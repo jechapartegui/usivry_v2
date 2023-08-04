@@ -1,0 +1,13 @@
+ <h2>Inscription aux séances</h2>
+
+ <div class="card-container">
+  <mat-card *ngFor="let rider of riders" class="mat-card" (click)="onCardClick(rider)">
+    <div class="mat-card-header">
+      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span>
+      <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
+    </div>
+    <div class="mat-card-content">
+      <!-- Ajoutez ici le contenu de la carte -->
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,64 @@
+import { Injectable } from '@angular/core';
+import { StaticClass } from 'src/app/global';
+import { Rider } from 'src/class/riders';
+import { GlobalService } from './global.services';
+import { environment } from 'src/environments/environment.prod';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RidersService {
+  static instance: RidersService;
+  static get ListeRiders(): Rider[] {
+    return RidersService.Riders;
+  }
+  constructor(public global: GlobalService) {
+    RidersService.instance = this;
+  }
+
+  url = environment.usivry + '/api/';
+  displayName: string = ''; // The name to display for the logged in user...
+  static Riders: Rider[];
+  isLoggedIn: boolean = false
+  currentUserId: number = 0
+  currentUserLogin: string = ''
+
+  public Login(username: string, password: string, stayLoggedIn: boolean): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/login.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      username: username,
+      password: password,
+      stayLoggedIn: stayLoggedIn
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: Rider[]) => {
+        this.isLoggedIn = true;
+        RidersService.Riders = response;
+        return true;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+  public AddRange(riders: Rider[]): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "add_range",
+      riders: riders,
+      password: environment.password
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+}

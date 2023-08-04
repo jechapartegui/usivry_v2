@@ -4,22 +4,27 @@
   "scripts": {
     "ng": "ng",
     "start": "nx serve",
+    "start-jecha": "ng serve --configuration=development --disable-host-check ",
     "build": "nx build",
+    "build-dev": "nx build --configuration=development",
     "watch": "nx build --watch --configuration development",
     "test": "nx test"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
+    "@angular/cdk": "^16.1.7",
     "@angular/common": "^16.1.0",
     "@angular/compiler": "^16.1.0",
     "@angular/core": "^16.1.0",
     "@angular/forms": "^16.1.0",
+    "@angular/material": "^16.1.7",
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0",
+    "tslib": "^2.6.1",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
