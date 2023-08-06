@@ -1,46 +1,69 @@
-/* Autres styles restent inchangés */
+/* Styles pour le formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #BB1919;
+  border-radius: 5px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mat-button {
+  margin-top: 20px;
+}
 
 /* Styles pour le menu top */
 .menu_top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .menu_usi {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px 15px;
-    font-weight: 600;
-    font-size: 12px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    background: #BB1919;
-    border-radius: 3px;
-    transition: background 0.3s ease;
-  }
-  
-  .menu_usi:hover {
-    background: #000000;
-  }
-  
-  /* Styles pour l'animation au survol */
-  .text_menu_usi::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: #BB1919;
-    transition: width 0.3s ease, left 0.3s ease;
-  }
-  
-  .menu_usi:hover .text_menu_usi::after {
-    width: 100%;
-    left: 0;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu_usi {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 15px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: #BB1919;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.menu_usi:hover {
+  background: #000000;
+}
+
+/* Styles pour l'animation au survol */
+.text_menu_usi::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #BB1919;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.menu_usi:hover .text_menu_usi::after {
+  width: 100%;
+  left: 0;
+}

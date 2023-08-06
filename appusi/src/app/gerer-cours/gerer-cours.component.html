@@ -1,1 +1,87 @@
-<p>gerer-cours works!</p>
+<!-- Liste des cours -->
+<div *ngIf="!editMode">
+    <h2>Liste des cours</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Jour de la semaine</th>
+          <th>Heure</th>
+          <th>Durée (en minutes)</th>
+          <th>Professeur Principal</th>
+          <th>Gymnase Référence</th>
+          <th>Âge requis</th>
+          <th>Niveau requis</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cours of listeCours">
+          <td>{{ cours.nom }}</td>
+          <td>{{ cours.jourSemaine }}</td>
+          <td>{{ cours.heure }}</td>
+          <td>{{ cours.duree }}</td>
+          <td>{{ trouverProfesseur(cours.professeurPrincipal)?.nom }}</td>
+          <td>{{ trouverGymnase(cours.gymnaseReference)?.nom }}</td>
+          <td>{{ cours.ageRequis }}</td>
+          <td>{{ cours.niveauRequis.join(', ') }}</td>
+          <td>
+            <button (click)="editerCours(cours)">Éditer</button>
+            <button (click)="supprimerCours(cours)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="creerCours()">Créer</button>
+  </div>
+  
+  <!-- Formulaire d'édition/création de cours -->
+<!-- Formulaire d'édition/création de cours -->
+<div *ngIf="editMode">
+    <h2 class="mat-h2">{{ editCours ? "Éditer" : "Créer" }} un cours</h2>
+    <div class="mat-form-field">
+      <input matInput [(ngModel)]="editCours.nom" placeholder="Nom du cours">
+    </div>
+    <div class="mat-form-field">
+      <mat-select [(ngModel)]="editCours.jourSemaine" placeholder="Jour de la semaine">
+        <mat-option value="lundi">Lundi</mat-option>
+        <mat-option value="mardi">Mardi</mat-option>
+        <mat-option value="mercredi">Mercredi</mat-option>
+        <mat-option value="jeudi">Jeudi</mat-option>
+        <mat-option value="vendredi">Vendredi</mat-option>
+        <mat-option value="samedi">Samedi</mat-option>
+        <mat-option value="dimanche">Dimanche</mat-option>
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <input matInput [(ngModel)]="editCours.heure" placeholder="Heure du cours">
+    </div>
+    <div class="mat-form-field">
+      <input matInput type="number" [(ngModel)]="editCours.duree" placeholder="Durée (en minutes)">
+    </div>
+    <div class="mat-form-field">
+      <mat-select [(ngModel)]="editCours.professeurPrincipal" placeholder="Professeur Principal">
+        <!-- Options pour les professeurs -->
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <mat-select [(ngModel)]="editCours.gymnaseReference" placeholder="Gymnase Référence">
+        <!-- Options pour les gymnases -->
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <input matInput type="number" [(ngModel)]="editCours.ageRequis" placeholder="Âge requis">
+    </div>
+    <div>
+      <label>Niveau requis:</label>
+      <div *ngFor="let niveau of niveauxRequis" class="mat-checkbox">
+        <mat-checkbox [(ngModel)]="editCours.niveauRequis" [value]="niveau">{{ niveau }}</mat-checkbox>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="soumettreCours()">
+      {{ editCours ? "Mettre à jour" : "Créer" }}
+    </button>
+    <button mat-raised-button (click)="annulerEdition()">Annuler</button>
+  </div>
+  
+  

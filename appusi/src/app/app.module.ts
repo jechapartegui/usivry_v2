@@ -24,6 +24,8 @@ import { SeancesService } from 'src/services/seances.service';
 import { CoursService } from 'src/services/cours.service';
 import { ErrorService } from 'src/services/error.service';
 import { NotifJechaComponent } from './custom-notification/custom-notification.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StaticClass } from './global';
 
 
 
@@ -34,9 +36,9 @@ import { NotifJechaComponent } from './custom-notification/custom-notification.c
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,
-    BrowserAnimationsModule,MatCardModule,MatIconModule, MatFormFieldModule, MatSelectModule
+    BrowserAnimationsModule,MatCardModule,MatIconModule, MatFormFieldModule, MatSelectModule,MatCheckboxModule
   ],
-  providers: [RidersService, GlobalService, SeancesService, CoursService, ErrorService],
+  providers: [RidersService, GlobalService, SeancesService, CoursService, ErrorService, StaticClass],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
