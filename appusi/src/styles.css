@@ -1,4 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+/* Autres styles restent inchangés */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Styles pour le menu top */
+.menu_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .menu_usi {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 15px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: #BB1919;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+  }
+  
+  .menu_usi:hover {
+    background: #000000;
+  }
+  
+  /* Styles pour l'animation au survol */
+  .text_menu_usi::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #BB1919;
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+  
+  .menu_usi:hover .text_menu_usi::after {
+    width: 100%;
+    left: 0;
+  }
+  

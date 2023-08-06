@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'import-riders',
-  templateUrl: './import-riders.html',
-  styleUrls: ['./import-riders.css']
+  selector: 'gerer-riders',
+  templateUrl: './gerer-riders.html',
+  styleUrls: ['./gerer-riders.css']
 })
-export class ImportRidersComponent {
+export class GererRidersComponent {
   fileData: any[];
   g:StaticClass = new StaticClass();
   ridersList: Rider[] = [];
@@ -52,7 +52,9 @@ export class ImportRidersComponent {
         essai_restant: 0,
         est_prof: false,
         est_admin: false,
-        id: 0
+        id: 0,
+        inscriptions: [],
+        seances: []
       };
       this.ridersList.push(rider);
       

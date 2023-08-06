@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { StaticClass } from 'src/app/global';
 import { Rider } from 'src/class/riders';
 import { GlobalService } from './global.services';
 import { environment } from 'src/environments/environment.prod';
@@ -12,14 +11,23 @@ export class RidersService {
   static get ListeRiders(): Rider[] {
     return RidersService.Riders;
   }
+  
+  static get GetName(): string {
+    return RidersService.email;
+  }
+  
+  static get IsLoggedIn(): boolean {
+    return RidersService.isLoggedIn;
+  }
   constructor(public global: GlobalService) {
     RidersService.instance = this;
   }
 
-  url = environment.usivry + '/api/';
-  displayName: string = ''; // The name to display for the logged in user...
+  url = environment.usivry;
+  
+  static email: string = ''; // The name to display for the logged in user...
   static Riders: Rider[];
-  isLoggedIn: boolean = false
+  static isLoggedIn: boolean = false
   currentUserId: number = 0
   currentUserLogin: string = ''
 
@@ -34,7 +42,8 @@ export class RidersService {
 
     return this.global.POST(this.url, body)
       .then((response: Rider[]) => {
-        this.isLoggedIn = true;
+        RidersService.isLoggedIn = true;
+        RidersService.email = username;
         RidersService.Riders = response;
         return true;
       })

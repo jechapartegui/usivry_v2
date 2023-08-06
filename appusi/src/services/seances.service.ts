@@ -1,0 +1,83 @@
+import { Injectable } from '@angular/core';
+import { Rider } from 'src/class/riders';
+import { GlobalService } from './global.services';
+import { environment } from 'src/environments/environment.prod';
+import { Seance } from 'src/class/seance';
+import { Inscription } from 'src/class/inscription';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SeancesService {
+  static instance: SeancesService;
+  static get ListeSeance(): Seance[] {
+    return SeancesService.Seances;
+  }
+  
+  constructor(public global: GlobalService) {
+    SeancesService.instance = this;
+  }
+
+  url = environment.usivry;
+  
+  static Seances: Seance[];
+
+  public GetSeance(): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"get_seance_plagedate",
+      password:environment.password,
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: Seance[]) => {
+        SeancesService.Seances = response;
+        return true;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+  public inscrire(inscription:Inscription): Promise<Inscription>{
+    this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      inscription:inscription,
+      command:"add"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: number) => {
+        inscription.id = response;
+        return inscription;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+  public desinscrire(inscription:Inscription): Promise<Inscription>{
+    this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      inscription:inscription,
+      command:"update"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: number) => {
+        inscription.id = response;
+        return inscription;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+ 
+}

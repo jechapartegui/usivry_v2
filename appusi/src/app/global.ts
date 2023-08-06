@@ -33,5 +33,12 @@ export class StaticClass{
   
     return date;
   }
+
   
+}
+export enum code_alert {
+  OK = 1,
+  KO = 2,
+  Warning = 3,
+  Info = 4
 }

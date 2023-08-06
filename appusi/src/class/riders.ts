@@ -1,3 +1,6 @@
+import { Inscription, InscriptionSeance } from "./inscription";
+import { Seance } from "./seance";
+
 export class Rider {
     constructor(
       public id:number=0,
@@ -15,8 +18,9 @@ export class Rider {
       public compte:number = 0,
       public essai_restant: number = 0,
       public est_prof: boolean =false,
-      public est_admin: boolean =false
-    ) {}
+      public est_admin: boolean =false,
+      public inscriptions: InscriptionSeance[]=[],
+      public seances: Seance[]=[]) {}
   }
 
  export enum Niveau {

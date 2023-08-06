@@ -1,13 +1,89 @@
  <h2>Inscription aux séances</h2>
 
  <div class="card-container">
-  <mat-card *ngFor="let rider of riders" class="mat-card" (click)="onCardClick(rider)">
+  <mat-card *ngFor="let rider of Riders" class="mat-card" (click)="onCardClick(rider)">
     <div class="mat-card-header">
-      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span>
+      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br/>
       <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
     </div>
-    <div class="mat-card-content">
-      <!-- Ajoutez ici le contenu de la carte -->
+    <div  class="mat-card-content">
+      <h3>Les séances disponibles</h3>
+      <div *ngIf="rider.seances && rider.seances.length > 0">
+      <table >
+        <tr *ngFor="let seance of rider.seances">
+          <!-- Afficher les détails de l'inscription ici -->
+          <td>{{ seance.libelle }}</td>
+          <td>{{ seance.date_seance | date }}</td>
+          <td>{{ seance.heure_debut }}</td>
+          <td>{{ seance.duree_cours }} minutes</td>
+          <td>{{ seance.gymnase }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let prof of seance.professeurs">{{ prof.nom }} {{ prof.prenom }}</li>
+            </ul>
+          </td>
+        
+          <!-- Bouton pour se désinscrire de la séance -->
+          <td>
+            <button class="menu_usi" mat-button color="primary" (click)="onAddSession(rider, seance)" >Ajouter</button>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="!rider.seances || rider.seances.length == 0">
+      Pas de séance disponible
+    </div>
+      
+      <!-- Tableau des séances inscrites par le rider -->
+      <h3 >Mes Inscriptions</h3>
+      <div *ngIf="rider.inscriptions && rider.inscriptions.length">
+      <table >
+        <tr *ngFor="let inscription of rider.inscriptions">
+          <!-- Afficher les détails de l'inscription ici -->
+          <td>{{ inscription.libelle }}</td>
+          <td>{{ inscription.date_seance | date }}</td>
+          <td>{{ inscription.heure_debut }}</td>
+          <td>{{ inscription.duree_cours }} minutes</td>
+          <td>{{ inscription.gymnase }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let prof of inscription.professeurs">{{ prof.nom }} {{ prof.prenom }}</li>
+            </ul>
+          </td>
+          <td>{{ inscription.statut }}</td>
+          <!-- Bouton pour se désinscrire de la séance -->
+          <td>
+            <button class="menu_usi" mat-button color="warn" (click)="onRemoveSession(rider, inscription)">Se désinscrire</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
+      Pas d'inscription en cours
+    </div>
+
+    <div *ngIf="rider.est_prof || rider.est_admin">
+      <h3 >Professeur</h3>
+       <!-- Bouton pour créer une séance (pour les professeurs) -->
+       <button mat-button color="primary" routerLink="/gerer-seance/0" >Créer séance</button>
+
+       <!-- Sélecteur pour voir la séance du professeur -->
+       <mat-form-field *ngIf="rider.est_prof">
+         <mat-label>Mes Séances Prof</mat-label>
+         <mat-select [(ngModel)]="selectedSeanceId">
+           <mat-option *ngFor="let seance of MesSeancesProf" [value]="seance.id">{{ seance.date_seance | date }}</mat-option>
+         </mat-select>
+         <button class="menu_usi" mat-button color="primary" [routerLink]="'/ma-seance/' + selectedSeanceId" >Voir ma séance</button>
+       </mat-form-field>
+      </div>
+      <div *ngIf="rider.est_admin">
+        <h3 >Administration</h3>
+       <!-- Boutons pour les administrateurs -->
+       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-riders" >Gérer les adhérents</button>
+       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-cours" >Gérer les cours</button>
+       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-seance" >Gérer les séances</button>
+       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-inscriptions" >Gérer les inscriptions</button>
+ 
+      </div>
     </div>
   </mat-card>
 </div>
