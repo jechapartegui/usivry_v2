@@ -1,4 +1,5 @@
-import { Rider } from "./riders";
+import { KeyValuePair } from "./keyvaluepair";
+import { Niveau, Rider } from "./riders";
 
 export class Seance {
   constructor(
@@ -7,8 +8,17 @@ export class Seance {
     public date_seance: Date,
     public heure_debut: string,
     public duree_cours: number,
-    public gymnase: string,
+    public lieu_id: number,
+    public lieu: string,
     public libelle:string,
-    public professeurs: Rider[]
+    public statut:StatutSeance=StatutSeance.prévue,
+    public professeurs: number[],
+    public age_requis:number,
+    public niveau_requis:Niveau,
+   
   ) {}
+}
+
+export enum StatutSeance{
+  prévue='prévue', réalisée= 'réalisée', annulée ='annulée'
 }

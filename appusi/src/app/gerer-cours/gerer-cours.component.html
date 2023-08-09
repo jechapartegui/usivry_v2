@@ -1,7 +1,7 @@
 <!-- Liste des cours -->
 <div *ngIf="!editMode">
-    <h2>Liste des cours</h2>
-    <table>
+    <h2 >Liste des cours</h2>
+    <table *ngIf="listeCours && listeCours.length> 0">
       <thead>
         <tr>
           <th>Nom</th>
@@ -18,32 +18,35 @@
       <tbody>
         <tr *ngFor="let cours of listeCours">
           <td>{{ cours.nom }}</td>
-          <td>{{ cours.jourSemaine }}</td>
+          <td>{{ cours.jour_semaine }}</td>
           <td>{{ cours.heure }}</td>
           <td>{{ cours.duree }}</td>
-          <td>{{ trouverProfesseur(cours.professeurPrincipal)?.nom }}</td>
-          <td>{{ trouverGymnase(cours.gymnaseReference)?.nom }}</td>
-          <td>{{ cours.ageRequis }}</td>
-          <td>{{ cours.niveauRequis.join(', ') }}</td>
+          <td>{{ trouverProfesseur(cours.prof_principal_id)?.value }}</td>
+          <td>{{ trouverGymnase(cours.lieu_id)?.value }}</td>
+          <td>{{ cours.age_requis }}</td>
+          <td>{{ cours.niveau_requis}}</td>
           <td>
-            <button (click)="editerCours(cours)">Éditer</button>
-            <button (click)="supprimerCours(cours)">Supprimer</button>
+            <button class="menu_usi" (click)="editerCours(cours)">Éditer</button>
+            <button class="menu_usi" (click)="supprimerCours(cours)">Supprimer</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <button (click)="creerCours()">Créer</button>
+    <p *ngIf="!listeCours || listeCours.length ==0">Pas de cours disponible</p>
+    <button class="menu_usi"  (click)="creerCours()">Créer</button>
   </div>
   
   <!-- Formulaire d'édition/création de cours -->
 <!-- Formulaire d'édition/création de cours -->
 <div *ngIf="editMode">
-    <h2 class="mat-h2">{{ editCours ? "Éditer" : "Créer" }} un cours</h2>
+    <h2 class="mat-h2">{{ editCours.id==0 ? "Éditer" : "Créer" }} un cours</h2>
     <div class="mat-form-field">
+      <label>Nom du cours :</label>
       <input matInput [(ngModel)]="editCours.nom" placeholder="Nom du cours">
     </div>
     <div class="mat-form-field">
-      <mat-select [(ngModel)]="editCours.jourSemaine" placeholder="Jour de la semaine">
+      <label>Jour de la semaine :</label>
+      <mat-select [(ngModel)]="editCours.jour_semaine" placeholder="Jour de la semaine">
         <mat-option value="lundi">Lundi</mat-option>
         <mat-option value="mardi">Mardi</mat-option>
         <mat-option value="mercredi">Mercredi</mat-option>
@@ -54,34 +57,47 @@
       </mat-select>
     </div>
     <div class="mat-form-field">
+      <label>Heure du cours :</label>
       <input matInput [(ngModel)]="editCours.heure" placeholder="Heure du cours">
     </div>
     <div class="mat-form-field">
+      
+      <label>Durée du cours :</label>
       <input matInput type="number" [(ngModel)]="editCours.duree" placeholder="Durée (en minutes)">
     </div>
     <div class="mat-form-field">
-      <mat-select [(ngModel)]="editCours.professeurPrincipal" placeholder="Professeur Principal">
+      <label>Responsable du cours :</label>
+      <mat-select [(ngModel)]="editCours.prof_principal_id" placeholder="Professeur Principal">
         <!-- Options pour les professeurs -->
+        <ng-container *ngFor="let prof of listeprof">
+            <mat-option [value]="prof.key">{{prof.value}}</mat-option>
+        </ng-container>
       </mat-select>
     </div>
     <div class="mat-form-field">
-      <mat-select [(ngModel)]="editCours.gymnaseReference" placeholder="Gymnase Référence">
+      
+      <label>Lieu du cours :</label>
+      <mat-select [(ngModel)]="editCours.lieu_id" placeholder="Gymnase Référence">
         <!-- Options pour les gymnases -->
+        <ng-container *ngFor="let lieu of listelieu">
+          <mat-option [value]="lieu.key">{{lieu.value}}</mat-option>
+      </ng-container>
       </mat-select>
     </div>
-    <div class="mat-form-field">
-      <input matInput type="number" [(ngModel)]="editCours.ageRequis" placeholder="Âge requis">
+    <div class="mat-form-field">      
+      <label>Age minimum :</label>
+      <input matInput type="number" [(ngModel)]="editCours.age_requis" placeholder="Âge requis">
     </div>
     <div>
-      <label>Niveau requis:</label>
-      <div *ngFor="let niveau of niveauxRequis" class="mat-checkbox">
-        <mat-checkbox [(ngModel)]="editCours.niveauRequis" [value]="niveau">{{ niveau }}</mat-checkbox>
-      </div>
+      <label for="niveauRequis">Niveau requis:</label>
+      <mat-select [(ngModel)]="editCours.niveau_requis" id="niveauRequis" name="niveauRequis">
+        <mat-option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</mat-option>
+      </mat-select>
     </div>
-    <button mat-raised-button color="primary" (click)="soumettreCours()">
-      {{ editCours ? "Mettre à jour" : "Créer" }}
+    <button class="menu_usi" mat-raised-button color="primary" (click)="soumettreCours()">
+      {{ editCours.id==0 ? "Mettre à jour" : "Créer" }}
     </button>
-    <button mat-raised-button (click)="annulerEdition()">Annuler</button>
+    <button class="menu_usi" mat-raised-button (click)="annulerEdition()">Annuler</button>
   </div>
   
   

@@ -22,6 +22,74 @@ export class SeancesService {
   
   static Seances: Seance[];
 
+  public Update(seance:Seance): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"update",
+      seance:seance,
+    };
+  
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+  public Delete(id:number): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"delete",
+      id:id,
+    };
+  
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+  public Add(seance:Seance): Promise<number> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"add",
+      seance:seance,
+    };
+  
+    return this.global.POST(this.url, body)
+      .then((response: number) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+  
+    public GetAllSeances(): Promise<Seance[]> {
+      this.url = environment.usivry + "usivry/seance_manage.php";
+      const body = {
+        command: "get_all_byseason",
+        password: environment.password
+      };
+  
+      return this.global.POST(this.url, body)
+        .then((response: Seance[]) => {
+          return response;
+        })
+        .catch(error => {
+          // Gestion de l'erreur
+          return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        });
+    }
   public GetSeance(): Promise<boolean> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
@@ -40,6 +108,8 @@ export class SeancesService {
         return Promise.reject('Une erreur s\'est produite lors de la connexion.');
       });
   }
+
+  
 
   public inscrire(inscription:Inscription): Promise<Inscription>{
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';

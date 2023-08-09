@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
+import { KeyValuePair } from 'src/class/keyvaluepair';
 import { Rider } from 'src/class/riders';
 import { Seance } from 'src/class/seance';
+import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 import { SeancesService } from 'src/services/seances.service';
 
@@ -15,12 +18,18 @@ export class MenuInscriptionComponent implements OnInit {
   Seances: Seance[] = []; // La liste des séances
   selectedSeanceId: number | null = null; // L'ID de la séance sélectionnée dans la liste déroulante
   MesSeancesProf:Seance[];
-  constructor(private seanceService: SeancesService) {}
+  listeprof:KeyValuePair[];
+  constructor(private seanceService: SeancesService, private ridersservice:RidersService) {}
 
   ngOnInit() {
     this.Riders = RidersService.ListeRiders;
    //charger seance
-
+   this.ridersservice.GetProf().then((elka) =>{
+    this.listeprof = elka;
+  }).catch((elkerreur:HttpErrorResponse)=>{
+    let errorservice = ErrorService
+    errorservice.instance.CreateError("récupérer les profs", elkerreur.status, elkerreur.statusText);
+  })
    //charger inscription par rider
 
    // charger mes seances prof si y'a un prof
@@ -72,7 +81,19 @@ export class MenuInscriptionComponent implements OnInit {
         this.seanceService.desinscrire(inscription);
       }
     }
+    trouverProfesseur(profId: number): any {
+      // Implémentez la logique pour trouver le professeur à partir de la liste des professeurs
+      // que vous pouvez stocker dans une variable
+      const indexToUpdate = this.listeprof.findIndex(prof => prof.key === profId);
   
+      if (indexToUpdate !== -1) {
+        // Remplacer l'élément à l'index trouvé par la nouvelle valeur
+        return this.listeprof[indexToUpdate];
+      } else {
+        return "Professeur non trouvé";
+      }
+      
+    }
   
   // Fonction pour calculer l'âge en fonction de la date de naissance
   calculateAge(dateNaissance: Date): number {

@@ -16,10 +16,12 @@
           <td>{{ seance.date_seance | date }}</td>
           <td>{{ seance.heure_debut }}</td>
           <td>{{ seance.duree_cours }} minutes</td>
-          <td>{{ seance.gymnase }}</td>
+          <td>{{ seance.lieu }}</td>
           <td>
             <ul>
-              <li *ngFor="let prof of seance.professeurs">{{ prof.nom }} {{ prof.prenom }}</li>
+              <ng-container *ngFor="let profId of seance.professeurs">
+                <li>{{ trouverProfesseur(profId)?.value }}</li>
+              </ng-container>
             </ul>
           </td>
         

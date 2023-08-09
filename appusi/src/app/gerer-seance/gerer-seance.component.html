@@ -1,1 +1,103 @@
-<p>gerer-seance works!</p>
+<!-- Liste des séances -->
+<div *ngIf="!editMode">
+    <h2>Liste des séances</h2>
+    <table *ngIf="listeSeances && listeSeances.length > 0">
+      <thead>
+        <tr>
+          <th>Cours</th>
+          <th>Date de la séance</th>
+          <th>Heure de début</th>
+          <th>Durée (en minutes)</th>
+          <th>Lieu</th>
+          <th>Statut</th>
+          <th>Professeurs</th>
+          <th>Âge requis</th>
+          <th>Niveau requis</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let seance of listeSeances">
+          <td>{{ trouverCours(seance.cours)?.value }}</td>
+          <td>{{ seance.date_seance | date }}</td>
+          <td>{{ seance.heure_debut }}</td>
+          <td>{{ seance.duree_cours }}</td>
+          <td>{{ trouverGymnase(seance.lieu_id)?.value }}</td>
+          <td>{{ seance.statut }}</td>
+          <td>
+            <ul>
+                <ng-container *ngFor="let profId of seance.professeurs">
+                  <li>{{ trouverProfesseur(profId)?.value }}</li>
+                </ng-container>
+              </ul>
+          </td>
+          <td>{{ seance.age_requis }}</td>
+          <td>{{ seance.niveau_requis }}</td>
+          <td>
+            <button class="menu_usi" (click)="editerSeance(seance)">Éditer</button>
+            <button class="menu_usi" (click)="supprimerSeance(seance)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!listeSeances || listeSeances.length === 0">Pas de séances disponibles</p>
+    <button class="menu_usi" (click)="creerSeance()">Créer</button>
+  </div>
+  
+  <!-- Formulaire d'édition/création de séance -->
+  <div *ngIf="editMode">
+    <h2 class="mat-h2">{{ editSeance.id === 0 ? "Éditer" : "Créer" }} une séance</h2>
+    <div class="mat-form-field">
+      <label>Cours :</label>
+      <mat-select [(ngModel)]="editSeance.cours" placeholder="Cours">
+        <mat-option *ngFor="let cours of listeCours" [value]="cours.key">{{ cours.value }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <label>Date de la séance :</label>
+      <input matInput type="date" [(ngModel)]="editSeance.date_seance">
+    </div>
+    <div class="mat-form-field">
+      <label>Heure de début :</label>
+      <input matInput type="time" [(ngModel)]="editSeance.heure_debut">
+    </div>
+    <div class="mat-form-field">
+      <label>Durée de la séance :</label>
+      <input matInput type="number" [(ngModel)]="editSeance.duree_cours">
+    </div>
+    <div class="mat-form-field">
+      <label>Lieu :</label>
+      <mat-select [(ngModel)]="editSeance.lieu_id" placeholder="Lieu">
+        <mat-option *ngFor="let lieu of listelieu" [value]="lieu.key">{{ lieu.value }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <label>Statut :</label>
+      <mat-select [(ngModel)]="editSeance.statut" placeholder="Statut">
+        <mat-option value="prévue">Prévue</mat-option>
+        <mat-option value="réalisée">Réalisée</mat-option>
+        <mat-option value="annulée">Annulée</mat-option>
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <label>Professeurs :</label>
+      <mat-select [(ngModel)]="editSeance.professeurs" multiple>
+        <mat-option *ngFor="let prof of listeprof" [value]="prof.key">{{ prof.value }}</mat-option>
+      </mat-select>
+    </div>
+    <div class="mat-form-field">
+      <label>Âge minimum requis :</label>
+      <input matInput type="number" [(ngModel)]="editSeance.age_requis">
+    </div>
+    <div class="mat-form-field">
+      <label>Niveau requis :</label>
+      <mat-select [(ngModel)]="editSeance.niveau_requis">
+        <mat-option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</mat-option>
+      </mat-select>
+    </div>
+    <button class="menu_usi" mat-raised-button color="primary" (click)="soumettreSeance()">
+      {{ editSeance.id === 0 ? "Mettre à jour" : "Créer" }}
+    </button>
+    <button class="menu_usi" mat-raised-button (click)="annulerEdition()">Annuler</button>
+  </div>
+  

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Rider } from 'src/class/riders';
+import { KeyValuePair } from 'src/class/keyvaluepair';
 import { GlobalService } from './global.services';
 import { environment } from 'src/environments/environment.prod';
 
@@ -63,6 +64,22 @@ export class RidersService {
 
     return this.global.POST(this.url, body)
       .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+  public GetProf(): Promise<KeyValuePair[]> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "get_prof_light",
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: KeyValuePair[]) => {
         return response;
       })
       .catch(error => {

@@ -4,12 +4,12 @@ export class Cours {
   constructor(
     public id:number,
     public nom: string,
-    public jourSemaine: string,
+    public jour_semaine: string,
     public heure: string,
     public duree: number,
-    public professeurPrincipal: number,
-    public gymnaseReference: number,
-    public ageRequis: number,
-    public niveauRequis: Niveau[]
+    public prof_principal_id: number,
+    public lieu_id: number,
+    public age_requis: number,
+    public niveau_requis: Niveau
   ) {}
 }
