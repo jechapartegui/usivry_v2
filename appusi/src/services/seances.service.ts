@@ -77,7 +77,7 @@ export class SeancesService {
     public GetAllSeances(): Promise<Seance[]> {
       this.url = environment.usivry + "usivry/seance_manage.php";
       const body = {
-        command: "get_all_byseason",
+        command: "get_all",
         password: environment.password
       };
   

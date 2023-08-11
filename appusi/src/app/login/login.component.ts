@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Remplacez par le chemin vers votre service RidersService
 import { Rider } from 'src/class/riders';
 import { ErrorService } from 'src/services/error.service';
@@ -9,12 +9,18 @@ import { RidersService } from 'src/services/riders.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   stayLoggedIn: boolean = false;
 
   constructor(private ridersService: RidersService, private router: Router) {}
+
+  ngOnInit(): void {
+      if(RidersService.isLoggedIn == true){
+        this.router.navigate(['/menu-inscription']);
+      }
+  }
 
   Login() {
     // Appel à la méthode Check_Login du service RidersService

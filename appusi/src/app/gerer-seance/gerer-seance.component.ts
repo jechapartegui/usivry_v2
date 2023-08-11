@@ -15,14 +15,14 @@ import { RidersService } from 'src/services/riders.service';
   styleUrls: ['./gerer-seance.component.css']
 })
 export class GererSeanceComponent implements OnInit {
-  listeCours: KeyValuePair[] = []; // Initialisez la liste des cours (vous pouvez la charger à partir d'une API, par exemple)
+  listeCours: Cours[] = []; // Initialisez la liste des cours (vous pouvez la charger à partir d'une API, par exemple)
   listelieu: KeyValuePair[] = []; // Initialisez la liste des lieux (vous pouvez la charger à partir d'une API, par exemple)
   listeprof: KeyValuePair[] = []; // Initialisez la liste des lieux (vous pouvez la charger à partir d'une API, par exemple)
   listeSeances: Seance[] = []; // Initialisez la liste des séances (vous pouvez la charger à partir d'une API, par exemple)
   editMode = false;
   editSeance: Seance | null = null;
   niveauxRequis: Niveau[] = Object.values(Niveau);
-
+  coursselectionne:boolean = false;
   constructor(
     private coursservice: CoursService,
     private seancesservice: SeancesService,
@@ -32,7 +32,7 @@ export class GererSeanceComponent implements OnInit {
 
   ngOnInit(): void {
     // Chargez la liste des cours
-    this.coursservice.GetCoursLight().then((list)=>{
+    this.coursservice.GetCours().then((list)=>{
       this.listeCours = list;
     }).catch((err:HttpErrorResponse)=>{
       let errorservice = ErrorService
@@ -89,7 +89,7 @@ export class GererSeanceComponent implements OnInit {
   trouverCours(coursId: number): any {
     // Implémentez la logique pour trouver le gymnase à partir de la liste des gymnases
     // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listeCours.findIndex(cc => cc.key === coursId);
+    const indexToUpdate = this.listeCours.findIndex(cc => cc.id === coursId);
 
     if (indexToUpdate !== -1) {
       // Remplacer l'élément à l'index trouvé par la nouvelle valeur
@@ -101,7 +101,26 @@ export class GererSeanceComponent implements OnInit {
 
   editerSeance(seance: Seance): void {
     this.editSeance = { ...seance };
+    this.coursselectionne = true;
     this.editMode = true;
+  }
+  onCoursSelectionChange(cours_id: any): void {
+    //  console.log('Nouvelle valeur sélectionnée :', newValue);
+    if(!isNaN(cours_id)){
+      const indexToUpdate = this.listeCours.findIndex(cc => cc.id === cours_id);
+      const newValue = this.listeCours[indexToUpdate];
+      this.coursselectionne = true;
+      this.editSeance.duree_cours = newValue.duree;
+      this.editSeance.age_requis = newValue.age_requis;
+      this.editSeance.heure_debut = newValue.heure;
+      this.editSeance.niveau_requis = newValue.niveau_requis;
+      this.editSeance.lieu_id = newValue.lieu_id;
+    } else{
+      console.log(cours_id);
+      console.log(!isNaN(cours_id));
+      this.coursselectionne = false;
+    }
+    // Faites ce que vous voulez avec la nouvelle valeur sélectionnée ici
   }
 
   supprimerSeance(seance: Seance): void {
@@ -127,6 +146,7 @@ export class GererSeanceComponent implements OnInit {
 
   creerSeance(): void {
     this.editSeance = new Seance(0,0,new Date(),"",0,0,"","",StatutSeance.prévue,[], 0,Niveau.Débutant);
+    this.coursselectionne = false;
     this.editMode = true;
   }
 

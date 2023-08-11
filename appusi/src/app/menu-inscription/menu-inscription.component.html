@@ -20,7 +20,7 @@
           <td>
             <ul>
               <ng-container *ngFor="let profId of seance.professeurs">
-                <li>{{ trouverProfesseur(profId)?.value }}</li>
+                <li>{{ profId.value }}</li>
               </ng-container>
             </ul>
           </td>

@@ -18,7 +18,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let seance of listeSeances">
-          <td>{{ trouverCours(seance.cours)?.value }}</td>
+          <td>{{ trouverCours(seance.cours)?.nom }}</td>
           <td>{{ seance.date_seance | date }}</td>
           <td>{{ seance.heure_debut }}</td>
           <td>{{ seance.duree_cours }}</td>
@@ -27,7 +27,7 @@
           <td>
             <ul>
                 <ng-container *ngFor="let profId of seance.professeurs">
-                  <li>{{ trouverProfesseur(profId)?.value }}</li>
+                  <li> {{profId.value}}</li>
                 </ng-container>
               </ul>
           </td>
@@ -49,17 +49,17 @@
     <h2 class="mat-h2">{{ editSeance.id === 0 ? "Éditer" : "Créer" }} une séance</h2>
     <div class="mat-form-field">
       <label>Cours :</label>
-      <mat-select [(ngModel)]="editSeance.cours" placeholder="Cours">
-        <mat-option *ngFor="let cours of listeCours" [value]="cours.key">{{ cours.value }}</mat-option>
+      <mat-select [(ngModel)]="editSeance.cours"  placeholder="Cours" (ngModelChange)="onCoursSelectionChange($event)">
+        <mat-option *ngFor="let cours of listeCours" [value]="cours.id">{{ cours.nom }}</mat-option>
       </mat-select>
     </div>
     <div class="mat-form-field">
       <label>Date de la séance :</label>
       <input matInput type="date" [(ngModel)]="editSeance.date_seance">
     </div>
-    <div class="mat-form-field">
+    <div class="mat-form-field" >
       <label>Heure de début :</label>
-      <input matInput type="time" [(ngModel)]="editSeance.heure_debut">
+      <input matInput type="time" [disabled]="!coursselectionne" [(ngModel)]="editSeance.heure_debut">
     </div>
     <div class="mat-form-field">
       <label>Durée de la séance :</label>
@@ -67,7 +67,7 @@
     </div>
     <div class="mat-form-field">
       <label>Lieu :</label>
-      <mat-select [(ngModel)]="editSeance.lieu_id" placeholder="Lieu">
+      <mat-select [(ngModel)]="editSeance.lieu_id" [disabled]="!coursselectionne" placeholder="Lieu">
         <mat-option *ngFor="let lieu of listelieu" [value]="lieu.key">{{ lieu.value }}</mat-option>
       </mat-select>
     </div>
@@ -87,16 +87,16 @@
     </div>
     <div class="mat-form-field">
       <label>Âge minimum requis :</label>
-      <input matInput type="number" [(ngModel)]="editSeance.age_requis">
+      <input matInput type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_requis">
     </div>
     <div class="mat-form-field">
       <label>Niveau requis :</label>
-      <mat-select [(ngModel)]="editSeance.niveau_requis">
+      <mat-select [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne">
         <mat-option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</mat-option>
       </mat-select>
     </div>
-    <button class="menu_usi" mat-raised-button color="primary" (click)="soumettreSeance()">
-      {{ editSeance.id === 0 ? "Mettre à jour" : "Créer" }}
+    <button class="menu_usi" mat-raised-button color="primary" [disabled]="!coursselectionne" (click)="soumettreSeance()">
+      {{ editSeance.id === 0 ?"Créer" : "Mettre à jour"  }}
     </button>
     <button class="menu_usi" mat-raised-button (click)="annulerEdition()">Annuler</button>
   </div>

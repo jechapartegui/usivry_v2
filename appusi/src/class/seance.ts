@@ -12,7 +12,7 @@ export class Seance {
     public lieu: string,
     public libelle:string,
     public statut:StatutSeance=StatutSeance.prévue,
-    public professeurs: number[],
+    public professeurs: KeyValuePair[],
     public age_requis:number,
     public niveau_requis:Niveau,
    
