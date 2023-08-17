@@ -24,23 +24,31 @@ listelieu:KeyValuePair[];
   niveauxRequis: Niveau[] = Object.values(Niveau);
 
   ngOnInit(): void {
+    if(RidersService.IsLoggedIn === false ){
+      this.router.navigate(['/login']);
+    return;
+    } 
+    if(RidersService.Est_Prof === false && RidersService.Est_Admin === false ){
+      this.router.navigate(['/menu-inscription']);
+    return;
+    } 
       this.coursservice.GetCours().then((list)=>{
         this.listeCours = list;
       }).catch((err:HttpErrorResponse)=>{
         let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les cours", err.status, err.statusText);
+        errorservice.instance.CreateError("récupérer les cours",  err.statusText);
       })
       this.ridersservice.GetProf().then((elka) =>{
         this.listeprof = elka;
       }).catch((elkerreur:HttpErrorResponse)=>{
         let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les profs", elkerreur.status, elkerreur.statusText);
+        errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
       })
       this.coursservice.GetLieuLight().then((laurie) =>{
         this.listelieu = laurie;
       }).catch((elkerreur:HttpErrorResponse)=>{
         let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les lieux", elkerreur.status, elkerreur.statusText);
+        errorservice.instance.CreateError("récupérer les lieux", elkerreur.statusText);
       })
   }
 
@@ -90,10 +98,10 @@ listelieu:KeyValuePair[];
           // Afficher un message de confirmation à l'utilisateur
           errorservice.instance.OKMessage(act);
         } else {
-          errorservice.instance.CreateError(act, "", "erreur lors de la suppression");
+          errorservice.instance.CreateError(act,"erreur lors de la suppression");
         }
       }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+          errorservice.instance.CreateError(act,  elkerreur.statusText);
         })
       }
   }
@@ -114,7 +122,7 @@ listelieu:KeyValuePair[];
           this.listeCours.push(this.editCours);
           this.annulerEdition();
         }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+          errorservice.instance.CreateError(act, elkerreur.statusText);
         })
       }
      else {
@@ -130,10 +138,10 @@ listelieu:KeyValuePair[];
           this.listeCours[indexToUpdate] = this.editCours;
         }
         this.annulerEdition();} else {
-          errorservice.instance.CreateError(act, "", "erreur lors de la mise à jour")
+          errorservice.instance.CreateError(act,  "erreur lors de la mise à jour")
         }
       }).catch((elkerreur:HttpErrorResponse)=>{
-        errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+        errorservice.instance.CreateError(act,  elkerreur.statusText);
       })
     }
     this.editMode = false;}

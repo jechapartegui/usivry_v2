@@ -32,9 +32,14 @@ export class LoginComponent implements OnInit {
         errorService.emitChange(o);
         this.router.navigate(['/menu-inscription']);
       } else {
+        let o = errorService.CreateError("Connexion", "Erreur inconnue");
+        errorService.emitChange(o);
         // Gérer le cas d'authentification échouée, par exemple, afficher un message d'erreur
         console.log('Identifiants invalides.');
       }
+    }).catch((error:Error)=>{
+      let o = errorService.CreateError("Connexion", error.message);
+      errorService.emitChange(o);
     });
   }
 }

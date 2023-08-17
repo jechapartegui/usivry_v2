@@ -8,6 +8,7 @@ import { SeancesService } from 'src/services/seances.service';
 import { ErrorService } from 'src/services/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RidersService } from 'src/services/riders.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gerer-seance',
@@ -24,6 +25,7 @@ export class GererSeanceComponent implements OnInit {
   niveauxRequis: Niveau[] = Object.values(Niveau);
   coursselectionne:boolean = false;
   constructor(
+    private router: Router,
     private coursservice: CoursService,
     private seancesservice: SeancesService,
     private ridersservice:RidersService,
@@ -31,31 +33,39 @@ export class GererSeanceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if(RidersService.IsLoggedIn === false ){
+      this.router.navigate(['/login']);
+    return;
+    } 
+    if(RidersService.Est_Prof === false && RidersService.Est_Admin === false ){
+      this.router.navigate(['/menu-inscription']);
+    return;
+    } 
     // Chargez la liste des cours
     this.coursservice.GetCours().then((list)=>{
       this.listeCours = list;
     }).catch((err:HttpErrorResponse)=>{
       let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les cours", err.status, err.statusText);
+      errorservice.instance.CreateError("récupérer les cours",  err.statusText);
     })
     this.ridersservice.GetProf().then((elka) =>{
       this.listeprof = elka;
     }).catch((elkerreur:HttpErrorResponse)=>{
       let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les profs", elkerreur.status, elkerreur.statusText);
+      errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
     })
     this.coursservice.GetLieuLight().then((laurie) =>{
       this.listelieu = laurie;
     }).catch((elkerreur:HttpErrorResponse)=>{
       let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les lieux", elkerreur.status, elkerreur.statusText);
+      errorservice.instance.CreateError("récupérer les lieux", elkerreur.statusText);
     })
 
     // Chargez la liste des séances
     this.seancesservice.GetAllSeances().then((list) => {
       this.listeSeances = list;
     }).catch((err) => {
-      ErrorService.instance.CreateError("récupérer les séances", err.status, err.statusText);
+      ErrorService.instance.CreateError("récupérer les séances",  err.statusText);
     });
   }
 
@@ -135,10 +145,10 @@ export class GererSeanceComponent implements OnInit {
           // Afficher un message de confirmation à l'utilisateur
           errorservice.instance.OKMessage(act);
         } else {
-          errorservice.instance.CreateError(act, "", "erreur lors de la suppression");
+          errorservice.instance.CreateError(act,"erreur lors de la suppression");
         }
       }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+          errorservice.instance.CreateError(act,  elkerreur.statusText);
         })
       }
 
@@ -161,7 +171,7 @@ export class GererSeanceComponent implements OnInit {
           this.listeSeances.push(this.editSeance);
           this.annulerEdition();
         }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+          errorservice.instance.CreateError(act,elkerreur.statusText);
         })
       }
      else {
@@ -177,10 +187,10 @@ export class GererSeanceComponent implements OnInit {
           this.listeSeances[indexToUpdate] = this.editSeance;
         }
         this.annulerEdition();} else {
-          errorservice.instance.CreateError(act, "", "erreur lors de la mise à jour")
+          errorservice.instance.CreateError(act,"erreur lors de la mise à jour")
         }
       }).catch((elkerreur:HttpErrorResponse)=>{
-        errorservice.instance.CreateError(act, elkerreur.status, elkerreur.statusText);
+        errorservice.instance.CreateError(act, elkerreur.statusText);
       })
     }
     this.editMode = false;}

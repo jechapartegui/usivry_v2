@@ -21,8 +21,14 @@
       <div class="menu_usi" (click)="select('Infos')">
         <a class="lien_menu"><span class="text_menu_usi">Club et contacts</span></a>
       </div> 
-      <div class="menu_usi" >
+      <div *ngIf="!(isLoggedIn$ | async)" class="menu_usi" >
         <a (click)="GoToLogin()" class="lien_menu"><span class="text_menu_usi">Se Connecter</span></a>
+      </div>
+      <div *ngIf="(isLoggedIn$ | async)" class="menu_usi" >
+        <a (click)="GoToMI()" class="lien_menu" ><span class="text_menu_usi">Menu inscription</span></a>
+      </div>
+      <div *ngIf="(isLoggedIn$ | async)" class="menu_usi" >
+        <a (click)="Logout()" class="lien_menu" ><span class="text_menu_usi">Se déconnecter</span></a>
       </div>
     </div>
     <div class="menu_top_mobile">

@@ -1,5 +1,6 @@
-<h2>Connexion</h2>
-
+<mat-card>
+  <mat-card-title>Connexion</mat-card-title>
+<mat-card-content>
 <div >
   <div>
     <label for="username">Nom d'utilisateur :</label>
@@ -9,9 +10,17 @@
     <label for="password">Mot de passe :</label>
     <input type="password" id="password" name="password" [(ngModel)]="password" required>
   </div>
-  <div>
-    <label for="stayLoggedIn">Rester connecté :</label>
-    <input type="checkbox" id="stayLoggedIn" name="stayLoggedIn" [(ngModel)]="stayLoggedIn">
+  <div style="margin-bottom: 15px;">
+    <label  for="toggle-switch">Resté connecté :</label>
+    <div class="toggle-switch">
+      <input type="checkbox" id="toggle" [(ngModel)]="stayLoggedIn">
+      <label class="toggle-switch-label" for="toggle"></label>
+    </div>
   </div>
-  <button type="submit" (click)="Login()">Connexion</button>
+  <button class="menu_usi" type="submit" (click)="Login()">Connexion</button>
 </div>
+
+</mat-card-content>
+</mat-card>
+
+

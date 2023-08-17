@@ -40,14 +40,13 @@ export class GlobalService {
   }
 
   private handleError(error: HttpErrorResponse): void {
-    console.log(error.error.text);
     if (error.error instanceof ErrorEvent) {
       console.error('Une erreur s\'est produite:', error.error.message);
     } else {
       console.error(
         `Code d'erreur ${error.status}, ` +
-        `message d'erreur: ${error.error}`);
+        `message d'erreur: ${error.statusText}`);
     }
-    throw new Error('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+    throw new Error(error.statusText);
   }
 }

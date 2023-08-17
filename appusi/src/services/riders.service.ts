@@ -20,6 +20,8 @@ export class RidersService {
   static get IsLoggedIn(): boolean {
     return RidersService.isLoggedIn;
   }
+  static Est_Admin:boolean = false;
+  static Est_Prof:boolean =false;
   constructor(public global: GlobalService) {
     RidersService.instance = this;
   }
@@ -46,11 +48,19 @@ export class RidersService {
         RidersService.isLoggedIn = true;
         RidersService.email = username;
         RidersService.Riders = response;
+        response.forEach(rider => {
+          if(rider.est_admin){
+            RidersService.Est_Admin = true;
+          } 
+          if(rider.est_prof){
+            RidersService.Est_Prof = true;
+          } 
+        });
         return true;
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 

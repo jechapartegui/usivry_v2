@@ -18,9 +18,9 @@ export class ErrorService {
     this.emitChangeSource.next(err);
   }
 
-  CreateError(action, status, statusText): notification {
+  CreateError(action, statusText): notification {
     let o = new notification();
-    o.content = this.interpret_error(status, statusText);
+    o.content = this.interpret_error(statusText);
     o.object = action;
     o.color = code_alert.KO;
     return o;
@@ -64,14 +64,11 @@ export class ErrorService {
         return "Non autorisé";
     }
   }
-  interpret_error(code: number, text: string): string {
-    switch (code) {
-      default:
-      case 401:
+  interpret_error(text: string): string {   
         switch (text) {
           default:
           case "Unauthorized NO_USER_FOUND":
-            return "Pas d'utilisateur détecté dans la requete";
+            return "Login incorrect";
           case "Unauthorized LOGIN_ALREADY_EXISTS":
             return "Le login existe déjà merci d'en choisir un autre"
           case "Unauthorized NO_OBJECT_FOUND":
@@ -88,10 +85,9 @@ export class ErrorService {
             return "Login incorrect";
           case "Unauthorized INCORRECT_PASSWORD":
             return "Mot de passe incorrect";
+            case "Unauthorized NO_VALUE_SET":
+            return "Valeur non saisie";
         }
     }
-
-  }
-
 
 }

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
 import { Rider } from 'src/class/riders';
@@ -19,16 +20,20 @@ export class MenuInscriptionComponent implements OnInit {
   selectedSeanceId: number | null = null; // L'ID de la séance sélectionnée dans la liste déroulante
   MesSeancesProf:Seance[];
   listeprof:KeyValuePair[];
-  constructor(private seanceService: SeancesService, private ridersservice:RidersService) {}
+  constructor(private seanceService: SeancesService, private ridersservice:RidersService, private router:Router) {}
 
   ngOnInit() {
+    if(RidersService.IsLoggedIn === false ){
+      this.router.navigate(['/login']);
+      return;
+    } 
     this.Riders = RidersService.ListeRiders;
    //charger seance
    this.ridersservice.GetProf().then((elka) =>{
     this.listeprof = elka;
   }).catch((elkerreur:HttpErrorResponse)=>{
     let errorservice = ErrorService
-    errorservice.instance.CreateError("récupérer les profs", elkerreur.status, elkerreur.statusText);
+    errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
   })
    //charger inscription par rider
 
