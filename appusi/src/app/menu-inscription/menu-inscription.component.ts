@@ -17,89 +17,119 @@ import { SeancesService } from 'src/services/seances.service';
 export class MenuInscriptionComponent implements OnInit {
   Riders: Rider[] = []; // Initialisez la variable riders avec les données de vos riders
   Seances: Seance[] = []; // La liste des séances
-  selectedSeanceId: number | null = null; // L'ID de la séance sélectionnée dans la liste déroulante
-  MesSeancesProf:Seance[];
-  listeprof:KeyValuePair[];
-  constructor(private seanceService: SeancesService, private ridersservice:RidersService, private router:Router) {}
+  listeprof: KeyValuePair[];
+  constructor(private seanceService: SeancesService, private ridersservice: RidersService, private router: Router) { }
 
   ngOnInit() {
-    if(RidersService.IsLoggedIn === false ){
+    if (RidersService.IsLoggedIn === false) {
       this.router.navigate(['/login']);
       return;
-    } 
+    }
     this.Riders = RidersService.ListeRiders;
-   //charger seance
-   this.ridersservice.GetProf().then((elka) =>{
-    this.listeprof = elka;
-  }).catch((elkerreur:HttpErrorResponse)=>{
-    let errorservice = ErrorService
-    errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
-  })
-   //charger inscription par rider
+    //charger seance
+    this.ridersservice.GetProf().then((elka) => {
+      this.listeprof = elka;
+    }).catch((elkerreur: HttpErrorResponse) => {
+      let errorservice = ErrorService
+      errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
+    })
+    //charger inscription par rider
 
-   // charger mes seances prof si y'a un prof
+    // charger mes seances prof si y'a un prof
   }
-    
-     
-  
-    // Fonction pour ajouter une séance à un rider
-    onAddSession(rider: Rider, seance:Seance) {
-      if (seance !== null) {
 
-          const inscription: Inscription = {
-            rider_id: rider.id,
-            seance_id: seance.id,
-            id: 0,
-            date_inscription: undefined,
-            statut: StatutPresence.Présent
-          };
-          this.seanceService.inscrire(inscription);
-        }
+
+
+  // Fonction pour ajouter une séance à un rider
+  Add(rider: Rider, seance: Seance, present: boolean) {
+    console.log(seance);
+    let action = "Se déclarer absent";
+    let pre = StatutPresence.Absent;
+    if (present) {
+      action = "S'inscrire à une séance";
+      pre = StatutPresence.Présent;
     }
-    Absent(rider: Rider) {
-      if (this.selectedSeanceId !== null) {
-        const selectedSeance = this.Seances.find((seance : Seance) => seance.id === this.selectedSeanceId);
-        if (selectedSeance) {
-          const inscription: Inscription = {
-            rider_id: rider.id,
-            seance_id: selectedSeance.id,
-            id: 0,
-            date_inscription: undefined,
-            statut: StatutPresence.Absent
-          };
-          this.seanceService.inscrire(inscription);
-        }
-      }
-    }
-  
-    // Fonction pour retirer une séance d'un rider
-    onRemoveSession(rider: Rider, inscr: InscriptionSeance) {
-      const selectedSeance = rider.inscriptions.find((seance : InscriptionSeance) => seance.seance_id === inscr.seance_id);
-      if (selectedSeance) {
-        const inscription: Inscription = {
-          rider_id: rider.id,
-          seance_id: selectedSeance.id,
-          id: 0,
-          date_inscription: undefined,
-          statut: StatutPresence.Absent
-        };
-        this.seanceService.desinscrire(inscription);
-      }
-    }
-    trouverProfesseur(profId: number): any {
-      // Implémentez la logique pour trouver le professeur à partir de la liste des professeurs
-      // que vous pouvez stocker dans une variable
-      const indexToUpdate = this.listeprof.findIndex(prof => prof.key === profId);
-  
-      if (indexToUpdate !== -1) {
-        // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-        return this.listeprof[indexToUpdate];
+    let errorService = ErrorService.instance;
+
+    const inscription: Inscription = {
+      rider_id: rider.id,
+      seance_id: seance.seance_id,
+      id: 0,
+      date_inscription: undefined,
+      statut: pre
+    };
+    this.seanceService.inscrire(inscription).then((id) => {
+      if (id > 0) {
+        this.ridersservice.GetRiders().then(() => {
+          this.Riders = RidersService.ListeRiders;
+        })
+        let o = errorService.OKMessage(action);
+        errorService.emitChange(o);
       } else {
-        return "Professeur non trouvé";
+        let u = errorService.CreateError(action, "Ajout KO");
+        errorService.emitChange(u);
       }
-      
+    }).catch((error) => {
+      let n = errorService.CreateError(action, error);
+      errorService.emitChange(n);
+    });
+  }
+
+  VoirSession(seance: Seance) {
+
+  }
+
+
+  // Fonction pour retirer une séance d'un rider
+  Update(rider: Rider, inscr: InscriptionSeance, present: boolean) {
+    let errorService = ErrorService.instance;
+    let action = "Modifier la présence : se déclarer absent";
+    let pre = StatutPresence.Absent;
+    if (present) {
+      action = "Modifier la présence : se déclarer présent";
+      pre = StatutPresence.Présent;
     }
-  
+    const selectedSeance = rider.inscriptions.find((seance: InscriptionSeance) => seance.id === inscr.id);
+    if (selectedSeance) {
+      const inscription: Inscription = {
+        rider_id: rider.id,
+        seance_id: selectedSeance.seance_id,
+        id: selectedSeance.id,
+        date_inscription: undefined,
+        statut: pre
+      };
+      this.seanceService.desinscrire(inscription).then((ret) => {
+        if (ret) {
+          this.ridersservice.GetRiders().then(() => {
+            this.Riders = RidersService.ListeRiders;
+          })
+          let o = errorService.OKMessage(action);
+          errorService.emitChange(o);
+        } else {
+
+          let u = errorService.CreateError(action, "Mise à jour KO");
+          errorService.emitChange(u);
+        }
+      }).catch((error) => {
+        let n = errorService.CreateError(action, error);
+        errorService.emitChange(n);
+      });
+    }
+  }
+  trouverProfesseur(profId: number): any {
+    // Implémentez la logique pour trouver le professeur à partir de la liste des professeurs
+    // que vous pouvez stocker dans une variable
+    const indexToUpdate = this.listeprof.findIndex(prof => prof.key === profId);
+
+    if (indexToUpdate !== -1) {
+      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
+      return this.listeprof[indexToUpdate];
+    } else {
+      return "Professeur non trouvé";
+    }
+
+  }
+
   // Fonction pour calculer l'âge en fonction de la date de naissance
   calculateAge(dateNaissance: Date): number {
     const today = new Date();
@@ -111,8 +141,8 @@ export class MenuInscriptionComponent implements OnInit {
     }
     return age;
   }
-  onCardClick(rider){
-    
+  onCardClick(rider) {
+
   }
 
 }

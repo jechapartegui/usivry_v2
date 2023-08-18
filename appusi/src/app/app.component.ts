@@ -12,12 +12,11 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   g:StaticClass;
   @ViewChild(NotifJechaComponent, { static: true }) child: NotifJechaComponent;
   title = 'US Ivry Roller';
   constructor(
-    private ridersService:RidersService,
+    public ridersService:RidersService,
     private erroservice: ErrorService,
     private router: Router,
     public globals: StaticClass,
@@ -43,9 +42,6 @@ export class AppComponent implements OnInit {
     console.log(RidersService.Riders);
     console.log(RidersService.email);
     console.log(RidersService.instance);
-//console.log(this.loggedin3);
- //   sectionElement.scrollIntoView();
-   // this.selected = sectionElement.id;
   }
 
   GoToLogin(){

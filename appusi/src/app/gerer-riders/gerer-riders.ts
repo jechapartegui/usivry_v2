@@ -54,7 +54,8 @@ export class GererRidersComponent {
         est_admin: false,
         id: 0,
         inscriptions: [],
-        seances: []
+        seances: [],
+        seances_prof:[]
       };
       this.ridersList.push(rider);
       

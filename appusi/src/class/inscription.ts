@@ -1,3 +1,4 @@
+import { KeyValuePair } from "./keyvaluepair";
 import { Rider } from "./riders";
 
 export class Inscription{
@@ -27,7 +28,7 @@ export enum StatutPresence {
         public date_seance: Date;
         public heure_debut: string;
         public duree_cours: number;
-        public gymnase: string;
+        public lieu: string;
         public libelle:string;
-        public professeurs: Rider[]=[];
+        public professeurs: KeyValuePair[]=[];
   }

@@ -3,7 +3,7 @@ import { Niveau, Rider } from "./riders";
 
 export class Seance {
   constructor(
-    public id:number,
+    public seance_id:number =0,
     public cours: number,
     public date_seance: Date,
     public heure_debut: string,

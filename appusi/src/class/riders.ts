@@ -20,7 +20,9 @@ export class Rider {
       public est_prof: boolean =false,
       public est_admin: boolean =false,
       public inscriptions: InscriptionSeance[]=[],
-      public seances: Seance[]=[]) {}
+      public seances: Seance[]=[],
+      public seances_prof: Seance[]=[]
+      ) {}
   }
 
  export enum Niveau {

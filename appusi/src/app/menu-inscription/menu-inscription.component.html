@@ -1,145 +1,191 @@
- <h2>Inscription aux séances</h2>
-
- <div class="card-container">
+<div class="card-container">
   <mat-card *ngFor="let rider of Riders" class="mat-card" (click)="onCardClick(rider)">
     <div class="mat-card-header">
-      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br/>
+      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
       <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
     </div>
-    <div  class="mat-card-content">
-      <div class="accordion" id="accordionExample">
+    <div class="mat-card-content">
+      <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              Accordion Item #1
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            [attr.data-bs-target]="'#collapseOne-' + rider.id" aria-expanded="true"
+            [attr.aria-controls]="'collapseOne-' + rider.id">
+              Mes inscriptions ({{rider.inscriptions.length}})
             </button>
           </h2>
-          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div [id]="'collapseOne-' + rider.id" class="accordion-collapse collapse show"
+          [attr.data-bs-parent]="'#accordionExample-' + rider.id">
             <div class="accordion-body">
-              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <table *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
+                <thead>
+                  <th>Nom</th>
+                  <th>Date</th>
+                  <th>Heure de début</th>
+                  <th>Durée du cours</th>
+                  <th>Lieu</th>
+                  <th>Professeur présent</th>
+                  <th>Statut</th>
+                  <th></th>
+                </thead>
+                <tr *ngFor="let inscription of rider.inscriptions">
+                  <!-- Afficher les détails de l'inscription ici -->
+                  <td>{{ inscription.libelle }}</td>
+                  <td>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ inscription.heure_debut }}</td>
+                  <td>{{ inscription.duree_cours }} minutes</td>
+                  <td>{{ inscription.lieu }}</td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let prof of inscription.professeurs">{{ prof.value }} </li>
+                    </ul>
+                  </td>
+                  <td>{{ inscription.statut }}
+                    <span *ngIf="inscription.statut.toString() ==='présent'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </svg></span>
+                    <span *ngIf="inscription.statut.toString() ==='absent'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                    </svg></span>
+                  </td>
+                  <!-- Bouton pour se désinscrire de la séance -->
+                  <td>
+                    <button *ngIf="inscription.statut.toString() ==='présent'" class="menu_usi" (click)="Update(rider, inscription, false)">Se désinscrire</button>
+                      <button *ngIf="inscription.statut.toString() ==='absent'" style="background-color: green;" class="menu_usi" (click)="Update(rider, inscription, true)">Réinscrire</button>
+                  </td>
+                </tr>
+              </table>
+              <p *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
+                Pas d'inscription en cours
+              </p>
             </div>
           </div>
         </div>
+       
+
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              Accordion Item #2
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapseTwo-' + rider.id" aria-expanded="false"
+          [attr.aria-controls]="'collapseTwo-' + rider.id">
+              Mes séances disponibles ({{rider.seances.length}})
             </button>
           </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div [id]="'collapseTwo-' + rider.id" class="accordion-collapse collapse"
+          [attr.data-bs-parent]="'#accordionExample-' + rider.id">
             <div class="accordion-body">
-              <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <table *ngIf="rider.seances && rider.seances.length > 0">
+                <thead>
+                  <th>Nom</th>
+                  <th>Date</th>
+                  <th>Heure de début</th>
+                  <th>Durée du cours</th>
+                  <th>Lieu</th>
+                  <th>Professeur présent</th>
+                  <th></th>
+                </thead>
+                <tr *ngFor="let seance of rider.seances">
+                  <!-- Afficher les détails de l'inscription ici -->
+                  <td>{{ seance.libelle }}</td>
+                  <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
+                  <td>{{ seance.heure_debut }}</td>
+                  <td>{{ seance.duree_cours }} minutes</td>
+                  <td>{{ seance.lieu }}</td>
+                  <td>
+                    <ul>
+                      <ng-container *ngFor="let profId of seance.professeurs">
+                        <li>{{ profId.value }}</li>
+                      </ng-container>
+                    </ul>
+                  </td>
+
+                  <!-- Bouton pour se désinscrire de la séance -->
+                  <td>
+                    <button class="menu_usi" mat-button color="primary" style="background-color: green;"
+                      (click)="Add(rider, seance, true)">S'inscrire</button>
+                      <button class="menu_usi" mat-button color="primary"
+                      (click)="Add(rider, seance, false)">Déclarer absent</button>
+                      </td>
+                </tr>
+              </table>
+              <p *ngIf="!rider.seances || rider.seances.length == 0">
+                Pas de séance disponible
+              </p>
             </div>
           </div>
         </div>
-        <div class="accordion-item">
+        <div *ngIf="rider.est_prof || rider.est_admin" class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              Accordion Item #3
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Mon portail
             </button>
           </h2>
           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+              <div *ngIf="rider.est_prof || rider.est_admin">
+                <h3>Professeur</h3>
+                <!-- Bouton pour créer une séance (pour les professeurs) -->
+                <button mat-button class="menu_usi" color="primary" routerLink="/gerer-seance/0">Créer séance</button>
+        
+                <mat-label>Mes Séances Prof</mat-label>
+                <!-- Sélecteur pour voir la séance du professeur -->
+                <table *ngIf="rider.est_prof">
+                  <thead>
+                  <th>Nom</th>
+                  <th>Date</th>
+                  <th>Heure de début</th>
+                  <th>Durée du cours</th>
+                  <th>Lieu</th>
+                  <th>Professeur présent</th>
+                  <th></th></thead>
+                  <tr *ngFor="let seance of rider.seances_prof">
+                    <!-- Afficher les détails de l'inscription ici -->
+                    <td>{{ seance.libelle }}</td>
+                    <td>{{ seance.date_seance | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ seance.heure_debut }}</td>
+                    <td>{{ seance.duree_cours }} minutes</td>
+                    <td>{{ seance.lieu }}</td>
+                    <td>
+                      <ul>
+                        <ng-container *ngFor="let profId of seance.professeurs">
+                          <li>{{ profId.value }}</li>
+                        </ng-container>
+                      </ul>
+                    </td>
+  
+                    <!-- Bouton pour se désinscrire de la séance -->
+                    <td>
+                      <button class="menu_usi" mat-button color="primary"
+                        (click)="VoirSession( seance)">Voir la séance</button>
+                    </td>
+                  </tr>                
+                </table>
+                <p *ngIf="!rider.seances_prof || rider.seances_prof.length == 0">
+                  Pas de séance disponible
+                </p>
+              </div>
+              <div *ngIf="rider.est_admin">
+                <h3>Administration</h3>
+                <!-- Boutons pour les administrateurs -->
+                <button class="menu_usi" mat-button color="primary" routerLink="/gerer-riders">Gérer les
+                  adhérents</button>
+                <button class="menu_usi" mat-button color="primary" routerLink="/gerer-cours">Gérer les cours</button>
+                <button class="menu_usi" mat-button color="primary" routerLink="/gerer-seance">Gérer les
+                  séances</button>
+                <button class="menu_usi" mat-button color="primary" routerLink="/gerer-inscriptions">Gérer les
+                  inscriptions</button>
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <h3>Les séances disponibles</h3>
-      <div *ngIf="rider.seances && rider.seances.length > 0">
-      <table >
-        <thead>
-          <th>Nom</th>
-          <th>Date</th>
-          <th>Heure de début</th>
-          <th>Durée du cours</th>
-          <th>Lieu</th>
-          <th>Professeur présent</th>
-        </thead>
-        <tr *ngFor="let seance of rider.seances">
-          <!-- Afficher les détails de l'inscription ici -->
-          <td>{{ seance.libelle }}</td>
-          <td>{{ seance.date_seance | date }}</td>
-          <td>{{ seance.heure_debut }}</td>
-          <td>{{ seance.duree_cours }} minutes</td>
-          <td>{{ seance.lieu }}</td>
-          <td>
-            <ul>
-              <ng-container *ngFor="let profId of seance.professeurs">
-                <li>{{ profId.value }}</li>
-              </ng-container>
-            </ul>
-          </td>
-        
-          <!-- Bouton pour se désinscrire de la séance -->
-          <td>
-            <button class="menu_usi" mat-button color="primary" (click)="onAddSession(rider, seance)" >Ajouter</button>
-        </tr>
-      </table>
-    </div>
-    <div *ngIf="!rider.seances || rider.seances.length == 0">
-      Pas de séance disponible
-    </div>
-      
-      <!-- Tableau des séances inscrites par le rider -->
-      <h3 >Mes Inscriptions</h3>
-      <div *ngIf="rider.inscriptions && rider.inscriptions.length">
-      <table > <thead>
-        <th>Nom</th>
-        <th>Date</th>
-        <th>Heure de début</th>
-        <th>Durée du cours</th>
-        <th>Lieu</th>
-        <th>Professeur présent</th>
-        <th>Statut</th>
-      </thead>
-        <tr *ngFor="let inscription of rider.inscriptions">
-          <!-- Afficher les détails de l'inscription ici -->
-          <td>{{ inscription.libelle }}</td>
-          <td>{{ inscription.date_seance | date }}</td>
-          <td>{{ inscription.heure_debut }}</td>
-          <td>{{ inscription.duree_cours }} minutes</td>
-          <td>{{ inscription.gymnase }}</td>
-          <td>
-            <ul>
-              <li *ngFor="let prof of inscription.professeurs">{{ prof.nom }} {{ prof.prenom }}</li>
-            </ul>
-          </td>
-          <td>{{ inscription.statut }}</td>
-          <!-- Bouton pour se désinscrire de la séance -->
-          <td>
-            <button class="menu_usi" mat-button color="warn" (click)="onRemoveSession(rider, inscription)">Se désinscrire</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
-      Pas d'inscription en cours
-    </div>
 
-    <div *ngIf="rider.est_prof || rider.est_admin">
-      <h3 >Professeur</h3>
-       <!-- Bouton pour créer une séance (pour les professeurs) -->
-       <button mat-button color="primary" routerLink="/gerer-seance/0" >Créer séance</button>
 
-       <!-- Sélecteur pour voir la séance du professeur -->
-       <mat-form-field *ngIf="rider.est_prof">
-         <mat-label>Mes Séances Prof</mat-label>
-         <mat-select [(ngModel)]="selectedSeanceId">
-           <mat-option *ngFor="let seance of MesSeancesProf" [value]="seance.id">{{ seance.date_seance | date }}</mat-option>
-         </mat-select>
-         <button class="menu_usi" mat-button color="primary" [routerLink]="'/ma-seance/' + selectedSeanceId" >Voir ma séance</button>
-       </mat-form-field>
-      </div>
-      <div *ngIf="rider.est_admin">
-        <h3 >Administration</h3>
-       <!-- Boutons pour les administrateurs -->
-       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-riders" >Gérer les adhérents</button>
-       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-cours" >Gérer les cours</button>
-       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-seance" >Gérer les séances</button>
-       <button class="menu_usi" mat-button color="primary" routerLink="/gerer-inscriptions" >Gérer les inscriptions</button>
- 
-      </div>
+
+
+
     </div>
   </mat-card>
 </div>

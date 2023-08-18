@@ -46,7 +46,7 @@
   
   <!-- Formulaire d'édition/création de séance -->
   <div *ngIf="editMode">
-    <h2 class="mat-h2">{{ editSeance.id === 0 ? "Éditer" : "Créer" }} une séance</h2>
+    <h2 class="mat-h2">{{ editSeance.seance_id === 0 ? "Éditer" : "Créer" }} une séance</h2>
     <div class="mat-form-field">
       <label>Cours :</label>
       <mat-select [(ngModel)]="editSeance.cours"  placeholder="Cours" (ngModelChange)="onCoursSelectionChange($event)">
@@ -96,7 +96,7 @@
       </mat-select>
     </div>
     <button class="menu_usi" mat-raised-button color="primary" [disabled]="!coursselectionne" (click)="soumettreSeance()">
-      {{ editSeance.id === 0 ?"Créer" : "Mettre à jour"  }}
+      {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour"  }}
     </button>
     <button class="menu_usi" mat-raised-button (click)="annulerEdition()">Annuler</button>
   </div>

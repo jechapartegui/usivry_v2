@@ -2,34 +2,19 @@
 <div class="main_container">
   <div class="main_header">
     <!-- Votre en-tête ici -->
-    <div class="menu_top">
-      <div class="menu_usi" (click)="select('Ecole')">
-        <a class="lien_menu"><span class="text_menu_usi">Ecole de Roller</span></a>
-      </div>
-      <div class="menu_usi" (click)="select('RollerSoccer')">
-        <a class="lien_menu"><span class="text_menu_usi">Roller Soccer</span></a>
-      </div>
-      <div class="menu_usi" (click)="select('RollerDerby')">
-        <a class="lien_menu"><span class="text_menu_usi">Roller Derby</span></a>
-      </div>
-      <div class="menu_usi" (click)="select('Entrainements')">
-        <a class="lien_menu"><span class="text_menu_usi">Entrainements</span></a>
-      </div>
-      <div class="menu_usi" (click)="select('Inscriptions')">
-        <a class="lien_menu"><span class="text_menu_usi">Inscriptions</span></a>
-      </div>
-      <div class="menu_usi" (click)="select('Infos')">
-        <a class="lien_menu"><span class="text_menu_usi">Club et contacts</span></a>
-      </div> 
-      <div *ngIf="!(isLoggedIn$ | async)" class="menu_usi" >
-        <a (click)="GoToLogin()" class="lien_menu"><span class="text_menu_usi">Se Connecter</span></a>
-      </div>
-      <div *ngIf="(isLoggedIn$ | async)" class="menu_usi" >
-        <a (click)="GoToMI()" class="lien_menu" ><span class="text_menu_usi">Menu inscription</span></a>
-      </div>
-      <div *ngIf="(isLoggedIn$ | async)" class="menu_usi" >
-        <a (click)="Logout()" class="lien_menu" ><span class="text_menu_usi">Se déconnecter</span></a>
-      </div>
+    <div class="menu_top">     
+     
+      <button class="menu_usi" mat-button color="primary" (click)="select('EcoleRoller')">Ecole de Roller</button>
+      <button class="menu_usi" mat-button color="primary" (click)="select('RollerSoccer')">Roller Soccer</button>
+      <button class="menu_usi" mat-button color="primary" (click)="select('Derby')">Roller Derby</button>
+      <button class="menu_usi" mat-button color="primary" (click)="select('RollBall')">RollBall</button>
+      <button class="menu_usi" mat-button color="primary" (click)="select('Entraînements')">Entraînements</button>
+      <button class="menu_usi" mat-button color="primary" (click)="select('Inscriptions')">Inscriptions</button>     
+      <button class="menu_usi" mat-button color="primary" (click)="select('Contact')">Club et contacts</button>
+      <button *ngIf="(ridersService.isLoggedIn$ | async) === false" class="menu_usi" mat-button color="primary" (click)="GoToLogin()">Se Connecter</button>
+      <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  class="menu_usi" mat-button color="primary" (click)="GoToMI()">Menu inscription</button>
+      <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  class="menu_usi" mat-button color="primary" (click)="Logout()">Se déconnecter</button>
+     
     </div>
     <div class="menu_top_mobile">
       <!-- Menu mobile si nécessaire -->

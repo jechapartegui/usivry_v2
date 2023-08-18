@@ -10,8 +10,8 @@ import { RidersService } from 'src/services/riders.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password: string = '';
+  username: string = 'jechapartegui@gmail.com';
+  password: string = 'ivry';
   stayLoggedIn: boolean = false;
 
   constructor(private ridersService: RidersService, private router: Router) {}

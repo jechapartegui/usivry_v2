@@ -137,10 +137,10 @@ export class GererSeanceComponent implements OnInit {
     let errorservice = ErrorService
     let act ="Ajouter un cours";
     if (seance) {
-      this.seancesservice.Delete(seance.id).then((result) => {
+      this.seancesservice.Delete(seance.seance_id).then((result) => {
         if (result) {
           // Suppression réussie en base, supprimer l'élément correspondant de la liste
-          this.listeSeances = this.listeSeances.filter(c => c.id !== seance.id);
+          this.listeSeances = this.listeSeances.filter(c => c.seance_id !== seance.seance_id);
       
           // Afficher un message de confirmation à l'utilisateur
           errorservice.instance.OKMessage(act);
@@ -164,9 +164,9 @@ export class GererSeanceComponent implements OnInit {
     let errorservice = ErrorService
     let act ="Ajouter un séance";
     if (this.editSeance) {
-      if(this.editSeance.id==0){
+      if(this.editSeance.seance_id==0){
         this.seancesservice.Add(this.editSeance).then((loe) =>{
-          this.editSeance.id = loe;
+          this.editSeance.seance_id = loe;
           errorservice.instance.OKMessage(act);
           this.listeSeances.push(this.editSeance);
           this.annulerEdition();
@@ -180,7 +180,7 @@ export class GererSeanceComponent implements OnInit {
         act ="Mettre à jour une séance"; 
         if (loe) {
         errorservice.instance.OKMessage(act);
-        const indexToUpdate = this.listeSeances.findIndex(Seance => Seance.id === this.editSeance.id);
+        const indexToUpdate = this.listeSeances.findIndex(Seance => Seance.seance_id === this.editSeance.seance_id);
 
         if (indexToUpdate !== -1) {
           // Remplacer l'élément à l'index trouvé par la nouvelle valeur

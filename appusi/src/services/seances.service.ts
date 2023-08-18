@@ -4,6 +4,7 @@ import { GlobalService } from './global.services';
 import { environment } from 'src/environments/environment.prod';
 import { Seance } from 'src/class/seance';
 import { Inscription } from 'src/class/inscription';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -111,7 +112,7 @@ export class SeancesService {
 
   
 
-  public inscrire(inscription:Inscription): Promise<Inscription>{
+  public inscrire(inscription:Inscription): Promise<number>{
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
@@ -120,17 +121,18 @@ export class SeancesService {
     };
 
     return this.global.POST(this.url, body)
-      .then((response: number) => {
-        inscription.id = response;
-        return inscription;
+      .then((response: number) => {       
+       return response;
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 
-  public desinscrire(inscription:Inscription): Promise<Inscription>{
+  public desinscrire(inscription:Inscription): Promise<boolean>{
+    let act = "Se désinscrire de la séance";
+    let errorservice = ErrorService;
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
@@ -139,13 +141,12 @@ export class SeancesService {
     };
 
     return this.global.POST(this.url, body)
-      .then((response: number) => {
-        inscription.id = response;
-        return inscription;
+      .then((response: boolean) => {       
+       return response;
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 
