@@ -1,11 +1,13 @@
 // import-riders.component.ts
 
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'; // Bibliothèque pour lire les fichiers Excel
 import { Niveau, Rider } from '../../class/riders';
 import { StaticClass } from '../global';
 import { RidersService } from 'src/services/riders.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from 'src/services/error.service';
 
 
 @Component({
@@ -13,11 +15,108 @@ import { Router } from '@angular/router';
   templateUrl: './gerer-riders.html',
   styleUrls: ['./gerer-riders.css']
 })
-export class GererRidersComponent {
+export class GererRidersComponent implements OnInit {
+  @Input() id:number;
   fileData: any[];
   g:StaticClass = new StaticClass();
   ridersList: Rider[] = [];
-  constructor( private _riderser: RidersService) {}
+  editMode = false;
+  editRider: Rider | null = null;
+  est_prof:boolean =false;
+  est_admin:boolean = false;
+
+  niveauxRequis: Niveau[] = Object.values(Niveau);
+  constructor( private _riderser: RidersService, private router:Router) {}
+
+  ngOnInit(): void {
+    if(RidersService.IsLoggedIn === false ){
+      this.router.navigate(['/login']);
+    return;
+    } 
+    this.est_prof =RidersService.Est_Prof ;
+    this.est_admin=RidersService.Est_Prof ;
+    
+      this._riderser.GetAllRiders().then((list)=>{
+        this.ridersList = list;
+      }).catch((err:HttpErrorResponse)=>{
+        let errorservice = ErrorService
+        errorservice.instance.CreateError("récupérer les riders",  err.statusText);
+      })
+     
+  }
+
+ 
+
+  editerRiders(rider: Rider): void {
+    this.editRider = { ...rider };
+    this.editMode = true;
+  }
+
+  supprimerRiders(rider: Rider): void {
+    let errorservice = ErrorService
+    let act ="Supprimer un rider";
+    if (rider) {
+      this._riderser.Delete(rider.id).then((result) => {
+        if (result) {
+          // Suppression réussie en base, supprimer l'élément correspondant de la liste
+          this.ridersList = this.ridersList.filter(c => c.id !== r.id);
+      
+          // Afficher un message de confirmation à l'utilisateur
+          errorservice.instance.OKMessage(act);
+        } else {
+          errorservice.instance.CreateError(act,"erreur lors de la suppression");
+        }
+      }).catch((elkerreur:HttpErrorResponse)=>{
+          errorservice.instance.CreateError(act,  elkerreur.statusText);
+        })
+      }
+  }
+
+  creerRiders(): void {
+    this.editRider = new Rider(0,"","",new Date(),false, Niveau.Débutant, "", "ivry","","","","",0,0,false,false, null,null, null);
+    this.editMode = true;
+  }
+
+  soumettreRiders(): void {
+    let errorservice = ErrorService
+    let act ="Ajouter un rider";
+    if (this.editRider) {
+      if(this.editRider.id==0){
+        this._riderser.Add(this.editRider).then((loe) =>{
+          this.editRider.id = loe;
+          errorservice.instance.OKMessage(act);
+          this.ridersList.push(this.editRider);
+          this.annulerEdition();
+        }).catch((elkerreur:HttpErrorResponse)=>{
+          errorservice.instance.CreateError(act, elkerreur.statusText);
+        })
+      }
+     else {
+      this._riderser.Update(this.editRider).then((loe) =>{
+        
+        act ="Mettre à jour un rider"; 
+        if (loe) {
+        errorservice.instance.OKMessage(act);
+        const indexToUpdate = this.ridersList.findIndex(rider => rider.id === this.editRider.id);
+
+        if (indexToUpdate !== -1) {
+          // Remplacer l'élément à l'index trouvé par la nouvelle valeur
+          this.ridersList[indexToUpdate] = this.editRider;
+        }
+        this.annulerEdition();} else {
+          errorservice.instance.CreateError(act,  "erreur lors de la mise à jour")
+        }
+      }).catch((elkerreur:HttpErrorResponse)=>{
+        errorservice.instance.CreateError(act,  elkerreur.statusText);
+      })
+    }
+    this.editMode = false;}
+  }
+
+  annulerEdition(): void {
+    this.editMode = false;
+    this.editRider = null;
+  }
   onFileChange(event: any) {
     const file = event.target.files[0];
     const fileReader = new FileReader();

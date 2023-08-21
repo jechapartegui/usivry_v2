@@ -1,7 +1,118 @@
 <!-- import-riders.component.html -->
 
-<div>
+<div *ngIf="est_admin">
+  <h2>Importer les riders</h2>
     <input type="file" (change)="onFileChange($event)" />
     <button (click)="importData()">Importer les riders</button>
+
   </div>
+  <!-- Liste des cours -->
+<div *ngIf="!editMode">
+  <button class="menu_usi"  (click)="creerRiders()">Créer</button>
+  <h2 >Liste des riders</h2>
+  <table *ngIf="ridersList && ridersList.length> 0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Inscrit</th>
+        <th>Niveau</th>
+        <th>Age</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rider of ridersList">
+        <td>{{ rider.nom }}</td>
+        <td>{{ rider.prenom }}</td>
+        <td>{{ rider.inscrit }}</td>
+        <td>{{ rider.niveau }}</td>
+        <td>{{ calculerAge(rider.date_naissance)}}</td>      
+        <td>
+          <button class="menu_usi" (click)="editerRiders(rider)">Éditer</button>
+          <button class="menu_usi" (click)="supprimerRiders(rider)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!ridersList || ridersList.length ==0">Pas de riders disponible</p>
+</div>
+
+<!-- Formulaire d'édition/création de cours -->
+<!-- Formulaire d'édition/création de cours -->
+<div *ngIf="editMode">
+<div class="col-12 col-md-6" style="margin: 5px;">
+  <h2 class="mat-h2">{{ editRider.id==0 ? "Créer" : "Editer" }} un cours</h2>
+ <div class="form-group">
+  <label for="nom_rider">Nom du Rider</label>
+  <input class="form-control" id="nom_rider" type="text" [(ngModel)]="editRider.nom" placeholder="Nom du Rider">
+  </div>
+  <div class="form-group">
+    <label for="prenom_rider">Prénom du Rider</label>
+    <input class="form-control" id="prenom_rider" type="text" [(ngModel)]="editRider.prenom" placeholder="Prénom du Rider">
+    </div>
+  <div class="form-group">
+    <label for="jour_semaine">Jour de la semaine :</label>
+    <select class="form-control" id="jour_semaine"  [(ngModel)]="editerRiders.jour_semaine" placeholder="Jour de la semaine">
+      <option value="lundi">Lundi</option>
+      <option value="mardi">Mardi</option>
+      <option value="mercredi">Mercredi</option>
+      <option value="jeudi">Jeudi</option>
+      <option value="vendredi">Vendredi</option>
+      <option value="samedi">Samedi</option>
+      <option value="dimanche">Dimanche</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="date_naissance">Date de naissance :</label>
+    <input class="form-control" id="date_naissance" matInput type="date"  [(ngModel)]="editRider.date_naissance">
+  </div>
+  <div class="form-group">
+    <label for="duree_cours">Durée du cours :</label> 
+    <input class="form-control" matInput type="number" id="duree_cours" [(ngModel)]="editCours.duree" placeholder="Durée (en minutes)">
+  </div>
+  <div class="form-group">
+    <label for="resp_cours">Responsable du cours :</label>
+    <select id="resp_cours" class="form-control"  [(ngModel)]="editCours.prof_principal_id" placeholder="Professeur Principal">
+      <!-- Options pour les professeurs -->
+      <ng-container *ngFor="let prof of listeprof">
+          <option [value]="prof.key">{{prof.value}}</option>
+      </ng-container>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="lieu_cours">Lieu du cours :</label>
+    <select id="lieu_cours" class="form-control" [(ngModel)]="editCours.lieu_id" placeholder="Lieu du cours">
+      <!-- Options pour les professeurs -->
+      <ng-container *ngFor="let lieu of listelieu">
+        <option [value]="lieu.key">{{lieu.value}}</option>
+    </ng-container>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="age_minimum">Age minimum :</label> 
+    <input class="form-control" matInput type="number" id="age_minimum" [(ngModel)]="editCours.age_requis" placeholder="Age requis">
+  </div>
+  <div class="form-group">
+    <label for="niveau_requis">Niveau :</label>
+    <select id="niveau_requis" class="form-control" [(ngModel)]="editRider.niveau" placeholder="Niveau">
+      <!-- Options pour les professeurs -->
+      <ng-container *ngFor="let niveau of niveauxRequis">
+        <option [value]="niveau">{{niveau}}</option>
+    </ng-container>
+    </select>
+  </div>
+<div class="p-3 m-0 ">   <button class="btn btn-outline-success btn-lg m-3" mat-raised-button (click)="soumettreRiders()">
+{{ editRider.id==0 ? "Créer" : "Mettre à jour"  }}
+</button>
+<button class="btn btn-outline-danger btn-lg m-3" mat-raised-button (click)="annulerEdition()">Annuler</button>
+
+</div>
+
+
+</div>
+</div>
+ 
+
+
   

@@ -75,7 +75,8 @@ export class MenuInscriptionComponent implements OnInit {
     });
   }
 
-  VoirSession(seance: Seance) {
+  VoirSession(seance: Seance){
+    this.router.navigate(['/ma-seance/' + seance.seance_id]);
 
   }
 

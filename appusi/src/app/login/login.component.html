@@ -2,13 +2,13 @@
   <mat-card-title>Connexion</mat-card-title>
 <mat-card-content>
 <div >
-  <div>
+  <div class="form-group">
     <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" name="username" [(ngModel)]="username" required>
+    <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required>
   </div>
   <div>
     <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="password" [(ngModel)]="password" required>
+    <input class="form-control"  type="password" id="password" name="password" [(ngModel)]="password" required>
   </div>
   <div style="margin-bottom: 15px;">
     <label  for="toggle-switch">Resté connecté :</label>
@@ -17,7 +17,7 @@
       <label class="toggle-switch-label" for="toggle"></label>
     </div>
   </div>
-  <button class="menu_usi" type="submit" (click)="Login()">Connexion</button>
+  <button class="btn btn-outline-success" type="submit" (click)="Login()">Connexion</button>
 </div>
 
 </mat-card-content>

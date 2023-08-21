@@ -134,16 +134,6 @@ select[multiple] {
   height: auto;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 220px;
-  padding: 10px;
-  margin-left: 3px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
 
 /* Styles pour les cases à cocher */
 input[type="checkbox"] {
@@ -240,4 +230,10 @@ label.checkbox-label {
   border-color: #0C548F;
   background-color: #D1ECF1;
   color: #0C548F
+}
+
+.div_flex{
+  display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
 }
