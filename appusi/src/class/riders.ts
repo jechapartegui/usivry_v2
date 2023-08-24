@@ -19,6 +19,7 @@ export class Rider {
       public essai_restant: number = 0,
       public est_prof: boolean =false,
       public est_admin: boolean =false,
+      public est_inscrit:boolean=true,
       public inscriptions: InscriptionSeance[]=[],
       public seances: Seance[]=[],
       public seances_prof: Seance[]=[]

@@ -36,7 +36,7 @@ export class GererRidersComponent implements OnInit {
     this.est_prof =RidersService.Est_Prof ;
     this.est_admin=RidersService.Est_Prof ;
     
-      this._riderser.GetAllRiders().then((list)=>{
+      this._riderser.GetAllThisSeason().then((list)=>{
         this.ridersList = list;
       }).catch((err:HttpErrorResponse)=>{
         let errorservice = ErrorService
@@ -51,15 +51,30 @@ export class GererRidersComponent implements OnInit {
     this.editRider = { ...rider };
     this.editMode = true;
   }
+  
+  calculateAge(dateNaissance: Date): number {
+    const today = new Date();
+    const birthDate = new Date(dateNaissance);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
 
   supprimerRiders(rider: Rider): void {
+    const isConfirmed = window.confirm('Êtes-vous sûr de vouloir supprimer ?');
+
+    if (isConfirmed) {
+
     let errorservice = ErrorService
     let act ="Supprimer un rider";
     if (rider) {
       this._riderser.Delete(rider.id).then((result) => {
         if (result) {
           // Suppression réussie en base, supprimer l'élément correspondant de la liste
-          this.ridersList = this.ridersList.filter(c => c.id !== r.id);
+          this.ridersList = this.ridersList.filter(c => c.id !== rider.id);
       
           // Afficher un message de confirmation à l'utilisateur
           errorservice.instance.OKMessage(act);
@@ -70,10 +85,11 @@ export class GererRidersComponent implements OnInit {
           errorservice.instance.CreateError(act,  elkerreur.statusText);
         })
       }
+    }
   }
 
   creerRiders(): void {
-    this.editRider = new Rider(0,"","",new Date(),false, Niveau.Débutant, "", "ivry","","","","",0,0,false,false, null,null, null);
+    this.editRider = new Rider(0,"","",new Date(),false, Niveau.Débutant, "", "ivry","","","","",0,0,false,false,false, null,null, null);
     this.editMode = true;
   }
 
@@ -82,8 +98,8 @@ export class GererRidersComponent implements OnInit {
     let act ="Ajouter un rider";
     if (this.editRider) {
       if(this.editRider.id==0){
-        this._riderser.Add(this.editRider).then((loe) =>{
-          this.editRider.id = loe;
+        this._riderser.AddWithInscriptionWithPassword(this.editRider).then((loe) =>{
+          this.editRider = loe;
           errorservice.instance.OKMessage(act);
           this.ridersList.push(this.editRider);
           this.annulerEdition();
@@ -151,6 +167,7 @@ export class GererRidersComponent implements OnInit {
         essai_restant: 0,
         est_prof: false,
         est_admin: false,
+        est_inscrit:true,
         id: 0,
         inscriptions: [],
         seances: [],

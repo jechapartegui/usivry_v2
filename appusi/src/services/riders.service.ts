@@ -120,6 +120,133 @@ export class RidersService {
       });
   }
 
+  public AddWithInscription(rider: Rider): Promise<Rider> {
+    const body = {
+      command: "add",
+      rider: rider,      
+      inscription_saison_encours : true,
+    }
+    return this.Add(body, rider);
+  }
+  
+  public AddNoInscription(rider: Rider): Promise<Rider> {
+    const body = {
+      command: "add",
+      with_psw:true,  
+      rider: rider
+    }
+    return this.Add(body, rider);
+  }
+  public AddWithInscriptionWithPassword(rider: Rider): Promise<Rider> {
+    const body = {
+      command: "add",
+      rider: rider,   
+      with_psw:true,   
+      inscription_saison_encours : true,
+    }
+    return this.Add(body, rider);
+  }
+  
+  public AddNoInscriptionWithPassword(rider: Rider): Promise<Rider> {
+    const body = {
+      command: "add",
+      rider: rider
+    }
+    return this.Add(body, rider);
+  }
+
+
+  public Add(body, rider): Promise<Rider> {
+    this.url = environment.usivry + 'usivry/rider_manage.php';
+
+    return this.global.POST(this.url, body)
+      .then((response: number) => {
+        rider.id =response
+        return rider;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public GetAllEver():Promise<Rider[]>{
+    const body = {
+      command: "get_all",
+      all: true
+    }
+    return this.GetAll(body);
+  }
+  public GetAllSearch(search:string):Promise<Rider[]>{
+    const body = {
+      command: "get_all",
+      all: true,
+      search: search
+    }
+    return this.GetAll(body);
+  }
+  public GetAllSearchActive(search:string):Promise<Rider[]>{
+    const body = {
+      command: "get_all",
+      search: search
+    }
+    return this.GetAll(body);
+  }
+  public GetAllThisSeason():Promise<Rider[]>{
+    const body = {
+      command: "get_all"
+    }
+    return this.GetAll(body);
+  }
+  public GetAllSeason(season_id :number):Promise<Rider[]>{
+    const body = {
+      command: "get_all",
+      season_id: season_id
+    }
+    return this.GetAll(body);
+  }
+  public GetAll(body): Promise<Rider[]> {
+    this.url = environment.usivry + 'usivry/rider_manage.php';
+
+    return this.global.POST(this.url, body)
+      .then((response: Rider[]) => {
+        
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Update(rider:Rider): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "update",
+      rider:rider
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Delete(id:number): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "delete",
+      id:id
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public GetProf(): Promise<KeyValuePair[]> {
     this.url = environment.usivry + "usivry/rider_manage.php";
     const body = {
