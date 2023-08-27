@@ -1,10 +1,39 @@
 <notif_jecha></notif_jecha>
-<div class="main_container">
-  <div class="main_header">
-    <!-- Votre en-tête ici -->
-    <div class="menu_top">     
-     
-      <button class="menu_usi" mat-button color="primary" (click)="select('EcoleRoller')">Ecole de Roller</button>
+<div class="container">
+  <nav class="navbar fixed-top bg-body-tertiary">
+    <div class="container-fluid"  style="align-items: center;
+    justify-content: center;">
+      <div class="btn-toolbar"  role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+          <a class="navbar-brand" href="#">
+            <img src=".\assets\usi.png" alt="Omnisports" width="68" height="30">
+          </a>
+          <a class="navbar-brand" href="#">
+            <img src=".\assets\rollersoccer.png" alt="RollerSoccer" width="30" height="30">
+          </a>
+          <a class="navbar-brand" href="#">
+            <img src=".\assets\roller.png" alt="Roller" width="36" height="30">
+          </a>
+          <a class="navbar-brand" href="#">
+            <img src=".\assets\cata.jpg" alt="Derby" width="30" height="30">
+          </a>
+        </div>     
+        <div class="btn-group me-2" role="group" aria-label="First group">
+          <button type="button" class="btn btn-ivry">Ecole de Roller</button>
+          <button type="button" class="btn btn-ivry">Roller Soccer</button>
+          <button type="button" class="btn btn-ivry">Roller Derby</button>
+          <button type="button" class="btn btn-ivry">RollBall</button>
+          <button type="button" class="btn btn-ivry">Entraînements</button>
+          <button type="button" class="btn btn-ivry">Inscriptions</button>
+          <button type="button" class="btn btn-ivry">Club et contacts</button>
+        </div>
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+          <button *ngIf="(ridersService.isLoggedIn$ | async) === false" type="button" class="btn btn-ivry" (click)="GoToLogin()">Se Connecter</button>
+          <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  type="button" class="btn btn-primary" (click)="GoToMI()">Menu inscription</button>
+          <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  type="button" class="btn btn-primary" (click)="Logout()">Se déconnecter</button>
+        </div>       
+      </div>
+      <!-- <button class="menu_usi" mat-button color="primary" (click)="select('EcoleRoller')">Ecole de Roller</button>
       <button class="menu_usi" mat-button color="primary" (click)="select('RollerSoccer')">Roller Soccer</button>
       <button class="menu_usi" mat-button color="primary" (click)="select('Derby')">Roller Derby</button>
       <button class="menu_usi" mat-button color="primary" (click)="select('RollBall')">RollBall</button>
@@ -13,19 +42,19 @@
       <button class="menu_usi" mat-button color="primary" (click)="select('Contact')">Club et contacts</button>
       <button *ngIf="(ridersService.isLoggedIn$ | async) === false" class="menu_usi" mat-button color="primary" (click)="GoToLogin()">Se Connecter</button>
       <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  class="menu_usi" mat-button color="primary" (click)="GoToMI()">Menu inscription</button>
-      <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  class="menu_usi" mat-button color="primary" (click)="Logout()">Se déconnecter</button>
+      <button *ngIf="(ridersService.isLoggedIn$ | async) === true"  class="menu_usi" mat-button color="primary" (click)="Logout()">Se déconnecter</button> -->
      
     </div>
     <div class="menu_top_mobile">
       <!-- Menu mobile si nécessaire -->
     </div>
-  </div>
+  </nav>
   <div class="main_body">
     <!-- Le contenu de vos sections -->
 
 
 
-
+<br/><br/><br/><br/>
 <router-outlet></router-outlet>  
 </div>
 </div>

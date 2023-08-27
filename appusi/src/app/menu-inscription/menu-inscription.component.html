@@ -1,8 +1,10 @@
+<div class="container">
 <div class="card-container">
-  <mat-card *ngFor="let rider of Riders" class="mat-card" (click)="onCardClick(rider)">
+  <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
     <div class="mat-card-header">
       <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
       <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
+      <span class="mat-card-subtitle" pl-1><button type="button"  class="btn btn-link" (click)="EditCompte(rider)">Mes informations</button></span>
     </div>
     <div class="mat-card-content">
       <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
@@ -200,4 +202,5 @@
 
     </div>
   </mat-card>
+</div>
 </div>

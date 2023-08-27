@@ -1,119 +1,216 @@
 <!-- import-riders.component.html -->
 <div class="container">
 
-<!-- Liste des cours -->
-<div class="row" *ngIf="!editMode">
-  <div class="col-12">
-    <div class="row">
-      <div class="col-8" *ngIf="est_admin">
-        <h2>Importer les riders</h2>
-        <div class="mb-3 row">
-          <label for="formFile col-3" class="form-label">Importer les riders</label>
-          <input class="form-control col-6" type="file" id="formFile" (change)="onFileChange($event)">
-          <button type="button col-3" class="btn btn-outline-success" (click)="importData()">Importer les riders</button>
+  <!-- Liste des cours -->
+  <div class="row" *ngIf="!editMode">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-8" *ngIf="est_admin">
+          <h2>Importer les riders</h2>
+          <div class="mb-3 row">
+            <label for="formFile col-3" class="form-label">Importer les riders</label>
+            <input class="form-control col-6" type="file" id="formFile" (change)="onFileChange($event)">
+            <button type="button col-3" class="btn btn-outline-success" (click)="importData()">Importer les
+              riders</button>
+          </div>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-outline-success" (click)="creerRiders()">Créer</button>
+
         </div>
       </div>
-      <div class="col-4">
-        <button type="button" class="btn btn-outline-success" (click)="creerRiders()">Créer</button>
+      <h2>Liste des riders</h2>
+      <table *ngIf="ridersList && ridersList.length> 0">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Inscrit</th>
+            <th>Niveau</th>
+            <th>Age</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rider of ridersList" style="cursor: pointer;" (click)="editerRiders(rider)">
+            <td>{{ rider.nom }}</td>
+            <td>{{ rider.prenom }}</td>
+            <td>{{ rider.est_inscrit }}</td>
+            <td>{{ rider.niveau }}</td>
+            <td>{{ calculateAge(rider.date_naissance)}}</td>
+            <td>
+              <button class="btn btn-outline-danger" (click)="supprimerRiders(rider)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="!ridersList || ridersList.length ==0">Pas de riders disponible</p>
+    </div>
+  </div>
+
+  <!-- Formulaire d'édition/création de cours -->
+  <!-- Formulaire d'édition/création de cours -->
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <button class="btn btn-outline-danger" mat-raised-button (click)="annulerEdition()">Retour au menu - annuler
+          les modifications</button>
+      </div>
+      <div> <button class="btn btn-outline-success" mat-raised-button (click)="soumettreRiders()">
+          {{ id==0 ? "Créer" : "Mettre à jour" }}
+        </button>
 
       </div>
     </div>
-    <h2>Liste des riders</h2>
-    <table *ngIf="ridersList && ridersList.length> 0">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Inscrit</th>
-          <th>Niveau</th>
-          <th>Age</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let rider of ridersList" style="cursor: pointer;"  (click)="editerRiders(rider)">
-          <td>{{ rider.nom }}</td>
-          <td>{{ rider.prenom }}</td>
-          <td>{{ rider.est_inscrit }}</td>
-          <td>{{ rider.niveau }}</td>
-          <td>{{ calculateAge(rider.date_naissance)}}</td>
-          <td>           
-            <button class="btn btn-outline-danger" (click)="supprimerRiders(rider)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p *ngIf="!ridersList || ridersList.length ==0">Pas de riders disponible</p>
+  </div>
+  <div class="row" *ngIf="editMode">
+    <div class="card col-md-6">
+      <div class="card-header">
+        Informations personnelles
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12" style="margin: 5px;">
+            <h2 class="mat-h2">{{ editRider.id==0 ? "Créer" : "Editer" }} un rider</h2>
+            <div class="form-group">
+              <label for="nom_rider">Nom du Rider</label>
+              <input class="form-control" id="nom_rider" type="text" [(ngModel)]="editRider.nom"
+                placeholder="Nom du Rider">
+            </div>
+            <div class="form-group">
+              <label for="prenom_rider">Prénom du Rider</label>
+              <input class="form-control" id="prenom_rider" type="text" [(ngModel)]="editRider.prenom"
+                placeholder="Prénom du Rider">
+            </div>
+
+            <div class="form-group">
+              <label for="date_naissance">Date de naissance :</label>
+              <input class="form-control" id="date_naissance" matInput type="date"
+                [(ngModel)]="editRider.date_naissance">
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+              <input type="radio" class="btn-check" name="btnradio-sexe" id="btnradio1-sexe"
+                [(ngModel)]="editRider.sexe" [value]="true" autocomplete="off">
+              <label class="btn btn-outline-primary" for="btnradio1-sexe">Homme</label>
+
+              <input type="radio" class="btn-check" name="btnradio-sexe" id="btnradio2-sexe"
+                [(ngModel)]="editRider.sexe" [value]="false" autocomplete="off">
+              <label class="btn btn-outline-primary" for="btnradio2-sexe">Femme</label>
+            </div>
+            <div class="form-group">
+              <label for="adresse">Adresse :</label>
+              <textarea class="form-control" id="adresse" [(ngModel)]="editRider.adresse" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="personne_prevenir">Personne à prévenir :</label>
+              <input class="form-control" matInput type="text" id="personne_prevenir"
+                [(ngModel)]="editRider.personne_prevenir">
+            </div>
+            <div class="form-group">
+              <label for="telephone_personne_prevenir">Téléphone personne à prévenir :</label>
+              <input class="form-control" matInput type="phone" id="telephone_personne_prevenir"
+                [(ngModel)]="editRider.telephone_personne_prevenir">
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  <div class="card col-md-6">
+    <div class="card-header">
+      Information du compte
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="email">Mail :</label>
+        <input class="form-control" matInput type="email" id="email" [(ngModel)]="editRider.email"
+          placeholder="Email du compte">
+      </div>
+      <div class="form-group">
+        <label for="mdp_actuel">Mot de passe actuel :</label>
+        <input class="form-control" matInput type="password" id="mdp_actuel" [(ngModel)]="mdp_actuel"
+          placeholder="Mot de passe actuel">
+      </div>
+      <div class="form-group">
+        <label for="new_mdp">Nouveau mot de passe :</label>
+        <input class="form-control" matInput type="password" id="new_mdp" [(ngModel)]="new_mdp"
+          placeholder="Nouveau mot de passe">
+      </div>
+      <div class="form-group">
+        <label for="new_mdp_confirm">Confirmer nouveau mot de passe</label>
+        <input class="form-control" matInput type="password" id="new_mdp_confirm" [(ngModel)]="new_mdp_confirm"
+          placeholder="Confirmer nouveau mot de passe">
+      </div>
+      <div class="row">
+        <p>Saisir mail et mot de passe</p>
+        <div> <button class="btn btn-outline-success" [disabled]="!editRider.email || !mdp_actuel"
+            (click)="ModifMail()">Modifier l'email du compte
+          </button>
+        </div>
+        <p>Saisir le mot de passe actuel et le mot de passe souhaité</p>
+        <div> <button class="btn btn-outline-success"
+            [disabled]="(new_mdp_confirm!= new_mdp) || !mdp_actuel" (click)="ModifMDP()">Modifier le mot de passe
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+<div class="row" *ngIf="editMode">
+  <div class="card col-md-6" *ngIf="est_admin || est_prof">
+    <div class="card-header">
+      Professeur
+    </div>
+    <div class="card-body">
 
-<!-- Formulaire d'édition/création de cours -->
-<!-- Formulaire d'édition/création de cours -->
-<div *ngIf="editMode">
-  <div class="col-12 col-md-6" style="margin: 5px;">
-    <h2 class="mat-h2">{{ editRider.id==0 ? "Créer" : "Editer" }} un cours</h2>
-    <div class="form-group">
-      <label for="nom_rider">Nom du Rider</label>
-      <input class="form-control" id="nom_rider" type="text" [(ngModel)]="editRider.nom" placeholder="Nom du Rider">
+      <div class="form-group">
+        <label for="niveau_requis">Niveau :</label>
+        <select id="niveau_requis" class="form-control" [(ngModel)]="editRider.niveau" placeholder="Niveau">
+          <!-- Options pour les professeurs -->
+          <ng-container *ngFor="let niveau of niveauxRequis">
+            <option [value]="niveau">{{niveau}}</option>
+          </ng-container>
+        </select>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="prenom_rider">Prénom du Rider</label>
-      <input class="form-control" id="prenom_rider" type="text" [(ngModel)]="editRider.prenom"
-        placeholder="Prénom du Rider">
-    </div>
-
-    <div class="form-group">
-      <label for="date_naissance">Date de naissance :</label>
-      <input class="form-control" id="date_naissance" matInput type="date" [(ngModel)]="editRider.date_naissance">
-    </div>
-    <div class="form-group">
-      <label for="email">Mail :</label>
-      <input class="form-control" matInput type="email" id="email" [(ngModel)]="editRider.email"
-        placeholder="Email du compte">
-    </div>
-    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-      <label class="btn btn-outline-primary" for="btnradio1">Homme</label>
-
-      <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-      <label class="btn btn-outline-primary" for="btnradio2">Femme</label>
-    </div>
-    <div class="form-group">
-      <label for="telephone">Téléphone :</label>
-      <input class="form-control" matInput type="phone" id="telephone" [(ngModel)]="editRider.telephone">
-    </div>
-    <div class="form-group">
-      <label for="personne_prevenir">Personne à prévenir :</label>
-      <input class="form-control" matInput type="text" id="personne_prevenir" [(ngModel)]="editRider.personne_prevenir">
-    </div>
-    <div class="form-group">
-      <label for="telephone_personne_prevenir">Téléphone personne à prévenir :</label>
-      <input class="form-control" matInput type="phone" id="telephone_personne_prevenir"
-        [(ngModel)]="editRider.telephone_personne_prevenir">
-    </div>
-
-    <div class="form-group">
-      <label for="niveau_requis">Niveau :</label>
-      <select id="niveau_requis" class="form-control" [(ngModel)]="editRider.niveau" placeholder="Niveau">
-        <!-- Options pour les professeurs -->
-        <ng-container *ngFor="let niveau of niveauxRequis">
-          <option [value]="niveau">{{niveau}}</option>
-        </ng-container>
-      </select>
-    </div>
-    <div class="p-3 m-0 "> <button class="btn btn-outline-success btn-lg m-3" mat-raised-button
-        (click)="soumettreRiders()">
-        {{ editRider.id==0 ? "Créer" : "Mettre à jour" }}
-      </button>
-      <button class="btn btn-outline-danger btn-lg m-3" mat-raised-button (click)="annulerEdition()">Annuler</button>
-
-    </div>
-
-
   </div>
-</div>
+  <div class="card col-md-6" *ngIf="est_admin">
+    <div class="card-header">
+      Administration
+    </div>
+    <div class="card-body">
+
+      <div class="form-group">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio-admin" id="btnradio1-admin"
+            [(ngModel)]="editRider.est_admin" [value]="true" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btnradio1-admin">Est admin</label>
+
+          <input type="radio" class="btn-check" name="btnradio-admin" id="btnradio2-admin"
+            [(ngModel)]="editRider.est_admin" [value]="false" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btnradio2-admin">Non admin</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio1-prof"
+            [(ngModel)]="editRider.est_prof" [value]="true" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btnradio1-prof">Est prof</label>
+
+          <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio2-prof"
+            [(ngModel)]="editRider.est_prof" [value]="false" autocomplete="off">
+          <label class="btn btn-outline-primary" for="btnradio2-prof">Non prof</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

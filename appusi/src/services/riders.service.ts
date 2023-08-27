@@ -231,6 +231,42 @@ export class RidersService {
         return Promise.reject(error);
       });
   }
+  public UpdateMail(compte:number, mail:string, password:string): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "update_mail",
+      compte:compte,
+      mail:mail,
+      password:password
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public UpdateMDP(email:string, mdp_actuel:string, new_mdp:string): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "update_password",
+      email:email,
+      mdp_actuel:mdp_actuel,
+      new_mdp:new_mdp
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public Delete(id:number): Promise<boolean> {
     this.url = environment.usivry + "usivry/rider_manage.php";
     const body = {

@@ -1,4 +1,25 @@
-/* Styles pour le formulaire */
+
+$accordion-color: var(--bs-danger-bg-subtle);
+.accordion {
+  background-color: $accordion-color;
+  // Autres styles personnalisés pour l'accordéon
+}
+.accordion-button{
+  background-color: $accordion-color;
+  &:not(.collapsed) {
+    background-color: $accordion-color;
+    font-weight: bold;
+  }
+}
+
+.text-bg-ivry {
+  /* Hérite des propriétés de la classe .btn de Bootstrap */
+  @extend .text-bg-danger !optional;
+  /* Ajoutez vos propres propriétés personnalisées ici */
+  background: #BB1919;
+  color: white;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -62,6 +83,15 @@ mat-form-field {
   height: 2px;
   background: #BB1919;
   transition: width 0.3s ease, left 0.3s ease;
+}
+
+/* Dans votre style.css */
+.btn-ivry {
+  /* Hérite des propriétés de la classe .btn de Bootstrap */
+  @extend .btn-danger !optional;
+  /* Ajoutez vos propres propriétés personnalisées ici */
+  background: #BB1919;
+  color: white;
 }
 
 .menu_usi:hover .text_menu_usi::after {

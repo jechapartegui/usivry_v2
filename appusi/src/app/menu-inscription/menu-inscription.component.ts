@@ -142,8 +142,8 @@ export class MenuInscriptionComponent implements OnInit {
     }
     return age;
   }
-  onCardClick(rider) {
-
+  EditCompte(rider) {
+    this.router.navigate(['/gerer-riders'], { queryParams: { id: rider.id } });
   }
 
 }

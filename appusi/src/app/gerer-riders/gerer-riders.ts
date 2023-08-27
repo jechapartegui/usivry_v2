@@ -5,9 +5,10 @@ import * as XLSX from 'xlsx'; // Bibliothèque pour lire les fichiers Excel
 import { Niveau, Rider } from '../../class/riders';
 import { StaticClass } from '../global';
 import { RidersService } from 'src/services/riders.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from 'src/services/error.service';
+import { notification } from '../custom-notification/custom-notification.component';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { ErrorService } from 'src/services/error.service';
   styleUrls: ['./gerer-riders.css']
 })
 export class GererRidersComponent implements OnInit {
-  @Input() id:number;
+  id:number =0;
+  situation: "MY_UPDATE" | "UPDATE" | "CREATE" | "ADD" | "LIST";
   fileData: any[];
   g:StaticClass = new StaticClass();
   ridersList: Rider[] = [];
@@ -24,27 +26,100 @@ export class GererRidersComponent implements OnInit {
   editRider: Rider | null = null;
   est_prof:boolean =false;
   est_admin:boolean = false;
+  mdp_actuel:string="";
+  new_mdp:string ="";
+  new_mdp_confirm="";
 
   niveauxRequis: Niveau[] = Object.values(Niveau);
-  constructor( private _riderser: RidersService, private router:Router) {}
+  constructor( private _riderser: RidersService, private router:Router,private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-    if(RidersService.IsLoggedIn === false ){
-      this.router.navigate(['/login']);
-    return;
-    } 
+  ngOnInit(): void { 
+    const errorService = ErrorService.instance;
+    let o:notification;
     this.est_prof =RidersService.Est_Prof ;
-    this.est_admin=RidersService.Est_Prof ;
-    
+    this.est_admin=RidersService.Est_Admin ;
+    this.route.queryParams.subscribe(params => {
+      if ('id' in params) {
+        this.id = params['id'];
+        this.situation = "MY_UPDATE";
+      }
+    });
+    if(RidersService.IsLoggedIn === false && this.id != -2 ){
+      this.router.navigate(['/login']);
+      return;
+    } else if(this.id == -2){
+      this.situation = "CREATE";
+      this.editMode = true;
+      this.editRider = new Rider(-2,"","",new Date(),false,Niveau.Débutant,"","ivry","","","","");
+      this.editRider.essai_restant = 2;
+    } else if(this.id>0){
+    //Afficher le rider :
+    //si rider dans la liste => on l'affiche sinon erreur
+    if (RidersService.Riders.find(x => x.id==this.id)) {
+      this.editMode = true;
+      this.editRider = RidersService.Riders.find(x => x.id==this.id);
+      if(this.situation== "MY_UPDATE"){
+        this.situation = "UPDATE";
+      }
+    } else {
+      this.router.navigate(['/menu-inscription']);
+    }  
+  } else if(this.id == 0){
+    if(!this.est_admin){
+      this.router.navigate(['/menu-inscription']);
+    } else {
+      this.editMode = false;
+      this.situation = "LIST";
       this._riderser.GetAllThisSeason().then((list)=>{
         this.ridersList = list;
       }).catch((err:HttpErrorResponse)=>{
-        let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les riders",  err.statusText);
+        errorService.CreateError("récupérer les riders",  err.statusText);
+        errorService.emitChange(o);
       })
+    }
+  } else if (this.id == -1) {
+  this.editMode = true;
+  this.editRider = new Rider(-1,"","",new Date(),false,Niveau.Débutant,"","ivry","","","","");
+  this.situation = "ADD";
+     
+    }
+      
      
   }
 
+  ModifMail(){
+    const errorService = ErrorService.instance;
+    let o:notification;
+    this._riderser.UpdateMail(this.editRider.compte, this.editRider.email, this.mdp_actuel).then((boooo)=>{
+    if(boooo){
+     o=  errorService.OKMessage("Modification de l'émail");
+     errorService.emitChange(o);
+    } else {
+      o= errorService.CreateError("Modification de l'émail",  "erreur inconnue");
+      errorService.emitChange(o);
+    }
+    }).catch((err:HttpErrorResponse)=>{
+      o=  errorService.CreateError("Modification de l'émail",  err.statusText);
+      errorService.emitChange(o);
+    })
+  }
+
+  ModifMDP(){
+    const errorService = ErrorService.instance;
+    let o:notification;
+    this._riderser.UpdateMDP(this.editRider.email, this.mdp_actuel, this.new_mdp).then((boooo)=>{
+    if(boooo){
+     o= errorService.OKMessage("Modification du mot de passe");
+     errorService.emitChange(o);
+    } else {
+      o= errorService.CreateError("Modification du mot de passe",  "erreur inconnue");
+      errorService.emitChange(o);
+    }
+    }).catch((err:HttpErrorResponse)=>{
+      o= errorService.CreateError("Modification du mot de passe",  err.statusText);
+      errorService.emitChange(o);
+    })
+  }
  
 
   editerRiders(rider: Rider): void {
@@ -132,6 +207,22 @@ export class GererRidersComponent implements OnInit {
   annulerEdition(): void {
     this.editMode = false;
     this.editRider = null;
+    switch(this.situation){
+      case "ADD" :
+        this.router.navigate(['/menu-inscription']);
+      break;
+      case "CREATE":
+        this.router.navigate(['/default']);
+        break;
+        case "LIST":
+          break;
+          case "MY_UPDATE" :
+            this.router.navigate(['/menu-inscription']);
+          break;
+          case "UPDATE":
+        this.situation = "LIST";
+          break
+    }
   }
   onFileChange(event: any) {
     const file = event.target.files[0];

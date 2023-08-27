@@ -59,7 +59,7 @@ export class NotifJechaComponent implements OnInit {
     // console.log("pauseTimer");
   }
   display_message(message: any) {
-    console.log("display_message");
+    console.log("display_message"); 
     console.log(message)
   }
   display_notification(item: notification) {

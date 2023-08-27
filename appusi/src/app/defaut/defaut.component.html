@@ -1,2 +1,368 @@
-<p>defaut works!</p><button routerLink="/import-riders">Aller vers Import Riders</button>
-<a routerLink="/login">Se connecter</a>
+<div class="row" id="Ecole" #Ecole>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Ecole de Roller</div>
+            <div class="card-body">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="..." class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Ecole de Roller</h5>
+                            <p class="card-text">En fondant le club en 2016, l'objectif était aussi de permettre à tous
+                                de pratiquer le roller à
+                                Ivry-sur-Seine. En effet, il y avait une demande importante que ce soit pour les jeunes,
+                                mais aussi pour
+                                les
+                                parents ou les adultes au sens large.<br>
+                                Nous avons fait le choix d'accepter tout le monde : des petits / des grands, tant que
+                                tout le monde
+                                s'amuse
+                                c'est l'essentiel. Nous proposerons donc des cours cette année avec des professeurs
+                                diplômés et
+                                compétents
+                                pour vous aider à débuter ou à progresser.<br>
+                                Nous acceptons tous les niveaux, nos groupes seront faits pour que chacun puisse
+                                s'épanouir dans la
+                                pratique
+                                du Roller.
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="RollerSoccer" #RollerSoccer>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Roller Soccer</div>
+            <div class="card-body">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <iframe class="img_content" src="https://www.youtube.com/embed/8DoFfade_r8"
+                            title="finale de la coupe du monde de Roller Soccer 2019 (Pontault-Combault VS Holland)"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Roller Soccer</h5>
+                            Discipline historique du club, le Roller Soccer est ce qui a fédéré la bande d'ami à
+                            l'origine de l'US
+                            Ivry
+                            Roller. <br>Qu'est ce que c'est ? Tout simplement du football mais avec des rollers, et non
+                            c'est pas si
+                            casse-gueule !<br>
+                            Ce sport se pratique à 5 contre 5 sur un terrain de type Hockey (ou Futsal avec
+                            balustrades), le but ne
+                            fait
+                            qu'un metre de haut (pour 3 de la large), aucun joueur ne pouvant toucher la balle à la
+                            main, même celui
+                            positionné en gardien. Au final de la vitesse, du fun et un sport accessible aux plus jeunes
+                            dès 8
+                            ans.<br>
+                            L'équipe
+                            sénior participe au plus grandes compétitions mondiales en étant régulièrement dans les
+                            meilleures.
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="RollerDerby" #RollerDerby>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Roller Derby</div>
+            <div class="card-body">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="../assets/Derby.jpg" class="img_content">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Roller Derby</h5>
+                            Le Roller Derby est un sport de contact et d’équipe, inclusif et bienveillant. <br>
+                            Mêlant vitesse, agilité, force et stratégie tout le monde peut se lancer ! Nous avons une
+                            équipe
+                            féminine –
+                            Les Tamponneuses – et une équipe masculine – Les Calebrutes – toutes les deux participantes
+                            des
+                            championnat
+                            nationaux et pour adultes.<br>
+                            Pour l'année 2022/2023, le nom de la ligue va changer : CATA - Calebrutes And Tamponneuses
+                            Association.<br>
+                            Nos entraînements sont à Ivry et à Paris et nous jouons partout en France et même en Europe
+                            de temps en
+                            temps.
+                            Au roller Derby il n’y a que des victoires, car à la fin on finit ensemble au bar !
+                            <p class="card-text"><small class="text-body-secondary">Les sites
+                                    <ul>
+                                        <li><a href="https://calebrutes-united-league.fr/">Site de la ligue</a></li>
+                                        <li><a href="https://www.facebook.com/lestamponneuses">Facebook Tamponneuses</a>
+                                        </li>
+                                        <li><a href="https://www.facebook.com/LesCalebrutes">Facebook Calebrutes</a>
+                                        </li>
+                                    </ul>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="Entrainements" #Entrainements>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Entrainements</div>
+            <div class="card-body">
+                <div class="accordion" [attr.id]="'accordionExample-Menu'">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapseOne-Menu'" aria-expanded="true"
+                                [attr.aria-controls]="'collapseOne-Menu'">
+                                Les prochaines séances
+                            </button>
+                        </h2>
+                        <div [id]="'collapseOne-Menu'" class="accordion-collapse collapse show"
+                            [attr.data-bs-parent]="'#accordionExample-Menu'">
+                            <div class="accordion-body">
+                                <table *ngIf="seances && seances.length > 0 ">
+                                    <thead>
+                                        <th>Nom</th>
+                                        <th>Date</th>
+                                        <th>Heure de début</th>
+                                        <th>Durée du cours</th>
+                                        <th>Lieu</th>
+                                        <th>Professeur présent</th>
+                                        <th>Niveau requis</th>
+                                        <th>Age minimum</th>
+                                        <th></th>
+                                    </thead>
+                                    <tr *ngFor="let seance of seances">
+                                        <!-- Afficher les détails de l'inscription ici -->
+                                        <td>{{ seance.libelle }}</td>
+                                        <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ seance.heure_debut }}</td>
+                                        <td>{{ seance.duree_cours }} minutes</td>
+                                        <td>{{ seance.lieu }}</td>
+                                        <td>
+                                            <ul>
+                                                <li *ngFor="let prof of seance.professeurs">{{ prof.value }} </li>
+                                            </ul>
+                                        </td>
+                                        <td>{{ seance.niveau_requis }}</td>
+                                        <td>{{ seance.age_requis }}</td>
+                                        <!-- Bouton pour se désinscrire de la séance -->
+                                        <td>
+                                            <button type="button" class="btn btn-success"
+                                                (click)="Essayer(seance)">Réserver un essai</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p *ngIf="!seances || seances.length == 0">
+                                    Pas de séances disponibles en cours
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapseTwo-Menu'" aria-expanded="false"
+                                [attr.aria-controls]="'collapseTwo-Menu'">
+                                Les cours de l'US Ivry Roller
+                            </button>
+                        </h2>
+                        <div [id]="'collapseTwo-Menu'" class="accordion-collapse collapse"
+                            [attr.data-bs-parent]="'#accordionExample-Menu'">
+                            <div class="accordion-body">
+                                <table *ngIf="cours && cours.length > 0">
+                                    <thead>
+                                        <th>Nom</th>
+                                        <th>Date</th>
+                                        <th>Heure de début</th>
+                                        <th>Durée du cours</th>
+                                        <th>Lieu</th>
+                                        <th>Professeur responsable</th>
+                                    </thead>
+                                    <tr *ngFor="let cours_det of cours">
+                                        <!-- Afficher les détails de l'inscription ici -->
+                                        <td>{{ cours_det.nom }}</td>
+                                        <td>{{ cours_det.jour_semaine }}</td>
+                                        <td>{{ cours_det.heure }}</td>
+                                        <td>{{ cours_det.duree }} minutes</td>
+                                        <td>{{ cours_det.lieu_nom }}</td>
+                                        <td>{{ cours_det.prof_principal_nom }}</td>
+                                    </tr>
+                                </table>
+                                <p *ngIf="!cours || cours.length == 0">
+                                    Pas de cours
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapseThree-Menu'" aria-expanded="false"
+                                [attr.aria-controls]="'collapseThree-Menu'">
+                                Les lieux de pratique
+                            </button>
+                        </h2>
+                        <div [id]="'collapseThree-Menu'" class="accordion-collapse collapse"
+                            [attr.data-bs-parent]="'#accordionExample-Menu'">
+                            <div class="accordion-body">
+                                <h3>Gymnase Dulcie September</h3>
+                                <a href="https://goo.gl/maps/jyHZDQg23GqZGfM36">8 rue Jean-Jacques Rousseau<br>
+                                    94200 Ivry-sur-Seine, France</a><br>
+                                Bus 325 : Jules Vanzuppe (1 min)<br>
+                                Métro 14 : Bibliothèque François Mitterand (12min)<br>
+                                Tram 3a : Avenue de France (6 min)<br>
+                                L'entrée ne se fait pas par l'école<br>
+                                <br>
+                                <h3>Halle Gosnat</h3>
+                                <a href="https://goo.gl/maps/H2ZHwpSgnS9yyaDK7">30 rue Amédée Huon<br>
+                                    94200 Ivry-sur-Seine, France</a><br>
+                                Bus 132 : Fort d'Ivry (1 min)<br>
+                                Métro 7 : Mairie d'Ivry (10 min)<br>
+                                <br>
+                                <h3>Stade Louis Braille</h3>
+                                <a href="https://goo.gl/maps/pE6DmMACyHrdph1n9">24 Rue Louis Braille <br>
+                                    75012 Paris, France</a><br>
+                                Bus 64 : Louis Braille (1 min)<br>
+                                Métro 6 : Daumesnil/Bel-Air (5 min)<br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="Inscriptions" #Inscriptions>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Inscription</div>
+            <div class="card-body">
+                <div class="row g-0">
+                   
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <div class="white_text_sous_section al_1">
+                                Les inscriptions se font toujours en ligne.<br>
+                                Voici le lien vers les inscriptions :
+                                <button type="button" class="btn btn-success btn-lg"
+                                    onclick="location.href='https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2022-2023/'">Inscriptions</button><br><br>
+                                Lien direct : <a
+                                    href="https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2022-2023/">https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2022-2023/</a>
+                                Les documents demandés :
+                                <ul>
+                                    <li>Certificat médiacal ou <a href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS
+                                            sports</a></li>
+                                    <li>Photo d'identité récente</li>
+                                    <li>Remplir le formulaire d'inscription</li>
+                                    <li>S'acquiter de la cotisation de 150 € (voir réduction à coté)</li>
+                                </ul>
+                            </div>
+                            <div class="white_text_sous_section al_2">
+                                <h3>Liste des codes de réduction applicables lors de l'inscription</h3>
+                                <ul>
+                                    <li>REDUC2 => Si vous réalisez deux adhésions</li>
+                                    <li>REDUC3 => Si vous réalisez trois adhésions</li>
+                                    <li>REDUC4 => Si vous réalisez quatre adhésions</li>
+                                    <li>REDUC5 => Si vous réalisez cinq adhésions</li>
+                                    <li>REDUC6 => Si vous réalisez six adhésions</li>
+                                    <li>USIADUL => Si vous avez adhéré dans une autre section de l'USI</li>
+                                    <li>USIENFANT => Si votre enfant a adhéré dans une autre section de l'USI</li>
+                                    <li>PASSSPORT => Si vous avez reçus le courrier attestant la réduction (A fournir lors de
+                                        l'entrainement)
+                                    </li>
+                                    <li>TOUSENCLUB => Si vous êtes bénéficiaire du RSA, étudiants non boursiers ou demandeur
+                                        d'emploi
+                                        (Justificatif à fournir)</li>
+                                </ul>
+                                Si vous êtes dans le cas d'un cumul de code, veuillez nous contacter pour que l'on puisse s'en
+                                occuper.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="row" id="Infos" #Infos>
+    <div class="col-12">
+        <div class="card mb-3">
+            <div class="card-header text-bg-ivry ">Club et contacts</div>
+            <div class="card-body">
+                <div class="row g-0">
+                   
+                    <div class="col-md-12">
+                        <div class="card-body">
+                            <div class="red_img_sous_section">
+                                <h3>US Ivry Roller</h3>
+                                69 Avenue Danielle Casanova
+                                94200 Ivry-sur-Seine, France
+                                Le club
+                                <div><span class="underline">@ : </span><a
+                                        href="mailto:usivry.roller@gmail.com">usivry.roller@gmail.com</a>
+                                </div>
+                                <h3>RollBall / Roller Soccer </h3>(J-E Chapartegui)
+                                <div><span class="underline">@ : </span><a
+                                        href="mailto:jechapartegui@gmail.com">jechapartegui@gmail.com</a>
+                                </div>
+                                <div><span class="underline">T :</span>+ 33 6 69 40 37 38</div>
+                                <h3>Ecole de Roller / Derby</h3> (Matthieu Thiellieux)
+                                <div><span class="underline">@ : </span><a
+                                        href="mailto:matthieu.thielleux@laposte.net">matthieu.thielleux@laposte.net</a></div>
+                                <div><span class="underline">T :</span>+ 33 6 64 17 93 19</div>
+                            </div>
+                            <div class="red_text_sous_section">
+                                Le premier cours de roller au sein de l'US Ivry Roller a été réalisé en Septembre 2017 à la
+                                Halle
+                                Gosnat,
+                                mais l'histoire n'a pas tout à fait commencé là.<br>
+                                Le groupe "historique" pratique le Roller Soccer depuis 2009 (au sein notamment de l'historique
+                                Paris Roller
+                                Foot) et malgré une bonne dynamique et de bons résultats, l'équipe a voulu monter un projet plus
+                                global
+                                autour du Roller. Former les nouvelles générations, avoir une approche sports collectifs dans un
+                                sport
+                                individuel, telles étaient les valeurs que nous voulions transmettre.<br>
+                                C'est pourquoi au Printemps 2016 nous avons contacté l'US Ivry Omnisport pour nous établir dans
+                                cette ville
+                                où certains habitaient déjà, et nous avons été acceuilli à bras ouverts. <br>
+                                Depuis 5 ans, nous proposons des cours de roller aux plus jeunes, avec toujours plein de
+                                bienveillance, en
+                                apportant notre "touche"... L'an dernier, nous avons intégré une équipe de Roller Derby, car ca
+                                correspond
+                                bien aux valeurs du club, cela permettra d'offrir une nouvelle discipline au club et surtout ils
+                                sont
+                                sympas.<br>
+                                Alors oui, nous faisons toujours du Roller Soccer, même du RollBall, mais nous voulons aussi
+                                vous
+                                proposer
+                                les différentes disciplines que proposent ce sport magnifique qu'est le Roller
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
