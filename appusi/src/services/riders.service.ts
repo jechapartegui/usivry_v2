@@ -75,6 +75,30 @@ export class RidersService {
       });
   }
 
+  public Logout():Promise<boolean>{
+    this.url = environment.usivry + 'usivry/logout.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: Rider[]) => {
+        RidersService.isLoggedIn = true;
+        this.updateLoggedInStatus(true);
+        RidersService.account = 0;
+        RidersService.email = "";
+        RidersService.Riders = [];
+        RidersService.Est_Admin =false;
+        RidersService.Est_Prof = false;
+        this.updateLoggedInStatus(false);
+        return true;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
+
   public GetRiders(): Promise<boolean> {
     this.url = environment.usivry + 'usivry/rider_manage.php';
     //  this.url = this.url + "login.php";

@@ -212,7 +212,7 @@ export class GererRidersComponent implements OnInit {
         this.router.navigate(['/menu-inscription']);
       break;
       case "CREATE":
-        this.router.navigate(['/default']);
+        this.router.navigate(['/defaut']);
         break;
         case "LIST":
           break;

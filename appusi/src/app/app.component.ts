@@ -30,25 +30,26 @@ export class AppComponent implements OnInit {
    
   }
   loggedin = RidersService.IsLoggedIn;
-  //loggedin3 = this.US.currentUserLogin;
-  selected: string | null = null;
 
-  // Assurez-vous que la variable sectionElement est bien un élément HTML
-  select(sectionElement: string) {
-    console.log(RidersService.GetName);
-    console.log(RidersService.IsLoggedIn);
-    console.log(RidersService.isLoggedIn);
-    console.log(RidersService.ListeRiders);
-    console.log(RidersService.Riders);
-    console.log(RidersService.email);
-    console.log(RidersService.instance);
-  }
 
   GoToLogin(){
     this.router.navigate(['/login']);
   }
   Logout(){
-    this.router.navigate(['/']);
+    const errorService = ErrorService.instance;
+    this.ridersService.Logout().then((boo) =>{
+      if(boo){
+        let o = errorService.OKMessage("Déconnexion");
+        errorService.emitChange(o);
+      } else {
+        let o = errorService.CreateError("Déconnexion", "Erreur inconnue");
+        errorService.emitChange(o);
+      }
+    }).catch((error:Error)=>{
+      let o = errorService.CreateError("Déconnexion", error.message);
+      errorService.emitChange(o);
+    });
+    this.router.navigate(['/defaut']);
   }
   GoToMI(){
     this.router.navigate(['/menu-inscription']);

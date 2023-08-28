@@ -91,7 +91,7 @@ export class SeancesService {
           return Promise.reject('Une erreur s\'est produite lors de la connexion.');
         });
     }
-  public GetSeance(): Promise<boolean> {
+  public GetSeance(): Promise<Seance[]> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
@@ -102,7 +102,7 @@ export class SeancesService {
     return this.global.POST(this.url, body)
       .then((response: Seance[]) => {
         SeancesService.Seances = response;
-        return true;
+        return response;
       })
       .catch(error => {
         // Gestion de l'erreur

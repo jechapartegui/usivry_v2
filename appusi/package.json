@@ -8,7 +8,9 @@
     "build": "nx build",
     "build-dev": "nx build --configuration=development",
     "watch": "nx build --watch --configuration development",
+    "aot": "ng build --configuration=production --aot",
     "test": "nx test"
+
   },
   "private": true,
   "dependencies": {

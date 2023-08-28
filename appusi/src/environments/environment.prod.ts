@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  usivry: "/",
+  usivry: "http://usivryroller.fr/",
   password:'jecha266',
 };
