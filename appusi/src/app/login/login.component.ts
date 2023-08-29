@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Remplacez par le chemin vers votre service RidersService
 import { Rider } from 'src/class/riders';
+import { environment } from 'src/environments/environment.prod';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 
@@ -10,13 +11,15 @@ import { RidersService } from 'src/services/riders.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = 'jechapartegui@gmail.com';
-  password: string = 'ivry';
+  username: string = environment.defaultlogin;
+  password: string = environment.defaultpassword;
   stayLoggedIn: boolean = false;
 
   constructor(private ridersService: RidersService, private router: Router) {}
 
   ngOnInit(): void {
+    this.username = environment.defaultlogin;
+    this.password = environment.defaultpassword;
       if(RidersService.isLoggedIn == true){
         this.router.navigate(['/menu-inscription']);
       }

@@ -23,11 +23,12 @@ export class DefautComponent implements OnInit {
       this.seances = seance_res;
     })
   }
-  loggedin = RidersService.IsLoggedIn;
+  
 
   Essayer(seance:Seance){
-    if(this.loggedin){
-      
+    const loggedin = RidersService.IsLoggedIn;
+    if(loggedin){
+      this.router.navigate(['/menu-inscription']);
     } else {
       
     this.router.navigate(['/gerer-riders'], { queryParams: { id: -2 } });

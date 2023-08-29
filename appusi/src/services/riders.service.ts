@@ -83,8 +83,7 @@ export class RidersService {
 
     return this.global.POST(this.url, body)
       .then((response: Rider[]) => {
-        RidersService.isLoggedIn = true;
-        this.updateLoggedInStatus(true);
+        RidersService.isLoggedIn = false;
         RidersService.account = 0;
         RidersService.email = "";
         RidersService.Riders = [];
@@ -144,37 +143,37 @@ export class RidersService {
       });
   }
 
-  public AddWithInscription(rider: Rider): Promise<Rider> {
+  public Add_NoPassword_Inscription(rider: Rider, command:string): Promise<Rider> {
     const body = {
-      command: "add",
-      rider: rider,      
+      command: command,
+      rider: rider,    
+      with_psw:true,    
       inscription_saison_encours : true,
     }
     return this.Add(body, rider);
   }
   
-  public AddNoInscription(rider: Rider): Promise<Rider> {
+  public Add_Password_Inscription(rider: Rider, command:string): Promise<Rider> {
     const body = {
-      command: "add",
+      command: command,
+      rider: rider,
+      inscription_saison_encours : true
+    }
+    return this.Add(body, rider);
+  }
+  public Add_NoPassword_NoInscription(rider: Rider, command:string): Promise<Rider> {
+    const body = {
+      command: command,
       with_psw:true,  
       rider: rider
     }
     return this.Add(body, rider);
   }
-  public AddWithInscriptionWithPassword(rider: Rider): Promise<Rider> {
-    const body = {
-      command: "add",
-      rider: rider,   
-      with_psw:true,   
-      inscription_saison_encours : true,
-    }
-    return this.Add(body, rider);
-  }
   
-  public AddNoInscriptionWithPassword(rider: Rider): Promise<Rider> {
+  public Add_Password_NoInscription(rider: Rider, command:string): Promise<Rider> {
     const body = {
-      command: "add",
-      rider: rider
+      command: command,
+      rider: rider,
     }
     return this.Add(body, rider);
   }
@@ -204,6 +203,14 @@ export class RidersService {
     const body = {
       command: "get_all",
       all: true,
+      search: search
+    }
+    return this.GetAll(body);
+  }
+  public GetAllSearchSeason(search:string, season_id:number):Promise<Rider[]>{
+    const body = {
+      command: "get_all",
+      season_id: season_id,
       search: search
     }
     return this.GetAll(body);
@@ -245,6 +252,21 @@ export class RidersService {
     const body = {
       command: "update",
       rider:rider
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Inscrire(id:number): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "register",
+      id:id
     };
 
     return this.global.POST(this.url, body)

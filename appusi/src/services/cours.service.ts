@@ -114,4 +114,20 @@ public Add(cours:Cours): Promise<number> {
         return Promise.reject('Une erreur s\'est produite lors de la connexion.');
       });
   }
+
+  public GetSaison() : Promise<KeyValuePair[]>{
+    this.url = environment.usivry + "usivry/cours_manage.php";
+    const body = {
+      command: "get_seasons_light"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: KeyValuePair[]) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
 }

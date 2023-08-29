@@ -6,6 +6,9 @@ export const environment = {
   production: false,
   usivry: '/',
   password:'jecha266',
+  defaultlogin:'jechapartegui@gmail.com',
+  defaultpassword:'ivry',
+
 };
 
 /*

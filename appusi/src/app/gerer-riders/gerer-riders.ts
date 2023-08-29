@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from 'src/services/error.service';
 import { notification } from '../custom-notification/custom-notification.component';
+import { KeyValuePair } from 'src/class/keyvaluepair';
+import { CoursService } from 'src/services/cours.service';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -28,10 +31,16 @@ export class GererRidersComponent implements OnInit {
   est_admin:boolean = false;
   mdp_actuel:string="";
   new_mdp:string ="";
+  seasons:KeyValuePair[];
+  existing_account:boolean = false;
+  inscription_saison_encours = false;
+  libelle_mail:string = "Saisir le nouvel email";
+  season_id:number;
+  search_text:string;
   new_mdp_confirm="";
 
   niveauxRequis: Niveau[] = Object.values(Niveau);
-  constructor( private _riderser: RidersService, private router:Router,private route: ActivatedRoute) {}
+  constructor( private _riderser: RidersService, private coursser:CoursService, private router:Router,private route: ActivatedRoute) {}
 
   ngOnInit(): void { 
     const errorService = ErrorService.instance;
@@ -68,6 +77,9 @@ export class GererRidersComponent implements OnInit {
     if(!this.est_admin){
       this.router.navigate(['/menu-inscription']);
     } else {
+      this.coursser.GetSaison().then((list) =>{
+        this.seasons = list;
+      })
       this.editMode = false;
       this.situation = "LIST";
       this._riderser.GetAllThisSeason().then((list)=>{
@@ -126,6 +138,14 @@ export class GererRidersComponent implements OnInit {
     this.editRider = { ...rider };
     this.editMode = true;
   }
+
+  ChangerExistingAccount(){
+    if(this.existing_account){
+      this.libelle_mail = "Saisir le nouvel email";
+    } else {
+      this.libelle_mail = "Saisir le mail du compte";
+    }
+  }
   
   calculateAge(dateNaissance: Date): number {
     const today = new Date();
@@ -152,7 +172,8 @@ export class GererRidersComponent implements OnInit {
           this.ridersList = this.ridersList.filter(c => c.id !== rider.id);
       
           // Afficher un message de confirmation à l'utilisateur
-          errorservice.instance.OKMessage(act);
+          let o = errorservice.instance.OKMessage(act);
+
         } else {
           errorservice.instance.CreateError(act,"erreur lors de la suppression");
         }
@@ -164,22 +185,116 @@ export class GererRidersComponent implements OnInit {
   }
 
   creerRiders(): void {
-    this.editRider = new Rider(0,"","",new Date(),false, Niveau.Débutant, "", "ivry","","","","",0,0,false,false,false, null,null, null);
+    this.editRider = new Rider(-1,"","",new Date(),false, Niveau.Débutant, "", "ivry","","","","",0,0,false,false,false, null,null, null);
     this.editMode = true;
   }
 
   soumettreRiders(): void {
-    let errorservice = ErrorService
+    let errorservice = ErrorService.instance;
     let act ="Ajouter un rider";
     if (this.editRider) {
-      if(this.editRider.id==0){
-        this._riderser.AddWithInscriptionWithPassword(this.editRider).then((loe) =>{
+      if(this.editRider.id<0){
+        let body;
+        if(this.inscription_saison_encours){
+          if(this.existing_account){
+            if(this.editRider.id == -2 ){
+              body = {
+               command : "create",
+               password : environment.password,
+               rider:this.editRider,
+               inscription_saison_encours : true
+             } }
+             else {
+              body = {
+                command : "add",
+                password : environment.password,
+                rider:this.editRider,
+                inscription_saison_encours : true
+              } 
+             }
+          } else {
+            if(this.editRider.id == -2 ){
+              body = {
+               command : "create",
+               with_psw:true,
+               password : environment.password,
+               rider:this.editRider,
+               inscription_saison_encours : true
+             } }
+             else {
+              body = {
+                command : "add",
+                with_psw:true,
+                password : environment.password,
+                rider:this.editRider,
+                inscription_saison_encours : true
+              } 
+             }
+          }
+        } else {
+          if(this.existing_account){
+            if(this.editRider.id == -2 ){
+              body = {
+               command : "create",
+               rider:this.editRider,
+               password : environment.password
+             } }
+             else {
+              body = {
+                rider:this.editRider,
+                command : "add",
+                password : environment.password
+              } 
+             }
+          } else {
+            if(this.editRider.id == -2 ){
+              body = {
+               command : "create",
+               rider:this.editRider,
+               with_psw:true,
+               password : environment.password
+             } }
+             else {
+              body = {
+                command : "add",
+                rider:this.editRider,
+                with_psw:true,
+                password : environment.password
+              } 
+             }
+          }
+        }
+
+        this._riderser.Add(body, this.editRider).then((loe) =>{
+          var id = this.editRider.id;
           this.editRider = loe;
-          errorservice.instance.OKMessage(act);
+          let o =errorservice.OKMessage(act);
+          errorservice.emitChange(o);
           this.ridersList.push(this.editRider);
-          this.annulerEdition();
+          if(id == -2 ){
+            this.router.navigate(['/menu-inscription']);
+          } 
         }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.statusText);
+          let o =errorservice.CreateError(act, elkerreur.statusText);
+          errorservice.emitChange(o);
+        })
+      } 
+      else if(this.editRider.id<0 && !this.existing_account){
+        let command = "add";
+        if(this.editRider.id == -2 ){
+          command = "create";
+        }
+        this._riderser.Add_NoPassword_NoInscription(this.editRider,command).then((loe) =>{
+          this.editRider = loe;
+          let o =errorservice.OKMessage(act);
+          errorservice.emitChange(o);
+          this.ridersList.push(this.editRider);
+          if(this.editRider.id == -2 ){
+            this.router.navigate(['/menu-inscription']);
+          } 
+        }).catch((elkerreur:HttpErrorResponse)=>{
+          let o =errorservice.CreateError(act, elkerreur.statusText);
+          errorservice.emitChange(o);
         })
       }
      else {
@@ -187,7 +302,8 @@ export class GererRidersComponent implements OnInit {
         
         act ="Mettre à jour un rider"; 
         if (loe) {
-        errorservice.instance.OKMessage(act);
+        let o = errorservice.OKMessage(act);
+        errorservice.emitChange(o);
         const indexToUpdate = this.ridersList.findIndex(rider => rider.id === this.editRider.id);
 
         if (indexToUpdate !== -1) {
@@ -195,13 +311,14 @@ export class GererRidersComponent implements OnInit {
           this.ridersList[indexToUpdate] = this.editRider;
         }
         this.annulerEdition();} else {
-          errorservice.instance.CreateError(act,  "erreur lors de la mise à jour")
+        let o =  errorservice.CreateError(act,  "erreur lors de la mise à jour")
+        errorservice.emitChange(o);
         }
       }).catch((elkerreur:HttpErrorResponse)=>{
-        errorservice.instance.CreateError(act,  elkerreur.statusText);
+        let o =  errorservice.CreateError(act,  elkerreur.statusText);
+        errorservice.emitChange(o);
       })
-    }
-    this.editMode = false;}
+    }}
   }
 
   annulerEdition(): void {
@@ -236,6 +353,45 @@ export class GererRidersComponent implements OnInit {
     fileReader.readAsArrayBuffer(file);
   }
 
+  Filtrer(){
+    let errorservice = ErrorService.instance;
+    this._riderser.GetAllSearchSeason(this.search_text, this.season_id).then((result) =>{
+      this.ridersList = result;
+      let o = errorservice.OKMessage("Recherche de rider");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de rider",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
+  }
+  FiltrerBack(){
+    let errorservice = ErrorService.instance;
+    this._riderser.GetAllThisSeason().then((result) =>{
+      this.ridersList = result;
+      let o = errorservice.OKMessage("Recherche de rider");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de rider",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
+  }
+
+  InscrireRider(){
+    let errorservice = ErrorService.instance;
+
+    this._riderser.Inscrire(this.editRider.id).then((bool) =>{
+      if(bool){
+        let o = errorservice.OKMessage("Inscription du rider");
+        errorservice.emitChange(o);
+      } else {
+        let o = errorservice.CreateError("Inscription du rider", "Erreur inconnue");
+        errorservice.emitChange(o);
+      }
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Inscription du rider",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
+  }
   
 
   importData() {

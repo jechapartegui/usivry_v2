@@ -1,14 +1,23 @@
-
 $accordion-color: var(--bs-danger-bg-subtle);
+
 .accordion {
   background-color: $accordion-color;
   // Autres styles personnalisés pour l'accordéon
 }
-.accordion-button{
+
+.accordion-button {
   background-color: $accordion-color;
+
   &:not(.collapsed) {
     background-color: $accordion-color;
     font-weight: bold;
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  .menu-haut {
+    display: none;
   }
 }
 
@@ -105,8 +114,9 @@ mat-form-field {
   margin: 20px 0;
   font-family: Arial, sans-serif;
 }
+
 .card-container {
- padding: 5px;
+  padding: 5px;
 }
 
 table {
@@ -115,7 +125,8 @@ table {
   border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -169,6 +180,7 @@ select[multiple] {
 input[type="checkbox"] {
   margin-right: 10px;
 }
+
 label.checkbox-label {
   display: inline-block;
   vertical-align: middle;
@@ -212,11 +224,11 @@ label.checkbox-label {
   transition: transform 0.3s ease;
 }
 
-.toggle-switch input[type="checkbox"]:checked + .toggle-switch-label {
+.toggle-switch input[type="checkbox"]:checked+.toggle-switch-label {
   background-color: #4caf50;
 }
 
-.toggle-switch input[type="checkbox"]:checked + .toggle-switch-label:before {
+.toggle-switch input[type="checkbox"]:checked+.toggle-switch-label:before {
   transform: translateX(26px);
 }
 
@@ -262,8 +274,8 @@ label.checkbox-label {
   color: #0C548F
 }
 
-.div_flex{
+.div_flex {
   display: flex;
-flex-direction: row;
-flex-wrap: nowrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
