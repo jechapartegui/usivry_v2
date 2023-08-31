@@ -1,34 +1,40 @@
 import { KeyValuePair } from "./keyvaluepair";
 import { Rider } from "./riders";
 
-export class Inscription{
-  
-        public id:number = 0;
-        public rider_id:number;
-        public seance_id:number;
-        public date_inscription:Date = new Date();
-        public statut:StatutPresence = StatutPresence.Présent;
- 
+export class Inscription {
+
+      public id: number = 0;
+      public rider_id: number;
+      public seance_id: number;
+      public date_inscription: Date = new Date();
+      public statut: StatutPresence = StatutPresence.Présent;
+
 
 }
 export enum StatutPresence {
-    Présent = "présent",
-    Absent = "absent",
-    PrésentConfirmé = "présent confirmé",
-    AbsentConfirmé = "absent confirmé",
-    PrésentNonInscrit = "présent non inscrit",
-  }
+      Présent = "présent",
+      Absent = "absent",
+      NonInscrit = "non inscrit",
+      PrésentConfirmé = "présent confirmé",
+      AbsentConfirmé = "absent confirmé",
+      FinalementAbsent = "inscrit finalement absent",
+      FinalementPrésent = "absent finalement présent",
+      AbsentNonInscrit = "absent non inscrit",
+      PrésentNonInscrit = "présent non inscrit",
+}
 
-  export class InscriptionSeance{
-        public id:number = 0;
-        public rider_id:number;
-        public seance_id:number;
-        public date_inscription:Date = new Date();
-        public statut:StatutPresence = StatutPresence.Présent;
-        public date_seance: Date;
-        public heure_debut: string;
-        public duree_cours: number;
-        public lieu: string;
-        public libelle:string;
-        public professeurs: KeyValuePair[]=[];
-  }
+export class InscriptionSeance {
+      public id: number = 0;
+      public rider_id: number;
+      public seance_id: number;
+      public date_inscription: Date = new Date();
+      public statut: StatutPresence = StatutPresence.Présent;
+      public date_seance: Date;
+      public heure_debut: string;
+      public duree_cours: number;
+      public lieu: string;
+      public libelle: string;
+      public professeurs: KeyValuePair[] = [];
+      public rider_libelle: string = "";
+      public statut_seance: StatutPresence = StatutPresence.Présent;
+}

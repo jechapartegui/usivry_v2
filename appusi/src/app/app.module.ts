@@ -32,7 +32,7 @@ import { StaticClass } from './global';
 @NgModule({
   declarations: [
     AppComponent
-  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent],
+  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent],
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,

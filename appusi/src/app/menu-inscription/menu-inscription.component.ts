@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
+import { Inscription,  InscriptionSeance,  StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
 import { Rider } from 'src/class/riders';
 import { Seance } from 'src/class/seance';
@@ -76,7 +76,7 @@ export class MenuInscriptionComponent implements OnInit {
   }
 
   VoirSession(seance: Seance){
-    this.router.navigate(['/ma-seance/' + seance.seance_id]);
+    this.router.navigate(['/ma-seance'], { queryParams: { id: seance.seance_id } });
 
   }
 

@@ -7,6 +7,7 @@ import { MenuInscriptionComponent } from './menu-inscription/menu-inscription.co
 import { GererSeanceComponent } from './gerer-seance/gerer-seance.component';
 import { GererCoursComponent } from './gerer-cours/gerer-cours.component';
 import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscriptions.component';
+import { MaSeanceComponent } from './ma-seance/ma-seance.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'defaut', pathMatch: 'full' }, // Redirection vers 'defaut' pour le path vide
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'gerer-riders', component: GererRidersComponent },
   { path: 'login', component: LoginComponent },
   { path: 'menu-inscription', component: MenuInscriptionComponent },
+  { path: 'ma-seance', component: MaSeanceComponent },
   {path:'gerer-seance', component:GererSeanceComponent},
   {path:'gerer-cours', component:GererCoursComponent},
   {path:'gerer-inscriptions', component:GererInscriptionsComponent},

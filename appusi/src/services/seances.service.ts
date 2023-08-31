@@ -3,7 +3,7 @@ import { Rider } from 'src/class/riders';
 import { GlobalService } from './global.services';
 import { environment } from 'src/environments/environment.prod';
 import { Seance } from 'src/class/seance';
-import { Inscription } from 'src/class/inscription';
+import { Inscription, InscriptionSeance } from 'src/class/inscription';
 import { ErrorService } from './error.service';
 
 @Injectable({
@@ -107,6 +107,39 @@ export class SeancesService {
       .catch(error => {
         // Gestion de l'erreur
         return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      });
+  }
+
+  public UpdatePresence(item:InscriptionSeance): Promise<boolean>{
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"update_inscription_seance",
+      inscription:item,
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public ChargerSeance(id:number):Promise<InscriptionSeance[]>{
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"load_seance",
+      id:id,
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: InscriptionSeance[]) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
       });
   }
 
