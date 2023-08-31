@@ -43,6 +43,8 @@ export class GererRidersComponent implements OnInit {
   constructor( private _riderser: RidersService, private coursser:CoursService, private router:Router,private route: ActivatedRoute) {}
 
   ngOnInit(): void { 
+    
+    console.log("gerer rider" + RidersService.isLoggedIn);
     const errorService = ErrorService.instance;
     let o:notification;
     this.est_prof =RidersService.Est_Prof ;

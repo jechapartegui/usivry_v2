@@ -4,8 +4,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        [attr.data-bs-target]="'#col_avant'" aria-expanded="true"
-                        [attr.aria-controls]="'col_avant'">
+                        [attr.data-bs-target]="'#col_avant'" aria-expanded="true" [attr.aria-controls]="'col_avant'">
                         Elèves
                     </button>
                 </h2>
@@ -17,70 +16,44 @@
                                 <th>Nom</th>
                                 <th>Inscription</th>
                                 <th>Séance</th>
+                                <th>Contact d'urgence</th>
                             </thead>
                             <tbody>
-                                <ng-container *ngFor="let item of Liste ">
+                                <ng-container *ngFor="let item of Potentiel ">
                                     <ng-container *ngIf="!item.statut_seance">
 
                                         <tr>
                                             <td>{{item.rider_libelle}}</td>
-                                            <td> <i style="color: green;" class="bi bi-check-circle-fill"></i>
-                                                <i style="color: red;" class="bi bi-x-circle-fill"></i>
-                                                <i style="color: gray;" class="bi bi-question-circle-fill"></i>
-                                                
+                                            <td>
+                                                <ng-container *ngIf="item.statut">
+                                                    <i *ngIf="item.statut.toString() == 'présent'" style="font-size: 2rem;color: green;"
+                                                        class="bi bi-check-circle-fill"></i>
+                                                    <i *ngIf="item.statut.toString() == 'absent'" style="font-size: 2rem;color: red;"
+                                                        class="bi bi-x-circle-fill"></i>
+                                                </ng-container>
+                                                <ng-container *ngIf="!item.statut">
+                                                    <i style="font-size: 2rem;color: gray;" class="bi bi-question-circle-fill"></i>
+                                                </ng-container>
+
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic radio toggle button group">
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio1"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio1">Présent
-                                                        confirmé</label>
+                                                    <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
+                                                        [value]="'présent'" class="btn-check" name="btnradio"
+                                                        id="btnradio1" autocomplete="off">
+                                                    <label class="btn btn-outline-success"
+                                                        for="btnradio1">Présent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio2"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio2">Absent
-                                                        confirmé</label>
+                                                    <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
+                                                        [value]="'absent'" class="btn-check" name="btnradio"
+                                                        id="btnradio2" autocomplete="off">
+                                                    <label class="btn btn-outline-danger" for="btnradio2">Absent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'inscrit finalement absent'" class="btn-check"
-                                                        name="btnradio" id="btnradio3" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio3">Inscrit
-                                                        finalement absent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio4"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio4">absent non
-                                                        inscrit</label>
-
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio5"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio5">présent non
-                                                        inscrit</label>
-
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'absent finalement présent'" class="btn-check"
-                                                        name="btnradio" id="btnradio6" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio6">Absent
-                                                        finalement présent</label>
                                                 </div>
                                             </td>
+                                            <td>{{item.contact_urgence}}</td>
                                         </tr>
                                     </ng-container>
                                 </ng-container>
@@ -105,68 +78,48 @@
                                 <th>Nom</th>
                                 <th>Inscription</th>
                                 <th>Séance</th>
+                                <th>Contact d'urgence</th>
                             </thead>
                             <tbody>
-                                <ng-container *ngFor="let item of Liste ">
-                                    <ng-container
-                                        *ngIf="item.statut_seance.toString() ==='présent confirmé' || item.statut_seance.toString() ==='présent non inscrit'  || item.statut_seance.toString() ==='absent finalement présent'">
+                                <ng-container *ngFor="let present of Present ">
+                                    <ng-container *ngIf="present.statut_seance">
+                                        <ng-container *ngIf="present.statut_seance.toString() == 'présent'">
 
-                                        <tr>
-                                            <td>{{item.rider_libelle}}</td>
-                                            <td>{{item.statut.toString()}}</td>
-                                            <td>
-                                                <div class="btn-group" role="group"
-                                                    aria-label="Basic radio toggle button group">
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio1"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio1">Présent
-                                                        confirmé</label>
+                                            <tr>
+                                                <td>{{present.rider_libelle}}</td>
+                                                <td>
+                                                    <ng-container *ngIf="present.statut">
+                                                        <i *ngIf="present.statut.toString() == 'présent'"
+                                                        style="font-size: 2rem;color: green;" class="bi bi-check-circle-fill"></i>
+                                                        <i *ngIf="present.statut.toString() == 'absent'"
+                                                        style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!present.statut">
+                                                        <i style="font-size: 2rem;color: gray;" class="bi bi-question-circle-fill"></i>
+                                                    </ng-container>
 
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio2"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio2">Absent
-                                                        confirmé</label>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic radio toggle button group">
+                                                        <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
+                                                            [value]="'présent'" class="btn-check" name="btnradio"
+                                                            id="btnradio1" autocomplete="off">
+                                                        <label class="btn btn-outline-success"
+                                                            for="btnradio1">Présent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'inscrit finalement absent'" class="btn-check"
-                                                        name="btnradio" id="btnradio3" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio3">Inscrit
-                                                        finalement absent</label>
+                                                        <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
+                                                            [value]="'absent'" class="btn-check" name="btnradio"
+                                                            id="btnradio2" autocomplete="off">
+                                                        <label class="btn btn-outline-danger"
+                                                            for="btnradio2">Absent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio4"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio4">absent non
-                                                        inscrit</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio5"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio5">présent non
-                                                        inscrit</label>
-
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'absent finalement présent'" class="btn-check"
-                                                        name="btnradio" id="btnradio6" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio6">Absent
-                                                        finalement présent</label>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                                <td>{{present.contact_urgence}}</td>
+                                            </tr>
+                                        </ng-container>
                                     </ng-container>
                                 </ng-container>
                             </tbody>
@@ -177,8 +130,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        [attr.data-bs-target]="'#Absent'" aria-expanded="true"
-                        [attr.aria-controls]="'Absent'">
+                        [attr.data-bs-target]="'#Absent'" aria-expanded="true" [attr.aria-controls]="'Absent'">
                         Absent à la séance
                     </button>
                 </h2>
@@ -189,69 +141,49 @@
                             <thead>
                                 <th>Nom</th>
                                 <th>Inscription</th>
-                                <th>Séance</th>
+                                <th>Présence séance</th>
+                                <th>Contact d'urgence</th>
                             </thead>
                             <tbody>
-                                <ng-container *ngFor="let item of Liste ">
-                                    <ng-container
-                                        *ngIf="item.statut_seance.toString() ==='absent confirmé' || item.statut_seance.toString() ==='absent non inscrit'  || item.statut_seance.toString() ==='inscrit finalement absent'">
+                                <ng-container *ngFor="let absent of Absent ">
+                                    <ng-container *ngIf="absent.statut_seance">
+                                        <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
 
-                                        <tr>
-                                            <td>{{item.rider_libelle}}</td>
-                                            <td>{{item.statut.toString()}}</td>
-                                            <td>
-                                                <div class="btn-group" role="group"
-                                                    aria-label="Basic radio toggle button group">
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio1"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio1">Présent
-                                                        confirmé</label>
+                                            <tr>
+                                                <td>{{absent.rider_libelle}}</td>
+                                                <td>
+                                                    <ng-container *ngIf="absent.statut">
+                                                        <i *ngIf="absent.statut.toString() == 'présent'"
+                                                        style="font-size: 2rem;color: green;" class="bi bi-check-circle-fill"></i>
+                                                        <i *ngIf="absent.statut.toString() == 'absent'"
+                                                        style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!absent.statut">
+                                                        <i style="font-size: 2rem;color: gray;" class="bi bi-question-circle-fill"></i>
+                                                    </ng-container>
 
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent confirmé'"
-                                                        class="btn-check" name="btnradio" id="btnradio2"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio2">Absent
-                                                        confirmé</label>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group"
+                                                        aria-label="Basic radio toggle button group">
+                                                        <input type="radio" [(ngModel)]="absent.statut_seance" (ngModelChange)="UpdateStatut(absent)"
+                                                            [value]="'présent'" class="btn-check" name="btnradio"
+                                                            id="btnradio1" autocomplete="off">
+                                                        <label class="btn btn-outline-success"
+                                                            for="btnradio1">Présent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'présent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'inscrit finalement absent'" class="btn-check"
-                                                        name="btnradio" id="btnradio3" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'présent'"
-                                                        class="btn btn-outline-primary" for="btnradio3">Inscrit
-                                                        finalement absent</label>
+                                                        <input type="radio" [(ngModel)]="absent.statut_seance" (ngModelChange)="UpdateStatut(absent)"
+                                                            [value]="'absent'" class="btn-check" name="btnradio"
+                                                            id="btnradio2" autocomplete="off">
+                                                        <label class="btn btn-outline-danger"
+                                                            for="btnradio2">Absent</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'absent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio4"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio4">absent non
-                                                        inscrit</label>
 
-                                                    <input *ngIf="item.statut.toString() == 'non inscrit'" type="radio"
-                                                        [(ngModel)]="item.statut_seance" [value]="'présent non inscrit'"
-                                                        class="btn-check" name="btnradio" id="btnradio5"
-                                                        autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'non inscrit'"
-                                                        class="btn btn-outline-primary" for="btnradio5">présent non
-                                                        inscrit</label>
-
-                                                    <input *ngIf="item.statut.toString() == 'absent'" type="radio"
-                                                        [(ngModel)]="item.statut_seance"
-                                                        [value]="'absent finalement présent'" class="btn-check"
-                                                        name="btnradio" id="btnradio6" autocomplete="off">
-                                                    <label *ngIf="item.statut.toString() == 'absent'"
-                                                        class="btn btn-outline-primary" for="btnradio6">Absent
-                                                        finalement présent</label>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                                <td>{{absent.contact_urgence}}</td>
+                                            </tr>
+                                        </ng-container>
                                     </ng-container>
                                 </ng-container>
                             </tbody>

@@ -15,12 +15,7 @@ export enum StatutPresence {
       Présent = "présent",
       Absent = "absent",
       NonInscrit = "non inscrit",
-      PrésentConfirmé = "présent confirmé",
-      AbsentConfirmé = "absent confirmé",
-      FinalementAbsent = "inscrit finalement absent",
-      FinalementPrésent = "absent finalement présent",
-      AbsentNonInscrit = "absent non inscrit",
-      PrésentNonInscrit = "présent non inscrit",
+  
 }
 
 export class InscriptionSeance {
@@ -36,5 +31,6 @@ export class InscriptionSeance {
       public libelle: string;
       public professeurs: KeyValuePair[] = [];
       public rider_libelle: string = "";
-      public statut_seance: StatutPresence = StatutPresence.Présent;
+      public contact_urgence: string = "";
+      public statut_seance?: StatutPresence = null ;
 }

@@ -39,6 +39,7 @@ export class AppComponent implements OnInit {
     const errorService = ErrorService.instance;
     this.ridersService.Logout().then((boo) =>{
       if(boo){
+        
         let o = errorService.OKMessage("Déconnexion");
         errorService.emitChange(o);
       } else {
