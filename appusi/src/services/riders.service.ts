@@ -129,8 +129,7 @@ export class RidersService {
     this.url = environment.usivry + "usivry/rider_manage.php";
     const body = {
       command: "add_range",
-      riders: riders,
-      password: environment.password
+      riders: riders
     };
 
     return this.global.POST(this.url, body)
@@ -139,7 +138,7 @@ export class RidersService {
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
       });
   }
 
@@ -341,7 +340,7 @@ export class RidersService {
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
       });
   }
 }

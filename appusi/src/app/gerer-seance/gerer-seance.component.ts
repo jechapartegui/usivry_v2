@@ -9,6 +9,7 @@ import { ErrorService } from 'src/services/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RidersService } from 'src/services/riders.service';
 import { Router } from '@angular/router';
+import { notification } from '../custom-notification/custom-notification.component';
 
 @Component({
   selector: 'app-gerer-seance',
@@ -22,6 +23,10 @@ export class GererSeanceComponent implements OnInit {
   listeSeances: Seance[] = []; // Initialisez la liste des séances (vous pouvez la charger à partir d'une API, par exemple)
   editMode = false;
   editSeance: Seance | null = null;
+  est_prof:boolean =false;
+  est_admin:boolean = false;
+  season_id:number;
+  seasons:KeyValuePair[];
   niveauxRequis: Niveau[] = Object.values(Niveau);
   coursselectionne:boolean = false;
   constructor(
@@ -33,6 +38,10 @@ export class GererSeanceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const errorService = ErrorService.instance;
+    let o:notification;
+    this.est_prof =RidersService.Est_Prof ;
+    this.est_admin=RidersService.Est_Admin ;
     if(RidersService.IsLoggedIn === false ){
       this.router.navigate(['/login']);
     return;
@@ -45,28 +54,35 @@ export class GererSeanceComponent implements OnInit {
     this.coursservice.GetCours().then((list)=>{
       this.listeCours = list;
     }).catch((err:HttpErrorResponse)=>{
-      let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les cours",  err.statusText);
+     let o = errorService.CreateError("récupérer les cours",  err.statusText);
+     errorService.emitChange(o);
     })
     this.ridersservice.GetProf().then((elka) =>{
       this.listeprof = elka;
-    }).catch((elkerreur:HttpErrorResponse)=>{
-      let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
-    })
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les profs",  err.statusText);
+      errorService.emitChange(o);
+     })
     this.coursservice.GetLieuLight().then((laurie) =>{
       this.listelieu = laurie;
-    }).catch((elkerreur:HttpErrorResponse)=>{
-      let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les lieux", elkerreur.statusText);
-    })
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les lieux",  err.statusText);
+      errorService.emitChange(o);
+     })
 
     // Chargez la liste des séances
     this.seancesservice.GetAllSeances().then((list) => {
       this.listeSeances = list;
-    }).catch((err) => {
-      ErrorService.instance.CreateError("récupérer les séances",  err.statusText);
-    });
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les séances",  err.statusText);
+      errorService.emitChange(o);
+     })
+    this.coursservice.GetSaison().then((list) =>{
+      this.seasons = list;
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les saisons",  err.statusText);
+      errorService.emitChange(o);
+     })
   }
 
   trouverProfesseur(profId: number): any {
@@ -134,7 +150,8 @@ export class GererSeanceComponent implements OnInit {
   }
 
   supprimerSeance(seance: Seance): void {
-    let errorservice = ErrorService
+    let errorService = ErrorService.instance;
+    let o = notification;
     let act ="Ajouter un cours";
     if (seance) {
       this.seancesservice.Delete(seance.seance_id).then((result) => {
@@ -143,13 +160,16 @@ export class GererSeanceComponent implements OnInit {
           this.listeSeances = this.listeSeances.filter(c => c.seance_id !== seance.seance_id);
       
           // Afficher un message de confirmation à l'utilisateur
-          errorservice.instance.OKMessage(act);
-        } else {
-          errorservice.instance.CreateError(act,"erreur lors de la suppression");
+          let o = errorService.OKMessage(act);
+          errorService.emitChange(o);
+        } else {       
+          let o = errorService.CreateError(act,  "erreur inconnue");
+          errorService.emitChange(o);
         }
-      }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act,  elkerreur.statusText);
-        })
+         }).catch((err:HttpErrorResponse)=>{
+        let o = errorService.CreateError(act,  err.statusText);
+        errorService.emitChange(o);
+       })
       }
 
   }
@@ -161,25 +181,29 @@ export class GererSeanceComponent implements OnInit {
   }
 
   soumettreSeance(): void {
-    let errorservice = ErrorService
+    let errorService = ErrorService.instance;
+    let o = notification;
     let act ="Ajouter un séance";
     if (this.editSeance) {
       if(this.editSeance.seance_id==0){
         this.seancesservice.Add(this.editSeance).then((loe) =>{
           this.editSeance.seance_id = loe;
-          errorservice.instance.OKMessage(act);
+          let o = errorService.OKMessage(act);
+          errorService.emitChange(o);
           this.listeSeances.push(this.editSeance);
           this.annulerEdition();
-        }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act,elkerreur.statusText);
-        })
+        }).catch((err:HttpErrorResponse)=>{
+          let o = errorService.CreateError(act,  err.statusText);
+          errorService.emitChange(o);
+         })
       }
      else {
       this.seancesservice.Update(this.editSeance).then((loe) =>{
         
         act ="Mettre à jour une séance"; 
         if (loe) {
-        errorservice.instance.OKMessage(act);
+          let o = errorService.OKMessage(act);
+          errorService.emitChange(o);
         const indexToUpdate = this.listeSeances.findIndex(Seance => Seance.seance_id === this.editSeance.seance_id);
 
         if (indexToUpdate !== -1) {
@@ -187,11 +211,13 @@ export class GererSeanceComponent implements OnInit {
           this.listeSeances[indexToUpdate] = this.editSeance;
         }
         this.annulerEdition();} else {
-          errorservice.instance.CreateError(act,"erreur lors de la mise à jour")
+          let o = errorService.CreateError(act,  "erreur lors de la mise à jour");
+          errorService.emitChange(o);
         }
-      }).catch((elkerreur:HttpErrorResponse)=>{
-        errorservice.instance.CreateError(act, elkerreur.statusText);
-      })
+      }).catch((err:HttpErrorResponse)=>{
+        let o = errorService.CreateError(act,  err.statusText);
+        errorService.emitChange(o);
+       })
     }
     this.editMode = false;}
   }
@@ -199,5 +225,28 @@ export class GererSeanceComponent implements OnInit {
   annulerEdition(): void {
     this.editMode = false;
     this.editSeance = null;
+  }
+
+  Filtrer(){
+    let errorservice = ErrorService.instance;
+    this.seancesservice.GetAllSeances().then((result) =>{
+      this.listeSeances = result;
+      let o = errorservice.OKMessage("Recherche de séances");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
+  }
+  FiltrerBack(){
+    let errorservice = ErrorService.instance;
+    this.seancesservice.GetSeance().then((result) =>{
+      this.listeSeances = result;
+      let o = errorservice.OKMessage("Recherche de séances");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
   }
 }

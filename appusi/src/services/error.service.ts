@@ -67,7 +67,7 @@ export class ErrorService {
   interpret_error(text: string): string {   
         switch (text) {
           default:
-            return "Erreur inconnue";
+            return "Erreur inconnue : " + text;
           case "Unauthorized NO_USER_FOUND":
             return "Login incorrect";
           case "Unauthorized LOGIN_ALREADY_EXISTS":

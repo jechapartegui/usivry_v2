@@ -36,8 +36,7 @@ export class SeancesService {
         return response;
       })
       .catch(error => {
-        // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
   public Delete(id:number): Promise<boolean> {
@@ -54,7 +53,7 @@ export class SeancesService {
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
       });
   }
   public Add(seance:Seance): Promise<number> {
@@ -71,15 +70,14 @@ export class SeancesService {
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
       });
   }
   
     public GetAllSeances(): Promise<Seance[]> {
       this.url = environment.usivry + "usivry/seance_manage.php";
       const body = {
-        command: "get_all",
-        password: environment.password
+        command: "get_all"
       };
   
       return this.global.POST(this.url, body)
@@ -88,15 +86,14 @@ export class SeancesService {
         })
         .catch(error => {
           // Gestion de l'erreur
-          return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
         });
     }
   public GetSeance(): Promise<Seance[]> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"get_seance_plagedate",
-      password:environment.password,
+      command:"get_seance_plagedate"
     };
 
     return this.global.POST(this.url, body)
@@ -105,8 +102,7 @@ export class SeancesService {
         return response;
       })
       .catch(error => {
-        // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 

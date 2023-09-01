@@ -7,6 +7,7 @@ import { Niveau } from 'src/class/riders';
 import { CoursService } from 'src/services/cours.service';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
+import { notification } from '../custom-notification/custom-notification.component';
 
 @Component({
   selector: 'app-gerer-cours',
@@ -18,12 +19,20 @@ export class GererCoursComponent implements OnInit {
   constructor(private coursservice:CoursService, private ridersservice:RidersService, private router:Router){}
 listeprof:KeyValuePair[];
 listelieu:KeyValuePair[];
+est_prof:boolean =false;
+est_admin:boolean = false;
+season_id:number;
+seasons:KeyValuePair[];
   listeCours: Cours[] = []; // Initialisez la liste des cours (vous pouvez la charger à partir d'une API, par exemple)
   editMode = false;
   editCours: Cours | null = null;
   niveauxRequis: Niveau[] = Object.values(Niveau);
 
   ngOnInit(): void {
+    const errorService = ErrorService.instance;
+    let o:notification;
+    this.est_prof =RidersService.Est_Prof ;
+    this.est_admin=RidersService.Est_Admin ;
     if(RidersService.IsLoggedIn === false ){
       this.router.navigate(['/login']);
     return;
@@ -32,24 +41,33 @@ listelieu:KeyValuePair[];
       this.router.navigate(['/menu-inscription']);
     return;
     } 
-      this.coursservice.GetCours().then((list)=>{
-        this.listeCours = list;
-      }).catch((err:HttpErrorResponse)=>{
-        let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les cours",  err.statusText);
-      })
-      this.ridersservice.GetProf().then((elka) =>{
-        this.listeprof = elka;
-      }).catch((elkerreur:HttpErrorResponse)=>{
-        let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
-      })
-      this.coursservice.GetLieuLight().then((laurie) =>{
-        this.listelieu = laurie;
-      }).catch((elkerreur:HttpErrorResponse)=>{
-        let errorservice = ErrorService
-        errorservice.instance.CreateError("récupérer les lieux", elkerreur.statusText);
-      })
+    // Chargez la liste des cours
+    this.coursservice.GetCours().then((list)=>{
+      this.listeCours = list;
+    }).catch((err:HttpErrorResponse)=>{
+     let o = errorService.CreateError("récupérer les cours",  err.statusText);
+     errorService.emitChange(o);
+    })
+    this.ridersservice.GetProf().then((elka) =>{
+      this.listeprof = elka;
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les profs",  err.statusText);
+      errorService.emitChange(o);
+     })
+    this.coursservice.GetLieuLight().then((laurie) =>{
+      this.listelieu = laurie;
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les lieux",  err.statusText);
+      errorService.emitChange(o);
+     })
+
+    
+    this.coursservice.GetSaison().then((list) =>{
+      this.seasons = list;
+    }).catch((err:HttpErrorResponse)=>{
+      let o = errorService.CreateError("récupérer les saisons",  err.statusText);
+      errorService.emitChange(o);
+     })
   }
 
   // Méthode pour trouver un professeur à partir de son ID
@@ -150,5 +168,28 @@ listelieu:KeyValuePair[];
   annulerEdition(): void {
     this.editMode = false;
     this.editCours = null;
+  }
+
+  Filtrer(){
+    let errorservice = ErrorService.instance;
+    this.coursservice.GetCours().then((result) =>{
+      this.listeCours = result;
+      let o = errorservice.OKMessage("Recherche de séances");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
+  }
+  FiltrerBack(){
+    let errorservice = ErrorService.instance;
+    this.coursservice.GetCours().then((result) =>{
+      this.listeCours = result;
+      let o = errorservice.OKMessage("Recherche de séances");
+      errorservice.emitChange(o);
+    }).catch((elkerreur:HttpErrorResponse)=>{
+      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+      errorservice.emitChange(o);
+    })
   }
 }

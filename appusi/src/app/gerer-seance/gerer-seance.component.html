@@ -1,5 +1,32 @@
-<!-- Liste des séances -->
-<div *ngIf="!editMode">
+<div class="container">
+  <div class="row" *ngIf="!editMode && est_admin">
+    <div class="col-12">
+      <div class="card mb-3">
+        <div class="card-header text-bg-ivry ">Menu administrateur</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <button type="button" class="btn btn-outline-success" (click)="creerSeance()">Créer</button>
+            </div>
+            <div class="col-4">
+              <label for="seasons" class="form-label">Choisir une saison</label>
+              <select id="seasons" class="form-control" [(ngModel)]="season_id" placeholder="Choisir la saison">
+                <!-- Options pour les professeurs -->
+                <ng-container *ngFor="let season of seasons">
+                  <option [value]="season.key">{{season.value}}</option>
+                </ng-container>
+              </select>
+
+
+              <button type="button" class="btn btn-outline-success" (click)="Filtrer()">Filtrer</button>
+              <button type="button" class="btn btn-outline-success" (click)="FiltrerBack()">Réinitialiser</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!editMode">
     <h2>Liste des séances</h2>
     <table *ngIf="listeSeances && listeSeances.length > 0">
       <thead>
@@ -17,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let seance of listeSeances">
+        <tr *ngFor="let seance of listeSeances" style="cursor: pointer;" (click)="editerSeance(seance)">
           <td>{{ trouverCours(seance.cours)?.nom }}</td>
           <td>{{ seance.date_seance | date }}</td>
           <td>{{ seance.heure_debut }}</td>
@@ -26,78 +53,91 @@
           <td>{{ seance.statut }}</td>
           <td>
             <ul>
-                <ng-container *ngFor="let profId of seance.professeurs">
-                  <li> {{profId.value}}</li>
-                </ng-container>
-              </ul>
+              <ng-container *ngFor="let profId of seance.professeurs">
+                <li> {{profId.value}}</li>
+              </ng-container>
+            </ul>
           </td>
           <td>{{ seance.age_requis }}</td>
           <td>{{ seance.niveau_requis }}</td>
           <td>
-            <button class="menu_usi" (click)="editerSeance(seance)">Éditer</button>
-            <button class="menu_usi" (click)="supprimerSeance(seance)">Supprimer</button>
+            <button class="btn btn-outline-danger" (click)="supprimerSeance(seance)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill"
+                viewBox="0 0 16 16">
+                <path
+                  d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+              </svg>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
     <p *ngIf="!listeSeances || listeSeances.length === 0">Pas de séances disponibles</p>
-    <button class="menu_usi" (click)="creerSeance()">Créer</button>
   </div>
-  
+
   <!-- Formulaire d'édition/création de séance -->
   <div *ngIf="editMode">
-    <h2 class="mat-h2">{{ editSeance.seance_id === 0 ? "Éditer" : "Créer" }} une séance</h2>
-    <div class="mat-form-field">
-      <label>Cours :</label>
-      <mat-select [(ngModel)]="editSeance.cours"  placeholder="Cours" (ngModelChange)="onCoursSelectionChange($event)">
-        <mat-option *ngFor="let cours of listeCours" [value]="cours.id">{{ cours.nom }}</mat-option>
-      </mat-select>
-    </div>
-    <div class="mat-form-field">
-      <label>Date de la séance :</label>
-      <input matInput type="date" [(ngModel)]="editSeance.date_seance">
-    </div>
-    <div class="mat-form-field" >
-      <label>Heure de début :</label>
-      <input matInput type="time" [disabled]="!coursselectionne" [(ngModel)]="editSeance.heure_debut">
-    </div>
-    <div class="mat-form-field">
-      <label>Durée de la séance :</label>
-      <input matInput type="number" [(ngModel)]="editSeance.duree_cours">
-    </div>
-    <div class="mat-form-field">
-      <label>Lieu :</label>
-      <mat-select [(ngModel)]="editSeance.lieu_id" [disabled]="!coursselectionne" placeholder="Lieu">
-        <mat-option *ngFor="let lieu of listelieu" [value]="lieu.key">{{ lieu.value }}</mat-option>
-      </mat-select>
-    </div>
-    <div class="mat-form-field">
-      <label>Statut :</label>
-      <mat-select [(ngModel)]="editSeance.statut" placeholder="Statut">
-        <mat-option value="prévue">Prévue</mat-option>
-        <mat-option value="réalisée">Réalisée</mat-option>
-        <mat-option value="annulée">Annulée</mat-option>
-      </mat-select>
-    </div>
-    <div class="mat-form-field">
-      <label>Professeurs :</label>
-      <mat-select [(ngModel)]="editSeance.professeurs" multiple>
-        <mat-option *ngFor="let prof of listeprof" [value]="prof.key">{{ prof.value }}</mat-option>
-      </mat-select>
-    </div>
-    <div class="mat-form-field">
-      <label>Âge minimum requis :</label>
-      <input matInput type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_requis">
-    </div>
-    <div class="mat-form-field">
-      <label>Niveau requis :</label>
-      <mat-select [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne">
-        <mat-option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</mat-option>
-      </mat-select>
-    </div>
-    <button class="menu_usi" mat-raised-button color="primary" [disabled]="!coursselectionne" (click)="soumettreSeance()">
-      {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour"  }}
-    </button>
-    <button class="menu_usi" mat-raised-button (click)="annulerEdition()">Annuler</button>
-  </div>
-  
+    <div class="row">
+      <div class="card col-md-6">
+        <div class="card-header">
+          Informations de la séance
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12" style="margin: 5px;">
+              <h2 class="mat-h2">{{ editSeance.seance_id==0 ? "Créer" : "Editer" }} une séance</h2>
+              <div class="form-group">
+                <label for="cours">Cours</label>
+                <select class="form-control" id="cours" [(ngModel)]="editSeance.cours" placeholder="Cours"
+                  (ngModelChange)="onCoursSelectionChange($event)">
+                  <option *ngFor="let cours of listeCours" [value]="cours.id">{{ cours.nom }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="date_seance">Date de la séance</label>
+                <input class="form-control" id="date_seance" type="date" [(ngModel)]="editSeance.date_seance">
+              </div>
+              <div class="form-group">
+                <label for="heure_debut">Heure de début :</label>
+                <input matInput class="form-control" id="heure_debut" type="time" [disabled]="!coursselectionne" [(ngModel)]="editSeance.heure_debut">
+              </div>
+              <div class="form-group">
+                <label for="date_seance">Durée de la séance</label>
+                <input class="form-control" id="duree_cours" type="number" [(ngModel)]="editSeance.duree_cours">
+              </div>
+              <div class="form-group">
+                <label for="lieu">Lieu</label>
+                <select  class="form-control" id="lieu" [(ngModel)]="editSeance.lieu_id" [disabled]="!coursselectionne" placeholder="Lieu">
+                  <option *ngFor="let lieu of listelieu" [value]="lieu.key">{{ lieu.value }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="statut">Statut</label>
+                <select  class="form-control" id="statut" [(ngModel)]="editSeance.statut" placeholder="Statut">
+                  <option value="prévue">Prévue</option>
+                  <option value="réalisée">Réalisée</option>
+                  <option value="annulée">Annulée</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="professeurs">Professeurs</label>
+                <select  class="form-control" id="professeurs"  [(ngModel)]="editSeance.professeurs" multiple>
+                  <option *ngFor="let prof of listeprof" [value]="prof.key">{{ prof.value }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="age_requis">Âge minimum requis : </label>
+                <input  class="form-control" id="age_requis"  type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_requis">
+              </div>
+              <div class="form-group">
+                <label for="niveau_requis">Niveau requis : </label>
+                <select  class="form-control" id="niveau_requis" [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne">
+                  <option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</option>
+                </select>
+              </div>
+              <button class="btn btn-outline-success" [disabled]="!coursselectionne"
+                (click)="soumettreSeance()">
+                {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour" }}
+              </button>
+              <button class="btn btn-outline-danger" (click)="annulerEdition()">Annuler</button>
+            </div>

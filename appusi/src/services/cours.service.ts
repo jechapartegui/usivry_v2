@@ -16,8 +16,7 @@ export class CoursService {
   this.url = environment.usivry + 'usivry/lieu_manage.php';
   //  this.url = this.url + "login.php";
   const body = {
-    command:"get_all_light",
-    password:environment.password,
+    command:"get_all_light"
   };
 
   return this.global.POST(this.url, body)
@@ -26,7 +25,7 @@ export class CoursService {
     })
     .catch(error => {
       // Gestion de l'erreur
-      return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
     });
 }
 
@@ -44,7 +43,7 @@ public Update(cours:Cours): Promise<boolean> {
     })
     .catch(error => {
       // Gestion de l'erreur
-      return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
     });
 }
 public Delete(id:number): Promise<boolean> {
@@ -61,7 +60,7 @@ public Delete(id:number): Promise<boolean> {
     })
     .catch(error => {
       // Gestion de l'erreur
-      return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
     });
 }
 public Add(cours:Cours): Promise<number> {
@@ -78,15 +77,14 @@ public Add(cours:Cours): Promise<number> {
     })
     .catch(error => {
       // Gestion de l'erreur
-      return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
     });
 }
 
   public GetCours(): Promise<Cours[]> {
     this.url = environment.usivry + "usivry/cours_manage.php";
     const body = {
-      command: "get_all_byseason",
-      password: environment.password
+      command: "get_all_byseason"
     };
 
     return this.global.POST(this.url, body)
@@ -95,14 +93,13 @@ public Add(cours:Cours): Promise<number> {
       })
       .catch(error => {
         // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+      return Promise.reject(error);
       });
   }
   public GetCoursLight(): Promise<KeyValuePair[]> {
     this.url = environment.usivry + "usivry/cours_manage.php";
     const body = {
-      command: "get_all_light_byseason",
-      password: environment.password
+      command: "get_all_light_byseason"
     };
 
     return this.global.POST(this.url, body)
@@ -110,8 +107,7 @@ public Add(cours:Cours): Promise<number> {
         return response;
       })
       .catch(error => {
-        // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 
@@ -126,8 +122,7 @@ public Add(cours:Cours): Promise<number> {
         return response;
       })
       .catch(error => {
-        // Gestion de l'erreur
-        return Promise.reject('Une erreur s\'est produite lors de la connexion.');
+        return Promise.reject(error);
       });
   }
 }

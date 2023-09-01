@@ -5,6 +5,7 @@ import { catchError, firstValueFrom } from 'rxjs';
 import { RidersService } from './riders.service';
 import { environment } from 'src/environments/environment.prod';
 import { ErrorService } from './error.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class GlobalService {
   
   
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private datepipe:DatePipe) {}
 
   public async GET(url:string): Promise<any> {
    
@@ -35,7 +36,7 @@ export class GlobalService {
 
     try {
       let date_ref = new Date();
-      let date_ref_string = date_ref.toDateString();
+      let date_ref_string = this.datepipe.transform(date_ref,"yyyy-MM-dd")
       let _varid:string = "0";
       if(RidersService.IsLoggedIn){
         _varid = RidersService.account.toString();
@@ -47,12 +48,14 @@ export class GlobalService {
   .set('content-type', 'application/json')
   .set('Access-Control-Allow-Origin', '*')
   .set('password', hashedPassword)
-  .set('date_ref', date_ref_string)
-  .set('user_id', _varid)
+  .set('dateref', date_ref_string)
+  .set('userid', _varid)
       const response = await firstValueFrom(this.http.post(url, body, { headers }));
       return response;
     } catch (error) {
       if (error instanceof HttpErrorResponse) {
+        console.log(url);
+        console.log(body);
         this.handleError(error);
       } else {
         console.error('Une erreur inattendue s\'est produite:', error);
