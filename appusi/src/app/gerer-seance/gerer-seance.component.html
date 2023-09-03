@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row" *ngIf="!editMode && est_admin">
+  <div class="row" *ngIf="!editMode && (est_admin || est_prof)">
     <div class="col-12">
       <div class="card mb-3">
         <div class="card-header text-bg-ivry ">Menu administrateur</div>
@@ -46,7 +46,7 @@
       <tbody>
         <tr *ngFor="let seance of listeSeances" style="cursor: pointer;" (click)="editerSeance(seance)">
           <td>{{ trouverCours(seance.cours)?.nom }}</td>
-          <td>{{ seance.date_seance | date }}</td>
+          <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
           <td>{{ seance.heure_debut }}</td>
           <td>{{ seance.duree_cours }}</td>
           <td>{{ trouverGymnase(seance.lieu_id)?.value }}</td>
@@ -122,7 +122,7 @@
               <div class="form-group">
                 <label for="professeurs">Professeurs</label>
                 <select  class="form-control" id="professeurs"  [(ngModel)]="editSeance.professeurs" multiple>
-                  <option *ngFor="let prof of listeprof" [value]="prof.key">{{ prof.value }}</option>
+                  <option *ngFor="let prof of listeprof" [value]="prof.key" [selected]="editSeance.professeurs.includes(prof)">{{ prof.value }}</option>
                 </select>
               </div>
               <div class="form-group">
@@ -133,6 +133,14 @@
                 <label for="niveau_requis">Niveau requis : </label>
                 <select  class="form-control" id="niveau_requis" [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne">
                   <option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</option>
+                </select>
+              </div>
+              <div class="form-group" *ngIf="est_admin">
+                <label for="niveau_requis">Statut : </label>
+                <select  class="form-control" id="statut" [(ngModel)]="editSeance.statut">
+                  <option [value]="'prévue'">prévue</option>
+                  <option [value]="'réalisée'">réalisée</option>
+                  <option [value]="'annulée'">annulée</option>
                 </select>
               </div>
               <button class="btn btn-outline-success" [disabled]="!coursselectionne"

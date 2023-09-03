@@ -239,7 +239,7 @@
             <label class="btn btn-outline-primary" for="btnradio2-prof">Non prof</label>
           </div>
         </div>
-        <div *ngIf="!editRider.est_inscrit">
+        <div *ngIf="!editRider.est_inscrit && (situation == 'UPDATE' || situation == 'MY_UPDATE')">
           <div> <button class="btn btn-outline-success" (click)="InscrireRider()">
           Inscrire le rider</button>
         </div>

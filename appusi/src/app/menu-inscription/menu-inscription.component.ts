@@ -27,21 +27,12 @@ export class MenuInscriptionComponent implements OnInit {
     }
     this.Riders = RidersService.ListeRiders;
     //charger seance
-    this.ridersservice.GetProf().then((elka) => {
-      this.listeprof = elka;
-    }).catch((elkerreur: HttpErrorResponse) => {
-      let errorservice = ErrorService
-      errorservice.instance.CreateError("récupérer les profs", elkerreur.statusText);
-    })
-    //charger inscription par rider
-
-    // charger mes seances prof si y'a un prof
-  }
+      }
 
 
 
   // Fonction pour ajouter une séance à un rider
-  Add(rider: Rider, seance: Seance, present: boolean) {
+  Add(rider: Rider, seance: Seance, present: boolean, essai:boolean = false) {
     console.log(seance);
     let action = "Se déclarer absent";
     let pre = StatutPresence.Absent;
@@ -65,6 +56,19 @@ export class MenuInscriptionComponent implements OnInit {
         })
         let o = errorService.OKMessage(action);
         errorService.emitChange(o);
+        if(essai){
+          rider.essai_restant--;
+          this.ridersservice.Update(rider).then((boo) => {
+              if(!boo){
+                let u = errorService.CreateError(
+                  action, "Mise à jour KO");
+              errorService.emitChange(u);
+              }
+          }).catch((error) => {
+            let n = errorService.CreateError(action, error);
+            errorService.emitChange(n);
+          });
+        }
       } else {
         let u = errorService.CreateError(action, "Ajout KO");
         errorService.emitChange(u);
@@ -73,6 +77,8 @@ export class MenuInscriptionComponent implements OnInit {
       let n = errorService.CreateError(action, error);
       errorService.emitChange(n);
     });
+  
+    
   }
 
   VoirSession(seance: Seance){

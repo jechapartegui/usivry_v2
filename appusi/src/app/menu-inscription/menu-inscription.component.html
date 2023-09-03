@@ -5,6 +5,15 @@
       <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
       <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
       <span class="mat-card-subtitle" pl-1><button type="button"  class="btn btn-link" (click)="EditCompte(rider)">Mes informations</button></span>
+      <span class="mat-card-subtitle" *ngIf="rider.est_inscrit" pl-1>
+        Inscription OK <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        Niveau : {{rider.niveau}}
+      </span>
+      <span class="mat-card-subtitle" *ngIf="!rider.est_inscrit" pl-1>
+        Essai restant : {{rider.essai_restant}}
+      </span>
     </div>
     <div class="mat-card-content">
       <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
@@ -52,8 +61,8 @@
                   </td>
                   <!-- Bouton pour se désinscrire de la séance -->
                   <td>
-                    <button *ngIf="inscription.statut.toString() ==='présent'" class="menu_usi" (click)="Update(rider, inscription, false)">Se désinscrire</button>
-                      <button *ngIf="inscription.statut.toString() ==='absent'" style="background-color: green;" class="menu_usi" (click)="Update(rider, inscription, true)">Réinscrire</button>
+                    <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger" (click)="Update(rider, inscription, false)">Se désinscrire</button>
+                      <button *ngIf="inscription.statut.toString() ==='absent'"  class="btn btn-success-danger" (click)="Update(rider, inscription, true)">Réinscrire</button>
                   </td>
                 </tr>
               </table>
@@ -103,10 +112,17 @@
 
                   <!-- Bouton pour se désinscrire de la séance -->
                   <td>
-                    <button class="menu_usi" mat-button color="primary" style="background-color: green;"
+                    <div *ngIf="rider.est_inscrit">
+                    <button class="btn btn-outline-success" 
                       (click)="Add(rider, seance, true)">S'inscrire</button>
-                      <button class="menu_usi" mat-button color="primary"
+                      <button class="btn btn-outline-danger"
                       (click)="Add(rider, seance, false)">Déclarer absent</button>
+                    </div>
+                    <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
+                      <button class="btn btn-outline-success" 
+                        (click)="Add(rider, seance, true)">Reserver un essai</button>
+                        
+                      </div>
                       </td>
                 </tr>
               </table>
@@ -129,9 +145,8 @@
           [attr.data-bs-parent]="'#accordionExample-' + rider.id">
             <div class="accordion-body">
              
-                <button class="btn btn-outline-success btn-lg" color="primary" routerLink="/gerer-seance/">Gérer les séances</button>
+                <button class="btn btn-outline-success" color="primary" routerLink="/gerer-seance/">Gérer les séances</button>
         
-                <mat-label>Mes Séances Prof</mat-label>
                 <!-- Sélecteur pour voir la séance du professeur -->
                 <table *ngIf="rider.est_prof">
                   <thead>
@@ -159,7 +174,7 @@
   
                     <!-- Bouton pour se désinscrire de la séance -->
                     <td>
-                      <button type="button" class="btn btn-outline-info btn-lg"
+                      <button type="button" class="btn btn-outline-info"
                         (click)="VoirSession( seance)">Voir la séance</button>
                     </td>
                   </tr>                
@@ -183,12 +198,12 @@
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
                 <div class="accordion-body">
                   <div class="div_flex">
-        <button class="btn btn-outline-info btn-lg" routerLink="/gerer-riders">Gérer les
+        <button class="btn btn-outline-info" routerLink="/gerer-riders">Gérer les
                   adhérents</button>
-                <button class="btn btn-outline-info btn-lg" routerLink="/gerer-cours">Gérer les cours</button>
-                <button class="btn btn-outline-info btn-lg" routerLink="/gerer-seance">Gérer les
+                <button class="btn btn-outline-info" routerLink="/gerer-cours">Gérer les cours</button>
+                <button class="btn btn-outline-info" routerLink="/gerer-seance">Gérer les
                   séances</button>
-                <button class="btn btn-outline-info btn-lg" routerLink="/gerer-inscriptions">Gérer les
+                <button class="btn btn-outline-info" routerLink="/gerer-inscriptions">Gérer les
                   inscriptions</button>
                 </div>
               </div>
