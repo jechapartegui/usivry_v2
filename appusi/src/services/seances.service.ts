@@ -178,6 +178,25 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
+  public Delete_inscription(id:number): Promise<boolean>{
+    let act = "Supprimer l'inscription";
+    let errorservice = ErrorService;
+    this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      id:id,
+      command:"delete"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {       
+       return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
 
  
 }

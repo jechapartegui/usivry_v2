@@ -1,162 +1,179 @@
 <div class="container">
-<div class="card-container">
-  <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
-    <div class="mat-card-header">
-      <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
-      <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
-      <span class="mat-card-subtitle" pl-1><button type="button"  class="btn btn-link" (click)="EditCompte(rider)">Mes informations</button></span>
-      <span class="mat-card-subtitle" *ngIf="rider.est_inscrit" pl-1>
-        Inscription OK <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-        </svg>
-        Niveau : {{rider.niveau}}
-      </span>
-      <span class="mat-card-subtitle" *ngIf="!rider.est_inscrit" pl-1>
-        Essai restant : {{rider.essai_restant}}
-      </span>
-    </div>
-    <div class="mat-card-content">
-      <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-            [attr.data-bs-target]="'#collapseOne-' + rider.id" aria-expanded="true"
-            [attr.aria-controls]="'collapseOne-' + rider.id">
-              Mes inscriptions ({{rider.inscriptions.length}})
-            </button>
-          </h2>
-          <div [id]="'collapseOne-' + rider.id" class="accordion-collapse collapse show"
-          [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-              <table *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
-                <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th>Statut</th>
-                  <th></th>
-                </thead>
-                <tr *ngFor="let inscription of rider.inscriptions">
-                  <!-- Afficher les détails de l'inscription ici -->
-                  <td>{{ inscription.libelle }}</td>
-                  <td>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
-                  <td>{{ inscription.heure_debut }}</td>
-                  <td>{{ inscription.duree_cours }} minutes</td>
-                  <td>{{ inscription.lieu }}</td>
-                  <td>
-                    <ul>
-                      <li *ngFor="let prof of inscription.professeurs">{{ prof.value }} </li>
-                    </ul>
-                  </td>
-                  <td>{{ inscription.statut }}
-                    <span *ngIf="inscription.statut.toString() ==='présent'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                    </svg></span>
-                    <span *ngIf="inscription.statut.toString() ==='absent'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                    </svg></span>
-                  </td>
-                  <!-- Bouton pour se désinscrire de la séance -->
-                  <td>
-                    <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger" (click)="Update(rider, inscription, false)">Se désinscrire</button>
-                      <button *ngIf="inscription.statut.toString() ==='absent'"  class="btn btn-success-danger" (click)="Update(rider, inscription, true)">Réinscrire</button>
-                  </td>
-                </tr>
-              </table>
-              <p *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
-                Pas d'inscription en cours
-              </p>
-            </div>
-          </div>
-        </div>
-       
-
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          [attr.data-bs-target]="'#collapseTwo-' + rider.id" aria-expanded="false"
-          [attr.aria-controls]="'collapseTwo-' + rider.id">
-              Mes séances disponibles ({{rider.seances.length}})
-            </button>
-          </h2>
-          <div [id]="'collapseTwo-' + rider.id" class="accordion-collapse collapse"
-          [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-              <table *ngIf="rider.seances && rider.seances.length > 0">
-                <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th></th>
-                </thead>
-                <tr *ngFor="let seance of rider.seances">
-                  <!-- Afficher les détails de l'inscription ici -->
-                  <td>{{ seance.libelle }}</td>
-                  <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
-                  <td>{{ seance.heure_debut }}</td>
-                  <td>{{ seance.duree_cours }} minutes</td>
-                  <td>{{ seance.lieu }}</td>
-                  <td>
-                    <ul>
-                      <ng-container *ngFor="let profId of seance.professeurs">
-                        <li>{{ profId.value }}</li>
-                      </ng-container>
-                    </ul>
-                  </td>
-
-                  <!-- Bouton pour se désinscrire de la séance -->
-                  <td>
-                    <div *ngIf="rider.est_inscrit">
-                    <button class="btn btn-outline-success" 
-                      (click)="Add(rider, seance, true)">S'inscrire</button>
-                      <button class="btn btn-outline-danger"
-                      (click)="Add(rider, seance, false)">Déclarer absent</button>
-                    </div>
-                    <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
-                      <button class="btn btn-outline-success" 
-                        (click)="Add(rider, seance, true)">Reserver un essai</button>
-                        
+  <div class="card-container">
+    <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
+      <div class="mat-card-header">
+        <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
+        <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
+        <span class="mat-card-subtitle" pl-1><button type="button" class="btn btn-link" (click)="EditCompte(rider)">Mes
+            informations</button></span>
+        <span class="mat-card-subtitle" *ngIf="rider.est_inscrit" pl-1>
+          Inscription OK <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
+            class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+          </svg>
+          Niveau : {{rider.niveau}}
+        </span>
+        <span class="mat-card-subtitle" *ngIf="!rider.est_inscrit" pl-1>
+          Essai restant : {{rider.essai_restant}}
+        </span>
+      </div>
+      <div class="mat-card-content">
+        <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseOne-' + rider.id" aria-expanded="true"
+                [attr.aria-controls]="'collapseOne-' + rider.id">
+                Mes inscriptions ({{rider.inscriptions.length}})
+              </button>
+            </h2>
+            <div [id]="'collapseOne-' + rider.id" class="accordion-collapse collapse show"
+              [attr.data-bs-parent]="'#accordionExample-' + rider.id">
+              <div class="accordion-body">
+                <table *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
+                  <thead>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Heure de début</th>
+                    <th>Durée du cours</th>
+                    <th>Lieu</th>
+                    <th>Professeur présent</th>
+                    <th>Statut</th>
+                    <th></th>
+                  </thead>
+                  <tr *ngFor="let inscription of rider.inscriptions">
+                    <!-- Afficher les détails de l'inscription ici -->
+                    <td>{{ inscription.libelle }}</td>
+                    <td>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ inscription.heure_debut }}</td>
+                    <td>{{ inscription.duree_cours }} minutes</td>
+                    <td>{{ inscription.lieu }}</td>
+                    <td>
+                      <ul>
+                        <li *ngFor="let prof of inscription.professeurs">{{ prof.value }} </li>
+                      </ul>
+                    </td>
+                    <td>{{ inscription.statut }}
+                      <span *ngIf="inscription.statut.toString() ==='présent'"><svg xmlns="http://www.w3.org/2000/svg"
+                          width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg></span>
+                      <span *ngIf="inscription.statut.toString() ==='absent'"><svg xmlns="http://www.w3.org/2000/svg"
+                          width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                          <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                        </svg></span>
+                    </td>
+                    <!-- Bouton pour se désinscrire de la séance -->
+                    <td>
+                      <div *ngIf="rider.est_inscrit">
+                        <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
+                          (click)="Update(rider, inscription, false)">Se désinscrire</button>
+                        <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
+                          (click)="Update(rider, inscription, true)">Réinscrire</button>
                       </div>
-                      </td>
-                </tr>
-              </table>
-              <p *ngIf="!rider.seances || rider.seances.length == 0">
-                Pas de séance disponible
-              </p>
+                      <div *ngIf="!rider.est_inscrit">
+                        <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
+                          (click)="Update_essai(rider, inscription.id)">Annuler l'essai</button>
+                       
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <p *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
+                  Pas d'inscription en cours
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div *ngIf="rider.est_prof" class="accordion-item">
-          
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          [attr.data-bs-target]="'#collapseThree-' + rider.id" aria-expanded="false"
-          [attr.aria-controls]="'collapseThree-' + rider.id">
-          Professeur
-            </button>
-          </h2>
-          <div [id]="'collapseThree-' + rider.id" class="accordion-collapse collapse"
-          [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-             
-                <button class="btn btn-outline-success" color="primary" routerLink="/gerer-seance/">Gérer les séances</button>
-        
+
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseTwo-' + rider.id" aria-expanded="false"
+                [attr.aria-controls]="'collapseTwo-' + rider.id">
+                Mes séances disponibles ({{rider.seances.length}})
+              </button>
+            </h2>
+            <div [id]="'collapseTwo-' + rider.id" class="accordion-collapse collapse"
+              [attr.data-bs-parent]="'#accordionExample-' + rider.id">
+              <div class="accordion-body">
+                <table *ngIf="rider.seances && rider.seances.length > 0">
+                  <thead>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Heure de début</th>
+                    <th>Durée du cours</th>
+                    <th>Lieu</th>
+                    <th>Professeur présent</th>
+                    <th></th>
+                  </thead>
+                  <tr *ngFor="let seance of rider.seances">
+                    <!-- Afficher les détails de l'inscription ici -->
+                    <td>{{ seance.libelle }}</td>
+                    <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ seance.heure_debut }}</td>
+                    <td>{{ seance.duree_cours }} minutes</td>
+                    <td>{{ seance.lieu }}</td>
+                    <td>
+                      <ul>
+                        <ng-container *ngFor="let profId of seance.professeurs">
+                          <li>{{ profId.value }}</li>
+                        </ng-container>
+                      </ul>
+                    </td>
+
+                    <!-- Bouton pour se désinscrire de la séance -->
+                    <td>
+                      <div *ngIf="rider.est_inscrit">
+                        <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
+                        <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
+                          absent</button>
+                      </div>
+                      <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
+                        <button class="btn btn-outline-success" (click)="Add(rider, seance, true, true)">Reserver un
+                          essai</button>
+
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <p *ngIf="!rider.seances || rider.seances.length == 0">
+                  Pas de séance disponible
+                </p>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="rider.est_prof" class="accordion-item">
+
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseThree-' + rider.id" aria-expanded="false"
+                [attr.aria-controls]="'collapseThree-' + rider.id">
+                Professeur
+              </button>
+            </h2>
+            <div [id]="'collapseThree-' + rider.id" class="accordion-collapse collapse"
+              [attr.data-bs-parent]="'#accordionExample-' + rider.id">
+              <div class="accordion-body">
+
+                <button class="btn btn-outline-success" color="primary" routerLink="/gerer-seance/">Gérer les
+                  séances</button>
+
                 <!-- Sélecteur pour voir la séance du professeur -->
                 <table *ngIf="rider.est_prof">
                   <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th></th></thead>
+                    <th>Nom</th>
+                    <th>Date</th>
+                    <th>Heure de début</th>
+                    <th>Durée du cours</th>
+                    <th>Lieu</th>
+                    <th>Professeur présent</th>
+                    <th></th>
+                  </thead>
                   <tr *ngFor="let seance of rider.seances_prof">
                     <!-- Afficher les détails de l'inscription ici -->
                     <td>{{ seance.libelle }}</td>
@@ -171,51 +188,51 @@
                         </ng-container>
                       </ul>
                     </td>
-  
+
                     <!-- Bouton pour se désinscrire de la séance -->
                     <td>
-                      <button type="button" class="btn btn-outline-info"
-                        (click)="VoirSession( seance)">Voir la séance</button>
+                      <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
+                        séance</button>
                     </td>
-                  </tr>                
+                  </tr>
                 </table>
                 <p *ngIf="!rider.seances_prof || rider.seances_prof.length == 0">
                   Pas de séance disponible
                 </p>
               </div>
             </div>
-            </div>
-            <div *ngIf="rider.est_admin" class="accordion-item">
-          
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapseFour-' + rider.id" aria-expanded="false"
-              [attr.aria-controls]="'collapseFour-' + rider.id">
-                  Administration
-                </button>
-              </h2>
-              <div [id]="'collapseFour-' + rider.id" class="accordion-collapse collapse"
+          </div>
+          <div *ngIf="rider.est_admin" class="accordion-item">
+
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapseFour-' + rider.id" aria-expanded="false"
+                [attr.aria-controls]="'collapseFour-' + rider.id">
+                Administration
+              </button>
+            </h2>
+            <div [id]="'collapseFour-' + rider.id" class="accordion-collapse collapse"
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-                <div class="accordion-body">
-                  <div class="div_flex">
-        <button class="btn btn-outline-info" routerLink="/gerer-riders">Gérer les
-                  adhérents</button>
-                <button class="btn btn-outline-info" routerLink="/gerer-cours">Gérer les cours</button>
-                <button class="btn btn-outline-info" routerLink="/gerer-seance">Gérer les
-                  séances</button>
-                <button class="btn btn-outline-info" routerLink="/gerer-inscriptions">Gérer les
-                  inscriptions</button>
+              <div class="accordion-body">
+                <div class="div_flex">
+                  <button class="btn btn-outline-info" routerLink="/gerer-riders">Gérer les
+                    adhérents</button>
+                  <button class="btn btn-outline-info" routerLink="/gerer-cours">Gérer les cours</button>
+                  <button class="btn btn-outline-info" routerLink="/gerer-seance">Gérer les
+                    séances</button>
+                  <button class="btn btn-outline-info" routerLink="/gerer-inscriptions">Gérer les
+                    inscriptions</button>
                 </div>
               </div>
             </div>
+          </div>
         </div>
+
+
+
+
+
       </div>
-
-
-
-
-
-    </div>
-  </mat-card>
-</div>
+    </mat-card>
+  </div>
 </div>

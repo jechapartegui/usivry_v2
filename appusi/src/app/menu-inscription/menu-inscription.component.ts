@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Inscription,  InscriptionSeance,  StatutPresence } from 'src/class/inscription';
+import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
 import { Rider } from 'src/class/riders';
 import { Seance } from 'src/class/seance';
@@ -27,12 +27,11 @@ export class MenuInscriptionComponent implements OnInit {
     }
     this.Riders = RidersService.ListeRiders;
     //charger seance
-      }
-
+  }
 
 
   // Fonction pour ajouter une séance à un rider
-  Add(rider: Rider, seance: Seance, present: boolean, essai:boolean = false) {
+  Add(rider: Rider, seance: Seance, present: boolean, essai: boolean = false) {
     console.log(seance);
     let action = "Se déclarer absent";
     let pre = StatutPresence.Absent;
@@ -56,14 +55,14 @@ export class MenuInscriptionComponent implements OnInit {
         })
         let o = errorService.OKMessage(action);
         errorService.emitChange(o);
-        if(essai){
+        if (essai) {
           rider.essai_restant--;
           this.ridersservice.Update(rider).then((boo) => {
-              if(!boo){
-                let u = errorService.CreateError(
-                  action, "Mise à jour KO");
+            if (!boo) {
+              let u = errorService.CreateError(
+                action, "Mise à jour KO");
               errorService.emitChange(u);
-              }
+            }
           }).catch((error) => {
             let n = errorService.CreateError(action, error);
             errorService.emitChange(n);
@@ -77,15 +76,48 @@ export class MenuInscriptionComponent implements OnInit {
       let n = errorService.CreateError(action, error);
       errorService.emitChange(n);
     });
-  
-    
+
+
   }
 
-  VoirSession(seance: Seance){
+  VoirSession(seance: Seance) {
     this.router.navigate(['/ma-seance'], { queryParams: { id: seance.seance_id } });
-
   }
 
+
+  Update_essai(rider:Rider,id: number) {
+    let errorService = ErrorService.instance;
+    let action = "Modifier la présence : annuler l'essai";
+
+    this.seanceService.Delete_inscription(id).then((ret) => {
+      if (ret) {
+        rider.essai_restant++;
+        this.ridersservice.Update(rider).then((boo) => {
+          if (!boo) {
+            let u = errorService.CreateError(
+              action, "Mise à jour KO");
+            errorService.emitChange(u);
+          }
+        }).catch((error) => {
+          let n = errorService.CreateError(action, error);
+          errorService.emitChange(n);
+        });
+        this.ridersservice.GetRiders().then(() => {
+          this.Riders = RidersService.ListeRiders;
+        })
+        
+        let o = errorService.OKMessage(action);
+        errorService.emitChange(o);
+      } else {
+
+        let u = errorService.CreateError(action, "Mise à jour KO");
+        errorService.emitChange(u);
+      }
+    }).catch((error) => {
+      let n = errorService.CreateError(action, error);
+      errorService.emitChange(n);
+    });
+  }
 
   // Fonction pour retirer une séance d'un rider
   Update(rider: Rider, inscr: InscriptionSeance, present: boolean) {

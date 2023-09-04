@@ -12,10 +12,7 @@ import { SeancesService } from 'src/services/seances.service';
 })
 export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
-  Liste: InscriptionSeance[] = [];
-  Potentiel: InscriptionSeance[] = [];
-  Present: InscriptionSeance[] = [];
-  Absent: InscriptionSeance[] = [];
+  Liste: InscriptionSeance[] = []; 
   constructor(private router: Router, private _seanceserv: SeancesService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     const errorService = ErrorService.instance;
@@ -51,7 +48,6 @@ export class MaSeanceComponent implements OnInit {
         return statutOrder[aStatut] - statutOrder[bStatut];
       }
       this.Liste.sort(compareByStatut);
-      this.Repartir();
       let o = errorService.OKMessage("Charger la séance");
       errorService.emitChange(o);
     }).catch((error: Error) => {
@@ -60,25 +56,22 @@ export class MaSeanceComponent implements OnInit {
     });
   }
 
-  Repartir(){
-    this.Absent = [];
-    this.Present = [];
-    this.Potentiel = [];
-
-    this.Liste.forEach((item) =>{
-      if(item.statut_seance == StatutPresence.Présent){
-        this.Present.push(item);
-      } else if(item.statut_seance == StatutPresence.Absent){
-        this.Absent.push(item);
-      } else {
-        this.Potentiel.push(item);
-      }
-    })
-  }
+ 
   UpdateStatut(item) {
     console.log(item);
-    this.Liste.find(x => x.rider_id == item.rider_id).statut_seance = item.statut_seance;
+    const index = this.Liste.findIndex(x => x.rider_id === item.rider_id);
+    if (index !== -1) {
+        this.Liste[index].statut_seance = item.statut_seance;
+    }
   }
+
+  trackByRiderId(index: number, item: InscriptionSeance): number {
+    return item.rider_id;
+  }
+  test(item) {
+    console.log(item);
+  }
+  
 
   UpdatePresence(item: InscriptionSeance) {
     const errorService = ErrorService.instance;

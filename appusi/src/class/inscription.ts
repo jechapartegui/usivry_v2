@@ -31,6 +31,7 @@ export class InscriptionSeance {
       public libelle: string;
       public professeurs: KeyValuePair[] = [];
       public rider_libelle: string = "";
+      public hors_liste:boolean=false;
       public contact_urgence: string = "";
       public statut_seance?: StatutPresence = null ;
 }
