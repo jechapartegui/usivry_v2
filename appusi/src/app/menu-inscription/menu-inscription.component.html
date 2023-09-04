@@ -31,7 +31,7 @@
             <div [id]="'collapseOne-' + rider.id" class="accordion-collapse collapse show"
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
               <div class="accordion-body">
-                <table *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
+                <table class="screen" *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
                   <thead>
                     <th>Nom</th>
                     <th>Date</th>
@@ -77,11 +77,51 @@
                       <div *ngIf="!rider.est_inscrit">
                         <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
                           (click)="Update_essai(rider, inscription.id)">Annuler l'essai</button>
-                       
+
                       </div>
                     </td>
                   </tr>
                 </table>
+                <ul class="mobile" *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
+                  <ng-container *ngFor="let inscription of rider.inscriptions">
+                    <li>
+                      <div class="rowmobile">
+                        <div style="margin: 2px;">
+                          <span><strong>{{ inscription.libelle }}</strong></span><br />
+                          <span>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                          <span>{{ inscription.heure_debut }}</span><br />
+                          <span>{{ inscription.lieu }}</span><br />
+                        </div>
+                        <div style="margin: 2px;">
+                          <span *ngIf="inscription.statut.toString() ==='présent'">Présent &nbsp;<svg
+                              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
+                              class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                              <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                            </svg></span>
+                          <span *ngIf="inscription.statut.toString() ==='absent'">Absent &nbsp;<svg
+                              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                              class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                              <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                            </svg></span><br />
+
+                          <div *ngIf="rider.est_inscrit">
+                            <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
+                              (click)="Update(rider, inscription, false)">Se désinscrire</button>
+                            <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
+                              (click)="Update(rider, inscription, true)">Réinscrire</button>
+                          </div>
+                          <div *ngIf="!rider.est_inscrit">
+                            <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
+                              (click)="Update_essai(rider, inscription.id)">Annuler l'essai</button>
+
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
                 <p *ngIf="!rider.inscriptions || rider.inscriptions.length == 0">
                   Pas d'inscription en cours
                 </p>
@@ -101,7 +141,7 @@
             <div [id]="'collapseTwo-' + rider.id" class="accordion-collapse collapse"
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
               <div class="accordion-body">
-                <table *ngIf="rider.seances && rider.seances.length > 0">
+                <table class="screen" *ngIf="rider.seances && rider.seances.length > 0">
                   <thead>
                     <th>Nom</th>
                     <th>Date</th>
@@ -141,6 +181,33 @@
                     </td>
                   </tr>
                 </table>
+                <ul class="mobile" *ngIf="rider.seances && rider.seances.length > 0">
+                  <ng-container *ngFor="let seance of rider.seances">
+                    <li>
+                      <div class="rowmobile">
+                        <div style="margin: 2px;">
+                        
+                          <span><strong>{{ seance.libelle }}</strong></span><br />
+                          <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                          <span>{{ seance.heure_debut }}</span><br />
+                          <span>{{ seance.lieu }}</span><br />
+                        </div>
+                        <div style="margin: 2px;">
+                          <div *ngIf="rider.est_inscrit">
+                            <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
+                            <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
+                              absent</button>
+                          </div>
+                          <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
+                            <button class="btn btn-outline-success" (click)="Add(rider, seance, true, true)">Reserver un
+                              essai</button>
+    
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
                 <p *ngIf="!rider.seances || rider.seances.length == 0">
                   Pas de séance disponible
                 </p>
@@ -164,7 +231,7 @@
                   séances</button>
 
                 <!-- Sélecteur pour voir la séance du professeur -->
-                <table *ngIf="rider.est_prof">
+                <table class="screen" *ngIf="rider.est_prof">
                   <thead>
                     <th>Nom</th>
                     <th>Date</th>
@@ -196,6 +263,25 @@
                     </td>
                   </tr>
                 </table>
+                <ul class="mobile" *ngIf="rider.est_prof">
+                  <ng-container *ngFor="let seance of rider.seances_prof">
+                    <li>
+                      <div class="rowmobile">
+                        <div style="margin: 2px;">
+                        
+                          <span><strong>{{ seance.libelle }}</strong></span><br />
+                          <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                          <span>{{ seance.heure_debut }}</span><br />
+                          <span>{{ seance.lieu }}</span><br />
+                        </div>
+                        <div style="margin: 2px;">
+                          <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
+                            séance</button>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-container>
+                </ul>
                 <p *ngIf="!rider.seances_prof || rider.seances_prof.length == 0">
                   Pas de séance disponible
                 </p>

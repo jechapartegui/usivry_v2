@@ -18,6 +18,36 @@ ul{
   margin-bottom: 0;
 }
 
+.mobile{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .menu-haut {
+    display: none;
+  }
+  .screen{
+    display: none;
+  }
+  .mobile{
+    display: block;
+  }
+  .accordion-body{
+    padding: 0;
+  }
+  .rowmobile{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+
+  }
+
+}
+
+
 
 @media only screen and (max-width: 600px) {
   .menu-haut {
@@ -280,6 +310,19 @@ label.checkbox-label {
 
 .div_flex {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.present{
+  color: green;
+}
+.absent{
+  color: red;
+}
+.non_inscrit{
+  color: gray;
 }

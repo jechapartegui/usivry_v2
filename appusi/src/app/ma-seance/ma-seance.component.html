@@ -11,7 +11,7 @@
                 <div [id]="'col_avant'" class="accordion-collapse collapse show"
                     [attr.data-bs-parent]="'accordionExample'">
                     <div class="accordion-body">
-                        <table>
+                        <table div class="screen">
                             <thead>
                                 <th>Nom</th>
                                 <th>Inscription</th>
@@ -39,13 +39,13 @@
                                             <td>
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic radio toggle button group">
-                                                    <input type="radio" [(ngModel)]="item.statut_seance" (click)="test(item)"
+                                                    <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
                                                         [value]="'présent'" class="btn-check" [name]="'btnradio' + item.rider_id"
                                                         [id]="'btnradio1_item' + item.rider_id" autocomplete="off">
                                                     <label class="btn btn-outline-success"
                                                     [for]="'btnradio1_item' + item.rider_id">Présent</label>
 
-                                                    <input type="radio" [(ngModel)]="item.statut_seance" (click)="test(item)"
+                                                    <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
                                                         [value]="'absent'" class="btn-check" [name]="'btnradio' + item.rider_id"
                                                         [id]="'btnradio2_item' + item.rider_id" autocomplete="off">
                                                     <label class="btn btn-outline-danger" [for]="'btnradio2_item' + item.rider_id">Absent</label>
@@ -59,6 +59,51 @@
                                 </ng-container>
                             </tbody>
                         </table>
+                        <ul div class="mobile">
+                            <ng-container *ngFor="let item of Liste; trackBy: trackByRiderId">
+                                <ng-container *ngIf="!item.statut_seance">
+
+                                    <li>
+                                        <div>
+                                            <ng-container *ngIf="item.statut">
+                                                <ng-container *ngIf="item.statut.toString() == 'présent'">
+                                                    <span class="present">{{item.rider_libelle}} ({{item.contact_urgence}})</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="item.statut.toString() == 'absent'">
+                                                    <span class="absent">{{item.rider_libelle}} ({{item.contact_urgence}})</span>
+                                                </ng-container>
+                                               
+                                            </ng-container>
+                                            <ng-container *ngIf="!item.statut">
+                                                <span class="non_inscrit">{{item.rider_libelle}} ({{item.contact_urgence}})</span>
+                                            </ng-container>
+
+
+                                        <span>
+                                           
+                                        </span>
+                                    </div>
+                                        <span>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Basic radio toggle button group">
+                                                <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
+                                                    [value]="'présent'" class="btn-check" [name]="'btnradio' + item.rider_id"
+                                                    [id]="'btnradio1_item' + item.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-success"
+                                                [for]="'btnradio1_item' + item.rider_id">Présent</label>
+
+                                                <input type="radio" [(ngModel)]="item.statut_seance" (ngModelChange)="UpdateStatut(item)"
+                                                    [value]="'absent'" class="btn-check" [name]="'btnradio' + item.rider_id"
+                                                    [id]="'btnradio2_item' + item.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-danger" [for]="'btnradio2_item' + item.rider_id">Absent</label>
+
+
+                                            </div>
+                                        </span>
+                                    </li>
+                                </ng-container>
+                            </ng-container>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -73,7 +118,7 @@
                 <div [id]="'collapseOne'" class="accordion-collapse collapse show"
                     [attr.data-bs-parent]="'accordionExample'">
                     <div class="accordion-body">
-                        <table>
+                        <table class="screen">
                             <thead>
                                 <th>Nom</th>
                                 <th>Inscription</th>
@@ -102,13 +147,13 @@
                                                 <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic radio toggle button group">
-                                                        <input type="radio" [(ngModel)]="present.statut_seance" (click)="test(present)"
+                                                        <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
                                                             [value]="'présent'" class="btn-check" [name]="'btnradio_present' + present.rider_id"
                                                             [id]="'btnradio1_present' + present.rider_id" autocomplete="off">
                                                         <label class="btn btn-outline-success"
                                                         [for]="'btnradio1_present' + present.rider_id">Présent</label>
 
-                                                        <input type="radio" [(ngModel)]="present.statut_seance" (click)="test(present)"
+                                                        <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
                                                             [value]="'absent'" class="btn-check" [name]="'btnradio_present' + present.rider_id"
                                                             [id]="'btnradio2_present' + present.rider_id" autocomplete="off">
                                                         <label class="btn btn-outline-danger"
@@ -124,6 +169,52 @@
                                 </ng-container>
                             </tbody>
                         </table>
+                        <ul div class="mobile">
+                            <ng-container *ngFor="let present of Liste; trackBy: trackByRiderId">
+                                <ng-container *ngIf="present.statut_seance">
+                                    <ng-container *ngIf="present.statut_seance.toString() == 'présent'">
+                                    <li>
+                                        <div>
+                                            <ng-container *ngIf="present.statut">
+                                                <ng-container *ngIf="present.statut.toString() == 'présent'">
+                                                    <span class="present">{{present.rider_libelle}} ({{present.contact_urgence}})</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="present.statut.toString() == 'absent'">
+                                                    <span class="absent">{{present.rider_libelle}} ({{present.contact_urgence}})</span>
+                                                </ng-container>
+                                               
+                                            </ng-container>
+                                            <ng-container *ngIf="!present.statut">
+                                                <span class="non_inscrit">{{present.rider_libelle}} ({{present.contact_urgence}})</span>
+                                            </ng-container>
+
+
+                                        <span>
+                                           
+                                        </span>
+                                    </div>
+                                        <span>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Basic radio toggle button group">
+                                                <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
+                                                    [value]="'présent'" class="btn-check" [name]="'btnradio' + present.rider_id"
+                                                    [id]="'btnradio1_item' + present.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-success"
+                                                [for]="'btnradio1_item' + present.rider_id">Présent</label>
+
+                                                <input type="radio" [(ngModel)]="present.statut_seance" (ngModelChange)="UpdateStatut(present)"
+                                                    [value]="'absent'" class="btn-check" [name]="'btnradio' + present.rider_id"
+                                                    [id]="'btnradio2_item' + present.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-danger" [for]="'btnradio2_item' + present.rider_id">Absent</label>
+
+
+                                            </div>
+                                        </span>
+                                    </li>
+                                </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -137,7 +228,7 @@
                 <div [id]="'Absent'" class="accordion-collapse collapse show"
                     [attr.data-bs-parent]="'accordionExample'">
                     <div class="accordion-body">
-                        <table>
+                        <table class="screen">
                             <thead>
                                 <th>Nom</th>
                                 <th>Inscription</th>
@@ -188,6 +279,52 @@
                                 </ng-container>
                             </tbody>
                         </table>
+                        <ul class="mobile">
+                            <ng-container *ngFor="let absent of Liste; trackBy: trackByRiderId">
+                                <ng-container *ngIf="absent.statut_seance">
+                                    <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
+                                        <li>
+                                            <div>
+                                                <ng-container *ngIf="absent.statut">
+                                                    <ng-container *ngIf="absent.statut.toString() == 'présent'">
+                                                        <span class="present">{{absent.rider_libelle}} ({{absent.contact_urgence}})</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="absent.statut.toString() == 'absent'">
+                                                        <span class="absent">{{absent.rider_libelle}} ({{absent.contact_urgence}})</span>
+                                                    </ng-container>
+                                                   
+                                                </ng-container>
+                                                <ng-container *ngIf="!absent.statut">
+                                                    <span class="non_inscrit">{{absent.rider_libelle}} ({{absent.contact_urgence}})</span>
+                                                </ng-container>
+    
+    
+                                            <span>
+                                               
+                                            </span>
+                                        </div>
+                                            <span>
+                                                <div class="btn-group" role="group"
+                                                    aria-label="Basic radio toggle button group">
+                                                    <input type="radio" [(ngModel)]="absent.statut_seance" (ngModelChange)="UpdateStatut(absent)"
+                                                        [value]="'présent'" class="btn-check" [name]="'btnradio' + absent.rider_id"
+                                                        [id]="'btnradio1_item' + absent.rider_id" autocomplete="off">
+                                                    <label class="btn btn-outline-success"
+                                                    [for]="'btnradio1_item' + absent.rider_id">Présent</label>
+    
+                                                    <input type="radio" [(ngModel)]="absent.statut_seance" (ngModelChange)="UpdateStatut(absent)"
+                                                        [value]="'absent'" class="btn-check" [name]="'btnradio' + absent.rider_id"
+                                                        [id]="'btnradio2_item' + absent.rider_id" autocomplete="off">
+                                                    <label class="btn btn-outline-danger" [for]="'btnradio2_item' + absent.rider_id">Absent</label>
+    
+    
+                                                </div>
+                                            </span>
+                                        </li>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ul>
                     </div>
                 </div>
             </div>

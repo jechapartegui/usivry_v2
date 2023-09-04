@@ -57,24 +57,17 @@ export class MaSeanceComponent implements OnInit {
   }
 
  
-  UpdateStatut(item) {
-    console.log(item);
-    const index = this.Liste.findIndex(x => x.rider_id === item.rider_id);
-    if (index !== -1) {
-        this.Liste[index].statut_seance = item.statut_seance;
-    }
-  }
+
 
   trackByRiderId(index: number, item: InscriptionSeance): number {
     return item.rider_id;
   }
-  test(item) {
-    console.log(item);
-  }
+
   
 
-  UpdatePresence(item: InscriptionSeance) {
+  UpdateStatut(item: InscriptionSeance) {
     const errorService = ErrorService.instance;
+    item.seance_id = this.id;
     this._seanceserv.UpdatePresence(item).then((retour: boolean) => {
       // Si la liste de riders est retournée (authentification réussie), rediriger vers la page "menu_inscription"
       if (retour) {
