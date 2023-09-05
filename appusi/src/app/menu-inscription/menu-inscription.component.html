@@ -51,7 +51,9 @@
                     <td>{{ inscription.lieu }}</td>
                     <td>
                       <ul>
-                        <li *ngFor="let prof of inscription.professeurs">{{ prof.value }} </li>
+                        <ng-container *ngFor="let profId of inscription.professeurs">
+                          <li>{{ profId.value }}</li>
+                        </ng-container>
                       </ul>
                     </td>
                     <td>{{ inscription.statut }}
