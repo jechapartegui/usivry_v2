@@ -10,7 +10,8 @@ import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscripti
 import { MaSeanceComponent } from './ma-seance/ma-seance.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'defaut', pathMatch: 'full' }, // Redirection vers 'defaut' pour le path vide
+ // { path: '', redirectTo: 'defaut', pathMatch: 'full' }, // Redirection vers 'defaut' pour le path vide
+  { path: '', component: DefautComponent }, // Route 'defaut' qui affiche ImportRidersComponent
   { path: 'defaut', component: DefautComponent }, // Route 'defaut' qui affiche ImportRidersComponent
   { path: 'gerer-riders', component: GererRidersComponent },
   { path: 'login', component: LoginComponent },

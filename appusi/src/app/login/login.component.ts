@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; // Remplacez par le chemin vers votre service RidersService
-import { Rider } from 'src/class/riders';
 import { environment } from 'src/environments/environment.prod';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
@@ -18,8 +17,6 @@ export class LoginComponent implements OnInit {
   constructor(private ridersService: RidersService, private router: Router) {}
 
   ngOnInit(): void {
-    this.username = environment.defaultlogin;
-    this.password = environment.defaultpassword;
       if(RidersService.isLoggedIn == true){
         this.router.navigate(['/menu-inscription']);
       }

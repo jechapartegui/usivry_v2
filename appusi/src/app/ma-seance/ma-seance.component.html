@@ -261,7 +261,7 @@
                                                             [value]="'présent'" class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
                                                             [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
                                                         <label class="btn btn-outline-success"
-                                                        [for]="'btnradio2_absent' + absent.rider_id">Présent</label>
+                                                        [for]="'btnradio1_absent' + absent.rider_id">Présent</label>
 
                                                         <input type="radio" [(ngModel)]="absent.statut_seance" (ngModelChange)="UpdateStatut(absent)"
                                                             [value]="'absent'" class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
