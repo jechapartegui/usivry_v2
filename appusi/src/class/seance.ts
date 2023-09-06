@@ -14,6 +14,7 @@ export class Seance {
     public statut:StatutSeance=StatutSeance.prévue,
     public professeurs: KeyValuePair[],
     public age_requis:number,
+    public age_maximum:number,
     public niveau_requis:Niveau,
    
   ) {}

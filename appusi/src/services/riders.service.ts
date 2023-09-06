@@ -76,13 +76,14 @@ export class RidersService {
   }
 
   public Logout():Promise<boolean>{
-    this.url = environment.usivry + 'usivry/logout.php';
+    this.url = environment.usivry + 'usivry/login.php';
     //  this.url = this.url + "login.php";
     const body = {
+      logout:true,
     };
 
     return this.global.POST(this.url, body)
-      .then((response: Rider[]) => {
+      .then((response: boolean) => {
         RidersService.isLoggedIn = false;
         RidersService.account = 0;
         RidersService.email = "";
@@ -91,6 +92,25 @@ export class RidersService {
         RidersService.Est_Prof = false;
         this.updateLoggedInStatus(false);
         return true;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
+
+  public RecupMDP(login:string):Promise<boolean>{
+    this.url = environment.usivry + 'usivry/login.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      login:login,
+      renvoi_mdp:true
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+     
+        return response;
       })
       .catch(error => {
         // Gestion de l'erreur

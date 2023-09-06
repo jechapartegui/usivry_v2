@@ -70,10 +70,7 @@ export class GererRidersComponent implements OnInit {
       //si rider dans la liste => on l'affiche sinon erreur
       if (RidersService.Riders.find(x => x.id == this.id)) {
         this.editMode = true;
-        this.editRider = RidersService.Riders.find(x => x.id == this.id);
-        if (this.situation == "MY_UPDATE") {
-          this.situation = "UPDATE";
-        }
+        this.editRider = RidersService.Riders.find(x => x.id == this.id);      
       } else {
         this.router.navigate(['/menu-inscription']);
       }
@@ -455,6 +452,7 @@ export class GererRidersComponent implements OnInit {
   annulerEdition(): void {
     this.editMode = false;
     this.editRider = null;
+    console.log(this.situation);
     switch (this.situation) {
       case "ADD":
         this.router.navigate(['/menu-inscription']);
@@ -466,6 +464,7 @@ export class GererRidersComponent implements OnInit {
         break;
       case "MY_UPDATE":
         this.router.navigate(['/menu-inscription']);
+        console.log("ici");
         break;
       case "UPDATE":
         this.situation = "LIST";

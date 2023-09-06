@@ -14,12 +14,30 @@ export class LoginComponent implements OnInit {
   password: string = environment.defaultpassword;
   stayLoggedIn: boolean = false;
 
-  constructor(private ridersService: RidersService, private router: Router) {}
+  constructor(private ridersService: RidersService, private router: Router) { }
 
   ngOnInit(): void {
-      if(RidersService.isLoggedIn == true){
-        this.router.navigate(['/menu-inscription']);
+    if (RidersService.isLoggedIn == true) {
+      this.router.navigate(['/menu-inscription']);
+    }
+  }
+
+  RecupMDP() {
+    // Appel à la méthode Check_Login du service RidersService
+    const errorService = ErrorService.instance;
+    this.ridersService.RecupMDP(this.username).then((retour: boolean) => {
+      // Si la liste de riders est retournée (authentification réussie), rediriger vers la page "menu_inscription"
+      if (retour) {
+        let o = errorService.OKMessage("Envoi du mail");
+        errorService.emitChange(o);
+      } else {
+        let o = errorService.CreateError("Envoi du mail", "Erreur lors de l'envoi de l'e-mail.");
+        errorService.emitChange(o);
       }
+    }).catch((error: Error) => {
+      let o = errorService.CreateError("Envoi du mail", error.message);
+      errorService.emitChange(o);
+    });
   }
 
   Login() {
@@ -37,7 +55,7 @@ export class LoginComponent implements OnInit {
         // Gérer le cas d'authentification échouée, par exemple, afficher un message d'erreur
         console.log('Identifiants invalides.');
       }
-    }).catch((error:Error)=>{
+    }).catch((error: Error) => {
       let o = errorService.CreateError("Connexion", error.message);
       errorService.emitChange(o);
     });

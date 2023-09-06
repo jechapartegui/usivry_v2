@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Connexion</mat-card-title>
 <mat-card-content>
-<div >
+<div class="row">
   <div class="form-group">
     <label for="username">Nom d'utilisateur :</label>
     <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required>
@@ -17,8 +17,12 @@
       <label class="toggle-switch-label" for="toggle"></label>
     </div>
   </div>
-  <button class="btn btn-outline-success" type="submit" (click)="Login()">Connexion</button>
+  
 </div>
+<div class="row">
+  <button class="btn btn-outline-success" type="submit" (click)="Login()">Connexion</button>
+  <button class="btn btn-outline-info" type="submit" (click)="RecupMDP()">Réinitialiser le mot de passe</button>
+  </div>
 
 </mat-card-content>
 </mat-card>

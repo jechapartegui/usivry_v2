@@ -26,6 +26,7 @@ export class GererSeanceComponent implements OnInit {
   est_prof:boolean =false;
   est_admin:boolean = false;
   season_id:number;
+  jour_semaine:string= "";
   seasons:KeyValuePair[];
   niveauxRequis: Niveau[] = Object.values(Niveau);
   coursselectionne:boolean = false;
@@ -138,12 +139,13 @@ export class GererSeanceComponent implements OnInit {
       this.coursselectionne = true;
       this.editSeance.duree_cours = newValue.duree;
       this.editSeance.age_requis = newValue.age_requis;
+      this.editSeance.age_maximum = 99;
+      this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
       this.editSeance.niveau_requis = newValue.niveau_requis;
       this.editSeance.lieu_id = newValue.lieu_id;
+      this.jour_semaine = newValue.jour_semaine;
     } else{
-      console.log(cours_id);
-      console.log(!isNaN(cours_id));
       this.coursselectionne = false;
     }
     // Faites ce que vous voulez avec la nouvelle valeur sélectionnée ici
@@ -175,7 +177,7 @@ export class GererSeanceComponent implements OnInit {
   }
 
   creerSeance(): void {
-    this.editSeance = new Seance(0,0,new Date(),"",0,0,"","",StatutSeance.prévue,[], 0,Niveau.Débutant);
+    this.editSeance = new Seance(0,0,new Date(),"",0,0,"","",StatutSeance.prévue,[], 0,99,Niveau.Débutant);
     this.coursselectionne = false;
     this.editMode = true;
   }

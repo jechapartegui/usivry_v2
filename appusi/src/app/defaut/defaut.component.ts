@@ -14,10 +14,24 @@ import { SeancesService } from 'src/services/seances.service';
 export class DefautComponent implements OnInit {
   public cours:Cours[] = [];
   public seances:Seance[] = [];
+  public lundi : boolean;
+  public mercredi : boolean;
+  public mardi : boolean;
+  public jeudi : boolean;
+  public vendredi : boolean;
+  public samedi : boolean;
+  public dimanche : boolean;
   constructor(private coursser:CoursService, private seanceser:SeancesService, public router:Router){}
   ngOnInit(): void {
     this.coursser.GetCours().then((cours_res) =>{
       this.cours = cours_res;
+      this.lundi = this.cours.some(x => x.jour_semaine == 'lundi');
+      this.mardi = this.cours.some(x => x.jour_semaine == 'mardi');
+      this.mercredi = this.cours.some(x => x.jour_semaine == 'mercredi');
+      this.jeudi = this.cours.some(x => x.jour_semaine == 'jeudi');
+      this.vendredi = this.cours.some(x => x.jour_semaine == 'vendredi');
+      this.samedi = this.cours.some(x => x.jour_semaine == 'samedi');
+      this.dimanche = this.cours.some(x => x.jour_semaine == 'dimanche');
     })
     this.seanceser.GetSeance().then((seance_res)=>{
       this.seances = seance_res;

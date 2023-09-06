@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="../assets/cours.jpg"  class="card-img">
+                        <img src="../assets/cours.jpg" class="card-img">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -46,7 +46,8 @@
             <div class="card-body">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <iframe class="img_content" src="https://www.youtube.com/embed/8DoFfade_r8"
+                        <iframe width="100%" height="100%" class="img_content"
+                            src="https://www.youtube.com/embed/8DoFfade_r8"
                             title="finale de la coupe du monde de Roller Soccer 2019 (Pontault-Combault VS Holland)"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -72,7 +73,9 @@
                             L'équipe
                             sénior participe au plus grandes compétitions mondiales en étant régulièrement dans les
                             meilleures.
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            <p class="card-text"><small class="text-body-secondary"><a
+                                        href="https://ffroller-skateboard.fr/blog/discipline/roller_soccer/">Roller
+                                        Soccer à la FFRS</a></small></p>
                         </div>
                     </div>
                 </div>
@@ -85,37 +88,48 @@
 <div class="row">
     <div class="col-12">
         <div class="card mb-3">
-            <div class="card-header text-bg-ivry ">Roll Ball</div>
+            <div class="card-header text-bg-ivry ">RollBall</div>
             <div class="card-body">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <iframe class="img_content" src="https://www.youtube.com/embed/8DoFfade_r8"
-                            title="finale de la coupe du monde de Roller Soccer 2019 (Pontault-Combault VS Holland)"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        <iframe width="100%" height="100%" class="img_content"
+                            src="https://www.youtube.com/embed/eGeFJWzHwnM?si=XIoFc5LLEAdjh3Tv"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen></iframe>
+
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">Roll Ball</h5>
-                            Discipline historique du club, le Roller Soccer est ce qui a fédéré la bande d'ami à
-                            l'origine de l'US
-                            Ivry
-                            Roller. <br>Qu'est ce que c'est ? Tout simplement du football mais avec des rollers, et non
-                            c'est pas si
-                            casse-gueule !<br>
-                            Ce sport se pratique à 5 contre 5 sur un terrain de type Hockey (ou Futsal avec
-                            balustrades), le but ne
-                            fait
-                            qu'un metre de haut (pour 3 de la large), aucun joueur ne pouvant toucher la balle à la
-                            main, même celui
-                            positionné en gardien. Au final de la vitesse, du fun et un sport accessible aux plus jeunes
-                            dès 8
-                            ans.<br>
-                            L'équipe
-                            sénior participe au plus grandes compétitions mondiales en étant régulièrement dans les
-                            meilleures.
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            Toute nouvelle discipline dans le monde du roller : le rollball.
+
+                            Sport hybride mélangeant roller et handball, le rollball se joue en équipe de 6 joueurs qui
+                            s’affrontent sur un terrain de handball, essayant de marquer le plus de buts possibles avec
+                            un ballon de basket.
+
+                            L’US Ivry Roller souhaite développer cette nouvelle activité en France et fait parti
+                            intégrante de cette discipline, notamment avec les équipes de France féminine et masculine
+                            qui ont été formés et entrainés au sein du club l’année dernière, afin de participer à la
+                            coupe du monde qui s’est tenue en Inde en Avril 2023.
+
+                            Ce sport prenant de plus en plus d’ampleur, nous souhaiterions le rendre accessible à tous :
+                            pour tous types de niveaux, tous types de profil… Venez découvrir un nouveau sport qui vous
+                            apportera cardio et force tout en vous amusant !
+                            <p class="card-text"><small class="text-body-secondary">Les sites
+                                    <ul>
+                                        <li><a class="m-1" href="https://www.facebook.com/RollBallFrance"> RollBall
+                                                France
+                                                <i style="font-size: 2rem; color: black;" class="bi bi-facebook"></i>
+                                            </a></li>
+
+                                        <li><a class="m-1" href="https://www.instagram.com/rollball_france/">
+                                                @rollball_france
+                                                <i style="font-size: 2rem ; color: black;" class="bi bi-instagram"></i>
+                                            </a></li>
+                                    </ul>
+                                </small>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -132,7 +146,7 @@
             <div class="card-body">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="../assets/derby.jpg"  class="card-img">
+                        <img src="../assets/derby.jpg" class="card-img">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -187,7 +201,7 @@
                         <div [id]="'collapseOne-Menu'" class="accordion-collapse collapse show"
                             [attr.data-bs-parent]="'#accordionExample-Menu'">
                             <div class="accordion-body">
-                                <table *ngIf="seances && seances.length > 0 ">
+                                <table class="screen" *ngIf="seances && seances.length > 0 ">
                                     <thead>
                                         <th>Nom</th>
                                         <th>Date</th>
@@ -196,7 +210,7 @@
                                         <th>Lieu</th>
                                         <th>Professeur présent</th>
                                         <th>Niveau requis</th>
-                                        <th>Age minimum</th>
+                                        <th>Age</th>
                                         <th></th>
                                     </thead>
                                     <tr *ngFor="let seance of seances">
@@ -212,7 +226,7 @@
                                             </ul>
                                         </td>
                                         <td>{{ seance.niveau_requis }}</td>
-                                        <td>{{ seance.age_requis }}</td>
+                                        <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
                                         <td>
                                             <button type="button" class="btn btn-success"
@@ -220,6 +234,27 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <ul class="mobile" *ngIf="seances && seances.length > 0 ">
+
+                                    <ng-container *ngFor="let seance of seances">
+                                        <!-- Afficher les détails de l'inscription ici -->
+                                        <li>
+                                            <div class="rowmobile">
+                                                <div style="margin: 2px;">
+                                                    <span><strong>{{ seance.libelle }}</strong></span><br />
+                                                    <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                                                    <span>{{ seance.heure_debut }}</span><br />
+                                                    <span>{{ seance.lieu }}</span><br />
+                                                </div>
+                                                <div style="margin: 2px;">
+
+                                                    <button type="button" class="btn btn-success"
+                                                        (click)="Essayer(seance)">Réserver un essai</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
                                 <p *ngIf="!seances || seances.length == 0">
                                     Pas de séances disponibles en cours
                                 </p>
@@ -239,7 +274,151 @@
                         <div [id]="'collapseTwo-Menu'" class="accordion-collapse collapse"
                             [attr.data-bs-parent]="'#accordionExample-Menu'">
                             <div class="accordion-body">
-                                <table *ngIf="cours && cours.length > 0">
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="lundi">
+                                        <h2>Lundi</h2>
+                                    </ng-container>
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <ng-container *ngIf="cours_det.jour_semaine == 'lundi'">
+                                            <div class="card m-2" style="width: auto;">
+                                                <div class="card-body">
+                                                    <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                    <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom }}
+                                                    </p>
+                                                    <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                        minutes </p>
+                                                    <p class="card-text">Responsable : {{ cours_det.prof_principal_nom
+                                                        }} </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="mardi">
+                                        <h2>Mardi</h2>
+                                    </ng-container>
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <ng-container *ngIf="cours_det.jour_semaine == 'mardi'">
+                                            <div class="card m-2" style="width: auto;">
+                                                <div class="card-body">
+                                                    <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                    <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom }}
+                                                    </p>
+                                                    <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                        minutes </p>
+                                                    <p class="card-text">Responsable : {{ cours_det.prof_principal_nom
+                                                        }} </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="mercredi">
+                                        <h2>Mercredi</h2>
+                                    </ng-container>
+                                    <div class="row">
+                                        <ng-container *ngFor="let cours_det of cours">
+                                            <ng-container *ngIf="cours_det.jour_semaine == 'mercredi'">
+                                                <div class="card m-2" style="width: auto;">
+                                                    <div class="card-body">
+                                                        <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                        <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom
+                                                            }}</p>
+                                                        <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                            minutes </p>
+                                                        <p class="card-text">Responsable : {{
+                                                            cours_det.prof_principal_nom }} </p>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="jeudi">
+                                        <h2>Jeudi</h2>
+                                    </ng-container>
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <ng-container *ngIf="cours_det.jour_semaine == 'jeudi'">
+                                            <div class="card m-2" style="width: auto;">
+                                                <div class="card-body">
+                                                    <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                    <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom }}
+                                                    </p>
+                                                    <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                        minutes </p>
+                                                    <p class="card-text">Responsable : {{ cours_det.prof_principal_nom
+                                                        }} </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="vendredi">
+                                        <h2>Vendredi</h2>
+                                    </ng-container>
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <ng-container *ngIf="cours_det.jour_semaine == 'vendredi'">
+                                            <div class="card m-2" style="width: auto;">
+                                                <div class="card-body">
+                                                    <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                    <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom }}
+                                                    </p>
+                                                    <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                        minutes </p>
+                                                    <p class="card-text">Responsable : {{ cours_det.prof_principal_nom
+                                                        }} </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="samedi">
+                                        <h2>Samedi</h2>
+                                    </ng-container>
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <ng-container *ngIf="cours_det.jour_semaine == 'samedi'">
+                                            <div class="card m-2" style="width: auto;">
+                                                <div class="card-body">
+                                                    <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                    <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom }}
+                                                    </p>
+                                                    <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                        minutes </p>
+                                                    <p class="card-text">Responsable : {{ cours_det.prof_principal_nom
+                                                        }} </p>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngIf="dimanche">
+                                        <h2>Dimanche</h2>
+                                    </ng-container>
+                                    <div class="row">
+                                        <ng-container *ngFor="let cours_det of cours">
+                                            <ng-container *ngIf="cours_det.jour_semaine == 'dimanche'">
+                                                <div class="card m-2" style="width: auto;">
+                                                    <div class="card-body">
+                                                        <p class="card-title"><strong>{{ cours_det.nom }}</strong></p>
+                                                        <p class="card-subtitle mb-2 text-muted">{{ cours_det.lieu_nom
+                                                            }}</p>
+                                                        <p class="card-text">{{cours_det.heure}} - {{ cours_det.duree }}
+                                                            minutes </p>
+                                                        <p class="card-text">Responsable : {{
+                                                            cours_det.prof_principal_nom }} </p>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <!-- <table class="screen" *ngIf="cours && cours.length > 0">
                                     <thead>
                                         <th>Nom</th>
                                         <th>Date</th>
@@ -248,8 +427,9 @@
                                         <th>Lieu</th>
                                         <th>Professeur responsable</th>
                                     </thead>
+
                                     <tr *ngFor="let cours_det of cours">
-                                        <!-- Afficher les détails de l'inscription ici -->
+
                                         <td>{{ cours_det.nom }}</td>
                                         <td>{{ cours_det.jour_semaine }}</td>
                                         <td>{{ cours_det.heure }}</td>
@@ -257,7 +437,24 @@
                                         <td>{{ cours_det.lieu_nom }}</td>
                                         <td>{{ cours_det.prof_principal_nom }}</td>
                                     </tr>
-                                </table>
+                                </table> 
+                                <ul class="mobile" *ngIf="cours && cours.length > 0">
+                                    <ng-container *ngFor="let cours_det of cours">
+                                        <li>
+                                            <div class="rowmobile">
+                                                <div style="margin: 2px;">
+                                                    <span><strong>{{ cours_det.nom }}</strong></span><br />
+                                                    <span>{{ cours_det.jour_semaine | date: 'dd/MM/yyyy' }}</span><br />
+                                                    <span>{{ cours_det.heure }}</span><br />
+                                                    <span>{{ cours_det.duree }} minutes</span><br />
+                                                    <span>{{ cours_det.lieu_nom }}</span><br />
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ng-container>
+
+                                </ul>-->
                                 <p *ngIf="!cours || cours.length == 0">
                                     Pas de cours
                                 </p>
@@ -321,58 +518,50 @@
             <div class="card-body">
                 <div class="row g-0">
 
-                    <div class="col-md-12">
-                        <div class="card-body row">
-                            <div class="card col-md-6">
-                                <div class="card-header">
-                                    Adhésion en ligne
-                                </div>
-                                <div class="card-body">
-                                    Les inscriptions se font toujours en ligne.<br>
-                                    Voici le lien vers les inscriptions :
-                                    Lien direct : <a
-                                        href="https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/">https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/</a>
-                                    <br />Les documents demandés :
-                                    <ul>
-                                        <li>Certificat médiacal ou <a
-                                                href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS
-                                                sports</a></li>
-                                        <li>Photo d'identité récente</li>
-                                        <li>Remplir le formulaire d'inscription</li>
-                                        <li>S'acquiter de la cotisation de 160 € (voir réduction à coté)</li>
-                                    </ul>
-                                    <div class="card-footer bg-transparent"> <button type="button"
-                                            class="btn btn-success btn-lg"
-                                            onclick="location.href='https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/'">Inscriptions</button><br><br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card col-md-6">
-                                <div class="card-header">
-                                    Réduction
-                                </div>
-                                <h3>Liste des codes de réduction applicables lors de l'inscription (justificatif
-                                    à fournir dans tous les cas ci-dessous)</h3>
-                                <ul>
-                                    <li><strong>MULTI</strong> => Si vous réalisez au moins deux adhésions dans un même
-                                        foyer :
-                                        15€ de réduction à partir de la 2ème inscription</li>
-                                    <li><strong>USI</strong> => Si vous êtes déjà membre de l'US Ivry et que le Roller
-                                        n'est pas
-                                        votre section principal : 15 €</li>
-                                    <li><strong>PASSSPORT</strong> => Si vous avez reçus le courrier attestant la
-                                        réduction </li>
-                                    <li><strong>TOUSENCLUB</strong> => Si vous êtes bénéficiaire du RSA, étudiants non
-                                        boursiers
-                                        ou demandeur
-                                        d'emploi</li>
-                                </ul>
-                                Si vous êtes dans le cas d'un cumul de code, veuillez nous contacter pour que
-                                l'on puisse s'en
-                                occuper.
-                            </div>
-                        </div>
+                    <div class="col-md-6">
+                        <h2>Adhésion en ligne</h2>
+                        Les inscriptions se font toujours en ligne.<br>
+                        Voici le lien vers les inscriptions :
+                        Lien direct : <a
+                            href="https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/">https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/</a>
+                        <br />Les documents demandés :
+                        <ul>
+                            <li>Certificat médiacal ou <a
+                                    href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS
+                                    sports</a></li>
+                            <li>Photo d'identité récente</li>
+                            <li>Remplir le formulaire d'inscription</li>
+                            <li>S'acquiter de la cotisation de 160 € (voir réduction à coté)</li>
+                        </ul>
+                        <button type="button" class="btn btn-success btn-lg"
+                            onclick="location.href='https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/'">Inscriptions</button><br><br>
+
                     </div>
+                    <div class="col-md-6">
+                        <h2>
+                            Réduction
+                        </h2>
+                        Liste des codes de réduction applicables lors de l'inscription - justificatif
+                        à fournir dans tous les cas ci-dessous
+                        <ul>
+                            <li><strong>MULTI</strong> => Si vous réalisez au moins deux adhésions dans un même
+                                foyer :
+                                15€ de réduction à partir de la 2ème inscription</li>
+                            <li><strong>USI</strong> => Si vous êtes déjà membre de l'US Ivry et que le Roller
+                                n'est pas
+                                votre section principal : 15 €</li>
+                            <li><strong>PASSSPORT</strong> => Si vous avez reçus le courrier attestant la
+                                réduction </li>
+                            <li><strong>TOUSENCLUB</strong> => Si vous êtes bénéficiaire du RSA, étudiants non
+                                boursiers
+                                ou demandeur
+                                d'emploi</li>
+                        </ul>
+                        Si vous êtes dans le cas d'un cumul de code, veuillez nous contacter pour que
+                        l'on puisse s'en
+                        occuper.
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -384,60 +573,102 @@
     <div class="col-12">
         <div class="card mb-3">
             <div class="card-header text-bg-ivry ">Club et contacts</div>
-            <div class="card-body row m-0">
-                <div class="col-md-4">
-                    <h3>US Ivry Roller</h3>
-                    69 Avenue Danielle Casanova<br />
-                    94200 Ivry-sur-Seine, France<br />
-                </div>
-                <div class="col-md-4">
-                    <h3>Le club</h3>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-envelope-at" viewBox="0 0 16 16">
-                        <path
-                            d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z" />
-                        <path
-                            d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
-                    </svg>&nbsp;:&nbsp;<a href="mailto:usivry.roller@gmail.com">usivry.roller@gmail.com</a><br />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-telephone" viewBox="0 0 16 16">
-                        <path
-                            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-                    </svg> +33 6 69 40 37 38<br />
-                    <a class="m-1" href="https://www.facebook.com/usivryroller">
-                        <i style="font-size: 2rem; color: black;" class="bi bi-facebook"></i>
-                    </a>&nbsp;
-
-                    <a class="m-1" href="https://www.instagram.com/us_ivry_roller/">
-                        <i style="font-size: 2rem ; color: black;" class="bi bi-instagram"></i>
-                    </a>
-
-                </div>
-                <div class="col-md-4">
-                    <h3>Le président</h3>
-                    J-E Chapartegui<br />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-envelope-at" viewBox="0 0 16 16">
-                        <path
-                            d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z" />
-                        <path
-                            d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
-                    </svg>&nbsp;:&nbsp;<a href="mailto:jechapartegui@gmail.com">jechapartegui@gmail.com</a><br />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-telephone" viewBox="0 0 16 16">
-                        <path
-                            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
-                    </svg> +33 6 69 40 37 38<br />
-
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12" style="align-content: center;">
+                        <h2>Histoire du club</h2>
+                        Le premier cours de roller au sein de l'US Ivry Roller a été réalisé en Septembre 2017 à
+                        la
+                        Halle
+                        Gosnat,
+                        mais l'histoire n'a pas tout à fait commencé là.<br>
+                        Le groupe "historique" pratique le Roller Soccer depuis 2009 (au sein notamment de
+                        l'historique
+                        Paris Roller
+                        Foot) et malgré une bonne dynamique et de bons résultats, l'équipe a voulu monter un
+                        projet plus
+                        global
+                        autour du Roller. Former les nouvelles générations, avoir une approche sports collectifs
+                        dans un
+                        sport
+                        individuel, telles étaient les valeurs que nous voulions transmettre.<br>
+                        C'est pourquoi au Printemps 2016 nous avons contacté l'US Ivry Omnisport pour nous
+                        établir dans
+                        cette ville
+                        où certains habitaient déjà, et nous avons été acceuillis à bras ouverts. <br>
+                        Depuis 5 ans, nous proposons des cours de roller aux plus jeunes, avec toujours plein de
+                        bienveillance, en
+                        apportant notre "touche"... L'an dernier, nous avons intégré une équipe de Roller Derby,
+                        car ca
+                        correspond
+                        bien aux valeurs du club, cela permettra d'offrir une nouvelle discipline au club et
+                        surtout ils
+                        sont
+                        sympas.<br>
+                        Alors oui, nous faisons toujours du Roller Soccer, même du RollBall, mais nous voulons
+                        aussi
+                        vous
+                        proposer
+                        les différentes disciplines que proposent ce sport magnifique qu'est le Roller
+                    </div>
                 </div>
 
+                <h2>Contacts</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>US Ivry Roller</h3>
+                        69 Avenue Danielle Casanova<br />
+                        94200 Ivry-sur-Seine, France<br />
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Le club</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-envelope-at" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z" />
+                            <path
+                                d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
+                        </svg>&nbsp;:&nbsp;<a href="mailto:usivry.roller@gmail.com">usivry.roller@gmail.com</a><br />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-telephone" viewBox="0 0 16 16">
+                            <path
+                                d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                        </svg> +33 6 69 40 37 38<br />
+                        <a class="m-1" href="https://www.facebook.com/usivryroller"> US Ivry Roller
+                            <i style="font-size: 2rem; color: black;" class="bi bi-facebook"></i>
+                        </a>&nbsp;
+
+                        <a class="m-1" href="https://www.instagram.com/us_ivry_roller/"> @us_ivry_roller
+                            <i style="font-size: 2rem ; color: black;" class="bi bi-instagram"></i>
+                        </a>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Le président</h3>
+                        J-E Chapartegui<br />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-envelope-at" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2H2Zm3.708 6.208L1 11.105V5.383l4.708 2.825ZM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2-7-4.2Z" />
+                            <path
+                                d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648Zm-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z" />
+                        </svg>&nbsp;:&nbsp;<a href="mailto:jechapartegui@gmail.com">jechapartegui@gmail.com</a><br />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-telephone" viewBox="0 0 16 16">
+                            <path
+                                d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                        </svg> +33 6 69 40 37 38<br />
+
+                    </div>
+                </div>
             </div>
             <div class="row m-1">
                 <div class="card border-dark p-2 mb-2 col-6 col-md-3">
                     <div class="card-header">Ecole de Roller</div>
                     <div class="card-body">
                         <h5 class="card-title">Responsable cours</h5>
-                        <p class="card-text">  <p class="card-text">Yoro S (CQP) :&nbsp;<i class="bi bi-telephone">&nbsp;</i>+33 7 55 97 69 27
+                        <p class="card-text">
+                        <p class="card-text">Yoro S (CQP) :&nbsp;<i class="bi bi-telephone">&nbsp;</i>+33 7 55 97 69 27
                         </p>
 
                     </div>
@@ -448,7 +679,8 @@
                         <h5 class="card-title">Responsable adultes</h5>
                         <p class="card-text">Toko K :&nbsp;<i class="bi bi-telephone">&nbsp;</i>+33 6 42 01 09 73</p>
                         <h5 class="card-title">Responsable juniors</h5>
-                        <p class="card-text">Françis V :&nbsp;<i class="bi bi-telephone">&nbsp;</i> +33 6 85 02 28 53</p>
+                        <p class="card-text">Françis V :&nbsp;<i class="bi bi-telephone">&nbsp;</i> +33 6 85 02 28 53
+                        </p>
                     </div>
                 </div>
                 <div class="card border-dark p-2 mb-2 col-6 col-md-3">
@@ -466,39 +698,6 @@
                     </div>
                 </div>
                 <br />
-                Le premier cours de roller au sein de l'US Ivry Roller a été réalisé en Septembre 2017 à
-                la
-                Halle
-                Gosnat,
-                mais l'histoire n'a pas tout à fait commencé là.<br>
-                Le groupe "historique" pratique le Roller Soccer depuis 2009 (au sein notamment de
-                l'historique
-                Paris Roller
-                Foot) et malgré une bonne dynamique et de bons résultats, l'équipe a voulu monter un
-                projet plus
-                global
-                autour du Roller. Former les nouvelles générations, avoir une approche sports collectifs
-                dans un
-                sport
-                individuel, telles étaient les valeurs que nous voulions transmettre.<br>
-                C'est pourquoi au Printemps 2016 nous avons contacté l'US Ivry Omnisport pour nous
-                établir dans
-                cette ville
-                où certains habitaient déjà, et nous avons été acceuilli à bras ouverts. <br>
-                Depuis 5 ans, nous proposons des cours de roller aux plus jeunes, avec toujours plein de
-                bienveillance, en
-                apportant notre "touche"... L'an dernier, nous avons intégré une équipe de Roller Derby,
-                car ca
-                correspond
-                bien aux valeurs du club, cela permettra d'offrir une nouvelle discipline au club et
-                surtout ils
-                sont
-                sympas.<br>
-                Alors oui, nous faisons toujours du Roller Soccer, même du RollBall, mais nous voulons
-                aussi
-                vous
-                proposer
-                les différentes disciplines que proposent ce sport magnifique qu'est le Roller
 
             </div>
         </div>
