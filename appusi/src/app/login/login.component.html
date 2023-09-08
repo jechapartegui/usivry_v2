@@ -30,54 +30,70 @@
 <br/>
 <br/>
 <br/>
+<div class="accordion" [attr.id]="'accordionExample-Menu'">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapseOne-Menu'" aria-expanded="true"
+                                [attr.aria-controls]="'collapseOne-Menu'">
+                                Tutoriel
+                            </button>
+                        </h2>
+                        <div [id]="'collapseOne-Menu'" class="accordion-collapse collapse"
+                            [attr.data-bs-parent]="'#accordionExample-Menu'">
+                            <div class="accordion-body" style="width: 100%;">
+                              <mat-card>
+                                <mat-card-title>Tutoriel d'utilisation</mat-card-title>
+                              <mat-card-content>
+                              Cette espace est disponible uniquement pour les personnes adhérentes à la section et / ou inscrite pour un essai. 
+                              Pour adhérer à la section, rendez vous sur <a href="https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/">Page d'adhésion</a> et pour faire un essai, inscrivez-vous dans la rubrique <a href="/#Entrainements">Entrainements</a> et choisir la séance à essayer.
+                              
+                              <h3 ><strong>Ouverture de l'application</strong></h3>
+                              Sauf si vous vous êtes inscrits pour un essai, vous aurez reçu vos login et mot de passe par mail.<br/>
+                              Une fois connecté, vous accéderez au Menu d'inscription.<br/>
+                              
+                              Chaque adhérent du même foyer sera sur ce menu.<br/>
+                              
+                              <img src="../assets/tuto_mesinscriptions.png" style="width: 100%;"/><br/>
+                              
+                              <h3 ><strong>S'inscrire</strong></h3>
+                              Vous retrouverez dans "Mes séances disponibles", les séances qui correspondent à votre niveau / age dans une plage de temps d'un mois. Cliquez sur le bouton "S'inscire" pour s'inscrire à la séance.
+                              <br/>
+                              Voilà, vous êtes inscrits.<br/>
+                              Vous pouvez le constater dans le menu "Mes inscriptions" :<br/>
+                              <img src="../assets/tuto_inscrite.png" style="width: 100%;"/><br/>
+                              
+                              <h3 ><strong>Se déclarer absent</strong></h3>
+                              Si vous ne pouvez pas participer à la séance il est également possible de se déclarer absent en cliquant sur le bouton "Se déclarer absent" <br/>
+                              
+                              <img src="../assets/tuto_declarer_absente.png" style="width: 100%;"/><br/>
+                              
+                              Voilà, vous êtes présents à un cours, mais pas à l'autre.<br/>
+                              <img src="../assets/tuto_1present_1absent.png" style="width: 100%;"/><br/>
+                              
+                              <h3 ><strong>Changer vos présences / absences</strong></h3>
+                              Vous pouvez bien évidemment changer cette situation en cliquant sur les boutons "Se désinscrire" ou "Réinscrire". Cela mettra à jour votre situation<br/>
+                              
+                              Voilà, votre nouvelle situation.<br/>
+                              <img src="../assets/tuto_changement_situation.png" style="width: 100%;"/><br/>
+                              
+                              <h3 ><strong>Mes informations</strong></h3>
+                              Cliquez sur le lien "Mes informations" pour modifier les données suivantes :
+                              - Informations de civilité (aucun impact FFRS ou USI Omnisports c'est la base de la section) ;
+                              - Téléphone / personne à prévenir / contact d'urgence ;
+                              - Email du compte ;
+                              - Mot de passe du compte ;
+                              Le niveau sera déterminé par vos professeurs.<br/>
+                              <h3 ><strong>Si vous effectuez un essai</strong></h3>
+                              C'est à peu près pareil, sauf que vous aurez un solde d'essai à répartir (2 essais par personne par an).
+                              <br/>
+                              <img src="../assets/tutuo_essai.png" style="width: 100%;"/>
+                              <br/></mat-card-content>
+                              </mat-card>
+                              
+                            </div>
+                        </div>
+                    </div>
 
-<mat-card>
-  <mat-card-title>Tutoriel d'utilisation</mat-card-title>
-<mat-card-content>
-Cette espace est disponible uniquement pour les personnes adhérentes à la section et / ou inscrite pour un essai. 
-Pour adhérer à la section, rendez vous sur <a href="https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/">Page d'adhésion</a> et pour faire un essai, inscrivez-vous dans la rubrique <a href="/#Entrainements">Entrainements</a> et choisir la séance à essayer.
-
-<h3 ><strong>Ouverture de l'application</strong></h3>
-Sauf si vous vous êtes inscrits pour un essai, vous aurez reçu vos login et mot de passe par mail.<br/>
-Une fois connecté, vous accéderez au Menu d'inscription.<br/>
-
-Chaque adhérent du même foyer sera sur ce menu.<br/>
-
-<img src="../assets/tuto_mesinscriptions.png" style="width: 100%;"/><br/>
-
-<h3 ><strong>S'inscrire</strong></h3>
-Vous retrouverez dans "Mes séances disponibles", les séances qui correspondent à votre niveau / age dans une plage de temps d'un mois. Cliquez sur le bouton "S'inscire" pour s'inscrire à la séance.
-<br/>
-Voilà, vous êtes inscrits.<br/>
-Vous pouvez le constater dans le menu "Mes inscriptions" :<br/>
-<img src="../assets/tuto_inscrite.png" style="width: 100%;"/><br/>
-
-<h3 ><strong>Se déclarer absent</strong></h3>
-Si vous ne pouvez pas participer à la séance il est également possible de se déclarer absent en cliquant sur le bouton "Se déclarer absent" <br/>
-
-<img src="../assets/tuto_declarer_absente.png" style="width: 100%;"/><br/>
-
-Voilà, vous êtes présents à un cours, mais pas à l'autre.<br/>
-<img src="../assets/tuto_1present_1absent.png" style="width: 100%;"/><br/>
-
-<h3 ><strong>Changer vos présences / absences</strong></h3>
-Vous pouvez bien évidemment changer cette situation en cliquant sur les boutons "Se désinscrire" ou "Réinscrire". Cela mettra à jour votre situation<br/>
-
-Voilà, votre nouvelle situation.<br/>
-<img src="../assets/tuto_changement_situation.png" style="width: 100%;"/><br/>
-
-<h3 ><strong>Mes informations</strong></h3>
-Cliquez sur le lien "Mes informations" pour modifier les données suivantes :
-- Informations de civilité (aucun impact FFRS ou USI Omnisports c'est la base de la section) ;
-- Téléphone / personne à prévenir / contact d'urgence ;
-- Email du compte ;
-- Mot de passe du compte ;
-Le niveau sera déterminé par vos professeurs.<br/>
-<h3 ><strong>Si vous effectuez un essai</strong></h3>
-C'est à peu près pareil, sauf que vous aurez un solde d'essai à répartir (2 essais par personne par an).
-<br/>
-<img src="../assets/tutuo_essai.png" style="width: 100%;"/>
-<br/></mat-card-content>
-</mat-card>
 
 
