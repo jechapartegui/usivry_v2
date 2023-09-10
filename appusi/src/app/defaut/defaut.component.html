@@ -229,8 +229,10 @@
                                         <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
                                         <td>
-                                            <button type="button" class="btn btn-success"
-                                                (click)="Essayer(seance)">Réserver un essai</button>
+                                            <a *ngIf="seance.libelle.toLowerCase().includes('derby')" href="mailto:calerecrutement@gmail.com">Contacter la CATA</a>
+                                            <a *ngIf="!seance.libelle.toLowerCase().includes('derby')" href="mailto:usivry.roller@gmail.com">Contacter l'USI</a>
+
+                                         
                                         </td>
                                     </tr>
                                 </table>
@@ -247,9 +249,10 @@
                                                     <span>{{ seance.lieu }}</span><br />
                                                 </div>
                                                 <div style="margin: 2px;">
+                                                    <a *ngIf="seance.libelle.toLowerCase().includes('derby')" href="mailto:calerecrutement@gmail.com">Contacter la CATA</a>
+                                                    <a *ngIf="!seance.libelle.toLowerCase().includes('derby')" href="mailto:usivry.roller@gmail.com">Contacter l'USI</a>
 
-                                                    <button type="button" class="btn btn-success"
-                                                        (click)="Essayer(seance)">Réserver un essai</button>
+                                                 
                                                 </div>
                                             </div>
                                         </li>
