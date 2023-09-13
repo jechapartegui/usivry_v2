@@ -29,7 +29,13 @@
                                 s'épanouir dans la
                                 pratique
                                 du Roller.
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                <ul>
+                                    <li><span style="text-decoration: underline;">Enfants : Cours apprentissage du Roller </span> : l'objectif de ce cours est d'apprendre les bases du Roller pour être le plus possible à l'aise sur les patins.</li>
+                                    <li><span style="text-decoration: underline;">Enfants : Activité multiglisse </span> : l'objectif de ce cours est de pratiquer le Roller avec d'autres disciplines comme le Hockey, le Derby, le RollBall, Slalom, Dance... une porte d'entrée vers d'autres nouvelles activités</li>
+                                    <li><span style="text-decoration: underline;">Enfants : Roller Street </span> : l'objectif de ce cours est d'apprendre les bases du Roller pour être le plus possible à l'aise sur les patins.</li>
+                                    <li><span style="text-decoration: underline;">Adultes : Apprentissage et perfectionnement </span> : un cours destiné aux adultes, tous niveaux permettant d'apprendre et se perfectionner.</li>
+
+                                </ul>
                         </div>
                     </div>
                 </div>
@@ -211,7 +217,6 @@
                                         <th>Professeur présent</th>
                                         <th>Niveau requis</th>
                                         <th>Age</th>
-                                        <th></th>
                                     </thead>
                                     <tr *ngFor="let seance of seances">
                                         <!-- Afficher les détails de l'inscription ici -->
@@ -228,12 +233,7 @@
                                         <td>{{ seance.niveau_requis }}</td>
                                         <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
-                                        <td>
-                                            <a *ngIf="seance.libelle.toLowerCase().includes('derby')" href="mailto:calerecrutement@gmail.com">Contacter la CATA</a>
-                                            <a *ngIf="!seance.libelle.toLowerCase().includes('derby')" href="mailto:usivry.roller@gmail.com">Contacter l'USI</a>
-
-                                         
-                                        </td>
+                                        
                                     </tr>
                                 </table>
                                 <ul class="mobile" *ngIf="seances && seances.length > 0 ">
@@ -248,12 +248,7 @@
                                                     <span>{{ seance.heure_debut }}</span><br />
                                                     <span>{{ seance.lieu }}</span><br />
                                                 </div>
-                                                <div style="margin: 2px;">
-                                                    <a *ngIf="seance.libelle.toLowerCase().includes('derby')" href="mailto:calerecrutement@gmail.com">Contacter la CATA</a>
-                                                    <a *ngIf="!seance.libelle.toLowerCase().includes('derby')" href="mailto:usivry.roller@gmail.com">Contacter l'USI</a>
-
-                                                 
-                                                </div>
+                                               
                                             </div>
                                         </li>
                                     </ng-container>
@@ -321,6 +316,7 @@
                                     <ng-container *ngIf="mercredi">
                                         <h2>Mercredi</h2>
                                     </ng-container>
+                                    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                                         <ng-container *ngFor="let cours_det of cours">
                                             <ng-container *ngIf="cours_det.jour_semaine == 'mercredi'">
                                                 <div class="card p-0 m-2" style="width: auto; max-width: 100%; border: 0px;">
@@ -336,6 +332,7 @@
                                                 </div>
                                             </ng-container>
                                         </ng-container>
+                                    </div>
                                 </ng-container>
                                 <ng-container *ngIf="cours && cours.length > 0">
                                     <ng-container *ngIf="jeudi">
@@ -401,6 +398,7 @@
                                     <ng-container *ngIf="dimanche">
                                         <h2>Dimanche</h2>
                                     </ng-container>
+                                    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                                         <ng-container *ngFor="let cours_det of cours">
                                             <ng-container *ngIf="cours_det.jour_semaine == 'dimanche'">
                                                 <div class="card p-0 m-2" style="width: auto; max-width: 100%; border: 0px;">
@@ -416,6 +414,7 @@
                                                 </div>
                                             </ng-container>
                                         </ng-container>
+                                        </div>
                                 </ng-container>
                                 <!-- <table class="screen" *ngIf="cours && cours.length > 0">
                                     <thead>
@@ -470,8 +469,8 @@
                         </h2>
                         <div [id]="'collapseThree-Menu'" class="accordion-collapse collapse"
                             [attr.data-bs-parent]="'#accordionExample-Menu'">
-                            <div class="accordion-body" style="width: 100%;">
-                                <div class="card col-12">
+                            <div class="accordion-body" style="width: 100%;display: flex;flex-direction: row; flex-wrap: wrap;">
+                                <div class="card col-12 col-md-4">
                                     <div class="card-header">Gymnase Dulcie September</div>
                                     <div class="card-body">
                                         <a href="https://goo.gl/maps/jyHZDQg23GqZGfM36">8 rue Jean-Jacques Rousseau<br>
@@ -482,7 +481,7 @@
                                         L'entrée ne se fait pas par l'école<br>
                                     </div>
                                 </div>
-                                <div class="card col-12">
+                                <div class="card col-12 col-md-4">
                                     <div class="card-header">Halle Gosnat</div>
                                     <div class="card-body">
                                         <a href="https://goo.gl/maps/H2ZHwpSgnS9yyaDK7">30 rue Amédée Huon<br>
@@ -491,7 +490,7 @@
                                         Métro 7 : Mairie d'Ivry (10 min)<br>
                                     </div>
                                 </div>
-                                <div class="card col-12">
+                                <div class="card col-12 col-md-4">
                                     <div class="card-header">Stade Louis Braille</div>
                                     <div class="card-body">
                                         <a href="https://goo.gl/maps/pE6DmMACyHrdph1n9">24 Rue Louis Braille <br>
@@ -534,7 +533,7 @@
                         </ul>
                         <button type="button" class="btn btn-success btn-lg"
                             onclick="location.href='https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/'">Inscriptions</button><br><br>
-
+                        <button type="button" class="btn btn-success btn-lg" (click)="Essayer()" disabled title="à partir du 15 octobre, en fonction des places restantes. Nous contacter par mail pour plus d'info" >Réserver un essai</button>
                     </div>
                     <div class="col-md-6">
                         <h2>

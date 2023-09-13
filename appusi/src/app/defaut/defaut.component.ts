@@ -39,7 +39,7 @@ export class DefautComponent implements OnInit {
   }
   
 
-  Essayer(seance:Seance){
+  Essayer(){
     const loggedin = RidersService.IsLoggedIn;
     if(loggedin){
       this.router.navigate(['/menu-inscription']);

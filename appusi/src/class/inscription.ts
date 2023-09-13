@@ -1,5 +1,5 @@
 import { KeyValuePair } from "./keyvaluepair";
-import { Rider } from "./riders";
+import { Niveau, Rider } from "./riders";
 
 export class Inscription {
 
@@ -31,6 +31,8 @@ export class InscriptionSeance {
       public libelle: string;
       public professeurs: KeyValuePair[] = [];
       public rider_libelle: string = "";
+      public niveau: Niveau = Niveau.Débutant;
+      public edit: boolean = false;
       public hors_liste:boolean=false;
       public contact_urgence: string = "";
       public statut_seance?: StatutPresence = null ;

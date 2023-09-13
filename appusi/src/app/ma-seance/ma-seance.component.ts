@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InscriptionSeance, StatutPresence } from 'src/class/inscription';
+import { Niveau, Rider } from 'src/class/riders';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 import { SeancesService } from 'src/services/seances.service';
@@ -12,8 +13,9 @@ import { SeancesService } from 'src/services/seances.service';
 })
 export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
-  Liste: InscriptionSeance[] = []; 
-  constructor(private router: Router, private _seanceserv: SeancesService, private route: ActivatedRoute) { }
+  Liste: InscriptionSeance[] = [];   
+  niveauxRequis: Niveau[] = Object.values(Niveau);
+  constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv:RidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     const errorService = ErrorService.instance;
     //virer tous les cas initules
@@ -61,6 +63,21 @@ export class MaSeanceComponent implements OnInit {
 
   trackByRiderId(index: number, item: InscriptionSeance): number {
     return item.rider_id;
+  }
+
+  UpdateLevel(rider:InscriptionSeance){
+    const errorService = ErrorService.instance;
+    this._riderserv.Update_Level(rider.niveau, rider.rider_id).then((res: boolean) => {
+     if(res){
+      rider.edit = false;
+     } else {
+      let o = errorService.CreateError("Sauvegarder niveau", "Erreur inconnue");
+      errorService.emitChange(o);
+     }
+    }).catch((error: Error) => {
+      let o = errorService.CreateError("Sauvegarder niveau", error.message);
+      errorService.emitChange(o);
+    });
   }
 
   

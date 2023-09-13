@@ -137,6 +137,13 @@ mat-form-field {
   color: white;
 }
 
+.btn-ivry:hover {
+  /* Hérite des propriétés de la classe .btn de Bootstrap */
+  @extend .btn-danger !optional;
+  color: #BB1919;
+}
+
+
 .menu_usi:hover .text_menu_usi::after {
   width: 100%;
   left: 0;

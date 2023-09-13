@@ -18,6 +18,7 @@
               <label for="seasons" class="form-label">Choisir une saison</label>
               <select id="seasons" class="form-control" [(ngModel)]="season_id" placeholder="Choisir la saison">
                 <!-- Options pour les professeurs -->
+                  <option value="0">Toutes les saisons</option>
                 <ng-container *ngFor="let season of seasons">
                   <option [value]="season.key">{{season.value}}</option>
                 </ng-container>

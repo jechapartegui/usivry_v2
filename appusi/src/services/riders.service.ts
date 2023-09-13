@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Rider } from 'src/class/riders';
+import { Niveau, Rider } from 'src/class/riders';
 import { KeyValuePair } from 'src/class/keyvaluepair';
 import { GlobalService } from './global.services';
 import { environment } from 'src/environments/environment.prod';
@@ -234,6 +234,7 @@ export class RidersService {
     }
     return this.GetAll(body);
   }
+
   public GetAllSearchActive(search:string):Promise<Rider[]>{
     const body = {
       command: "get_all",
@@ -271,6 +272,22 @@ export class RidersService {
     const body = {
       command: "update",
       rider:rider
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Update_Level(niveau:Niveau, id:number): Promise<boolean> {
+    this.url = environment.usivry + "usivry/rider_manage.php";
+    const body = {
+      command: "update_level",
+      niveau:niveau,
+      id:id
     };
 
     return this.global.POST(this.url, body)

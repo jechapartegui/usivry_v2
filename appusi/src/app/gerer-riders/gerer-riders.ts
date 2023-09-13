@@ -485,14 +485,26 @@ export class GererRidersComponent implements OnInit {
 
   Filtrer() {
     let errorservice = ErrorService.instance;
-    this._riderser.GetAllSearchSeason(this.search_text, this.season_id).then((result) => {
-      this.ridersList = result;
-      let o = errorservice.OKMessage("Recherche de rider");
-      errorservice.emitChange(o);
-    }).catch((elkerreur: HttpErrorResponse) => {
-      let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
-      errorservice.emitChange(o);
-    })
+    if(!this.season_id || this.season_id == 0){
+      this._riderser.GetAllSearch(this.search_text).then((result) => {
+        this.ridersList = result;
+        let o = errorservice.OKMessage("Recherche de rider");
+        errorservice.emitChange(o);
+      }).catch((elkerreur: HttpErrorResponse) => {
+        let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
+        errorservice.emitChange(o);
+      })
+    } else {
+      this._riderser.GetAllSearchSeason(this.search_text, this.season_id).then((result) => {
+        this.ridersList = result;
+        let o = errorservice.OKMessage("Recherche de rider");
+        errorservice.emitChange(o);
+      }).catch((elkerreur: HttpErrorResponse) => {
+        let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
+        errorservice.emitChange(o);
+      })
+    }
+    
   }
   FiltrerBack() {
     let errorservice = ErrorService.instance;
