@@ -25,19 +25,23 @@ export class LoginComponent implements OnInit {
   RecupMDP() {
     // Appel à la méthode Check_Login du service RidersService
     const errorService = ErrorService.instance;
-    this.ridersService.RecupMDP(this.username).then((retour: boolean) => {
-      // Si la liste de riders est retournée (authentification réussie), rediriger vers la page "menu_inscription"
-      if (retour) {
-        let o = errorService.OKMessage("Réinitialisation du mot de passe");
+    const confirmation = window.confirm("Voulez-vous vraiment réinitialiser votre mot de passe ?");
+    if(confirmation){
+      this.ridersService.RecupMDP(this.username).then((retour: boolean) => {
+        // Si la liste de riders est retournée (authentification réussie), rediriger vers la page "menu_inscription"
+        if (retour) {
+          let o = errorService.OKMessage("Réinitialisation du mot de passe");
+          errorService.emitChange(o);
+        } else {
+          let o = errorService.CreateError("Réinitialisation du mot de passe", "Erreur inconnue");
+          errorService.emitChange(o);
+        }
+      }).catch((error: Error) => {
+        let o = errorService.CreateError("Réinitialisation du mot de passe", error.message);
         errorService.emitChange(o);
-      } else {
-        let o = errorService.CreateError("Réinitialisation du mot de passe", "Erreur inconnue");
-        errorService.emitChange(o);
-      }
-    }).catch((error: Error) => {
-      let o = errorService.CreateError("Réinitialisation du mot de passe", error.message);
-      errorService.emitChange(o);
-    });
+      });
+    }
+    
   }
 
   Login() {

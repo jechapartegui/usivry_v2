@@ -36,4 +36,17 @@ export class InscriptionSeance {
       public hors_liste:boolean=false;
       public contact_urgence: string = "";
       public statut_seance?: StatutPresence = null ;
+
+      public constructor(inscription?:Inscription){
+            if(inscription){
+                  this.id = inscription.id;
+                  this.rider_id = inscription.rider_id;
+                  this.seance_id = inscription.seance_id;
+                  this.date_inscription = inscription.date_inscription;
+                  this.statut = inscription.statut;
+                  this.statut_seance = null;
+                  this.hors_liste = true;
+                        }
+      }
 }
+

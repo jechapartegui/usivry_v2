@@ -197,7 +197,6 @@ export class RidersService {
     return this.Add(body, rider);
   }
 
-
   public Add(body, rider): Promise<Rider> {
     this.url = environment.usivry + 'usivry/rider_manage.php';
 
@@ -210,7 +209,6 @@ export class RidersService {
         return Promise.reject(error);
       });
   }
-
   public GetAllEver():Promise<Rider[]>{
     const body = {
       command: "get_all",
@@ -242,6 +240,13 @@ export class RidersService {
     }
     return this.GetAll(body);
   }
+  public GetAllSearchActiveLight(search:string):Promise<KeyValuePair[]>{
+    const body = {
+      command: "get_all_light",
+      search: search
+    }
+    return this.GetAllLight(body);
+  }
   public GetAllThisSeason():Promise<Rider[]>{
     const body = {
       command: "get_all"
@@ -260,6 +265,18 @@ export class RidersService {
 
     return this.global.POST(this.url, body)
       .then((response: Rider[]) => {
+        
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public GetAllLight(body): Promise<KeyValuePair[]> {
+    this.url = environment.usivry + 'usivry/rider_manage.php';
+
+    return this.global.POST(this.url, body)
+      .then((response: KeyValuePair[]) => {
         
         return response;
       })

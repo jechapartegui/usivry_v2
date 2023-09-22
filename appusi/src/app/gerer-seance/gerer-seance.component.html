@@ -126,10 +126,10 @@
               </div>
               <div class="form-group">
                 <label for="professeurs">Professeurs</label>
-                <select  class="form-control" id="professeurs"  [(ngModel)]="editSeance.professeurs" multiple>
-                  <option *ngFor="let prof of listeprof" [value]="prof.key" [selected]="editSeance.professeurs.includes(prof)">{{ prof.value }}</option>
+                <select class="form-control" id="professeurs" [(ngModel)]="editSeance.professeurs" multiple>
+                  <option *ngFor="let prof of listeprof" [ngValue]="prof" [selected]="editSeance.professeurs.includes(prof)">{{ prof.value }}</option>
                 </select>
-              </div>
+              </div>              
               <div class="form-group">
                 <label for="age_requis">Âge minimum requis : </label>
                 <input  class="form-control" id="age_requis"  type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_requis">
@@ -140,7 +140,7 @@
               </div>
               <div class="form-group">
                 <label for="niveau_requis">Niveau requis : </label>
-                <select  class="form-control" id="niveau_requis" [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne">
+                <select  class="form-control" id="niveau_requis" [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne" multiple>
                   <option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</option>
                 </select>
               </div>

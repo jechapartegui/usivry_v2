@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InscriptionSeance, StatutPresence } from 'src/class/inscription';
+import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
+import { KeyValuePair } from 'src/class/keyvaluepair';
 import { Niveau, Rider } from 'src/class/riders';
+import { Seance, StatutSeance } from 'src/class/seance';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 import { SeancesService } from 'src/services/seances.service';
@@ -14,6 +16,10 @@ import { SeancesService } from 'src/services/seances.service';
 export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
   Liste: InscriptionSeance[] = [];   
+  seance: Seance;
+  selected_adherent:KeyValuePair = null;
+  text_recherche:string="";
+  liste_adherent:KeyValuePair[];
   niveauxRequis: Niveau[] = Object.values(Niveau);
   constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv:RidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
@@ -50,15 +56,110 @@ export class MaSeanceComponent implements OnInit {
         return statutOrder[aStatut] - statutOrder[bStatut];
       }
       this.Liste.sort(compareByStatut);
-      let o = errorService.OKMessage("Charger la séance");
-      errorService.emitChange(o);
+      this._seanceserv.Get(this.id).then((ss:Seance) =>{
+        this.seance = ss;
+        let o = errorService.OKMessage("Charger la séance");
+        errorService.emitChange(o);
+      }).catch((error: Error) => {
+        let o = errorService.CreateError("Charger la séance", error.message);
+        errorService.emitChange(o);
+      });
+
     }).catch((error: Error) => {
       let o = errorService.CreateError("Charger la séance", error.message);
       errorService.emitChange(o);
     });
   }
 
- 
+  validerSeance(): void {
+    // Afficher une boîte de dialogue de confirmation
+    const confirmation = window.confirm("Voulez-vous vraiment valider la séance ?");
+
+    // Si l'utilisateur a confirmé, effectuez l'action souhaitée
+    if (confirmation) {
+      // Mettez ici votre code pour l'action souhaitée
+      console.log("Séance validée !");
+    }
+  }
+  AnnulerSeance(): void {
+    const errorService = ErrorService.instance;
+    // Afficher une boîte de dialogue de confirmation
+    const confirmation = window.confirm("Voulez-vous vraiment annuler la séance ?");
+
+    // Si l'utilisateur a confirmé, effectuez l'action souhaitée
+    if (confirmation) {
+      this.seance.statut = StatutSeance.annulée;
+      this._seanceserv.Update(this.seance).then((res)=>{
+        if(res){
+          let o = errorService.OKMessage("Annuler la séance");          
+          errorService.emitChange(o);
+          this.router.navigate(['/menu-inscription']);
+        } else {
+          let o = errorService.CreateError("Annuler la séance", "Erreur inconnue");
+          errorService.emitChange(o);
+        }
+      }).catch((error: Error) => {
+        let o = errorService.CreateError("Annuler la séance", error.message);
+        errorService.emitChange(o);
+      });
+    }
+  }
+
+  SauvegarderText(){
+
+  }
+
+  RechercherAdherent(){
+    const errorService = ErrorService.instance;
+    this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) =>{
+      if(res.length> 0){
+        this.liste_adherent = res;
+        this.selected_adherent = this.liste_adherent[0];
+      } else {
+        this.liste_adherent = null;
+        let o = errorService.CreateError("Rechercher adhérent", "Pas de résultat");
+        errorService.emitChange(o);
+      }
+    }).catch((error: Error) => {
+      let o = errorService.CreateError("Rechercher adhérent", error.message);
+      errorService.emitChange(o);
+    });
+  }
+
+  InscrireAdherent(){
+    const inscription = new Inscription();
+    const errorService = ErrorService.instance;
+    inscription.date_inscription = new Date();
+    inscription.rider_id = this.selected_adherent.key;
+    inscription.seance_id = this.seance.seance_id;
+    inscription.statut = StatutPresence.Présent;
+    this._seanceserv.inscrire(inscription).then((id) =>{
+      this._seanceserv.ChargerSeance(this.id).then((list: InscriptionSeance[]) => {
+        this.Liste = list;
+        function compareByStatut(a: InscriptionSeance, b: InscriptionSeance): number {
+          const statutOrder = { présent: 1, absent: 2, null: 3 };
+  
+          const aStatut = a.statut || null;
+          const bStatut = b.statut || null;
+  
+          return statutOrder[aStatut] - statutOrder[bStatut];
+        }
+        this.Liste.sort(compareByStatut);
+        this._seanceserv.Get(this.id).then((ss:Seance) =>{
+          this.seance = ss;
+          let o = errorService.OKMessage("Inscription du rider et chargement de la liste");
+          errorService.emitChange(o);
+        }).catch((error: Error) => {
+          let o = errorService.CreateError("Inscription du rider et chargement de la liste", error.message);
+          errorService.emitChange(o);
+        });
+  
+      }).catch((error: Error) => {
+        let o = errorService.CreateError("Inscription du rider", error.message);
+        errorService.emitChange(o);
+      });
+    })
+  }
 
 
   trackByRiderId(index: number, item: InscriptionSeance): number {

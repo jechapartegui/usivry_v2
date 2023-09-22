@@ -125,7 +125,7 @@ seasons:KeyValuePair[];
   }
 
   creerCours(): void {
-    this.editCours = new Cours(0,"","","",0,0,"",0,"",0,Niveau.Débutant);
+    this.editCours = new Cours();
     this.editMode = true;
   }
 
