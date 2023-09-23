@@ -177,7 +177,7 @@ export class GererSeanceComponent implements OnInit {
   }
 
   creerSeance(): void {
-    this.editSeance = new Seance(0,0,new Date(),"",0,0,"","",StatutSeance.prévue,[], 0,99,Niveau.Débutant);
+    this.editSeance = new Seance();
     this.coursselectionne = false;
     this.editMode = true;
   }

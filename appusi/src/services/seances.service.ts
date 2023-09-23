@@ -106,6 +106,23 @@ export class SeancesService {
       });
   }
 
+  public Get(id:number): Promise<Seance> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"get",
+      id:id
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: Seance) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public UpdatePresence(item:InscriptionSeance): Promise<boolean>{
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
