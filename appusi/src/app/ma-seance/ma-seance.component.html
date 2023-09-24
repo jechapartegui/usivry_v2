@@ -36,30 +36,17 @@
                                                         placeholder="Niveau">
                                                         <ng-container *ngFor="let niveau of niveauxRequis">
                                                             <option [value]="niveau">{{niveau}}</option>
-                                                        </ng-container>
-                                                    <select id="niveau_requis" [disabled]="!item.edit"
-                                                        class="form-control" [(ngModel)]="item.niveau"
-                                                        placeholder="Niveau">
-                                                        <ng-container *ngFor="let niveau of niveauxRequis">
-                                                            <option [value]="niveau">{{niveau}}</option>
-                                                        </ng-container>
-                                                    </select>
-                                                </div>
-                                                <i style="cursor: pointer;"
-                                                    [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                    (click)="item.edit=true" class="bi bi-pencil"></i>
+                                                        </ng-container>                                                 
+                                                        
+                                                    </select>                                               
                                                 <i style="cursor: pointer;"
                                                     [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
                                                     (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
-                                                </div>
-                                                <i style="cursor: pointer;"
-                                                    [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                    (click)="item.edit=true" class="bi bi-pencil"></i>
+                                                </div>                                             
                                                 <i style="cursor: pointer;"
                                                     [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
                                                     (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
 
-                                            </td>
                                             </td>
                                             <td>
                                                 <ng-container *ngIf="item.statut">
@@ -81,20 +68,13 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group"
-                                                    aria-label="Basic radio toggle button group">
-                                                    <input type="radio" [(ngModel)]="item.statut_seance"
-                                                        (ngModelChange)="UpdateStatut(item)" [value]="'présent'"
-                                                        class="btn-check" [name]="'btnradio' + item.rider_id"
+                                                    aria-label="Basic radio toggle button group">                                                    
                                                     <input type="radio" [(ngModel)]="item.statut_seance"
                                                         (ngModelChange)="UpdateStatut(item)" [value]="'présent'"
                                                         class="btn-check" [name]="'btnradio' + item.rider_id"
                                                         [id]="'btnradio1_item' + item.rider_id" autocomplete="off">
                                                     <label class="btn btn-outline-success"
-                                                            [for]="'btnradio1_item' + item.rider_id">Présent</label>
-
-                                                    <input type="radio" [(ngModel)]="item.statut_seance"
-                                                        (ngModelChange)="UpdateStatut(item)" [value]="'absent'"
-                                                        class="btn-check" [name]="'btnradio' + item.rider_id"
+                                                            [for]="'btnradio1_item' + item.rider_id">Présent</label>                                                
                                                     <input type="radio" [(ngModel)]="item.statut_seance"
                                                         (ngModelChange)="UpdateStatut(item)" [value]="'absent'"
                                                         class="btn-check" [name]="'btnradio' + item.rider_id"
@@ -218,26 +198,15 @@
 
                                             </span>
                                         </div>
-                                            <span>
-
-                                            </span>
-                                        </div>
                                         <span>
                                             <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group">
-                                                <input type="radio" [(ngModel)]="item.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(item)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio' + item.rider_id"
+                                                aria-label="Basic radio toggle button group">                                               
                                                 <input type="radio" [(ngModel)]="item.statut_seance"
                                                     (ngModelChange)="UpdateStatut(item)" [value]="'présent'"
                                                     class="btn-check" [name]="'btnradio' + item.rider_id"
                                                     [id]="'btnradio1_item' + item.rider_id" autocomplete="off">
                                                 <label class="btn btn-outline-success"
                                                         [for]="'btnradio1_item' + item.rider_id">Présent</label>
-
-                                                <input type="radio" [(ngModel)]="item.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(item)" [value]="'absent'"
-                                                    class="btn-check" [name]="'btnradio' + item.rider_id"
                                                 <input type="radio" [(ngModel)]="item.statut_seance"
                                                     (ngModelChange)="UpdateStatut(item)" [value]="'absent'"
                                                     class="btn-check" [name]="'btnradio' + item.rider_id"
@@ -296,18 +265,11 @@
                                                             </ng-container>
                                                         </select>
                                                     </div>
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                        (click)="present.edit=true" class="bi bi-pencil"></i>
+                                                
                                                     <i style="cursor: pointer;"
                                                         [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
                                                         (click)="UpdateLevel(present)" class="bi bi-save-fill"></i>
-
-                                                </td>
-                                                    </div>
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                        (click)="present.edit=true" class="bi bi-pencil"></i>
+                                              
                                                     <i style="cursor: pointer;"
                                                         [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
                                                         (click)="UpdateLevel(present)" class="bi bi-save-fill"></i>
@@ -322,12 +284,8 @@
                                                         <i *ngIf="present.statut.toString() == 'absent'"
                                                             style="font-size: 2rem;color: red;"
                                                             class="bi bi-x-circle-fill"></i>
-                                                            style="font-size: 2rem;color: red;"
-                                                            class="bi bi-x-circle-fill"></i>
                                                     </ng-container>
                                                     <ng-container *ngIf="!present.statut">
-                                                        <i style="font-size: 2rem;color: gray;"
-                                                            class="bi bi-question-circle-fill"></i>
                                                         <i style="font-size: 2rem;color: gray;"
                                                             class="bi bi-question-circle-fill"></i>
                                                     </ng-container>
@@ -336,12 +294,7 @@
                                                 <td>
                                                     <div class="btn-group" role="group"
                                                         aria-label="Basic radio toggle button group">
-                                                        <input type="radio" [(ngModel)]="present.statut_seance"
-                                                            (ngModelChange)="UpdateStatut(present)" [value]="'présent'"
-                                                            class="btn-check"
-                                                            [name]="'btnradio_present' + present.rider_id"
-                                                            [id]="'btnradio1_present' + present.rider_id"
-                                                            autocomplete="off">
+                                                       
                                                         <input type="radio" [(ngModel)]="present.statut_seance"
                                                             (ngModelChange)="UpdateStatut(present)" [value]="'présent'"
                                                             class="btn-check"
@@ -349,7 +302,6 @@
                                                             [id]="'btnradio1_present' + present.rider_id"
                                                             autocomplete="off">
                                                         <label class="btn btn-outline-success"
-                                                            [for]="'btnradio1_present' + present.rider_id">Présent</label>
                                                             [for]="'btnradio1_present' + present.rider_id">Présent</label>
 
                                                         <input type="radio" [(ngModel)]="present.statut_seance"
@@ -359,7 +311,6 @@
                                                             [id]="'btnradio2_present' + present.rider_id"
                                                             autocomplete="off">
                                                         <label class="btn btn-outline-danger"
-                                                            [for]="'btnradio2_present' + present.rider_id">Absent</label>
                                                             [for]="'btnradio2_present' + present.rider_id">Absent</label>
 
 
@@ -395,9 +346,7 @@
                                                                     <ng-container *ngFor="let niveau of niveauxRequis">
                                                                         <option [value]="niveau">{{niveau}}</option>
                                                                     </ng-container>
-                                                                </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                                    (click)="present.edit=true" class="bi bi-pencil"></i>
+                                                                </select>
                                                                 <i style="cursor: pointer; margin-left: 10px;"
                                                                     [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
                                                                     (click)="UpdateLevel(present)"
@@ -455,10 +404,8 @@
                                                                 <ng-container *ngFor="let niveau of niveauxRequis">
                                                                     <option [value]="niveau">{{niveau}}</option>
                                                                 </ng-container>
-                                                            </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                                (click)="present.edit=true" class="bi bi-pencil"></i>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
+                                                            </select>
+                                                                                                                        <i style="cursor: pointer; margin-left: 10px;"
                                                                 [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
                                                                 (click)="UpdateLevel(present)"
                                                                 class="bi bi-save-fill"></i>
@@ -474,7 +421,6 @@
 
                                                 </span>
                                             </div>
-                                            <span>
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic radio toggle button group">
                                                     <input type="radio" [(ngModel)]="present.statut_seance"
@@ -503,13 +449,7 @@
                                                         [id]="'btnradio2_item' + present.rider_id" autocomplete="off">
                                                     <label class="btn btn-outline-danger"
                                                         [for]="'btnradio2_item' + present.rider_id">Absent</label>
-                                                    <input type="radio" [(ngModel)]="present.statut_seance"
-                                                        (ngModelChange)="UpdateStatut(present)" [value]="'absent'"
-                                                        class="btn-check" [name]="'btnradio' + present.rider_id"
-                                                        [id]="'btnradio2_item' + present.rider_id" autocomplete="off">
-                                                    <label class="btn btn-outline-danger"
-                                                        [for]="'btnradio2_item' + present.rider_id">Absent</label>
-
+                                                  
 
                                                     </div>
                                                 </span>
@@ -558,26 +498,15 @@
                                                             <ng-container *ngFor="let niveau of niveauxRequis">
                                                                 <option [value]="niveau">{{niveau}}</option>
                                                             </ng-container>
-                                                        <select id="niveau_requis" [disabled]="!absent.edit"
-                                                            class="form-control" [(ngModel)]="absent.niveau"
-                                                            placeholder="Niveau">
-                                                            <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                <option [value]="niveau">{{niveau}}</option>
-                                                            </ng-container>
                                                         </select>
                                                     </div>
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                        (click)="absent.edit=true" class="bi bi-pencil"></i>
+                                                    
                                                     <i style="cursor: pointer;"
                                                         [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
                                                         (click)="UpdateLevel(absent)" class="bi bi-save-fill"></i>
 
-                                                </td>
-                                                    </div>
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                        (click)="absent.edit=true" class="bi bi-pencil"></i>
+                                                
+                                                   
                                                     <i style="cursor: pointer;"
                                                         [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
                                                         (click)="UpdateLevel(absent)" class="bi bi-save-fill"></i>
@@ -670,9 +599,7 @@
                                                                 <ng-container *ngFor="let niveau of niveauxRequis">
                                                                     <option [value]="niveau">{{niveau}}</option>
                                                                 </ng-container>
-                                                            </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                                (click)="absent.edit=true" class="bi bi-pencil"></i>
+                                                            </select>
                                                             <i style="cursor: pointer; margin-left: 10px;"
                                                                 [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
                                                                 (click)="UpdateLevel(absent)"
@@ -763,10 +690,7 @@
                                                     <label class="btn btn-outline-success"
                                                         [for]="'btnradio1_item' + absent.rider_id">Présent</label>
 
-                                                    <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                        (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                        class="btn-check" [name]="'btnradio' + absent.rider_id"
-                                                        [for]="'btnradio1_item' + absent.rider_id">Présent</label>
+
 
                                                     <input type="radio" [(ngModel)]="absent.statut_seance"
                                                         (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
