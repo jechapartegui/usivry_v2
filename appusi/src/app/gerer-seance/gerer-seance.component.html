@@ -144,17 +144,16 @@
                   <option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</option>
                 </select>
               </div>
-              <div class="form-group" *ngIf="est_admin">
-                <label for="niveau_requis">Statut : </label>
-                <select  class="form-control" id="statut" [(ngModel)]="editSeance.statut">
-                  <option [value]="'prévue'">prévue</option>
-                  <option [value]="'réalisée'">réalisée</option>
-                  <option [value]="'annulée'">annulée</option>
-                </select>
+              <div class="form-group">
+                <label for="age_requis">Place maximum (laissez vide si illimité) : </label>
+                <input class="form-control" id="age_requis"  type="number"  [(ngModel)]="editSeance.place_maximum">
               </div>
               <button class="btn btn-outline-success" [disabled]="!coursselectionne"
                 (click)="soumettreSeance()">
                 {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour" }}
               </button>
               <button class="btn btn-outline-danger" (click)="annulerEdition()">Annuler</button>
+              <button *ngIf="est_admin && editSeance.seance_id > 0" class="btn btn-outline-info" 
+                (click)="VoirMaSeance()">Vue professeur
+              </button>
             </div>

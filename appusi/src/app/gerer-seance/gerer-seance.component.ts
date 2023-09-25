@@ -182,6 +182,14 @@ export class GererSeanceComponent implements OnInit {
     this.editMode = true;
   }
 
+  VoirMaSeance(){
+    let confirmation = window.confirm("Voulez-vous aller vers la vue du professeur ? les modifications non sauvegardées seront perdues");
+    if(confirmation){
+      this.router.navigate(['/ma-seance'], { queryParams: { id: this.editSeance.seance_id } });
+
+    }
+  }
+
   soumettreSeance(): void {
     let errorService = ErrorService.instance;
     let o = notification;

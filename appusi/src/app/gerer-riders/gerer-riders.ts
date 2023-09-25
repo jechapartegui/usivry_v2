@@ -537,21 +537,32 @@ export class GererRidersComponent implements OnInit {
 
 
   importData() {
-    if (!this.fileData) return;
+    let errorservice = ErrorService.instance;
 
+    //simuler :
+    if (!this.fileData) return;
+    var rid_list: Rider[] = [];
+    let compte = 0;
+    
     this.fileData.slice(1).forEach((row: any) => {
+      compte++;
+  
+      // Convertissez la date depuis Excel en utilisant date-fns-tz
+      const excelDate = row[21];
+      const date_naissance = this.g.parseExcelDate(excelDate);
+  
       const rider: Rider = {
         nom: row[2],
         prenom: row[3],
-        date_naissance: this.g.parseExcelDate(row[10]),
+        date_naissance: date_naissance, // Utilisez la date convertie
         sexe: row[9].toLowerCase() === 'monsieur',
         niveau: Niveau.Débutant,
-        adresse: `${row[12]} ${row[13]} ${row[14]}`,
+        adresse: `${row[22]} ${row[23]} ${row[24]} ${row[25]} ${row[27]} ${row[26]}`,
         mot_de_passe: 'ivry',
-        telephone: row[20],
-        personne_prevenir: `${row[25]} ${row[26]}`,
-        telephone_personne_prevenir: `${row[27]} ${row[28]}`,
-        email: row[1],
+        telephone: `${row[34]} ${row[35]}`,
+        personne_prevenir: `${row[37]} ${row[38]} - ${row[41]} ${row[42]}`,
+        telephone_personne_prevenir: `${row[39]} - ${row[43]}`,
+        email: row[29],
         compte: 0,
         essai_restant: 0,
         est_prof: false,
@@ -562,14 +573,25 @@ export class GererRidersComponent implements OnInit {
         seances: [],
         seances_prof: []
       };
-      this.ridersList.push(rider);
-
+      rid_list.push(rider);
     });
-    this._riderser.AddRange(this.ridersList).then((t: boolean) => {
-      console.log("ca marche");
-    }).catch((ee) => {
-      console.log(ee);
-    })
+    console.log(rid_list);
+    let confirmation = window.confirm("Il y'a " + compte.toString() + " lignes et " + rid_list.length.toString() + " comptes créés. Voulez vous importer ? ")
+    if(confirmation){
+      this._riderser.AddRange(rid_list).then((bool: boolean) => {
+        if (bool) {
+          let o = errorservice.OKMessage("Création de compte en masse");
+          errorservice.emitChange(o);
+        } else {
+          let o = errorservice.CreateError("Création de compte en masse", "Erreur inconnue");
+          errorservice.emitChange(o);
+        }
+      }).catch((elkerreur: HttpErrorResponse) => {
+        let o = errorservice.CreateError("Inscription du rider", elkerreur.statusText);
+        errorservice.emitChange(o);
+      })
+    }
+    
 
   }
 }

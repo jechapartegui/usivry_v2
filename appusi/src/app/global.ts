@@ -30,7 +30,7 @@ export class StaticClass{
     if (excelDate <= 60) {
       date.setFullYear(date.getFullYear() + 1);
     }
-  
+    date.setHours(12);
     return date;
   }
 
