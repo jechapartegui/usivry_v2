@@ -39,13 +39,13 @@ export class DefautComponent implements OnInit {
   }
   
 
-  Essayer(){
+  Essayer(seance:Seance){
     const loggedin = RidersService.IsLoggedIn;
     if(loggedin){
       this.router.navigate(['/menu-inscription']);
     } else {
       
-    this.router.navigate(['/gerer-riders'], { queryParams: { id: -2 } });
+    this.router.navigate(['/gerer-riders'], { queryParams: { id: -2, seance_id: seance.seance_id } });
     }
   }
 }

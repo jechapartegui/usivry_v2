@@ -733,7 +733,7 @@
                 <select id="adhrent_trouve" [disabled]="!liste_adherent" class="form-control"
                     [(ngModel)]="selected_adherent" placeholder="Adhérents trouvés">
                     <ng-container *ngFor="let adh of liste_adherent">
-                        <option [value]="adh">{{adh.value}}</option>
+                        <option [value]="adh.key">{{adh.value}}</option>
                     </ng-container>
                 </select>
             </div>
@@ -752,8 +752,8 @@
         </div>
     </div>
 </div>
-<h2>Changer le statut de la séance</h2>
-<div class="row  mt-1">
+<h2 *ngIf="seance">Changer le statut de la séance</h2>
+<div *ngIf="seance" class="row  mt-1">
     <div class="col-12">
         <ng-container *ngIf="seance.statut == 'prévue'">
             <button type="button" class="btn btn-danger" (click)="AnnulerSeance()">Annuler la séance</button>

@@ -100,6 +100,8 @@ export class GererSeanceComponent implements OnInit {
     
   }
 
+  ChangeProf(){}
+
   // Méthode pour trouver un gymnase à partir de son ID
   trouverGymnase(gymId: number): any {
     // Implémentez la logique pour trouver le gymnase à partir de la liste des gymnases
@@ -149,6 +151,13 @@ export class GererSeanceComponent implements OnInit {
       this.coursselectionne = false;
     }
     // Faites ce que vous voulez avec la nouvelle valeur sélectionnée ici
+  }
+
+  isProfInEditSeance(prof: KeyValuePair): boolean {
+    return this.editSeance.professeurs.some(p => p.value === prof.value);
+  }
+  isNiveauInEditSeance(niveau:Niveau): boolean {
+    return this.editSeance.niveau_requis.includes(niveau);
   }
 
   supprimerSeance(seance: Seance): void {

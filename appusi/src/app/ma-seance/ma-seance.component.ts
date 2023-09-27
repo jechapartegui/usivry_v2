@@ -17,7 +17,7 @@ export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
   Liste: InscriptionSeance[] = [];   
   seance: Seance;
-  selected_adherent:KeyValuePair = null;
+  selected_adherent:number = null;
   text_recherche:string="";
   liste_adherent:KeyValuePair[];
   niveauxRequis: Niveau[] = Object.values(Niveau);
@@ -77,8 +77,8 @@ export class MaSeanceComponent implements OnInit {
 
     // Si l'utilisateur a confirmé, effectuez l'action souhaitée
     if (confirmation) {
-      // Mettez ici votre code pour l'action souhaitée
-      console.log("Séance validée !");
+      this.seance.statut = StatutSeance.réalisée;
+      let ret = this.UpdateSeance("Séance réalisée");
     }
   }
   AnnulerSeance(): void {
@@ -89,24 +89,34 @@ export class MaSeanceComponent implements OnInit {
     // Si l'utilisateur a confirmé, effectuez l'action souhaitée
     if (confirmation) {
       this.seance.statut = StatutSeance.annulée;
-      this._seanceserv.Update(this.seance).then((res)=>{
-        if(res){
-          let o = errorService.OKMessage("Annuler la séance");          
-          errorService.emitChange(o);
-          this.router.navigate(['/menu-inscription']);
-        } else {
-          let o = errorService.CreateError("Annuler la séance", "Erreur inconnue");
-          errorService.emitChange(o);
-        }
-      }).catch((error: Error) => {
-        let o = errorService.CreateError("Annuler la séance", error.message);
-        errorService.emitChange(o);
-      });
+      let ret = this.UpdateSeance("Annuler la séance");
+      if(ret){
+        this.router.navigate(['/menu-inscription']);
+      }     
     }
   }
 
   SauvegarderText(){
-
+    this.UpdateSeance("Sauvegarder les notes");
+  }
+  UpdateSeance(motif:string) : boolean{
+    const errorService = ErrorService.instance;
+    this._seanceserv.Update(this.seance).then((res)=>{
+      if(res){
+        let o = errorService.OKMessage(motif);          
+        errorService.emitChange(o);
+        return true;
+      } else {
+        let o = errorService.CreateError(motif, "Erreur inconnue");
+        errorService.emitChange(o);
+        return false;
+      }
+    }).catch((error: Error) => {
+      let o = errorService.CreateError(motif, error.message);
+      errorService.emitChange(o);
+      return false;
+    });
+    return false;
   }
 
   RechercherAdherent(){
@@ -114,7 +124,6 @@ export class MaSeanceComponent implements OnInit {
     this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) =>{
       if(res.length> 0){
         this.liste_adherent = res;
-        this.selected_adherent = this.liste_adherent[0];
       } else {
         this.liste_adherent = null;
         let o = errorService.CreateError("Rechercher adhérent", "Pas de résultat");
@@ -130,7 +139,7 @@ export class MaSeanceComponent implements OnInit {
     const inscription = new Inscription();
     const errorService = ErrorService.instance;
     inscription.date_inscription = new Date();
-    inscription.rider_id = this.selected_adherent.key;
+    inscription.rider_id = this.selected_adherent;
     inscription.seance_id = this.seance.seance_id;
     inscription.statut = StatutPresence.Présent;
     this._seanceserv.inscrire(inscription).then((id) =>{

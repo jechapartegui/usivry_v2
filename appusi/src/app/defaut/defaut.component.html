@@ -233,6 +233,9 @@
                                         <td>{{ seance.niveau_requis }}</td>
                                         <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
+                                        <td *ngIf="seance.essai_possible">
+                                            <button type="button" class="btn btn-outline-success" (click)="Essayer(seance)">Réserver un essai</button>
+                                        </td>
                                         
                                     </tr>
                                 </table>
@@ -247,6 +250,9 @@
                                                     <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
                                                     <span>{{ seance.heure_debut }}</span><br />
                                                     <span>{{ seance.lieu }}</span><br />
+                                                    <span *ngIf="seance.essai_possible">
+                                                        <button type="button" class="btn btn-outline-success" (click)="Essayer(seance)">Réserver un essai</button>
+                                                    </span>
                                                 </div>
                                                
                                             </div>
@@ -533,7 +539,7 @@
                         </ul>
                         <button type="button" class="btn btn-success btn-lg"
                             onclick="location.href='https://www.helloasso.com/associations/us-ivry-roller/adhesions/adhesion-saison-2023-2024/'">Inscriptions</button><br><br>
-                        <button type="button" class="btn btn-success btn-lg" (click)="Essayer()" disabled title="à partir du 15 octobre, en fonction des places restantes. Nous contacter par mail pour plus d'info" >Réserver un essai</button>
+                      
                     </div>
                     <div class="col-md-6">
                         <h2>

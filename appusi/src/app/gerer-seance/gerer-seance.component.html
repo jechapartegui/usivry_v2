@@ -125,11 +125,15 @@
                 </select>
               </div>
               <div class="form-group">
-                <label for="professeurs">Professeurs</label>
-                <select class="form-control" id="professeurs" [(ngModel)]="editSeance.professeurs" multiple>
-                  <option *ngFor="let prof of listeprof" [ngValue]="prof" [selected]="editSeance.professeurs.includes(prof)">{{ prof.value }}</option>
+                <label for="professeurs">Professeurs</label>                
+               
+                <select id="professeurs" [(ngModel)]="editSeance.professeurs" multiple>
+                  <ng-container *ngFor="let prof of listeprof">
+                    <option [value]="prof" [selected]="isProfInEditSeance(prof) ? 'true' : null" [attr.selected]="isProfInEditSeance(prof) ? 'true' : null" >{{ prof.value }}</option>
+                  </ng-container>
+                  
                 </select>
-              </div>              
+              </div>           
               <div class="form-group">
                 <label for="age_requis">Âge minimum requis : </label>
                 <input  class="form-control" id="age_requis"  type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_requis">
@@ -139,14 +143,23 @@
                 <input  class="form-control" id="age_maximum"  type="number" [disabled]="!coursselectionne" [(ngModel)]="editSeance.age_maximum">
               </div>
               <div class="form-group">
-                <label for="niveau_requis">Niveau requis : </label>
-                <select  class="form-control" id="niveau_requis" [(ngModel)]="editSeance.niveau_requis" [disabled]="!coursselectionne" multiple>
-                  <option *ngFor="let niveau of niveauxRequis" [value]="niveau">{{ niveau }}</option>
-                </select>
+                  <select id="niveaux" [(ngModel)]="editSeance.niveau_requis" multiple>
+                    <ng-container *ngFor="let niveau of niveauxRequis">
+                      <option [value]="niveau" [selected]="isNiveauInEditSeance(niveau) ? 'true' : null" [attr.selected]="isNiveauInEditSeance(niveau) ? 'true' : null" >{{ niveau }}</option>
+                    </ng-container>
+                    
+                  </select>
               </div>
               <div class="form-group">
-                <label for="age_requis">Place maximum (laissez vide si illimité) : </label>
-                <input class="form-control" id="age_requis"  type="number"  [(ngModel)]="editSeance.place_maximum">
+                <label for="place_maximum">Place maximum (laissez vide si illimité) : </label>
+                <input class="form-control" id="place_maximum"  type="number"  [(ngModel)]="editSeance.place_maximum">
+              </div>
+              
+              <div class="form-group">
+                <div class="essai">
+                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" [(ngModel)]="editSeance.essai_possible">
+                  <label class="form-check-label" for="flexSwitchCheckChecked">Essai possible</label>
+                </div>
               </div>
               <button class="btn btn-outline-success" [disabled]="!coursselectionne"
                 (click)="soumettreSeance()">
