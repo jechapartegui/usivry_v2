@@ -9,6 +9,7 @@
     "build-dev": "nx build --configuration=development",
     "watch": "nx build --watch --configuration development",
     "aot": "ng build --configuration=production --aot",
+    "aot-preprod": "ng build --configuration=preprod --aot",
     "test": "nx test"
   },
   "private": true,

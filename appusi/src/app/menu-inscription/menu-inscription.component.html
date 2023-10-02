@@ -1,22 +1,32 @@
 <div class="container">
+  <div class="souscarte ligne_haute">
+      <span style="align-self: center;">{{CurrentMail}}</span>
+      <div class="form-group">
+        <span>Relance par mail :</span>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio1-prof" [(ngModel)]="StatutMailActive" [value]="true" (ngModelChange)="UpdateMailActive()" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio1-prof">Oui</label>
+    
+            <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio2-prof" [(ngModel)]="StatutMailActive" [value]="false" (ngModelChange)="UpdateMailActive()" autocomplete="off" >
+            <label class="btn btn-outline-primary" for="btnradio2-prof">Non</label>
+        </div>
+    </div>
+    
+
+
+  </div>
   <div class="card-container">
     <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
       <div class="mat-card-header">
-        <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />
-        <span class="mat-card-subtitle">{{ calculateAge(rider.date_naissance) }} ans</span>
-        <span class="mat-card-subtitle" pl-1><button type="button" class="btn btn-link" (click)="EditCompte(rider)">Mes
-            informations</button></span>
-        <span class="mat-card-subtitle" *ngIf="rider.est_inscrit" pl-1>
-          Inscription OK <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
-            class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-            <path
-              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-          </svg>
-          Niveau : {{rider.niveau}}
-        </span>
-        <span class="mat-card-subtitle" *ngIf="!rider.est_inscrit" pl-1>
-          Essai restant : {{rider.essai_restant}}
-        </span>
+        <span class="mat-card-title">{{ rider.nom }} {{ rider.prenom }}</span><br />        
+        <span class="mat-card-subtitle">
+          <div class="souscarte">
+            <span>{{ calculateAge(rider.date_naissance) }} ans</span>  
+            <span><i class="bi bi-pencil-square" (click)="EditCompte(rider)"></i></span>
+            <span>  Niveau : {{rider.niveau}}</span>
+          </div>
+        
+       </span>
       </div>
       <div class="mat-card-content">
         <div class="accordion" [attr.id]="'accordionExample-' + rider.id">
@@ -76,11 +86,7 @@
                         <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
                           (click)="Update(rider, inscription, true)">Réinscrire</button>
                       </div>
-                      <div *ngIf="!rider.est_inscrit">
-                        <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
-                          (click)="Update_essai(rider, inscription.id)">Annuler l'essai</button>
-
-                      </div>
+                    
                     </td>
                   </tr>
                 </table>
@@ -114,11 +120,7 @@
                             <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
                               (click)="Update(rider, inscription, true)">Réinscrire</button>
                           </div>
-                          <div *ngIf="!rider.est_inscrit">
-                            <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
-                              (click)="Update_essai(rider, inscription.id)">Annuler l'essai</button>
-
-                          </div>
+                          
                         </div>
                       </div>
                     </li>
@@ -170,16 +172,10 @@
 
                     <!-- Bouton pour se désinscrire de la séance -->
                     <td>
-                      <div *ngIf="rider.est_inscrit">
                         <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
                         <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
                           absent</button>
-                      </div>
-                      <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
-                        <button class="btn btn-outline-success" (click)="Add(rider, seance, true, true)">Reserver un
-                          essai</button>
-
-                      </div>
+                    
                     </td>
                   </tr>
                 </table>
@@ -195,16 +191,10 @@
                           <span>{{ seance.lieu }}</span><br />
                         </div>
                         <div style="margin: 2px;">
-                          <div *ngIf="rider.est_inscrit">
                             <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
                             <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
                               absent</button>
-                          </div>
-                          <div *ngIf="!rider.est_inscrit && rider.essai_restant>0">
-                            <button class="btn btn-outline-success" (click)="Add(rider, seance, true, true)">Reserver un
-                              essai</button>
-    
-                          </div>
+                        
                         </div>
                       </div>
                     </li>

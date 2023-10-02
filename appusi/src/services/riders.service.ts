@@ -118,6 +118,39 @@ export class RidersService {
       });
   }
 
+  public getAccount(id:number) : Promise<any>{
+    this.url = environment.usivry + 'usivry/rider_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "get_account",
+      id: id
+    };
+    return this.global.POST(this.url, body)
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
+  public UpdateMail_Active(id:number, mail_active:number) : Promise<any>{
+    this.url = environment.usivry + 'usivry/rider_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "update_mail_active",
+      compte: id,
+      mail_active:mail_active
+    };
+    return this.global.POST(this.url, body)
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
   public GetRiders(): Promise<boolean> {
     this.url = environment.usivry + 'usivry/rider_manage.php';
     //  this.url = this.url + "login.php";

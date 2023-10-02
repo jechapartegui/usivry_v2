@@ -39,3 +39,20 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée */
   }
   
+  .souscarte{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 1px;
+    margin: 1px;
+    font-size: large;
+  }
+  .souscarte  * {
+    padding: 5px;
+}
+
+.ligne_haute{
+  border-color:#BB1919;
+  border-style: double;justify-content: center;
+
+}

@@ -18,6 +18,7 @@ export class Seance {
     public place_maximum:number =null;
     public essai_possible:boolean=false;
     public notes:string="";
+    public info_seance:string="";
   constructor() {
     
   }

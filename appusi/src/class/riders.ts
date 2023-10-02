@@ -16,7 +16,6 @@ export class Rider {
       public telephone_personne_prevenir:string ="",
       public email: string,
       public compte:number = 0,
-      public essai_restant: number = 0,
       public est_prof: boolean =false,
       public est_admin: boolean =false,
       public est_inscrit:boolean=true,
