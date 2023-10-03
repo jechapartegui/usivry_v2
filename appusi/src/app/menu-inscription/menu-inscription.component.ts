@@ -142,19 +142,7 @@ export class MenuInscriptionComponent implements OnInit {
       });
     }
   }
-  trouverProfesseur(profId: number): any {
-    // Implémentez la logique pour trouver le professeur à partir de la liste des professeurs
-    // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listeprof.findIndex(prof => prof.key === profId);
 
-    if (indexToUpdate !== -1) {
-      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-      return this.listeprof[indexToUpdate];
-    } else {
-      return "Professeur non trouvé";
-    }
-
-  }
 
   // Fonction pour calculer l'âge en fonction de la date de naissance
   calculateAge(dateNaissance: Date): number {

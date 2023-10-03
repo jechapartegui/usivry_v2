@@ -49,7 +49,7 @@
           <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
           <td>{{ seance.heure_debut }}</td>
           <td>{{ seance.duree_cours }}</td>
-          <td>{{ trouverGymnase(seance.lieu_id)?.value }}</td>
+          <td>{{ seance.lieu }}</td>
           <td>{{ seance.statut }}</td>
           <td>
             <ul>
@@ -157,7 +157,7 @@
                 <label for="professeurs">Niveaux acceptés</label>
                 <br />
                 <ng-container *ngFor="let niv of editSeance.niveau_requis">
-                  <h5 class="badge rounded-pill bg-default" (click)="RemoveNiveau(niv)">{{niv}} <i
+                  <h5 class="badge rounded-pill bg-primary" (click)="RemoveNiveau(niv)">{{niv}} <i
                       class="bi bi-x-square"></i></h5>
                 </ng-container><br />
                 <label for="statut">Niveaux disponibles</label>

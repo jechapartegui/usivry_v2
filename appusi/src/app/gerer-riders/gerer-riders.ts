@@ -69,7 +69,7 @@ export class GererRidersComponent implements OnInit {
       //si rider dans la liste => on l'affiche sinon erreur
       if (RidersService.Riders.find(x => x.id == this.id)) {
         this.editMode = true;
-        this.editRider = RidersService.Riders.find(x => x.id == this.id);      
+        this.editRider = RidersService.Riders.find(x => x.id == this.id);
       } else {
         this.router.navigate(['/menu-inscription']);
       }
@@ -193,21 +193,21 @@ export class GererRidersComponent implements OnInit {
     this.situation = "ADD";
   }
 
-  control(): boolean{
+  control(): boolean {
     let errorservice = ErrorService.instance;
     let retour = true;
     let champs = "Le(s) champ(s) suivant(s) sont obligatoire(s) : ";
     let taille = champs.length;
-    if(!this.editRider.nom || this.editRider.nom == ""){
-      if(champs.length == taille){
+    if (!this.editRider.nom || this.editRider.nom == "") {
+      if (champs.length == taille) {
         champs += "Nom";
       } else {
         champs += ", Nom";
       }
       retour = false;
     }
-    if(!this.editRider.prenom || this.editRider.prenom == ""){
-      if(champs.length == taille){
+    if (!this.editRider.prenom || this.editRider.prenom == "") {
+      if (champs.length == taille) {
         champs += "Prénom";
       } else {
         champs += ", Prénom";
@@ -215,59 +215,59 @@ export class GererRidersComponent implements OnInit {
       retour = false;
     }
     const dt = new Date(this.editRider.date_naissance);
-    if(!this.editRider.date_naissance || dt.getFullYear() == new Date().getFullYear()){
-      
-      if(champs.length == taille){
+    if (!this.editRider.date_naissance || dt.getFullYear() == new Date().getFullYear()) {
+
+      if (champs.length == taille) {
         champs += "Date de naissance";
       } else {
         champs += ", Date de naissance";
       }
       retour = false;
     }
-    if(!this.editRider.adresse || this.editRider.adresse == ""){
-      if(champs.length == taille){
+    if (!this.editRider.adresse || this.editRider.adresse == "") {
+      if (champs.length == taille) {
         champs += "Adresse";
       } else {
         champs += ", Adresse";
       }
       retour = false;
     }
-    if(!this.editRider.telephone || this.editRider.telephone == ""){
-      if(champs.length == taille){
+    if (!this.editRider.telephone || this.editRider.telephone == "") {
+      if (champs.length == taille) {
         champs += "Téléphone";
       } else {
         champs += ", Téléphone";
       }
       retour = false;
     }
-    if(!this.editRider.personne_prevenir || this.editRider.personne_prevenir == ""){
-      if(champs.length == taille){
+    if (!this.editRider.personne_prevenir || this.editRider.personne_prevenir == "") {
+      if (champs.length == taille) {
         champs += "Personne à prévenir";
       } else {
         champs += ", Personne à prévenir";
       }
       retour = false;
     }
-    if(!this.editRider.telephone_personne_prevenir || this.editRider.telephone_personne_prevenir == ""){
-      if(champs.length == taille){
+    if (!this.editRider.telephone_personne_prevenir || this.editRider.telephone_personne_prevenir == "") {
+      if (champs.length == taille) {
         champs += "Téléphone de la personne à prévenir";
       } else {
         champs += ", Téléphone de la personne à prévenir";
       }
       retour = false;
     }
-    if(this.situation == "CREATE"){
-      if(this.existing_account){
-        if(!this.editRider.email || this.editRider.email == ""){
-          if(champs.length == taille){
+    if (this.situation == "CREATE") {
+      if (this.existing_account) {
+        if (!this.editRider.email || this.editRider.email == "") {
+          if (champs.length == taille) {
             champs += "Email";
           } else {
             champs += ", Email";
           }
           retour = false;
         }
-        if(!this.mdp_actuel || this.mdp_actuel == ""){
-          if(champs.length == taille){
+        if (!this.mdp_actuel || this.mdp_actuel == "") {
+          if (champs.length == taille) {
             champs += "Mot de passe";
           } else {
             champs += ", Mot de passe";
@@ -275,24 +275,24 @@ export class GererRidersComponent implements OnInit {
           retour = false;
         }
       } else {
-        if(!this.editRider.email|| this.editRider.email == ""){
-          if(champs.length == taille){
+        if (!this.editRider.email || this.editRider.email == "") {
+          if (champs.length == taille) {
             champs += "Email";
           } else {
             champs += ", Email";
           }
           retour = false;
         }
-        if(!this.new_mdp || this.new_mdp == ""){
-          if(champs.length == taille){
+        if (!this.new_mdp || this.new_mdp == "") {
+          if (champs.length == taille) {
             champs += "Mot de passe";
           } else {
             champs += ", Mot de passe";
           }
           retour = false;
         }
-        if(!this.new_mdp_confirm || this.new_mdp_confirm == ""){
-          if(champs.length == taille){
+        if (!this.new_mdp_confirm || this.new_mdp_confirm == "") {
+          if (champs.length == taille) {
             champs += "Confirmation du mot de passe";
           } else {
             champs += ", Confirmation du mot de passe";
@@ -301,8 +301,8 @@ export class GererRidersComponent implements OnInit {
         }
       }
     }
-   
-    if(!retour){
+
+    if (!retour) {
       let o = errorservice.CreateError("Formulaire incomplet", champs);
       errorservice.emitChange(o);
     }
@@ -310,8 +310,8 @@ export class GererRidersComponent implements OnInit {
   }
 
   soumettreRiders(): void {
-    if(!this.est_admin){
-      if(!this.control()){
+    if (!this.est_admin) {
+      if (!this.control()) {
         return;
       }
     }
@@ -395,7 +395,7 @@ export class GererRidersComponent implements OnInit {
           if (this.situation = "CREATE") {
             this._riderser.Login(this.editRider.email, this.mdp_actuel, false);
             this.router.navigate(['/menu-inscription']);
-          }  else {
+          } else {
             this.situation = "UPDATE";
           }
         }).catch((elkerreur: HttpErrorResponse) => {
@@ -448,26 +448,28 @@ export class GererRidersComponent implements OnInit {
   }
 
   annulerEdition(): void {
-    this.editMode = false;
-    this.editRider = null;
-    console.log(this.situation);
-    switch (this.situation) {
-      case "ADD":
-        this.router.navigate(['/menu-inscription']);
-        break;
-      case "CREATE":
-        this.router.navigate(['/defaut']);
-        break;
-      case "LIST":
-        break;
-      case "MY_UPDATE":
-        this.router.navigate(['/menu-inscription']);
-        console.log("ici");
-        break;
-      case "UPDATE":
-        this.situation = "LIST";
-        break
+    let confirmation = window.confirm("En quittant cet écran, vous perdez les données non sauvegardées. Confirmez vous l'opération ?");
+    if (confirmation) {
+      this.editMode = false;
+      this.editRider = null;
+      switch (this.situation) {
+        case "ADD":
+          this.router.navigate(['/menu-inscription']);
+          break;
+        case "CREATE":
+          this.router.navigate(['/defaut']);
+          break;
+        case "LIST":
+          break;
+        case "MY_UPDATE":
+          this.router.navigate(['/menu-inscription']);
+          break;
+        case "UPDATE":
+          this.situation = "LIST";
+          break
+      }
     }
+
   }
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -483,7 +485,7 @@ export class GererRidersComponent implements OnInit {
 
   Filtrer() {
     let errorservice = ErrorService.instance;
-    if(!this.season_id || this.season_id == 0){
+    if (!this.season_id || this.season_id == 0) {
       this._riderser.GetAllSearch(this.search_text).then((result) => {
         this.ridersList = result;
         let o = errorservice.OKMessage("Recherche de rider");
@@ -502,7 +504,7 @@ export class GererRidersComponent implements OnInit {
         errorservice.emitChange(o);
       })
     }
-    
+
   }
   FiltrerBack() {
     let errorservice = ErrorService.instance;
@@ -541,14 +543,14 @@ export class GererRidersComponent implements OnInit {
     if (!this.fileData) return;
     var rid_list: Rider[] = [];
     let compte = 0;
-    
+
     this.fileData.slice(1).forEach((row: any) => {
       compte++;
-  
+
       // Convertissez la date depuis Excel en utilisant date-fns-tz
       const excelDate = row[21];
       const date_naissance = this.g.parseExcelDate(excelDate);
-  
+
       const rider: Rider = {
         nom: row[2],
         prenom: row[3],
@@ -574,7 +576,7 @@ export class GererRidersComponent implements OnInit {
     });
     console.log(rid_list);
     let confirmation = window.confirm("Il y'a " + compte.toString() + " lignes et " + rid_list.length.toString() + " comptes créés. Voulez vous importer ? ")
-    if(confirmation){
+    if (confirmation) {
       this._riderser.AddRange(rid_list).then((bool: boolean) => {
         if (bool) {
           let o = errorservice.OKMessage("Création de compte en masse");
@@ -588,7 +590,7 @@ export class GererRidersComponent implements OnInit {
         errorservice.emitChange(o);
       })
     }
-    
+
 
   }
 }

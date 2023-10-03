@@ -48,8 +48,8 @@
           <td>{{ cours.jour_semaine }}</td>
           <td>{{ cours.heure }}</td>
           <td>{{ cours.duree }}</td>
-          <td>{{ trouverProfesseur(cours.prof_principal_id)?.value }}</td>
-          <td>{{ trouverGymnase(cours.lieu_id)?.value }}</td>
+          <td>{{ cours.prof_principal_nom }}</td>
+          <td>{{ cours.lieu_nom }}</td>
           <td>{{ cours.age_requis }}</td>
           <td>{{ cours.niveau_requis}}</td>
           <td>
@@ -132,14 +132,19 @@
                 placeholder="Age requis">
             </div>
             <div class="form-group">
-              <label for="niveau_requis">Niveau requis :</label>
-              <select id="niveau_requis" class="form-control" [(ngModel)]="editCours.niveau_requis"
-                placeholder="Niveau requis">
-                <!-- Options pour les professeurs -->
-                <ng-container *ngFor="let niveau of niveauxRequis">
-                  <option [value]="niveau">{{niveau}}</option>
+              <label for="professeurs">Niveaux acceptés</label>
+              <br />
+              <ng-container *ngFor="let niv of editCours.niveau_requis">
+                <h5 class="badge rounded-pill bg-primary" (click)="RemoveNiveau(niv)">{{niv}} <i
+                    class="bi bi-x-square"></i></h5>
+              </ng-container><br />
+              <label for="statut">Niveaux disponibles</label>
+              <select class="form-control" id="professeurs" [(ngModel)]="current_niveau">
+                <ng-container *ngFor="let ni of niveau_dispo">
+                  <option [value]="ni">{{ ni }}</option>
                 </ng-container>
               </select>
+              <button type="button" class="btn btn-outline-success" (click)="AjouterNiveau()">Ajouter</button>
             </div>
             <div class="p-3 m-0 "> <button class="btn btn-outline-success btn-lg m-3" mat-raised-button
                 (click)="soumettreCours()">

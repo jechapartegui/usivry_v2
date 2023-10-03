@@ -56,6 +56,8 @@ export class SeancesService {
       return Promise.reject(error);
       });
   }
+
+  
   public Add(seance:Seance): Promise<number> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
@@ -105,7 +107,21 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
+public MailRelance(): Promise<boolean>{
+  this.url = environment.usivry + 'usivry/seance_manage.php';
+  //  this.url = this.url + "login.php";
+  const body = {
+    command:"mail_relance"
+  };
 
+  return this.global.POST(this.url, body)
+    .then((response: boolean) => {
+      return response;
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
+}
   public Get(id:number): Promise<Seance> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";

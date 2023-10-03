@@ -27,6 +27,8 @@ seasons:KeyValuePair[];
   editMode = false;
   editCours: Cours | null = null;
   niveauxRequis: Niveau[] = Object.values(Niveau);
+  niveau_dispo:Niveau[]=[];
+  current_niveau:Niveau;
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
@@ -85,23 +87,12 @@ seasons:KeyValuePair[];
     
   }
 
-  // Méthode pour trouver un gymnase à partir de son ID
-  trouverGymnase(gymId: number): any {
-    // Implémentez la logique pour trouver le gymnase à partir de la liste des gymnases
-    // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listelieu.findIndex(lieu => lieu.key === gymId);
-
-    if (indexToUpdate !== -1) {
-      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-      return this.listelieu[indexToUpdate];
-    } else {
-      return "Lieu non trouvé";
-    }
-  }
+ 
 
   editerCours(cours: Cours): void {
     this.editCours = { ...cours };
     this.editMode = true;
+    this.MAJListeNiveau();
   }
 
   supprimerCours(cours: Cours): void {
@@ -127,6 +118,32 @@ seasons:KeyValuePair[];
   creerCours(): void {
     this.editCours = new Cours();
     this.editMode = true;
+    this.MAJListeNiveau();
+  }
+
+  AjouterNiveau() { 
+    this.editCours.niveau_requis.push(this.current_niveau);
+    this.current_niveau = null;
+    this.MAJListeNiveau();
+  }
+  RemoveNiveau(item){
+    this.editCours.niveau_requis = this.editCours.niveau_requis.filter(e => e.toString() !== item.toString());
+    this.MAJListeNiveau();
+  }
+  MAJListeNiveau(){
+    this.niveau_dispo = this.niveauxRequis;
+    if(typeof(this.editCours.niveau_requis) == 'string'){
+      let n = this.editCours.niveau_requis;
+      this.editCours.niveau_requis = [];
+      this.editCours.niveau_requis.push(n);
+
+    }
+    this.editCours.niveau_requis.forEach((element:string) => {
+      let element_to_remove = this.niveauxRequis.find(e => e.toString() == element.toString());
+      if (element_to_remove) {
+        this.niveau_dispo = this.niveau_dispo.filter(e => e.toString() !== element_to_remove.toString());
+      }
+    });
   }
 
   soumettreCours(): void {

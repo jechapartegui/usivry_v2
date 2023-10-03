@@ -90,22 +90,11 @@ export class GererSeanceComponent implements OnInit {
     })
   }
 
-  trouverProfesseur(profId: number): any {
-    // Implémentez la logique pour trouver le professeur à partir de la liste des professeurs
-    // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listeprof.findIndex(prof => prof.key === profId);
-
-    if (indexToUpdate !== -1) {
-      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-      return this.listeprof[indexToUpdate];
-    } else {
-      return "Professeur non trouvé";
-    }
-
-  }
+ 
 
   AjouterProf() { 
     let kvp = this.prof_dispo.filter(e => e.key == this.current_prof)[0];
+    console.log(kvp);
       this.editSeance.professeurs.push(kvp);
     this.current_prof = null;
     this.MAJListeProf();
@@ -124,7 +113,6 @@ export class GererSeanceComponent implements OnInit {
     });
   }
   AjouterNiveau() { 
-    console.log(this.current_niveau);
     this.editSeance.niveau_requis.push(this.current_niveau);
     this.current_niveau = null;
     this.MAJListeNiveau();
@@ -134,8 +122,13 @@ export class GererSeanceComponent implements OnInit {
     this.MAJListeNiveau();
   }
   MAJListeNiveau(){
-    console.log(this.editSeance.niveau_requis);
     this.niveau_dispo = this.niveauxRequis;
+    if(typeof(this.editSeance.niveau_requis) == 'string'){
+      let n = this.editSeance.niveau_requis;
+      this.editSeance.niveau_requis = [];
+      this.editSeance.niveau_requis.push(n);
+
+    }
     this.editSeance.niveau_requis.forEach((element:string) => {
       let element_to_remove = this.niveauxRequis.find(e => e.toString() == element.toString());
       if (element_to_remove) {
@@ -144,31 +137,6 @@ export class GererSeanceComponent implements OnInit {
     });
   }
 
-  // Méthode pour trouver un gymnase à partir de son ID
-  trouverGymnase(gymId: number): any {
-    // Implémentez la logique pour trouver le gymnase à partir de la liste des gymnases
-    // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listelieu.findIndex(lieu => lieu.key === gymId);
-
-    if (indexToUpdate !== -1) {
-      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-      return this.listelieu[indexToUpdate];
-    } else {
-      return "Lieu non trouvé";
-    }
-  }
-  trouverCours(coursId: number): any {
-    // Implémentez la logique pour trouver le gymnase à partir de la liste des gymnases
-    // que vous pouvez stocker dans une variable
-    const indexToUpdate = this.listeCours.findIndex(cc => cc.id === coursId);
-
-    if (indexToUpdate !== -1) {
-      // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-      return this.listeCours[indexToUpdate];
-    } else {
-      return "Cours non trouvé";
-    }
-  }
 
   editerSeance(seance: Seance): void {
     this.editSeance = { ...seance };
@@ -188,7 +156,10 @@ export class GererSeanceComponent implements OnInit {
       this.editSeance.age_maximum = 99;
       this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
-      this.editSeance.niveau_requis = newValue.niveau_requis;
+      console.log(newValue.niveau_requis);
+      newValue.niveau_requis.forEach((el) =>{
+        this.editSeance.niveau_requis.push(el);
+      })
       this.editSeance.lieu_id = newValue.lieu_id;
       this.jour_semaine = newValue.jour_semaine;
     } else {
@@ -233,6 +204,8 @@ export class GererSeanceComponent implements OnInit {
     this.editSeance = new Seance();
     this.coursselectionne = false;
     this.editMode = true;
+    this.MAJListeProf();
+    this.MAJListeNiveau()
   }
 
   VoirMaSeance() {

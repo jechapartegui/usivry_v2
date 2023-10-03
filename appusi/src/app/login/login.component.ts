@@ -13,12 +13,15 @@ export class LoginComponent implements OnInit {
   username: string = environment.defaultlogin;
   password: string = environment.defaultpassword;
   stayLoggedIn: boolean = false;
-
+afficher:boolean=true;
   constructor(private ridersService: RidersService, private router: Router) { }
 
   ngOnInit(): void {
     if (RidersService.isLoggedIn == true) {
       this.router.navigate(['/menu-inscription']);
+    }
+    if(environment.environment == 'prod'){
+      this.afficher = false;
     }
   }
 
