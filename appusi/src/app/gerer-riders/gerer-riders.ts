@@ -97,7 +97,6 @@ export class GererRidersComponent implements OnInit {
       this.situation = "ADD";
 
     }
-    console.log(this.situation);
 
   }
 

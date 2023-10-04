@@ -156,7 +156,6 @@ export class GererSeanceComponent implements OnInit {
       this.editSeance.age_maximum = 99;
       this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
-      console.log(newValue.niveau_requis);
       newValue.niveau_requis.forEach((el) =>{
         this.editSeance.niveau_requis.push(el);
       })
@@ -165,6 +164,7 @@ export class GererSeanceComponent implements OnInit {
     } else {
       this.coursselectionne = false;
     }
+    this.MAJListeNiveau();
     // Faites ce que vous voulez avec la nouvelle valeur sélectionnée ici
   }
 
@@ -178,7 +178,7 @@ export class GererSeanceComponent implements OnInit {
   supprimerSeance(seance: Seance): void {
     let errorService = ErrorService.instance;
     let o = notification;
-    let act = "Ajouter un cours";
+    let act = "Supprimer une séance";
     if (seance) {
       this.seancesservice.Delete(seance.seance_id).then((result) => {
         if (result) {
