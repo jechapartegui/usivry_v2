@@ -36,6 +36,7 @@ export class InscriptionSeance {
       public hors_liste:boolean=false;
       public contact_urgence: string = "";
       public statut_seance?: StatutPresence = null ;
+      public info_seance:string = "";
 
       public constructor(inscription?:Inscription){
             if(inscription){

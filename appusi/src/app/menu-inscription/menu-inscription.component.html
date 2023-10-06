@@ -52,7 +52,8 @@
                     <th>Statut</th>
                     <th></th>
                   </thead>
-                  <tr *ngFor="let inscription of rider.inscriptions">
+                  <ng-container *ngFor="let inscription of rider.inscriptions">
+                    <tr [title]="inscription.info_seance">
                     <!-- Afficher les détails de l'inscription ici -->
                     <td>{{ inscription.libelle }}</td>
                     <td>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
@@ -89,10 +90,11 @@
                     
                     </td>
                   </tr>
+                  </ng-container>
                 </table>
                 <ul class="mobile" *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
                   <ng-container *ngFor="let inscription of rider.inscriptions">
-                    <li>
+                    <li [title]="inscription.info_seance">
                       <div class="rowmobile">
                         <div style="margin: 2px;">
                           <span><strong>{{ inscription.libelle }}</strong></span><br />
@@ -155,7 +157,8 @@
                     <th>Professeur présent</th>
                     <th></th>
                   </thead>
-                  <tr *ngFor="let seance of rider.seances">
+                  <ng-container *ngFor="let seance of rider.seances">
+                    <tr [title]="seance.info_seance">
                     <!-- Afficher les détails de l'inscription ici -->
                     <td>{{ seance.libelle }}</td>
                     <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
@@ -178,10 +181,11 @@
                     
                     </td>
                   </tr>
+                  </ng-container>
                 </table>
                 <ul class="mobile" *ngIf="rider.seances && rider.seances.length > 0">
                   <ng-container *ngFor="let seance of rider.seances">
-                    <li>
+                    <li [title]="seance.info_seance">
                       <div class="rowmobile">
                         <div style="margin: 2px;">
                         
@@ -233,7 +237,8 @@
                     <th>Professeur présent</th>
                     <th></th>
                   </thead>
-                  <tr *ngFor="let seance of rider.seances_prof">
+                  <ng-container *ngFor="let seance of rider.seances_prof">
+                    <tr [title]="seance.info_seance">
                     <!-- Afficher les détails de l'inscription ici -->
                     <td>{{ seance.libelle }}</td>
                     <td>{{ seance.date_seance | date: 'dd/MM/yyyy'}}</td>
@@ -254,6 +259,7 @@
                         séance</button>
                     </td>
                   </tr>
+                  </ng-container>
                 </table>
                 <ul class="mobile" *ngIf="rider.est_prof">
                   <ng-container *ngFor="let seance of rider.seances_prof">

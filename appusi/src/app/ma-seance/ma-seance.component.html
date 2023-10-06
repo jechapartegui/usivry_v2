@@ -747,7 +747,7 @@
     <div class="col-12">
         <div class="form-group">
             <span class="input-group-text">Notes</span>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" [(ngModel)]="seance.notes" aria-label="Notes de la séances"></textarea>
             <button type="button" class="btn btn-success ml-1" (click)="SauvegarderText()">Sauvegarder</button>
         </div>
     </div>
