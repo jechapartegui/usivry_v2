@@ -12,6 +12,7 @@ export class GererInscriptionsComponent {
   constructor(
     private seancesservice: SeancesService,
   ) { }
+  message:string = "";
 
   MailRelance(){
     let errorService = ErrorService.instance;
@@ -21,7 +22,7 @@ export class GererInscriptionsComponent {
         if(retour){
           let o = errorService.OKMessage("Envoi mail");
           errorService.emitChange(o);
-
+          this.message = retour;
         } else{
           
           let o = errorService.CreateError("Envoi mail", "Erreur inconnue");

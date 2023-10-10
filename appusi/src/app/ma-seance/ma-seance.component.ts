@@ -15,13 +15,14 @@ import { SeancesService } from 'src/services/seances.service';
 })
 export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
-  Liste: InscriptionSeance[] = [];   
+  Liste: InscriptionSeance[] = [];
   seance: Seance;
-  selected_adherent:number = null;
-  text_recherche:string="";
-  liste_adherent:KeyValuePair[];
+  selected_adherent: number = null;
+  text_recherche: string = "";
+  liste_adherent: KeyValuePair[];
+  messageAnnulation: string = "";
   niveauxRequis: Niveau[] = Object.values(Niveau);
-  constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv:RidersService, private route: ActivatedRoute) { }
+  constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv: RidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     const errorService = ErrorService.instance;
     //virer tous les cas initules
@@ -35,7 +36,7 @@ export class MaSeanceComponent implements OnInit {
       console.log("redirigé non connecté");
       return;
     }
-    if (RidersService.Est_Prof == false) {
+    if (RidersService.Est_Prof == false && RidersService.Est_Admin == false) {
       this.router.navigate(['/menu-inscription']);
       console.log("redirigé non professeur");
       return;
@@ -56,7 +57,7 @@ export class MaSeanceComponent implements OnInit {
         return statutOrder[aStatut] - statutOrder[bStatut];
       }
       this.Liste.sort(compareByStatut);
-      this._seanceserv.Get(this.id).then((ss:Seance) =>{
+      this._seanceserv.Get(this.id).then((ss: Seance) => {
         this.seance = ss;
         let o = errorService.OKMessage("Charger la séance");
         errorService.emitChange(o);
@@ -90,20 +91,44 @@ export class MaSeanceComponent implements OnInit {
     if (confirmation) {
       this.seance.statut = StatutSeance.annulée;
       let ret = this.UpdateSeance("Annuler la séance");
-      if(ret){
+      let ut = this.NotifierAnnulation();
+
+      if (ut && ret) {
         this.router.navigate(['/menu-inscription']);
-      }     
+      }
+
     }
+
   }
 
-  SauvegarderText(){
+  SauvegarderText() {
     this.UpdateSeance("Sauvegarder les notes");
   }
-  UpdateSeance(motif:string) : boolean{
+  NotifierAnnulation(): boolean {
     const errorService = ErrorService.instance;
-    this._seanceserv.Update(this.seance).then((res)=>{
-      if(res){
-        let o = errorService.OKMessage(motif);          
+    this._seanceserv.NotifierAnnulation(this.seance.seance_id, this.messageAnnulation).then((res) => {
+      if (res) {
+        let o = errorService.OKMessage("Envoi mail annulation");
+        errorService.emitChange(o);
+        return true;
+      } else {
+        let o = errorService.CreateError("Envoi mail annulation", "Erreur inconnue");
+        errorService.emitChange(o);
+        return false;
+      }
+    }).catch((error: Error) => {
+      let o = errorService.CreateError("Envoi mail annulation", error.message);
+      errorService.emitChange(o);
+      return false;
+    });
+    return false;
+  }
+
+  UpdateSeance(motif: string): boolean {
+    const errorService = ErrorService.instance;
+    this._seanceserv.Update(this.seance).then((res: boolean) => {
+      if (res) {
+        let o = errorService.OKMessage(motif);
         errorService.emitChange(o);
         return true;
       } else {
@@ -119,10 +144,10 @@ export class MaSeanceComponent implements OnInit {
     return false;
   }
 
-  RechercherAdherent(){
+  RechercherAdherent() {
     const errorService = ErrorService.instance;
-    this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) =>{
-      if(res.length> 0){
+    this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) => {
+      if (res.length > 0) {
         this.liste_adherent = res;
       } else {
         this.liste_adherent = null;
@@ -135,26 +160,26 @@ export class MaSeanceComponent implements OnInit {
     });
   }
 
-  InscrireAdherent(){
+  InscrireAdherent() {
     const inscription = new Inscription();
     const errorService = ErrorService.instance;
     inscription.date_inscription = new Date();
     inscription.rider_id = this.selected_adherent;
     inscription.seance_id = this.seance.seance_id;
     inscription.statut = StatutPresence.Présent;
-    this._seanceserv.inscrire(inscription).then((id) =>{
+    this._seanceserv.inscrire(inscription).then((id) => {
       this._seanceserv.ChargerSeance(this.id).then((list: InscriptionSeance[]) => {
         this.Liste = list;
         function compareByStatut(a: InscriptionSeance, b: InscriptionSeance): number {
           const statutOrder = { présent: 1, absent: 2, null: 3 };
-  
+
           const aStatut = a.statut || null;
           const bStatut = b.statut || null;
-  
+
           return statutOrder[aStatut] - statutOrder[bStatut];
         }
         this.Liste.sort(compareByStatut);
-        this._seanceserv.Get(this.id).then((ss:Seance) =>{
+        this._seanceserv.Get(this.id).then((ss: Seance) => {
           this.seance = ss;
           let o = errorService.OKMessage("Inscription du rider et chargement de la liste");
           errorService.emitChange(o);
@@ -162,7 +187,7 @@ export class MaSeanceComponent implements OnInit {
           let o = errorService.CreateError("Inscription du rider et chargement de la liste", error.message);
           errorService.emitChange(o);
         });
-  
+
       }).catch((error: Error) => {
         let o = errorService.CreateError("Inscription du rider", error.message);
         errorService.emitChange(o);
@@ -175,22 +200,22 @@ export class MaSeanceComponent implements OnInit {
     return item.rider_id;
   }
 
-  UpdateLevel(rider:InscriptionSeance){
+  UpdateLevel(rider: InscriptionSeance) {
     const errorService = ErrorService.instance;
     this._riderserv.Update_Level(rider.niveau, rider.rider_id).then((res: boolean) => {
-     if(res){
-      rider.edit = false;
-     } else {
-      let o = errorService.CreateError("Sauvegarder niveau", "Erreur inconnue");
-      errorService.emitChange(o);
-     }
+      if (res) {
+        rider.edit = false;
+      } else {
+        let o = errorService.CreateError("Sauvegarder niveau", "Erreur inconnue");
+        errorService.emitChange(o);
+      }
     }).catch((error: Error) => {
       let o = errorService.CreateError("Sauvegarder niveau", error.message);
       errorService.emitChange(o);
     });
   }
 
-  
+
 
   UpdateStatut(item: InscriptionSeance) {
     const errorService = ErrorService.instance;

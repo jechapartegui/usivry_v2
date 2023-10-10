@@ -267,7 +267,7 @@ export class GererSeanceComponent implements OnInit {
 
   Filtrer() {
     let errorservice = ErrorService.instance;
-    this.seancesservice.GetAllSeances().then((result) => {
+    this.seancesservice.GetAllSeances(true).then((result) => {
       this.listeSeances = result;
       let o = errorservice.OKMessage("Recherche de séances");
       errorservice.emitChange(o);

@@ -14,23 +14,23 @@ export class SeancesService {
   static get ListeSeance(): Seance[] {
     return SeancesService.Seances;
   }
-  
+
   constructor(public global: GlobalService) {
     SeancesService.instance = this;
   }
 
   url = environment.usivry;
-  
+
   static Seances: Seance[];
 
-  public Update(seance:Seance): Promise<boolean> {
+  public Update(seance: Seance): Promise<boolean> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"update",
-      seance:seance,
+      command: "update",
+      seance: seance,
     };
-  
+
     return this.global.POST(this.url, body)
       .then((response: boolean) => {
         return response;
@@ -39,63 +39,83 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
-  public Delete(id:number): Promise<boolean> {
+  public Delete(id: number): Promise<boolean> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"delete",
-      id:id,
+      command: "delete",
+      id: id,
     };
-  
+
     return this.global.POST(this.url, body)
       .then((response: boolean) => {
         return response;
       })
       .catch(error => {
         // Gestion de l'erreur
-      return Promise.reject(error);
+        return Promise.reject(error);
       });
   }
 
-  
-  public Add(seance:Seance): Promise<number> {
+
+  public Add(seance: Seance): Promise<number> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"add",
-      seance:seance,
+      command: "add",
+      seance: seance,
     };
-  
+
     return this.global.POST(this.url, body)
       .then((response: number) => {
         return response;
       })
       .catch(error => {
         // Gestion de l'erreur
-      return Promise.reject(error);
+        return Promise.reject(error);
       });
   }
-  
-    public GetAllSeances(): Promise<Seance[]> {
-      this.url = environment.usivry + "usivry/seance_manage.php";
-      const body = {
-        command: "get_all"
-      };
-  
-      return this.global.POST(this.url, body)
-        .then((response: Seance[]) => {
-          return response;
-        })
-        .catch(error => {
-          // Gestion de l'erreur
-      return Promise.reject(error);
-        });
-    }
+  public NotifierAnnulation(id: number, message:string ): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "notifier_annulation",
+      seance_id: id,
+      message: message
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
+  public GetAllSeances(all: boolean = false): Promise<Seance[]> {
+    this.url = environment.usivry + "usivry/seance_manage.php";
+
+    const body = {
+      command: "get_all",
+      all: all,
+    };
+
+
+    return this.global.POST(this.url, body)
+      .then((response: Seance[]) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
   public GetSeance(): Promise<Seance[]> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"get_seance_plagedate"
+      command: "get_seance_plagedate"
     };
 
     return this.global.POST(this.url, body)
@@ -107,27 +127,27 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
-public MailRelance(): Promise<boolean>{
-  this.url = environment.usivry + 'usivry/seance_manage.php';
-  //  this.url = this.url + "login.php";
-  const body = {
-    command:"mail_relance"
-  };
-
-  return this.global.POST(this.url, body)
-    .then((response: boolean) => {
-      return response;
-    })
-    .catch(error => {
-      return Promise.reject(error);
-    });
-}
-  public Get(id:number): Promise<Seance> {
+  public MailRelance(): Promise<string> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"get",
-      id:id
+      command: "mail_relance"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: string) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Get(id: number): Promise<Seance> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "get",
+      id: id
     };
 
     return this.global.POST(this.url, body)
@@ -139,12 +159,12 @@ public MailRelance(): Promise<boolean>{
       });
   }
 
-  public UpdatePresence(item:InscriptionSeance): Promise<boolean>{
+  public UpdatePresence(item: InscriptionSeance): Promise<boolean> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"update_inscription_seance",
-      inscription:item,
+      command: "update_inscription_seance",
+      inscription: item,
     };
 
     return this.global.POST(this.url, body)
@@ -155,12 +175,12 @@ public MailRelance(): Promise<boolean>{
         return Promise.reject(error);
       });
   }
-  public ChargerSeance(id:number):Promise<InscriptionSeance[]>{
+  public ChargerSeance(id: number): Promise<InscriptionSeance[]> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"load_seance",
-      id:id,
+      command: "load_seance",
+      id: id,
     };
 
     return this.global.POST(this.url, body)
@@ -172,19 +192,19 @@ public MailRelance(): Promise<boolean>{
       });
   }
 
-  
 
-  public inscrire(inscription:Inscription): Promise<number>{
+
+  public inscrire(inscription: Inscription): Promise<number> {
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      inscription:inscription,
-      command:"add"
+      inscription: inscription,
+      command: "add"
     };
 
     return this.global.POST(this.url, body)
-      .then((response: number) => {       
-       return response;
+      .then((response: number) => {
+        return response;
       })
       .catch(error => {
         // Gestion de l'erreur
@@ -192,38 +212,38 @@ public MailRelance(): Promise<boolean>{
       });
   }
 
-  public desinscrire(inscription:Inscription): Promise<boolean>{
+  public desinscrire(inscription: Inscription): Promise<boolean> {
     let act = "Se désinscrire de la séance";
     let errorservice = ErrorService;
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      inscription:inscription,
-      command:"update"
+      inscription: inscription,
+      command: "update"
     };
 
     return this.global.POST(this.url, body)
-      .then((response: boolean) => {       
-       return response;
+      .then((response: boolean) => {
+        return response;
       })
       .catch(error => {
         // Gestion de l'erreur
         return Promise.reject(error);
       });
   }
-  public Delete_inscription(id:number): Promise<boolean>{
+  public Delete_inscription(id: number): Promise<boolean> {
     let act = "Supprimer l'inscription";
     let errorservice = ErrorService;
     this.url = environment.usivry + 'usivry/inscriptionseance_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      id:id,
-      command:"delete"
+      id: id,
+      command: "delete"
     };
 
     return this.global.POST(this.url, body)
-      .then((response: boolean) => {       
-       return response;
+      .then((response: boolean) => {
+        return response;
       })
       .catch(error => {
         // Gestion de l'erreur
@@ -231,5 +251,5 @@ public MailRelance(): Promise<boolean>{
       });
   }
 
- 
+
 }
