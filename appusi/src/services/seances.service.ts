@@ -142,6 +142,21 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
+  public MailTest(): Promise<string> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "mail_test"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: string) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
   public Get(id: number): Promise<Seance> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";
