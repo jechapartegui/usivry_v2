@@ -156,6 +156,7 @@ export class GererSeanceComponent implements OnInit {
       this.editSeance.age_maximum = 99;
       this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
+      this.editSeance.niveau_requis = [];
       newValue.niveau_requis.forEach((el) =>{
         this.editSeance.niveau_requis.push(el);
       })
@@ -179,7 +180,8 @@ export class GererSeanceComponent implements OnInit {
     let errorService = ErrorService.instance;
     let o = notification;
     let act = "Supprimer une séance";
-    if (seance) {
+    let confirmation = window.confirm("Cette action est définitive et peut avoir des répercutions sur les adhérents inscrits, êtes-vous sûr de vouloir confirmer la suppresion ?")
+    if (confirmation && seance) {
       this.seancesservice.Delete(seance.seance_id).then((result) => {
         if (result) {
           // Suppression réussie en base, supprimer l'élément correspondant de la liste
