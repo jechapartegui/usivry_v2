@@ -90,7 +90,7 @@ export class PopInEssai {
   }
   saveRider() {
     let errorservice = ErrorService
-    let act = "Faire un essai";
+    let act = "Faire un essai ";
     this.seanceservice.Essayer(this.data.essai).then((result) =>{
       if (result) {
         // Suppression réussie en base, supprimer l'élément correspondant de la liste
