@@ -63,7 +63,8 @@ export class GererRidersComponent implements OnInit {
     } else if (this.id == -2) {
       this.situation = "CREATE";
       this.editMode = true;
-      this.editRider = new Rider(-2, "", "", new Date(), false, Niveau.Débutant, "", "ivry", "", "", "", "");
+      this.editRider = new Rider();
+      this.editRider.id = -2;
     } else if (this.id > 0) {
       //Afficher le rider :
       //si rider dans la liste => on l'affiche sinon erreur
@@ -93,7 +94,8 @@ export class GererRidersComponent implements OnInit {
       this.libelle_mail = "Saisir l'email";
       this.existing_account = false;
       this.editMode = true;
-      this.editRider = new Rider(-1, "", "", new Date(), false, Niveau.Débutant, "", "ivry", "", "", "", "");
+      this.editRider = new Rider();
+      this.editRider.id = -1;
       this.situation = "ADD";
 
     }
@@ -187,7 +189,8 @@ export class GererRidersComponent implements OnInit {
   }
 
   creerRiders(): void {
-    this.editRider = new Rider(-1, "", "", new Date(), false, Niveau.Débutant, "", "ivry", "", "", "", "", 0, false, false, false, null, null);
+    this.editRider = new Rider();
+    this.editRider.id = -1;
     this.editMode = true;
     this.situation = "ADD";
   }

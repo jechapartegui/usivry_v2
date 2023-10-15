@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@material/dialog": "^15.0.0-canary.bc9ae6c9c.0",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.10.5",
     "crypto-js": "^4.1.1",

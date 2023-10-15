@@ -1,0 +1,28 @@
+<div><h2>Ajouter un Rider : {{data.essai.seance.libelle}}</h2>
+        <div class="form-group">
+          <label for="name">Nom:</label>
+          <input id="name" class="form-control" [(ngModel)]="data.essai.rider.nom" name="nom" type="text">
+        </div>
+        <div class="form-group">
+          <label for="firstname">Prénom:</label>
+          <input id="firstname" class="form-control" [(ngModel)]="data.essai.rider.prenom" name="prenom" type="text">
+        </div>
+        <div class="form-group">
+          <label for="date_naissance">Date de Naissance:</label>
+          <input id="date_naissance" class="form-control" [(ngModel)]="data.essai.rider.date_naissance" name="date_naissance" type="date">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input id="email" class="form-control" [(ngModel)]="data.essai.rider.email" name="email" type="email">
+        </div>
+        <div class="form-group">
+          <label for="address">Adresse:</label>
+          <input id="address" class="form-control" [(ngModel)]="data.essai.rider.adresse"  name="adresse" type="text">
+        </div>
+        <div class="form-group">
+          <label for="phone">Téléphone:</label>
+          <input id="phone" class="form-control" [(ngModel)]="data.essai.rider.telephone" name="telephone" type="tel">
+        </div>
+        <button type="button" class="btn btn-success" (click)="saveRider()">Essayer</button>
+        <button type="button" class="btn btn-danger" (click)="onNoClick()">Annuler</button>
+    </div>

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment.prod';
 import { Seance } from 'src/class/seance';
 import { Inscription, InscriptionSeance } from 'src/class/inscription';
 import { ErrorService } from './error.service';
+import { Essai } from 'src/app/defaut/defaut.component';
 
 @Injectable({
   providedIn: 'root'
@@ -136,6 +137,22 @@ export class SeancesService {
 
     return this.global.POST(this.url, body)
       .then((response: string) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public Essayer(essai:Essai): Promise<boolean> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      essai :essai,
+      command: "reserver_essai"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: boolean) => {
         return response;
       })
       .catch(error => {

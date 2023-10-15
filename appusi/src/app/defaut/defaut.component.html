@@ -189,7 +189,8 @@
     </div>
 </div>
 <div id="Entrainements" #Entrainements></div>
-<br /><br /><br />
+<br /><br />
+<br />
 <div class="row">
     <div class="col-12">
         <div class="card mb-3">
@@ -220,7 +221,11 @@
                                     </thead>
                                     <tr *ngFor="let seance of seances">
                                         <!-- Afficher les détails de l'inscription ici -->
-                                        <td>{{ seance.libelle }}</td>
+                                        <td>{{ seance.libelle }}    
+                                            <span *ngIf="seance.essai_possible && comparedate(seance.date_seance.toString())">
+                                                <br/><button (click)="Essayer(seance)" class="btn btn-sm btn-success" type="button">Essayer</button>
+                                            </span>
+                                        </td>
                                         <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
                                         <td>{{ seance.heure_debut }}</td>
                                         <td>{{ seance.duree_cours }} minutes</td>
@@ -233,9 +238,7 @@
                                         <td>{{ seance.niveau_requis }}</td>
                                         <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
-                                        <td *ngIf="seance.essai_possible">
-                                            <button type="button" class="btn btn-outline-success" (click)="Essayer(seance)">Réserver un essai</button>
-                                        </td>
+                                      
                                         
                                     </tr>
                                 </table>
@@ -251,7 +254,7 @@
                                                     <span>{{ seance.heure_debut }}</span><br />
                                                     <span>{{ seance.lieu }}</span><br />
                                                     <span *ngIf="seance.essai_possible">
-                                                        <button type="button" class="btn btn-outline-success" (click)="Essayer(seance)">Réserver un essai</button>
+                                                        <button type="button" class="btn btn-outline-success" (click)="Essayer(seance)">>Essayer</button>
                                                     </span>
                                                 </div>
                                                
