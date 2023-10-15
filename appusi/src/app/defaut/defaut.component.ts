@@ -98,6 +98,7 @@ export class PopInEssai {
     
         // Afficher un message de confirmation à l'utilisateur
         errorservice.instance.OKMessage(act);
+        this.dialogRef.close();
       } else {
         errorservice.instance.CreateError(act,"erreur inconnue");
       }
