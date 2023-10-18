@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Team } from './class/team';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'eurollball';
+  public title = 'Anywhere / Anytimes Series - Europe';
+  public team = new Team();
+  submitForm(){
+
+  }
 }
