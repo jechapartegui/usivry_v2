@@ -17,7 +17,7 @@
                     <div class="accordion-body">
                         <table div class="screen">
                             <thead>
-                                <th>Nom et niveau</th>
+                                <th>Nom</th>
                                 <th>Inscription</th>
                                 <th>Séance</th>
                                 <th>Contact d'urgence</th>
@@ -33,22 +33,9 @@
                                             align-items: center;
                                             justify-content: space-between;"><span
                                                     class="mr-1">{{item.rider_libelle}}</span>
-                                                <div class="form-group">
-                                                    <select id="niveau_requis" [disabled]="!item.edit"
-                                                        class="form-control" [(ngModel)]="item.niveau"
-                                                        placeholder="Niveau">
-                                                        <ng-container *ngFor="let niveau of niveauxRequis">
-                                                            <option [value]="niveau">{{niveau}}</option>
-                                                        </ng-container>
+                                               
 
-                                                    </select>
-                                                </div>
-                                                <i style="cursor: pointer;"
-                                                    [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                    (click)="item.edit = true" class="bi bi-pencil"></i>
-                                                <i style="cursor: pointer;"
-                                                    [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
-                                                    (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
+                                               
 
                                             </td>
                                             <td>
@@ -103,26 +90,6 @@
                                                         <span class="present"><strong>{{item.rider_libelle}}
                                                             </strong>
                                                         </span>
-                                                        <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                            <select id="niveau_requis" [disabled]="!item.edit"
-                                                                class="form-control" [(ngModel)]="item.niveau"
-                                                                placeholder="Niveau">
-                                                                <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                    <option [value]="niveau">{{niveau}}</option>
-                                                                </ng-container>
-                                                            </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                                (click)="item.edit=true" class="bi bi-pencil"></i>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
-                                                                (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
-
-                                                        </div>
 
                                                         <span class="present">({{item.contact_urgence}})</span>
                                                     </div>
@@ -132,26 +99,7 @@
                                                         <span class="absent"><strong>{{item.rider_libelle}}
                                                             </strong>
                                                         </span>
-                                                        <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                            <select id="niveau_requis" [disabled]="!item.edit"
-                                                                class="form-control" [(ngModel)]="item.niveau"
-                                                                placeholder="Niveau">
-                                                                <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                    <option [value]="niveau">{{niveau}}</option>
-                                                                </ng-container>
-                                                            </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                                (click)="item.edit=true" class="bi bi-pencil"></i>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
-                                                                (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
-
-                                                        </div>
+                                                      
 
                                                         <span class="absent">({{item.contact_urgence}})</span>
                                                     </div>
@@ -164,26 +112,7 @@
                                                     <span class="non_inscrit"><strong>{{item.rider_libelle}}
                                                         </strong>
                                                     </span>
-                                                    <div class="form-group" style="display: flex;
-                                                        flex-direction: row;
-                                                        flex-wrap: nowrap;
-                                                        justify-content: space-between;
-                                                        align-content: center;
-                                                        align-items: center;">
-                                                        <select id="niveau_requis" [disabled]="!item.edit"
-                                                            class="form-control" [(ngModel)]="item.niveau"
-                                                            placeholder="Niveau">
-                                                            <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                <option [value]="niveau">{{niveau}}</option>
-                                                            </ng-container>
-                                                        </select><i style="cursor: pointer; margin-left: 10px;"
-                                                            [ngStyle]="{'display': item.edit ? 'none' : 'block'}"
-                                                            (click)="item.edit=true" class="bi bi-pencil"></i>
-                                                        <i style="cursor: pointer; margin-left: 10px;"
-                                                            [ngStyle]="{'display': !item.edit ? 'none' : 'block'}"
-                                                            (click)="UpdateLevel(item)" class="bi bi-save-fill"></i>
-
-                                                    </div>
+                                                   
 
                                                     <span class="non_inscrit">({{item.contact_urgence}})</span>
                                                 </div>
@@ -233,7 +162,7 @@
                     <div class="accordion-body">
                         <table class="screen">
                             <thead>
-                                <th>Nom et niveau</th>
+                                <th>Nom</th>
                                 <th>Inscription</th>
                                 <th>Séance</th>
                                 <th>Contact d'urgence</th>
@@ -250,25 +179,12 @@
                                                 align-items: center;
                                                 justify-content: space-between;"><span
                                                         class="mr-1">{{present.rider_libelle}}</span>
-                                                    <div class="form-group">
-                                                        <select id="niveau_requis" [disabled]="!present.edit"
-                                                            class="form-control" [(ngModel)]="present.niveau"
-                                                            placeholder="Niveau">
-                                                            <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                <option [value]="niveau">{{niveau}}</option>
-                                                            </ng-container>
-                                                        </select>
-                                                    </div>
+                                                   
 
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                        (click)="UpdateLevel(present)" class="bi bi-pencil"></i>
-
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
-                                                        (click)="UpdateLevel(present)" class="bi bi-save-fill"></i>
+                                                   
 
                                                 </td>
+                                               
                                                 <td>
                                                     <ng-container *ngIf="present.statut">
                                                         <i *ngIf="present.statut.toString() == 'présent'"
@@ -329,29 +245,7 @@
                                                             <span
                                                                 class="present"><strong>{{present.rider_libelle}}</strong>
                                                             </span>
-                                                            <div class="form-group" style="display: flex;
-                                                                flex-direction: row;
-                                                                flex-wrap: nowrap;
-                                                                justify-content: space-between;
-                                                                align-content: center;
-                                                                align-items: center;">
-                                                                <select id="niveau_requis" [disabled]="!present.edit"
-                                                                    class="form-control" [(ngModel)]="present.niveau"
-                                                                    placeholder="Niveau">
-                                                                    <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                        <option [value]="niveau">{{niveau}}</option>
-                                                                    </ng-container>
-                                                                </select>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                                    (click)="present.edit = true"
-                                                                    class="bi bi-pencil"></i>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
-                                                                    (click)="UpdateLevel(present)"
-                                                                    class="bi bi-save-fill"></i>
-
-                                                            </div>
+                                                           
 
                                                             <span class="present">({{present.contact_urgence}})</span>
                                                         </div>
@@ -362,29 +256,7 @@
                                                             <span
                                                                 class="absent"><strong>{{present.rider_libelle}}</strong>
                                                             </span>
-                                                            <div class="form-group" style="display: flex;
-                                                                flex-direction: row;
-                                                                flex-wrap: nowrap;
-                                                                justify-content: space-between;
-                                                                align-content: center;
-                                                                align-items: center;">
-                                                                <select id="niveau_requis" [disabled]="!present.edit"
-                                                                    class="form-control" [(ngModel)]="present.niveau"
-                                                                    placeholder="Niveau">
-                                                                    <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                        <option [value]="niveau">{{niveau}}</option>
-                                                                    </ng-container>
-                                                                </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                                    (click)="present.edit=true"
-                                                                    class="bi bi-pencil"></i>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
-                                                                    (click)="UpdateLevel(present)"
-                                                                    class="bi bi-save-fill"></i>
-
-                                                            </div>
-
+                                                            
                                                             <span class="absent">({{present.contact_urgence}})</span>
                                                         </div>
                                                     </ng-container>
@@ -395,29 +267,7 @@
                                                         <span
                                                             class="non_inscrit"><strong>{{present.rider_libelle}}</strong>
                                                         </span>
-                                                        <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                            <select id="niveau_requis" [disabled]="!present.edit"
-                                                                class="form-control" [(ngModel)]="present.niveau"
-                                                                placeholder="Niveau">
-                                                                <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                    <option [value]="niveau">{{niveau}}</option>
-                                                                </ng-container>
-                                                            </select>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': present.edit ? 'none' : 'block'}"
-                                                                (click)="present.edit=true"
-                                                                class="bi bi-pencil"></i>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': !present.edit ? 'none' : 'block'}"
-                                                                (click)="UpdateLevel(present)"
-                                                                class="bi bi-save-fill"></i>
-
-                                                        </div>
+                                                        
 
                                                         <span class="non_inscrit">({{present.contact_urgence}})</span>
                                                     </div>
@@ -480,7 +330,7 @@
                     <div class="accordion-body">
                         <table class="screen">
                             <thead>
-                                <th>Nom et niveau</th>
+                                <th>Nom</th>
                                 <th>Inscription</th>
                                 <th>Présence séance</th>
                                 <th>Contact d'urgence</th>
@@ -497,25 +347,9 @@
                                                 align-items: center;
                                                 justify-content: space-between;"><span
                                                         class="mr-1">{{absent.rider_libelle}}</span>
-                                                    <div class="form-group">
-                                                        <select id="niveau_requis" [disabled]="!absent.edit"
-                                                            class="form-control" [(ngModel)]="absent.niveau"
-                                                            placeholder="Niveau">
-                                                            <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                <option [value]="niveau">{{niveau}}</option>
-                                                            </ng-container>
-                                                        </select>
-                                                    </div>
+                                                   
 
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                        (click)="absent.edit = true" class="bi bi-pencil"></i>
-
-
-
-                                                    <i style="cursor: pointer;"
-                                                        [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
-                                                        (click)="UpdateLevel(absent)" class="bi bi-save-fill"></i>
+                                                   
 
                                                 </td>
                                                 <td>
@@ -589,29 +423,7 @@
                                                             <span class="present"><strong>{{absent.rider_libelle}}
                                                                 </strong>
                                                             </span>
-                                                            <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                                <select id="niveau_requis" [disabled]="!absent.edit"
-                                                                    class="form-control" [(ngModel)]="absent.niveau"
-                                                                    placeholder="Niveau">
-                                                                    <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                        <option [value]="niveau">{{niveau}}</option>
-                                                                    </ng-container>
-                                                                </select>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                                    (click)="absent.edit=true"
-                                                                    class="bi bi-pencil"></i>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
-                                                                    (click)="UpdateLevel(absent)"
-                                                                    class="bi bi-save-fill"></i>
-
-                                                            </div>
+                                                           
 
                                                             <span class="present">({{absent.contact_urgence}})</span>
                                                         </div>
@@ -622,27 +434,7 @@
                                                             <span class="absent"><strong>{{absent.rider_libelle}}
                                                                 </strong>
                                                             </span>
-                                                            <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                                <select id="niveau_requis" [disabled]="!absent.edit"
-                                                                    class="form-control" [(ngModel)]="absent.niveau"
-                                                                    placeholder="Niveau">
-                                                                    <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                        <option [value]="niveau">{{niveau}}</option>
-                                                                    </ng-container>
-                                                                </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                                    (click)="absent.edit=true" class="bi bi-pencil"></i>
-                                                                <i style="cursor: pointer; margin-left: 10px;"
-                                                                    [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
-                                                                    (click)="UpdateLevel(absent)"
-                                                                    class="bi bi-save-fill"></i>
-
-                                                            </div>
+                                                            
 
                                                             <span class="absent">({{absent.contact_urgence}})</span>
                                                         </div>
@@ -654,27 +446,7 @@
                                                         <span class="non_inscrit"><strong>{{absent.rider_libelle}}
                                                             </strong>
                                                         </span>
-                                                        <div class="form-group" style="display: flex;
-                                                            flex-direction: row;
-                                                            flex-wrap: nowrap;
-                                                            justify-content: space-between;
-                                                            align-content: center;
-                                                            align-items: center;">
-                                                            <select id="niveau_requis" [disabled]="!absent.edit"
-                                                                class="form-control" [(ngModel)]="absent.niveau"
-                                                                placeholder="Niveau">
-                                                                <ng-container *ngFor="let niveau of niveauxRequis">
-                                                                    <option [value]="niveau">{{niveau}}</option>
-                                                                </ng-container>
-                                                            </select><i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': absent.edit ? 'none' : 'block'}"
-                                                                (click)="absent.edit=true" class="bi bi-pencil"></i>
-                                                            <i style="cursor: pointer; margin-left: 10px;"
-                                                                [ngStyle]="{'display': !absent.edit ? 'none' : 'block'}"
-                                                                (click)="UpdateLevel(absent)"
-                                                                class="bi bi-save-fill"></i>
-
-                                                        </div>
+                                                        
 
                                                         <span class="non_inscrit">({{absent.contact_urgence}})</span>
                                                     </div>

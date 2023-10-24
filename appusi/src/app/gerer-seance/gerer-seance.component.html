@@ -39,7 +39,6 @@
           <th>Statut</th>
           <th>Professeurs</th>
           <th>Âge requis</th>
-          <th>Niveau requis</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -60,7 +59,6 @@
             </ul>
           </td>
           <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
-          <td>{{ seance.niveau_requis }}</td>
           <td>
             <button class="btn btn-outline-danger" (click)="supprimerSeance(seance)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill"
@@ -156,20 +154,21 @@
                   [(ngModel)]="editSeance.age_maximum">
               </div>
               <div class="form-group">
-                <label for="professeurs">Niveaux acceptés</label>
+                <label for="professeurs">Groupes</label>
                 <br />
-                <ng-container *ngFor="let niv of editSeance.niveau_requis">
-                  <h5 class="badge rounded-pill bg-primary" (click)="RemoveNiveau(niv)">{{niv}} <i
+                <ng-container *ngFor="let niv of editSeance.groupes">
+                  <h5 class="badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
                       class="bi bi-x-square"></i></h5>
                 </ng-container><br />
-                <label for="statut">Niveaux disponibles</label>
-                <select class="form-control" id="professeurs" [(ngModel)]="current_niveau">
-                  <ng-container *ngFor="let ni of niveau_dispo">
-                    <option [value]="ni">{{ ni }}</option>
+                <label for="statut">Groupes disponibles</label>
+                <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >
+                  <ng-container *ngFor="let ni of groupe_dispo	">
+                    <option [value]="ni.id">{{ ni.nom }}</option>
                   </ng-container>
                 </select>
-                <button type="button" class="btn btn-outline-success" (click)="AjouterNiveau()">Ajouter</button>
+                <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
               </div>
+            </div>
              
               <div class="form-group">
                 <label for="place_maximum">Info séance : </label>

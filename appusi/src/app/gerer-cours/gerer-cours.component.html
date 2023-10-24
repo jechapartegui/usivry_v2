@@ -38,7 +38,6 @@
           <th>Professeur Principal</th>
           <th>Gymnase Référence</th>
           <th>Âge requis</th>
-          <th>Niveau requis</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -51,7 +50,6 @@
           <td>{{ cours.prof_principal_nom }}</td>
           <td>{{ cours.lieu_nom }}</td>
           <td>{{ cours.age_requis }}</td>
-          <td>{{ cours.niveau_requis}}</td>
           <td>
             <button class="btn btn-outline-danger" (click)="supprimerCours(cours)">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill"
@@ -132,19 +130,19 @@
                 placeholder="Age requis">
             </div>
             <div class="form-group">
-              <label for="professeurs">Niveaux acceptés</label>
+              <label for="professeurs">Groupes</label>
               <br />
-              <ng-container *ngFor="let niv of editCours.niveau_requis">
-                <h5 class="badge rounded-pill bg-primary" (click)="RemoveNiveau(niv)">{{niv}} <i
+              <ng-container *ngFor="let niv of editCours.groupes">
+                <h5 class="badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
                     class="bi bi-x-square"></i></h5>
               </ng-container><br />
-              <label for="statut">Niveaux disponibles</label>
-              <select class="form-control" id="professeurs" [(ngModel)]="current_niveau">
-                <ng-container *ngFor="let ni of niveau_dispo">
-                  <option [value]="ni">{{ ni }}</option>
+              <label for="statut">Groupes disponibles</label>
+              <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >
+                <ng-container *ngFor="let ni of groupe_dispo	">
+                  <option [value]="ni.id">{{ ni.nom }}</option>
                 </ng-container>
               </select>
-              <button type="button" class="btn btn-outline-success" (click)="AjouterNiveau()">Ajouter</button>
+              <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
             </div>
             <div class="p-3 m-0 "> <button class="btn btn-outline-success btn-lg m-3" mat-raised-button
                 (click)="soumettreCours()">

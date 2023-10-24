@@ -216,7 +216,6 @@
                                         <th>Durée du cours</th>
                                         <th>Lieu</th>
                                         <th>Professeur présent</th>
-                                        <th>Niveau requis</th>
                                         <th>Age</th>
                                     </thead>
                                     <tr *ngFor="let seance of seances">
@@ -235,7 +234,7 @@
                                                 <li *ngFor="let prof of seance.professeurs">{{ prof.value }} </li>
                                             </ul>
                                         </td>
-                                        <td>{{ seance.niveau_requis }}</td>
+                                     
                                         <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
                                         <!-- Bouton pour se désinscrire de la séance -->
                                       

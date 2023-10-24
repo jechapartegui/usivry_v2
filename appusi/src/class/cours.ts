@@ -1,4 +1,4 @@
-import { Niveau } from "./riders";
+import { Groupe, Lien_Groupe } from "./groupe";
 
 export class Cours {
 
@@ -13,8 +13,16 @@ export class Cours {
   public lieu_nom: string = "";
   public age_requis: number = 0;
   public age_maximum: number = 99;
-  public niveau_requis: Niveau[] = [];
   public saison_id: number = 0;
   public place_maximum: number = null;
+  public groupes: Groupe[] = [];
   constructor() { }
+  ToLienGroupe() : Lien_Groupe{
+    let LG = new Lien_Groupe();
+    LG.objet_id = this.id;
+    LG.objet_type = 'cours';
+    LG.groupe = this.groupes.map( x => x.id);
+    return LG;
+  }
+
 }

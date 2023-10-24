@@ -84,7 +84,7 @@ public Add(cours:Cours): Promise<number> {
   public GetCours(): Promise<Cours[]> {
     this.url = environment.usivry + "usivry/cours_manage.php";
     const body = {
-      command: "get_all_byseason"
+      command: "get_all"
     };
 
     return this.global.POST(this.url, body)

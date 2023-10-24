@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cours } from 'src/class/cours';
 import { KeyValuePair } from 'src/class/keyvaluepair';
-import { Niveau } from 'src/class/riders';
 import { CoursService } from 'src/services/cours.service';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 import { notification } from '../custom-notification/custom-notification.component';
+import { Groupe } from 'src/class/groupe';
+import { GroupeService } from 'src/services/groupe.service';
 
 @Component({
   selector: 'app-gerer-cours',
@@ -16,7 +17,8 @@ import { notification } from '../custom-notification/custom-notification.compone
 })
 export class GererCoursComponent implements OnInit {
   // cours.component.ts
-  constructor(private coursservice:CoursService, private ridersservice:RidersService, private router:Router){}
+  constructor(private coursservice:CoursService, private ridersservice:RidersService, private router:Router,
+    private grServ: GroupeService){}
 listeprof:KeyValuePair[];
 listelieu:KeyValuePair[];
 est_prof:boolean =false;
@@ -26,9 +28,9 @@ seasons:KeyValuePair[];
   listeCours: Cours[] = []; // Initialisez la liste des cours (vous pouvez la charger à partir d'une API, par exemple)
   editMode = false;
   editCours: Cours | null = null;
-  niveauxRequis: Niveau[] = Object.values(Niveau);
-  niveau_dispo:Niveau[]=[];
-  current_niveau:Niveau;
+  current_groupe_id:number;
+  groupe_dispo:Groupe[]=[];
+  liste_groupe: Groupe[] = []
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
@@ -50,6 +52,12 @@ seasons:KeyValuePair[];
      let o = errorService.CreateError("récupérer les cours",  err.statusText);
      errorService.emitChange(o);
     })
+    this.grServ.GetAll().then((list) => {
+      this.liste_groupe = list;
+    }).catch((err: HttpErrorResponse) => {
+      errorService.CreateError("récupérer les groupes", err.statusText);
+      errorService.emitChange(o);
+    });
     this.ridersservice.GetProf().then((elka) =>{
       this.listeprof = elka;
     }).catch((err:HttpErrorResponse)=>{
@@ -90,9 +98,9 @@ seasons:KeyValuePair[];
  
 
   editerCours(cours: Cours): void {
-    this.editCours = { ...cours };
+    this.editCours = cours;
     this.editMode = true;
-    this.MAJListeNiveau();
+    this.MAJListeGroupe();
   }
 
   supprimerCours(cours: Cours): void {
@@ -118,30 +126,28 @@ seasons:KeyValuePair[];
   creerCours(): void {
     this.editCours = new Cours();
     this.editMode = true;
-    this.MAJListeNiveau();
+    this.MAJListeGroupe();
   }
 
-  AjouterNiveau() { 
-    this.editCours.niveau_requis.push(this.current_niveau);
-    this.current_niveau = null;
-    this.MAJListeNiveau();
-  }
-  RemoveNiveau(item){
-    this.editCours.niveau_requis = this.editCours.niveau_requis.filter(e => e.toString() !== item.toString());
-    this.MAJListeNiveau();
-  }
-  MAJListeNiveau(){
-    this.niveau_dispo = this.niveauxRequis;
-    if(typeof(this.editCours.niveau_requis) == 'string'){
-      let n = this.editCours.niveau_requis;
-      this.editCours.niveau_requis = [];
-      this.editCours.niveau_requis.push(n);
+  AjouterGroupe() { 
+    const indexToUpdate = this.liste_groupe.findIndex(cc => cc.id === this.current_groupe_id);
+    const newValue = this.liste_groupe[indexToUpdate];
+    this.editCours.groupes.push(newValue);
+    this.current_groupe_id = null;
+    this.MAJListeGroupe();
 
-    }
-    this.editCours.niveau_requis.forEach((element:string) => {
-      let element_to_remove = this.niveauxRequis.find(e => e.toString() == element.toString());
+  }
+  RemoveGroupe(item){
+    this.editCours.groupes = this.editCours.groupes.filter(e => e.id !== item.id);
+    this.MAJListeGroupe();
+  }
+  MAJListeGroupe(){
+    this.groupe_dispo = this.liste_groupe;
+
+    this.editCours.groupes.forEach((element:Groupe) => {
+      let element_to_remove = this.liste_groupe.find(e => e.id == element.id);
       if (element_to_remove) {
-        this.niveau_dispo = this.niveau_dispo.filter(e => e.toString() !== element_to_remove.toString());
+        this.groupe_dispo = this.groupe_dispo.filter(e => e.id !== element_to_remove.id);
       }
     });
   }

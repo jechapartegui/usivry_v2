@@ -1,5 +1,5 @@
+import { Groupe, Lien_Groupe } from "./groupe";
 import { KeyValuePair } from "./keyvaluepair";
-import { Niveau, Rider } from "./riders";
 
 export class Seance {
     public seance_id:number =0;
@@ -14,13 +14,20 @@ export class Seance {
     public professeurs: KeyValuePair[]= [];
     public age_requis:number =0 ;
     public age_maximum:number =99 ;
-    public niveau_requis: Niveau[] = [];
+    public groupes: Groupe[] = [];
     public place_maximum:number =null;
     public essai_possible:boolean=false;
     public notes:string="";
     public info_seance:string="";
   constructor() {
     
+  }
+  ToLienGroupe() : Lien_Groupe{
+    let LG = new Lien_Groupe();
+    LG.objet_id = this.seance_id;
+    LG.objet_type = 'cours';
+    LG.groupe = this.groupes.map( x => x.id);
+    return LG;
   }
 }
 

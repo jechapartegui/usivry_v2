@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Cours } from 'src/class/cours';
 import { Seance, StatutSeance } from 'src/class/seance';
 import { KeyValuePair } from 'src/class/keyvaluepair';
-import { Niveau } from 'src/class/riders';
 import { CoursService } from 'src/services/cours.service';
 import { SeancesService } from 'src/services/seances.service';
 import { ErrorService } from 'src/services/error.service';
@@ -10,6 +9,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RidersService } from 'src/services/riders.service';
 import { Router } from '@angular/router';
 import { notification } from '../custom-notification/custom-notification.component';
+import { Groupe } from 'src/class/groupe';
+import { GroupeService } from 'src/services/groupe.service';
 
 @Component({
   selector: 'app-gerer-seance',
@@ -29,16 +30,17 @@ export class GererSeanceComponent implements OnInit {
   season_id: number;
   jour_semaine: string = "";
   seasons: KeyValuePair[];
-  niveauxRequis: string[] = Object.values(Niveau);
-  niveau_dispo: string[] = [];
   current_prof:number;
-  current_niveau:Niveau;
-  coursselectionne: boolean = false;
+  coursselectionne: boolean = false;  
+  current_groupe_id:number;
+  groupe_dispo:Groupe[]=[];
+  liste_groupe: Groupe[] = []
   constructor(
     private router: Router,
     private coursservice: CoursService,
     private seancesservice: SeancesService,
     private ridersservice: RidersService,
+    private grServ: GroupeService,
     private errorservice: ErrorService
   ) { }
 
@@ -51,6 +53,13 @@ export class GererSeanceComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    
+    this.grServ.GetAll().then((list) => {
+      this.liste_groupe = list;
+    }).catch((err: HttpErrorResponse) => {
+      errorService.CreateError("récupérer les groupes", err.statusText);
+      errorService.emitChange(o);
+    });
     if (RidersService.Est_Prof === false && RidersService.Est_Admin === false) {
       this.router.navigate(['/menu-inscription']);
       return;
@@ -112,38 +121,36 @@ export class GererSeanceComponent implements OnInit {
       }
     });
   }
-  AjouterNiveau() { 
-    this.editSeance.niveau_requis.push(this.current_niveau);
-    this.current_niveau = null;
-    this.MAJListeNiveau();
-  }
-  RemoveNiveau(item){
-    this.editSeance.niveau_requis = this.editSeance.niveau_requis.filter(e => e.toString() !== item.toString());
-    this.MAJListeNiveau();
-  }
-  MAJListeNiveau(){
-    this.niveau_dispo = this.niveauxRequis;
-    if(typeof(this.editSeance.niveau_requis) == 'string'){
-      let n = this.editSeance.niveau_requis;
-      this.editSeance.niveau_requis = [];
-      this.editSeance.niveau_requis.push(n);
+  AjouterGroupe() { 
+    const indexToUpdate = this.liste_groupe.findIndex(cc => cc.id === this.current_groupe_id);
+    const newValue = this.liste_groupe[indexToUpdate];
+    this.editSeance.groupes.push(newValue);
+    this.current_groupe_id = null;
+    this.MAJListeGroupe();
 
-    }
-    this.editSeance.niveau_requis.forEach((element:string) => {
-      let element_to_remove = this.niveauxRequis.find(e => e.toString() == element.toString());
+  }
+  RemoveGroupe(item){
+    this.editSeance.groupes = this.editSeance.groupes.filter(e => e.id !== item.id);
+    this.MAJListeGroupe();
+  }
+  MAJListeGroupe(){
+    this.groupe_dispo = this.liste_groupe;
+
+    this.editSeance.groupes.forEach((element:Groupe) => {
+      let element_to_remove = this.liste_groupe.find(e => e.id == element.id);
       if (element_to_remove) {
-        this.niveau_dispo = this.niveau_dispo.filter(e => e.toString() !== element_to_remove.toString());
+        this.groupe_dispo = this.groupe_dispo.filter(e => e.id !== element_to_remove.id);
       }
     });
   }
 
 
   editerSeance(seance: Seance): void {
-    this.editSeance = { ...seance };
+    this.editSeance = seance;
     this.coursselectionne = true;
     this.editMode = true;
    this.MAJListeProf();
-   this.MAJListeNiveau();
+   this.MAJListeGroupe();
   }
   onCoursSelectionChange(cours_id: any): void {
     //  console.log('Nouvelle valeur sélectionnée :', newValue);
@@ -156,24 +163,21 @@ export class GererSeanceComponent implements OnInit {
       this.editSeance.age_maximum = 99;
       this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
-      this.editSeance.niveau_requis = [];
-      newValue.niveau_requis.forEach((el) =>{
-        this.editSeance.niveau_requis.push(el);
+      this.editSeance.groupes = [];
+      newValue.groupes.forEach((el) =>{
+        this.editSeance.groupes.push(el);
       })
       this.editSeance.lieu_id = newValue.lieu_id;
       this.jour_semaine = newValue.jour_semaine;
     } else {
       this.coursselectionne = false;
     }
-    this.MAJListeNiveau();
+    this.MAJListeGroupe();
     // Faites ce que vous voulez avec la nouvelle valeur sélectionnée ici
   }
 
   isProfInEditSeance(prof: KeyValuePair): boolean {
     return this.editSeance.professeurs.some(p => p.value === prof.value);
-  }
-  isNiveauInEditSeance(niveau: Niveau): boolean {
-    return this.editSeance.niveau_requis.includes(niveau);
   }
 
   supprimerSeance(seance: Seance): void {
@@ -207,7 +211,7 @@ export class GererSeanceComponent implements OnInit {
     this.coursselectionne = false;
     this.editMode = true;
     this.MAJListeProf();
-    this.MAJListeNiveau()
+    this.MAJListeGroupe();
   }
 
   VoirMaSeance() {

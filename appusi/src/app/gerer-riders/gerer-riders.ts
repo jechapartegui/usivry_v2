@@ -2,7 +2,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx'; // Bibliothèque pour lire les fichiers Excel
-import { Niveau, Rider } from '../../class/riders';
+import { Rider } from '../../class/riders';
 import { StaticClass } from '../global';
 import { RidersService } from 'src/services/riders.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,8 @@ import { notification } from '../custom-notification/custom-notification.compone
 import { KeyValuePair } from 'src/class/keyvaluepair';
 import { CoursService } from 'src/services/cours.service';
 import { environment } from 'src/environments/environment.prod';
+import { Groupe } from 'src/class/groupe';
+import { GroupeService } from 'src/services/groupe.service';
 
 
 @Component({
@@ -38,9 +40,11 @@ export class GererRidersComponent implements OnInit {
   season_id: number;
   search_text: string;
   new_mdp_confirm = "";
+  current_groupe_id:number;
+  groupe_dispo:Groupe[]=[];
 
-  niveauxRequis: Niveau[] = Object.values(Niveau);
-  constructor(private _riderser: RidersService, private coursser: CoursService, private router: Router, private route: ActivatedRoute) { }
+  liste_groupe: Groupe[] = [];
+  constructor(private _riderser: RidersService, private grServ: GroupeService, private coursser: CoursService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -56,6 +60,12 @@ export class GererRidersComponent implements OnInit {
         this.id = params['id'];
         this.situation = "MY_UPDATE";
       }
+    });
+    this.grServ.GetAll().then((list) => {
+      this.liste_groupe = list;
+    }).catch((err: HttpErrorResponse) => {
+      errorService.CreateError("récupérer les groupes", err.statusText);
+      errorService.emitChange(o);
     });
     if (RidersService.IsLoggedIn === false && this.id != -2) {
       this.router.navigate(['/login']);
@@ -138,9 +148,10 @@ export class GererRidersComponent implements OnInit {
 
 
   editerRiders(rider: Rider): void {
-    this.editRider = { ...rider };
+    this.editRider = rider;
     this.editMode = true;
     this.situation = "UPDATE";
+    this.MAJListeGroupe();
   }
 
   ChangerExistingAccount() {
@@ -193,6 +204,7 @@ export class GererRidersComponent implements OnInit {
     this.editRider.id = -1;
     this.editMode = true;
     this.situation = "ADD";
+    this.MAJListeGroupe();
   }
 
   control(): boolean {
@@ -536,7 +548,28 @@ export class GererRidersComponent implements OnInit {
       errorservice.emitChange(o);
     })
   }
+  AjouterGroupe() { 
+    const indexToUpdate = this.liste_groupe.findIndex(cc => cc.id === this.current_groupe_id);
+    const newValue = this.liste_groupe[indexToUpdate];
+    this.editRider.groupes.push(newValue);
+    this.current_groupe_id = null;
+    this.MAJListeGroupe();
 
+  }
+  RemoveGroupe(item){
+    this.editRider.groupes = this.editRider.groupes.filter(e => e.id !== item.id);
+    this.MAJListeGroupe();
+  }
+  MAJListeGroupe(){
+    this.groupe_dispo = this.liste_groupe;
+
+    this.editRider.groupes.forEach((element:Groupe) => {
+      let element_to_remove = this.liste_groupe.find(e => e.id == element.id);
+      if (element_to_remove) {
+        this.groupe_dispo = this.groupe_dispo.filter(e => e.id !== element_to_remove.id);
+      }
+    });
+  }
 
   importData() {
     let errorservice = ErrorService.instance;
@@ -553,27 +586,27 @@ export class GererRidersComponent implements OnInit {
       const excelDate = row[21];
       const date_naissance = this.g.parseExcelDate(excelDate);
 
-      const rider: Rider = {
-        nom: row[2],
-        prenom: row[3],
-        date_naissance: date_naissance, // Utilisez la date convertie
-        sexe: row[9].toLowerCase() === 'monsieur',
-        niveau: Niveau.Débutant,
-        adresse: `${row[22]} ${row[23]} ${row[24]} ${row[25]} ${row[27]} ${row[26]}`,
-        mot_de_passe: 'ivry',
-        telephone: `${row[34]} ${row[35]}`,
-        personne_prevenir: `${row[38]} ${row[39]} - ${row[42]} ${row[43]}`,
-        telephone_personne_prevenir: `${row[40]} - ${row[44]}`,
-        email: row[29],
-        compte: 0,
-        est_prof: false,
-        est_admin: false,
-        est_inscrit: true,
-        id: 0,
-        inscriptions: [],
-        seances: [],
-        seances_prof: []
-      };
+      const rider = new Rider();
+      rider.nom = row[2];
+      rider.prenom = row[3];
+      rider.date_naissance = date_naissance; // Utilisez la date convertie
+      rider.sexe = row[9].toLowerCase() === 'monsieur';
+      rider.groupes = [];
+      rider.adresse = `${row[22]} ${row[23]} ${row[24]} ${row[25]} ${row[27]} ${row[26]}`;
+      rider.mot_de_passe = 'ivry';
+      rider.telephone = `${row[34]} ${row[35]}`;
+      rider.personne_prevenir = `${row[38]} ${row[39]} - ${row[42]} ${row[43]}`;
+      rider.telephone_personne_prevenir = `${row[40]} - ${row[44]}`;
+      rider.email = row[29];
+      rider.compte = 0;
+      rider.est_prof = false;
+      rider.est_admin = false;
+      rider.est_inscrit = true;
+      rider.id = 0;
+      rider.inscriptions = [];
+      rider.seances = [];
+      rider.seances_prof = [];
+
       rid_list.push(rider);
     });
     console.log(rid_list);

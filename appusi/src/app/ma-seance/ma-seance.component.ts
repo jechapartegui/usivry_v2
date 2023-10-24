@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
-import { Niveau, Rider } from 'src/class/riders';
 import { Seance, StatutSeance } from 'src/class/seance';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
@@ -21,7 +20,6 @@ export class MaSeanceComponent implements OnInit {
   text_recherche: string = "";
   liste_adherent: KeyValuePair[];
   messageAnnulation: string = "";
-  niveauxRequis: Niveau[] = Object.values(Niveau);
   constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv: RidersService, private route: ActivatedRoute) { }
   ngOnInit(): void {
     const errorService = ErrorService.instance;
@@ -200,20 +198,6 @@ export class MaSeanceComponent implements OnInit {
     return item.rider_id;
   }
 
-  UpdateLevel(rider: InscriptionSeance) {
-    const errorService = ErrorService.instance;
-    this._riderserv.Update_Level(rider.niveau, rider.rider_id).then((res: boolean) => {
-      if (res) {
-        rider.edit = false;
-      } else {
-        let o = errorService.CreateError("Sauvegarder niveau", "Erreur inconnue");
-        errorService.emitChange(o);
-      }
-    }).catch((error: Error) => {
-      let o = errorService.CreateError("Sauvegarder niveau", error.message);
-      errorService.emitChange(o);
-    });
-  }
 
 
 
