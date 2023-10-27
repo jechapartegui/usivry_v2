@@ -1,0 +1,18 @@
+<ng-container>
+  <div class="stickyNotificationArea">
+    <ng-container *ngFor="let msg of stickyNotifications">
+      <div class="stickyNotificationWrapper" [@notification]>
+        <div class="stickyNotification" (click)="Close(msg)"
+          [ngClass]="{
+          'alert_info': msg.color == 4,
+          'alert_KO': msg.color==2,
+          'alert_OK': msg.color==1,
+          'alert_Warning': msg.color==3}">
+          <!-- Order ticket printing related notifications -->
+          <span>{{msg.object}}</span>&nbsp;: &nbsp;
+          <span>{{msg.content}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

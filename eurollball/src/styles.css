@@ -1,1 +1,146 @@
 /* You can add global styles to this file, and also import other style files */
+.toggle-switch input[type="checkbox"] {
+    display: none;
+  }
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    margin-left: 3px;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .toggle-switch-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-switch-label:before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  .toggle-switch input[type="checkbox"]:checked+.toggle-switch-label {
+    background-color: #4caf50;
+  }
+  
+  .toggle-switch input[type="checkbox"]:checked+.toggle-switch-label:before {
+    transform: translateX(26px);
+  }
+
+  body {
+    background-color: #f0f0f0;
+    font-family: Candara, sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #0d47a1;
+    padding: 0;
+}
+
+.navbar h1 {
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-switch-label {
+    margin-left: 10px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.alert {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.alert_KO {
+    padding: 5px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #6B1A54;
+    background-color: #F8D7DA;
+    color: #6B1A54;
+  }
+  
+  .alert_OK {
+    padding: 5px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #15572A;
+    background-color: #D4EDDA;
+    color: #15572A;
+  }
+  
+  .alert_Warning {
+    padding: 5px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #A56404;
+    background-color: #FFF3CD;
+    color: #A56404
+  }
+  
+  .alert_info {
+    padding: 5px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #0C548F;
+    background-color: #D1ECF1;
+    color: #0C548F
+  }

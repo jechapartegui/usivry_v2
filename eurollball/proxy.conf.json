@@ -1,0 +1,8 @@
+{
+  "/usivry/*": {
+    "target": "http://localhost/",
+    "secure": true,
+    "changeOrigin": true
+
+  }
+}

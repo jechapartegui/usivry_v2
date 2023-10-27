@@ -1,52 +1,97 @@
-<h2>Registration form</h2>
-<div class="row">
-  <div class="col-6">
-    <form (ngSubmit)="submitForm()" #teamForm="ngForm">
-      <div class="form-group">
-        <label for="nom_long">Long Name:</label>
-        <input class="form-control" type="text" id="nom_long" name="nom_long" [(ngModel)]="team.nom_long" required>
+<notif_jecha></notif_jecha>
+<div class="container">
+  <nav id="navbar-example2" class="navbar fixed-top bg-body-tertiary" style="padding: 0px;">
+    <div class="container-fluid" style="align-items: center; 
+    justify-content: center; background-color: darkblue; height: 40px;">
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        Anywhere, Anytime series Europe - Paris / Ivry 2024
       </div>
+    </div>
+  </nav>
+  <div class="row" style="padding-top: 45px;">
+    <div class="col-5 p-5 card">
+      <form (ngSubmit)="submitForm()" #teamForm="ngForm">
+        <h2>Registration form</h2>
+        <div class="form-group">
+          <label for="nom_long">Long Name:<span style="color: red;">*</span></label>
+          <input class="form-control" type="text" id="nom_long" name="nom_long" [(ngModel)]="team.nom_long" required>
+        </div>
 
-      <div class="form-group">
-        <label for="nom_court">Short Name: (3 caracters maximum) </label>
-        <input type="text" id="nom_court" class="form-control" name="nom_court" [(ngModel)]="team.nom_court" required
-          maxlength="3">
-      </div>
+        <div class="form-group">
+          <label for="nom_court">Short Name:<span style="color: red;">*</span></label>
+          <input type="text" id="nom_court" class="form-control" name="nom_court" placeholder="3 chars maximum"
+            [(ngModel)]="team.nom_court" required maxlength="3">
+        </div>
+        <div class="form-group">
+          <label for="contact">Contact's name:<span style="color: red;">*</span></label>
+          <input type="text" id="contact" class="form-control" name="contact" placeholder="Write your name"
+            [(ngModel)]="team.contact" required >
+        </div>
+        <div class="form-group">
+          <label for="couleur_1">Color 1:<span style="color: red;">*</span></label>
+          <input type="color" id="couleur_1" class="form-control" name="couleur_1" [(ngModel)]="team.couleur_1"
+            required>
+        </div>
 
-      <div class="form-group">
-        <label for="couleur_1">Color 1:</label>
-        <input type="color" id="couleur_1" class="form-control" name="couleur_1" [(ngModel)]="team.couleur_1" required>
-      </div>
+        <div class="form-group">
+          <label for="couleur_2">Color 2:</label>
+          <input type="color" id="couleur_2" class="form-control" name="couleur_2" [(ngModel)]="team.couleur_2">
+        </div>
 
-      <div class="form-group">
-        <label for="couleur_2">Color 2:</label>
-        <input type="color" id="couleur_2" class="form-control" name="couleur_2" [(ngModel)]="team.couleur_2">
-      </div>
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" class="form-control" name="email" [(ngModel)]="team.email"
+          required>
+        </div>
 
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-          placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
+        <div class="form-group">
+          <label for="pays">Country:</label>
+          <input type="text" class="form-control" id="pays" name="pays" [(ngModel)]="team.pays" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone:</label>
+          <input type="text" id="phone" class="form-control" name="phone"
+            placeholder="don't forget the international code " [(ngModel)]="team.phone">
+        </div>
 
-      <div class="form-group">
-        <label for="pays">Country:</label>
-        <input type="text" class="form-control" id="pays" name="pays" [(ngModel)]="team.pays" required>
-      </div>
+        <div class="form-group">
+          <label for="sexe">Category:</label>
+          <select id="sexe" class="form-control" name="sexe" [(ngModel)]="team.sexe" required>
+            <option value="0">Women tournament</option>
+            <option value="1">Men tournament</option>
+          </select>
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label for="toggle-switch">Uncomplete team :</label>
+          <div class="toggle-switch">
+            <input type="checkbox" id="toggle" [(ngModel)]="team.not_enough" [ngModelOptions]="{standalone: true}">
+            <label class="toggle-switch-label" for="toggle"></label>
+          </div>
+          <p style="font-size:xx-small;">don't worry if you're not enough we can find extra players</p>
+        </div>
+        <div *ngIf="team.not_enough" class="form-group">
+          <label for="howmany">How many players do you have ?:</label>
+          <input type="number" id="text" class="form-control" name="howmany"
+            placeholder="We will find extra players for you" [(ngModel)]="team.how_many">
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="teamForm.invalid">Submit</button>
+        <label>Your will received a confirmation mail</label>
+      </form>
+    </div>
 
-      <div class="form-group">
-        <label for="sexe">Tournament:</label>
-        <select id="sexe" class="form-control" name="sexe" [(ngModel)]="team.sexe" required>
-          <option value="0">Women tournament</option>
-          <option value="1">Men tournament</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-success" [disabled]="teamForm.invalid">Submit</button>
-      <label>The registration will be validated after the paiement on : <a
-          href="https://www.helloasso.com/associations/us-ivry-roller/evenements/rollball-tournament?_ga=2.162999039.276828212.1697526064-899161207.1691178614&_gl=1%2a17od3sz%2a_ga%2aODk5MTYxMjA3LjE2OTExNzg2MTQ.%2a_ga_TKC826G3G2%2aMTY5NzU1NTY3OC4zMy4xLjE2OTc1NTU4ODMuNDUuMC4w">Women
-          Tournament</a></label>
-    </form>
+    <div class="col-5 p-5 card">
+      <h5 class="card-title">About the Tournaments&nbsp;<i class="bi bi-info-square"></i></h5>
+      <p class="card-text">Our tournaments are the first of their kind in Europe. Both women and men compete for glory over an exciting weekend.</p>
+      <h5 class="card-title">Event Dates&nbsp;<i class="bi bi-calendar-date"></i></h5>
+      <p class="card-text">Join us on February 11th and 12th, 2024, for an action-packed weekend.</p>
+      <h5 class="card-title">Location&nbsp;<i class="bi bi-geo-alt"></i></h5>
+      <p class="card-text">We'll be at the Venise Gosnat Complex: 30 rue Amedée Huon, 94200 Ivry-sur-Seine. Our venue includes a gymnasium and a sports hall for the games.</p>
+      <h5 class="card-title">Categories&nbsp;<i class="bi bi-person"></i></h5>
+      <p class="card-text">We have two categories: Women's Tournament (minimum age: 14) and Men's Tournament (minimum age: 16).</p>
+      <h5 class="card-title">Registration Fees&nbsp;<i class="bi bi-currency-euro"></i></h5>
+      <p class="card-text">For foreign teams: €50, For French teams: €100.</p>
+      <h5 class="card-title">Extras&nbsp;<i class="bi bi-three-dots"></i></h5>
+      <p class="card-text">We'll assist with accommodation and transportation to Ivry-sur-Seine. We can't wait to compete with you.      </p>
+    </div>
   </div>
 </div>
