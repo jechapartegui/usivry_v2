@@ -55,7 +55,7 @@ export class GlobalService {
     } catch (error) {
       if (error instanceof HttpErrorResponse) {
         console.log(url);
-        console.log(body);
+        console.log(error);
         this.handleError(error);
       } else {
         console.error('Une erreur inattendue s\'est produite:', error);

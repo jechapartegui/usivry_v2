@@ -2,14 +2,27 @@
 <div class="container">
   <nav id="navbar-example2" class="navbar fixed-top bg-body-tertiary" style="padding: 0px;">
     <div class="container-fluid" style="align-items: center; 
-    justify-content: center; background-color: darkblue; height: 40px;">
-      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        Anywhere, Anytime series Europe - Paris / Ivry 2024
-      </div>
+    justify-content: center; background-color: darkblue; height: 50px; color: white;">
+    <div class="btn-group me-2 d-none d-sm-block" role="group" aria-label="Second group">
+      <a class="navbar-brand" href="http://usivryroller.fr">
+        <img src=".\assets\usi.png" alt="Omnisports" width="40" height="40">
+      </a>     
+      <a class="navbar-brand" href="https://www.facebook.com/RollBallFrance">
+        <img src=".\assets\rbf.png" alt="Derby" width="40" height="40">
+      </a>
     </div>
+    <div  class="menu-haut btn-group me-2" role="group" aria-label="First group">    
+      <strong>Anywhere, Anytime series Europe - Paris / Ivry 2024</strong> 
+    </div>
+    <div class="btn-group me-2 d-none d-sm-block" role="group" aria-label="Second group">
+      <a class="navbar-brand"  href="https://www.facebook.com/RollBallFrance">
+        <img src=".\assets\irbf.png" alt="Derby" width="40" height="40">
+      </a>
+    </div>
+  </div>
   </nav>
-  <div class="row" style="padding-top: 45px;">
-    <div class="col-5 p-5 card">
+  <div class="row" style="padding-top: 55px;">
+    <div class="col-md-5 p-5 card">
       <form (ngSubmit)="submitForm()" #teamForm="ngForm">
         <h2>Registration form</h2>
         <div class="form-group">
@@ -79,7 +92,7 @@
       </form>
     </div>
 
-    <div class="col-5 p-5 card">
+    <div class="col-md-5 p-5 card">
       <h5 class="card-title">About the Tournaments&nbsp;<i class="bi bi-info-square"></i></h5>
       <p class="card-text">Our tournaments are the first of their kind in Europe. Both women and men compete for glory over an exciting weekend.</p>
       <h5 class="card-title">Event Dates&nbsp;<i class="bi bi-calendar-date"></i></h5>

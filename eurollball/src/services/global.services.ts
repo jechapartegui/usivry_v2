@@ -51,12 +51,10 @@ export class GlobalService {
       return response;
     } catch (error) {
       if (error instanceof HttpErrorResponse) {
-        console.log(url);
-        console.log(body);
         this.handleError(error);
       } else {
-        console.error('Une erreur inattendue s\'est produite:', error);
-        throw new Error('Une erreur inattendue s\'est produite. Veuillez réessayer plus tard.');
+        console.error('Something went wrong:', error);
+        throw new Error('Something went wrong.');
       }
     }
   }
@@ -64,10 +62,10 @@ export class GlobalService {
   private handleError(error: HttpErrorResponse): void {
     let errorservice = ErrorService.instance;
     if (error.error instanceof ErrorEvent) {
-      let o = errorservice.CreateError('Une erreur s\'est produite:', error.error.message);
+      let o = errorservice.CreateError('Something went wrong:', error.error.message);
       errorservice.emitChange(o);
     } else {
-      let o = errorservice.CreateError('Une erreur s\'est produite:', error.statusText);
+      let o = errorservice.CreateError('Something went wrong:', error.statusText);
       errorservice.emitChange(o);
       
     }

@@ -52,7 +52,7 @@ export class ErrorService {
   }
   UnknownError(action: string): notification {
     let o = new notification();
-    o.content = "Erreur inconnue";
+    o.content = "Unknown error";
     o.object = action;
     o.color = code_alert.KO;
     return o;
@@ -62,15 +62,17 @@ export class ErrorService {
     switch (code) {
       default:
       case 401:
-        return "Non autorisé";
+        return "Not Authorized";
     }
   }
   interpret_error(text: string): string {   
         switch (text) {
           default:
             return "Erreur inconnue : " + text;
-          case "Unauthorized NO_USER_FOUND":
-            return "Login incorrect";
+          case "Method Not Allowed SIMILAR_LONG_NAME":
+              return "A team with the same long name already exists";
+          case "Method Not Allowed SIMILAR_SHORT_NAME":
+            return "A team with the same short name already exists";
           case "Unauthorized LOGIN_ALREADY_EXISTS":
             return "Le login existe déjà merci d'en choisir un autre"
           case "Unauthorized NO_OBJECT_FOUND":

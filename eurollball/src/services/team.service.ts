@@ -15,7 +15,7 @@ export class TeamService {
     this.url = environment.usivry + 'usivry/rollball_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
-      command:"suscribe",
+      command:"add",
       team:team
     };
     return this.global.POST(this.url, body)
@@ -27,4 +27,37 @@ export class TeamService {
         return Promise.reject(error);
       });
   }
+
+  public Test(): Promise<any> {
+    this.url = environment.usivry + 'usivry/lieu_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"get_all"
+    };
+    return this.global.POST(this.url, body)
+      .then((response: any) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
+
+  public Test2(): Promise<any> {
+    this.url = environment.usivry + 'usivry/rollball_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command:"retour"
+    };
+    return this.global.POST(this.url, body)
+      .then((response: any) => {
+        return response;
+      })
+      .catch(error => {
+        // Gestion de l'erreur
+        return Promise.reject(error);
+      });
+  }
+  
 }

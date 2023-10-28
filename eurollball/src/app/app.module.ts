@@ -10,6 +10,7 @@ import { StaticClass } from 'src/global';
 import { ErrorService } from 'src/services/error.service';
 import { GlobalService } from 'src/services/global.services';
 import { TeamService } from 'src/services/team.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 
 
@@ -18,7 +19,7 @@ import { DatePipe } from '@angular/common';
     AppComponent,
     NotifJechaComponent],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule, HttpClientModule, BrowserAnimationsModule,
     AppRoutingModule, 
     FormsModule, NgbModule
   ],

@@ -5,7 +5,12 @@
   "projects": {
     "eurollball": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      }
+      ,
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -16,14 +21,10 @@
             "outputPath": "dist/eurollball",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "aot": true,
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css"
             ],
@@ -99,8 +100,7 @@
                 }
               ]
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -114,7 +114,7 @@
             },
             "development": {
               "browserTarget": "eurollball:build:development",
-              "port": 4200
+              "port": 7513
             }
           }
         },
@@ -127,24 +127,20 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "main": "src/test.ts",
+            "karmaConfig": "src/karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "assets": ["src/favicon.ico", "src/assets"]
           }
         }
       }
     }
-  },
+},
   "cli": {
     "analytics": "1cdc9572-14e9-4cc2-ab6d-60f10bd411ab"
   }
