@@ -163,6 +163,8 @@ export class GererSeanceComponent implements OnInit {
       this.editSeance.age_maximum = 99;
       this.editSeance.libelle = newValue.nom;
       this.editSeance.heure_debut = newValue.heure;
+      this.editSeance.convocation_nominative = newValue.convocation_nominative;
+      this.editSeance.place_maximum = newValue.place_maximum;
       this.editSeance.groupes = [];
       newValue.groupes.forEach((el) =>{
         this.editSeance.groupes.push(el);
@@ -262,7 +264,6 @@ export class GererSeanceComponent implements OnInit {
           errorService.emitChange(o);
         })
       }
-      this.editMode = false;
     }
   }
 

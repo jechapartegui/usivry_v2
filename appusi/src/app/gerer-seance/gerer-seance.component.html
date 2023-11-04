@@ -144,15 +144,41 @@
                 <button type="button" class="btn btn-outline-success" (click)="AjouterProf()">Ajouter</button>
               </div>
               <div class="form-group">
-                <label for="age_requis">Âge minimum requis : </label>
-                <input class="form-control" id="age_requis" type="number" [disabled]="!coursselectionne"
-                  [(ngModel)]="editSeance.age_requis">
+                <label for="age_minimum">Age minimum :</label>
+                <input class="form-control" min="1" max="99" matInput type="number" id="age_minimum" [(ngModel)]="editSeance.age_requis"
+                  placeholder="Age requis">
               </div>
               <div class="form-group">
-                <label for="age_maximum">Âge maximum : </label>
-                <input class="form-control" id="age_maximum" type="number" [disabled]="!coursselectionne"
-                  [(ngModel)]="editSeance.age_maximum">
+                <label for="age_maximum">Age maximum :</label>
+                <input class="form-control" min="1" max="99" matInput type="number" id="age_maximum" [(ngModel)]="editSeance.age_maximum"
+                  placeholder="Age maximum">
               </div>
+              <div class="form-group">
+                <label for="place_maximum">Place maximum :</label>
+                <mat-slide-toggle class="form-control" [checked]="editSeance.place_maximum == -1 ? true : false" 
+                (change)="editSeance.place_maximum == -1 ? editSeance.place_maximum = 25 : editSeance.place_maximum = -1" >
+                <span *ngIf="editSeance.place_maximum == -1">Places illimitées</span>
+                <span *ngIf="editSeance.place_maximum > -1">Places limitées</span>
+              </mat-slide-toggle>
+                <input *ngIf="editSeance.place_maximum>0" class="form-control" matInput type="number" id="place_maximum" min="1" max="99" [(ngModel)]="editSeance.place_maximum"
+                  placeholder="Laissez vide si pas de place maximum">
+              </div>
+              <div class="form-group">
+                <label for="place_maximum">Convocation :</label>
+                <mat-slide-toggle class="form-control" [checked]="editSeance.convocation_nominative == true ? true : false" 
+                (change)="editSeance.convocation_nominative == true ? editSeance.convocation_nominative = false : editSeance.convocation_nominative = true" >
+                <span *ngIf="editSeance.convocation_nominative == true">Convocation nominative</span>
+                <span *ngIf="editSeance.convocation_nominative == false">Groupe entier convoqué</span>
+              </mat-slide-toggle>
+              </div>
+              <div class="form-group">
+                <label for="place_maximum">Essai :</label>
+                <mat-slide-toggle class="form-control" [checked]="editSeance.essai_possible == true ? true : false" 
+                (change)="editSeance.essai_possible == true ? editSeance.essai_possible = false : editSeance.essai_possible = true" >
+                <span *ngIf="editSeance.essai_possible == true">Essai possible</span>
+                <span *ngIf="editSeance.essai_possible == false">Pas d'essai pendant cette séance</span>
+              </mat-slide-toggle>
+            </div>
               <div class="form-group">
                 <label for="professeurs">Groupes</label>
                 <br />
@@ -174,17 +200,8 @@
                 <label for="place_maximum">Info séance : </label>
                 <textarea class="form-control" [(ngModel)]="editSeance.info_seance" aria-label="Info pour la séance"></textarea>
               </div>
-              <div class="form-group">
-                <label for="place_maximum">Place maximum (laissez vide si illimité) : </label>
-                <input class="form-control" id="place_maximum" type="number" [(ngModel)]="editSeance.place_maximum">
-              </div>
-              <div class="form-group">
-                <div class="essai">
-                  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                    [(ngModel)]="editSeance.essai_possible">
-                  <label class="form-check-label" for="flexSwitchCheckChecked">Essai possible</label>
-                </div>
-              </div>
+             
+              
               <button class="btn btn-outline-success" [disabled]="!coursselectionne" (click)="soumettreSeance()">
                 {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour" }}
               </button>

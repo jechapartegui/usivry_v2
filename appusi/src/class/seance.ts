@@ -15,8 +15,9 @@ export class Seance {
     public age_requis:number =0 ;
     public age_maximum:number =99 ;
     public groupes: Groupe[] = [];
-    public place_maximum:number =null;
+    public place_maximum:number =-1;
     public essai_possible:boolean=false;
+    public convocation_nominative:boolean=false;
     public notes:string="";
     public info_seance:string="";
   constructor() {
@@ -26,7 +27,7 @@ export class Seance {
     let LG = new Lien_Groupe();
     LG.objet_id = this.seance_id;
     LG.objet_type = 'cours';
-    LG.groupe = this.groupes.map( x => x.id);
+    LG.groupes = this.groupes.map( x => x.id);
     return LG;
   }
 }

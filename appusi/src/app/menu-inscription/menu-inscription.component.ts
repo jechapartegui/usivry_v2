@@ -19,6 +19,8 @@ export class MenuInscriptionComponent implements OnInit {
   Seances: Seance[] = []; // La liste des séances
   listeprof: KeyValuePair[];
   CurrentMail: string = "";
+  EstAdmin :boolean = false;
+  EstProf:boolean = false;
   StatutMailActive: boolean = false;
   constructor(private seanceService: SeancesService, private ridersservice: RidersService, private router: Router) { }
 
@@ -29,6 +31,14 @@ export class MenuInscriptionComponent implements OnInit {
       return;
     }
     this.Riders = RidersService.ListeRiders;
+    this.Riders.forEach((rider) =>{
+      if(rider.est_admin){
+        this.EstAdmin = true;
+      }
+      if(rider.est_prof){
+        this.EstProf = true;
+      }
+    })
     //charger seance
     if (this.Riders.length > 0) {
       this.ridersservice.getAccount(this.Riders[0].compte).then((val) => {

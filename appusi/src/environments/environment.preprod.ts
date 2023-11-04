@@ -1,9 +1,9 @@
 export const environment = {
     production: true,
-    usivry: "http://usivryroller.fr/",
+    usivry: "https://usivryroller.fr/",
     password:'jecha266',
     defaultlogin:'jechapartegui@gmail.com',
-    defaultpassword:'ivry',
+    defaultpassword:'Gulfed2606',
     environment: 'preprod'
   };
   

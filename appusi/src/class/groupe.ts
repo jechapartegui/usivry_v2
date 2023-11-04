@@ -11,7 +11,7 @@ export class Groupe_Lie extends Groupe{
 }
 
 export class Lien_Groupe {
-    public groupe:number[];
+    public groupes:number[];
     public objet_id:number;
     public objet_type:string;
 

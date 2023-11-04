@@ -14,14 +14,15 @@ export class Cours {
   public age_requis: number = 0;
   public age_maximum: number = 99;
   public saison_id: number = 0;
-  public place_maximum: number = null;
+  public place_maximum: number = -1;
   public groupes: Groupe[] = [];
+  public convocation_nominative :boolean=false;
   constructor() { }
   ToLienGroupe() : Lien_Groupe{
     let LG = new Lien_Groupe();
     LG.objet_id = this.id;
     LG.objet_type = 'cours';
-    LG.groupe = this.groupes.map( x => x.id);
+    LG.groupes = this.groupes.map( x => x.id);
     return LG;
   }
 

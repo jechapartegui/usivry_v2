@@ -27,15 +27,8 @@
                                     <ng-container *ngIf="!item.statut_seance">
 
                                         <tr>
-                                            <td style="display: flex;
-                                            flex-direction: row;
-                                            flex-wrap: wrap;
-                                            align-items: center;
-                                            justify-content: space-between;"><span
-                                                    class="mr-1">{{item.rider_libelle}}</span>
-                                               
-
-                                               
+                                            <td><span
+                                                    class="mr-1">{{item.rider_libelle}}</span>     
 
                                             </td>
                                             <td>
@@ -173,11 +166,7 @@
                                         <ng-container *ngIf="present.statut_seance.toString() == 'présent'">
 
                                             <tr>
-                                                <td style="display: flex;
-                                                flex-direction: row;
-                                                flex-wrap: wrap;
-                                                align-items: center;
-                                                justify-content: space-between;"><span
+                                                <td><span
                                                         class="mr-1">{{present.rider_libelle}}</span>
                                                    
 
@@ -274,18 +263,6 @@
                                                 </ng-container>
 
 
-                                                <span>
-
-                                                </span>
-                                            </div>
-                                            <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group">
-                                                <input type="radio" [(ngModel)]="present.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(present)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio' + present.rider_id"
-                                                    [id]="'btnradio1_item' + present.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-success"
-                                                    [for]="'btnradio1_item' + present.rider_id">Présent</label>
                                                 <span>
 
                                                 </span>

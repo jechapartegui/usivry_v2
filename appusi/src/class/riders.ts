@@ -10,8 +10,9 @@ export class Rider {
   public ToLienGroupe() : Lien_Groupe{
     let LG = new Lien_Groupe();
     LG.objet_id = this.id;
-    LG.objet_type = 'cours';
-    LG.groupe = this.groupes.map( x => x.id);
+    LG.objet_type = 'rider';
+    LG.groupes = [];
+    LG.groupes = this.groupes.map( x => x.id);
     return LG;
   }
 

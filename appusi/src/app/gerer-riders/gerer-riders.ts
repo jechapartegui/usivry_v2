@@ -40,14 +40,13 @@ export class GererRidersComponent implements OnInit {
   season_id: number;
   search_text: string;
   new_mdp_confirm = "";
-  current_groupe_id:number;
-  groupe_dispo:Groupe[]=[];
+  current_groupe_id: number;
+  groupe_dispo: Groupe[] = [];
 
   liste_groupe: Groupe[] = [];
   constructor(private _riderser: RidersService, private grServ: GroupeService, private coursser: CoursService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     const errorService = ErrorService.instance;
     let o: notification;
     if (this.editRider) {
@@ -63,52 +62,54 @@ export class GererRidersComponent implements OnInit {
     });
     this.grServ.GetAll().then((list) => {
       this.liste_groupe = list;
+
+      if (RidersService.IsLoggedIn === false && this.id != -2) {
+        this.router.navigate(['/login']);
+        return;
+      } else if (this.id == -2) {
+        this.situation = "CREATE";
+        this.editMode = true;
+        this.editRider = new Rider();
+        this.editRider.id = -2;
+      } else if (this.id > 0) {
+        //Afficher le rider :
+        //si rider dans la liste => on l'affiche sinon erreur
+        if (RidersService.Riders.find(x => x.id == this.id)) {
+          this.editMode = true;
+          this.editRider = RidersService.Riders.find(x => x.id == this.id);
+          this.MAJListeGroupe();
+        } else {
+          this.router.navigate(['/menu-inscription']);
+        }
+      } else if (this.id == 0) {
+        if (!this.est_admin) {
+          this.router.navigate(['/menu-inscription']);
+        } else {
+          this.coursser.GetSaison().then((list) => {
+            this.seasons = list;
+          })
+          this.editMode = false;
+          this.situation = "LIST";
+          this._riderser.GetAllThisSeason().then((list) => {
+            this.ridersList = list;
+          }).catch((err: HttpErrorResponse) => {
+            errorService.CreateError("récupérer les riders", err.statusText);
+            errorService.emitChange(o);
+          })
+        }
+      } else if (this.id == -1) {
+        this.libelle_mail = "Saisir l'email";
+        this.existing_account = false;
+        this.editMode = true;
+        this.editRider = new Rider();
+        this.editRider.id = -1;
+        this.situation = "ADD";
+
+      }
     }).catch((err: HttpErrorResponse) => {
       errorService.CreateError("récupérer les groupes", err.statusText);
       errorService.emitChange(o);
     });
-    if (RidersService.IsLoggedIn === false && this.id != -2) {
-      this.router.navigate(['/login']);
-      return;
-    } else if (this.id == -2) {
-      this.situation = "CREATE";
-      this.editMode = true;
-      this.editRider = new Rider();
-      this.editRider.id = -2;
-    } else if (this.id > 0) {
-      //Afficher le rider :
-      //si rider dans la liste => on l'affiche sinon erreur
-      if (RidersService.Riders.find(x => x.id == this.id)) {
-        this.editMode = true;
-        this.editRider = RidersService.Riders.find(x => x.id == this.id);
-      } else {
-        this.router.navigate(['/menu-inscription']);
-      }
-    } else if (this.id == 0) {
-      if (!this.est_admin) {
-        this.router.navigate(['/menu-inscription']);
-      } else {
-        this.coursser.GetSaison().then((list) => {
-          this.seasons = list;
-        })
-        this.editMode = false;
-        this.situation = "LIST";
-        this._riderser.GetAllThisSeason().then((list) => {
-          this.ridersList = list;
-        }).catch((err: HttpErrorResponse) => {
-          errorService.CreateError("récupérer les riders", err.statusText);
-          errorService.emitChange(o);
-        })
-      }
-    } else if (this.id == -1) {
-      this.libelle_mail = "Saisir l'email";
-      this.existing_account = false;
-      this.editMode = true;
-      this.editRider = new Rider();
-      this.editRider.id = -1;
-      this.situation = "ADD";
-
-    }
 
   }
 
@@ -548,7 +549,7 @@ export class GererRidersComponent implements OnInit {
       errorservice.emitChange(o);
     })
   }
-  AjouterGroupe() { 
+  AjouterGroupe() {
     const indexToUpdate = this.liste_groupe.findIndex(cc => cc.id === this.current_groupe_id);
     const newValue = this.liste_groupe[indexToUpdate];
     this.editRider.groupes.push(newValue);
@@ -556,14 +557,16 @@ export class GererRidersComponent implements OnInit {
     this.MAJListeGroupe();
 
   }
-  RemoveGroupe(item){
+  RemoveGroupe(item) {
     this.editRider.groupes = this.editRider.groupes.filter(e => e.id !== item.id);
     this.MAJListeGroupe();
   }
-  MAJListeGroupe(){
+  MAJListeGroupe() {
     this.groupe_dispo = this.liste_groupe;
-
-    this.editRider.groupes.forEach((element:Groupe) => {
+    if (!this.editRider.groupes) {
+      this.editRider.groupes = [];
+    }
+    this.editRider.groupes.forEach((element: Groupe) => {
       let element_to_remove = this.liste_groupe.find(e => e.id == element.id);
       if (element_to_remove) {
         this.groupe_dispo = this.groupe_dispo.filter(e => e.id !== element_to_remove.id);

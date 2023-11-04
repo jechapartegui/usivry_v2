@@ -53,27 +53,23 @@ export class GlobalService {
       const response = await firstValueFrom(this.http.post(url, body, { headers }));
       return response;
     } catch (error) {
-      if (error instanceof HttpErrorResponse) {
-        console.log(url);
-        console.log(error);
+      if (error instanceof HttpErrorResponse) {       
         this.handleError(error);
       } else {
-        console.error('Une erreur inattendue s\'est produite:', error);
         throw new Error('Une erreur inattendue s\'est produite. Veuillez réessayer plus tard.');
       }
     }
   }
 
   private handleError(error: HttpErrorResponse): void {
-    let errorservice = ErrorService.instance;
+    let message:string;
     if (error.error instanceof ErrorEvent) {
-      let o = errorservice.CreateError('Une erreur s\'est produite:', error.error.message);
-      errorservice.emitChange(o);
+
+      message = error.error.message;
     } else {
-      let o = errorservice.CreateError('Une erreur s\'est produite:', error.statusText);
-      errorservice.emitChange(o);
+      message =  error.statusText;
       
     }
-    throw new Error(error.statusText);
+    throw new Error(message);
   }
 }

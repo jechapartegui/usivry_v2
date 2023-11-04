@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { MenuInscriptionComponent } from './menu-inscription/menu-inscription.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { GererCoursComponent } from './gerer-cours/gerer-cours.component';
 import { GererSeanceComponent } from './gerer-seance/gerer-seance.component';
 import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscriptions.component';
@@ -30,17 +31,18 @@ import { StaticClass } from './global';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { GererGroupeComponent } from './gerer-groupe/gerer-groupe.component';
+import { SimulationMailComponent } from './simulation-mail/simulation-mail.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent
-  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent],
+  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent],
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,
-    BrowserAnimationsModule,MatCardModule,MatIconModule, MatFormFieldModule, MatSelectModule,MatCheckboxModule, NgbModule, MatDialogModule
+    BrowserAnimationsModule,MatCardModule,MatIconModule, MatFormFieldModule, MatSelectModule,MatCheckboxModule, NgbModule, MatDialogModule, MatSlideToggleModule
   ],
   providers: [RidersService, GlobalService, SeancesService, CoursService, ErrorService, StaticClass, DatePipe],
   bootstrap: [AppComponent]

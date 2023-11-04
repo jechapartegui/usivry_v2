@@ -17,40 +17,40 @@ import { GroupeService } from 'src/services/groupe.service';
 })
 export class GererCoursComponent implements OnInit {
   // cours.component.ts
-  constructor(private coursservice:CoursService, private ridersservice:RidersService, private router:Router,
-    private grServ: GroupeService){}
-listeprof:KeyValuePair[];
-listelieu:KeyValuePair[];
-est_prof:boolean =false;
-est_admin:boolean = false;
-season_id:number;
-seasons:KeyValuePair[];
+  constructor(private coursservice: CoursService, private ridersservice: RidersService, private router: Router,
+    private grServ: GroupeService) { }
+  listeprof: KeyValuePair[];
+  listelieu: KeyValuePair[];
+  est_prof: boolean = false;
+  est_admin: boolean = false;
+  season_id: number;
+  seasons: KeyValuePair[];
   listeCours: Cours[] = []; // Initialisez la liste des cours (vous pouvez la charger à partir d'une API, par exemple)
   editMode = false;
   editCours: Cours | null = null;
-  current_groupe_id:number;
-  groupe_dispo:Groupe[]=[];
+  current_groupe_id: number;
+  groupe_dispo: Groupe[] = [];
   liste_groupe: Groupe[] = []
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
-    let o:notification;
-    this.est_prof =RidersService.Est_Prof ;
-    this.est_admin=RidersService.Est_Admin ;
-    if(RidersService.IsLoggedIn === false ){
+    let o: notification;
+    this.est_prof = RidersService.Est_Prof;
+    this.est_admin = RidersService.Est_Admin;
+    if (RidersService.IsLoggedIn === false) {
       this.router.navigate(['/login']);
-    return;
-    } 
-    if(RidersService.Est_Prof === false && RidersService.Est_Admin === false ){
+      return;
+    }
+    if (RidersService.Est_Prof === false && RidersService.Est_Admin === false) {
       this.router.navigate(['/menu-inscription']);
-    return;
-    } 
+      return;
+    }
     // Chargez la liste des cours
-    this.coursservice.GetCours().then((list)=>{
+    this.coursservice.GetCours().then((list) => {
       this.listeCours = list;
-    }).catch((err:HttpErrorResponse)=>{
-     let o = errorService.CreateError("récupérer les cours",  err.statusText);
-     errorService.emitChange(o);
+    }).catch((err: HttpErrorResponse) => {
+      let o = errorService.CreateError("récupérer les cours", err.statusText);
+      errorService.emitChange(o);
     })
     this.grServ.GetAll().then((list) => {
       this.liste_groupe = list;
@@ -58,26 +58,26 @@ seasons:KeyValuePair[];
       errorService.CreateError("récupérer les groupes", err.statusText);
       errorService.emitChange(o);
     });
-    this.ridersservice.GetProf().then((elka) =>{
+    this.ridersservice.GetProf().then((elka) => {
       this.listeprof = elka;
-    }).catch((err:HttpErrorResponse)=>{
-      let o = errorService.CreateError("récupérer les profs",  err.statusText);
+    }).catch((err: HttpErrorResponse) => {
+      let o = errorService.CreateError("récupérer les profs", err.statusText);
       errorService.emitChange(o);
-     })
-    this.coursservice.GetLieuLight().then((laurie) =>{
+    })
+    this.coursservice.GetLieuLight().then((laurie) => {
       this.listelieu = laurie;
-    }).catch((err:HttpErrorResponse)=>{
-      let o = errorService.CreateError("récupérer les lieux",  err.statusText);
+    }).catch((err: HttpErrorResponse) => {
+      let o = errorService.CreateError("récupérer les lieux", err.statusText);
       errorService.emitChange(o);
-     })
+    })
 
-    
-    this.coursservice.GetSaison().then((list) =>{
+
+    this.coursservice.GetSaison().then((list) => {
       this.seasons = list;
-    }).catch((err:HttpErrorResponse)=>{
-      let o = errorService.CreateError("récupérer les saisons",  err.statusText);
+    }).catch((err: HttpErrorResponse) => {
+      let o = errorService.CreateError("récupérer les saisons", err.statusText);
       errorService.emitChange(o);
-     })
+    })
   }
 
   // Méthode pour trouver un professeur à partir de son ID
@@ -92,10 +92,13 @@ seasons:KeyValuePair[];
     } else {
       return "Professeur non trouvé";
     }
+
+  }
+
+  PlaceMax(){
     
   }
 
- 
 
   editerCours(cours: Cours): void {
     this.editCours = cours;
@@ -105,22 +108,22 @@ seasons:KeyValuePair[];
 
   supprimerCours(cours: Cours): void {
     let errorservice = ErrorService
-    let act ="Ajouter un cours";
+    let act = "Ajouter un cours";
     if (cours) {
       this.coursservice.Delete(cours.id).then((result) => {
         if (result) {
           // Suppression réussie en base, supprimer l'élément correspondant de la liste
           this.listeCours = this.listeCours.filter(c => c.id !== cours.id);
-      
+
           // Afficher un message de confirmation à l'utilisateur
           errorservice.instance.OKMessage(act);
         } else {
-          errorservice.instance.CreateError(act,"erreur lors de la suppression");
+          errorservice.instance.CreateError(act, "erreur lors de la suppression");
         }
-      }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act,  elkerreur.statusText);
-        })
-      }
+      }).catch((elkerreur: HttpErrorResponse) => {
+        errorservice.instance.CreateError(act, elkerreur.statusText);
+      })
+    }
   }
 
   creerCours(): void {
@@ -129,7 +132,7 @@ seasons:KeyValuePair[];
     this.MAJListeGroupe();
   }
 
-  AjouterGroupe() { 
+  AjouterGroupe() {
     const indexToUpdate = this.liste_groupe.findIndex(cc => cc.id === this.current_groupe_id);
     const newValue = this.liste_groupe[indexToUpdate];
     this.editCours.groupes.push(newValue);
@@ -137,14 +140,14 @@ seasons:KeyValuePair[];
     this.MAJListeGroupe();
 
   }
-  RemoveGroupe(item){
+  RemoveGroupe(item) {
     this.editCours.groupes = this.editCours.groupes.filter(e => e.id !== item.id);
     this.MAJListeGroupe();
   }
-  MAJListeGroupe(){
+  MAJListeGroupe() {
     this.groupe_dispo = this.liste_groupe;
 
-    this.editCours.groupes.forEach((element:Groupe) => {
+    this.editCours.groupes.forEach((element: Groupe) => {
       let element_to_remove = this.liste_groupe.find(e => e.id == element.id);
       if (element_to_remove) {
         this.groupe_dispo = this.groupe_dispo.filter(e => e.id !== element_to_remove.id);
@@ -153,39 +156,46 @@ seasons:KeyValuePair[];
   }
 
   soumettreCours(): void {
-    let errorservice = ErrorService
-    let act ="Ajouter un cours";
+    let errorService = ErrorService.instance;
+    let act = "Ajouter un cours";
     if (this.editCours) {
-      if(this.editCours.id==0){
-        this.coursservice.Add(this.editCours).then((loe) =>{
+      if (this.editCours.id == 0) {
+        this.coursservice.Add(this.editCours).then((loe) => {
           this.editCours.id = loe;
-          errorservice.instance.OKMessage(act);
+          let o = errorService.OKMessage(act);
+          errorService.emitChange(o);
           this.listeCours.push(this.editCours);
           this.annulerEdition();
-        }).catch((elkerreur:HttpErrorResponse)=>{
-          errorservice.instance.CreateError(act, elkerreur.statusText);
+        }).catch((elkerreur: HttpErrorResponse) => {
+          let o = errorService.CreateError(act, elkerreur.statusText);
+          errorService.emitChange(o);
         })
       }
-     else {
-      this.coursservice.Update(this.editCours).then((loe) =>{
-        
-        act ="Mettre à jour un cours"; 
-        if (loe) {
-        errorservice.instance.OKMessage(act);
-        const indexToUpdate = this.listeCours.findIndex(cours => cours.id === this.editCours.id);
+      else {
+        this.coursservice.Update(this.editCours).then((loe) => {
 
-        if (indexToUpdate !== -1) {
-          // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-          this.listeCours[indexToUpdate] = this.editCours;
-        }
-        this.annulerEdition();} else {
-          errorservice.instance.CreateError(act,  "erreur lors de la mise à jour")
-        }
-      }).catch((elkerreur:HttpErrorResponse)=>{
-        errorservice.instance.CreateError(act,  elkerreur.statusText);
-      })
+          act = "Mettre à jour un cours";
+          if (loe) {
+            errorService.OKMessage(act);
+            const indexToUpdate = this.listeCours.findIndex(cours => cours.id === this.editCours.id);
+
+            if (indexToUpdate !== -1) {
+              // Remplacer l'élément à l'index trouvé par la nouvelle valeur
+              this.listeCours[indexToUpdate] = this.editCours;
+            }
+            let o = errorService.OKMessage(act);
+            errorService.emitChange(o);
+            this.annulerEdition();
+          } else {
+            let o =errorService.CreateError(act, "erreur lors de la mise à jour")
+            errorService.emitChange(o);
+          }
+        }).catch((elkerreur: HttpErrorResponse) => {
+          let o = errorService.CreateError(act, elkerreur.statusText);
+          errorService.emitChange(o);
+        })
+      };
     }
-    this.editMode = false;}
   }
 
   annulerEdition(): void {
@@ -193,25 +203,25 @@ seasons:KeyValuePair[];
     this.editCours = null;
   }
 
-  Filtrer(){
+  Filtrer() {
     let errorservice = ErrorService.instance;
-    this.coursservice.GetCours().then((result) =>{
+    this.coursservice.GetCours().then((result) => {
       this.listeCours = result;
       let o = errorservice.OKMessage("Recherche de séances");
       errorservice.emitChange(o);
-    }).catch((elkerreur:HttpErrorResponse)=>{
-      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+    }).catch((elkerreur: HttpErrorResponse) => {
+      let o = errorservice.CreateError("Recherche de séances", elkerreur.statusText);
       errorservice.emitChange(o);
     })
   }
-  FiltrerBack(){
+  FiltrerBack() {
     let errorservice = ErrorService.instance;
-    this.coursservice.GetCours().then((result) =>{
+    this.coursservice.GetCours().then((result) => {
       this.listeCours = result;
       let o = errorservice.OKMessage("Recherche de séances");
       errorservice.emitChange(o);
-    }).catch((elkerreur:HttpErrorResponse)=>{
-      let o =  errorservice.CreateError("Recherche de séances",  elkerreur.statusText);
+    }).catch((elkerreur: HttpErrorResponse) => {
+      let o = errorservice.CreateError("Recherche de séances", elkerreur.statusText);
       errorservice.emitChange(o);
     })
   }

@@ -9,7 +9,7 @@
   </div>
   <div>
     <label for="password">Mot de passe :</label>
-    <input class="form-control"  type="password" id="password" name="password" [(ngModel)]="password" required>
+    <input class="form-control"  type="password" id="password" name="password" (keyup.enter)="Login()" [(ngModel)]="password" required>
   </div>
   <div  style="margin-bottom: 15px;display: none;">
     <label  for="toggle-switch">Resté connecté :</label>

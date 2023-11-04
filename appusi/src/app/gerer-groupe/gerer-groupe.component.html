@@ -1,1 +1,53 @@
-<p>gerer-groupe works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Ajouter un nouveau groupe</h2>
+            <div class="form-group">
+                <label for="name">Nom du groupe:</label>
+                <input id="name" class="form-control" [(ngModel)]="thisgroupe.nom" name="nom" type="text">
+              </div>
+              <button class="btn btn-outline-success" (click)="AddGroupe()">Créer le groupe</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="view == 'GROUPE'">
+        <div class="col-xs-12">
+            <h2>Gestion de la composition des groupes</h2>
+            <div class="accordion" [attr.id]="'acc_groupes'">
+                <ng-container *ngFor="let groupe of Groupes">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#col_' + groupe.id" aria-expanded="true"
+                                [attr.aria-controls]="'col_' + groupe.id">
+                                {{groupe.nom}} <i class="bi bi-trash" (click)="RemoveGroupe(groupe)"></i>
+                            </button>
+                        </h2>
+                        <div [id]="'col_' + groupe.id" class="accordion-collapse collapse show"
+                            [attr.data-bs-parent]="'#acc_groupes'">
+                            <div class="accordion-body">
+                                <h3>Dans le groupe</h3>
+                                <div class="display_list_label">
+                                <ng-container *ngFor="let rider of Liste">
+                                    <ng-container *ngIf="isGroupe(groupe.id, rider)">
+                                        <h5 class="label-groupe badge rounded-pill bg-primary" (click)="AddOrRemove(groupe, rider, false)">{{rider.prenom}} {{rider.nom}}<i
+                                            class="bi bi-trash3-fill" fill="red"></i></h5>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                                <h3>Eligible au groupe</h3>
+                                <div class="display_list_label">
+                                <ng-container *ngFor="let rider of Liste">
+                                    <ng-container *ngIf="!isGroupe(groupe.id, rider)">
+                                        <h5 class="label-groupe badge rounded-pill bg-primary" (click)="AddOrRemove(groupe, rider, true)">{{rider.prenom}} {{rider.nom}}<i
+                                            class="bi bi-plus"></i></h5>
+                                    </ng-container>
+                                </ng-container>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

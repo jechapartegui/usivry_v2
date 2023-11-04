@@ -294,6 +294,19 @@ label.checkbox-label {
   color: #6B1A54;
 }
 
+.label-groupe{
+  cursor: pointer;
+  gap: 0.2em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.display_list_label{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
 .alert_OK {
   padding: 5px;
   border-width: 1px;

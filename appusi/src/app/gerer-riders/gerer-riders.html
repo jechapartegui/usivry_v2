@@ -46,7 +46,6 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Inscrit</th>
-            <th>Niveau</th>
             <th>Age</th>
             <th>Action</th>
           </tr>
@@ -77,7 +76,7 @@
   </div>
 <div *ngIf="editMode">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" style="display: flex; flex-direction: row;">
       <div>
         <button class="btn btn-outline-danger" mat-raised-button (click)="annulerEdition()">Retour</button>
       </div>
@@ -194,26 +193,35 @@
     </div>
   </div>
   <div class="row" >
-    <div class="card col-md-6" *ngIf="est_admin || est_prof">
+    <div class="card col-md-6">
       <div class="card-header">
-        Professeur
+        Groupes
       </div>
       <div class="card-body">
 
         <div class="form-group">
-          <label for="professeurs">Groupes</label>
+          <label for="professeurs">Groupes du rider</label>
           <br />
-          <ng-container *ngFor="let niv of editRider.groupes">
-            <h5 class="badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
-                class="bi bi-x-square"></i></h5>
-          </ng-container><br />
-          <label for="statut">Groupes disponibles</label>
-          <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >
-            <ng-container *ngFor="let ni of groupe_dispo	">
-              <option [value]="ni.id">{{ ni.nom }}</option>
-            </ng-container>
-          </select>
-          <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
+          <ng-container *ngIf="!est_admin">
+            <ng-container *ngFor="let niv of editRider.groupes">
+              <h5 class="label-groupe badge rounded-pill bg-primary">{{niv.nom}} <i
+                  class="bi bi-x-trash3-fill"></i></h5>
+            </ng-container><br />
+          </ng-container>
+          <ng-container *ngIf="est_admin">
+            <ng-container *ngFor="let niv of editRider.groupes">
+              <h5 class="label-groupe badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
+                  class="bi bi-x-trash3-fill"></i></h5>
+            </ng-container><br />
+            <label for="statut">Groupes disponibles</label>
+            <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >
+              <ng-container *ngFor="let ni of groupe_dispo	">
+                <option [value]="ni.id">{{ ni.nom }}</option>
+              </ng-container>
+            </select>
+            <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
+          </ng-container>
+         
         </div>
         </div>
     </div>

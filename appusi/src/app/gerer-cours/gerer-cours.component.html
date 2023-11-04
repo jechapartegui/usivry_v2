@@ -102,7 +102,7 @@
             </div>
             <div class="form-group">
               <label for="duree_cours">Durée du cours :</label>
-              <input class="form-control" matInput type="number" id="duree_cours" [(ngModel)]="editCours.duree"
+              <input class="form-control" matInput min="0" max="1440" type="number" id="duree_cours" [(ngModel)]="editCours.duree"
                 placeholder="Durée (en minutes)">
             </div>
             <div class="form-group">
@@ -126,15 +126,38 @@
             </div>
             <div class="form-group">
               <label for="age_minimum">Age minimum :</label>
-              <input class="form-control" matInput type="number" id="age_minimum" [(ngModel)]="editCours.age_requis"
+              <input class="form-control" min="1" max="99" matInput type="number" id="age_minimum" [(ngModel)]="editCours.age_requis"
                 placeholder="Age requis">
+            </div>
+            <div class="form-group">
+              <label for="age_maximum">Age maximum :</label>
+              <input class="form-control" min="1" max="99" matInput type="number" id="age_maximum" [(ngModel)]="editCours.age_maximum"
+                placeholder="Age maximum">
+            </div>
+            <div class="form-group">
+              <label for="place_maximum">Place maximum :</label>
+              <mat-slide-toggle class="form-control" [checked]="editCours.place_maximum == -1 ? true : false" 
+              (change)="editCours.place_maximum == -1 ? editCours.place_maximum = 25 : editCours.place_maximum = -1" >
+              <span *ngIf="editCours.place_maximum == -1">Places illimitées</span>
+              <span *ngIf="editCours.place_maximum > -1">Places limitées</span>
+            </mat-slide-toggle>
+              <input *ngIf="editCours.place_maximum>0" class="form-control" matInput type="number" id="place_maximum" min="1" max="99" [(ngModel)]="editCours.place_maximum"
+                placeholder="Laissez vide si pas de place maximum">
+            </div>
+            <div class="form-group">
+              <label for="place_maximum">Convocation :</label>
+              <mat-slide-toggle class="form-control" [checked]="editCours.convocation_nominative == true ? true : false" 
+              (change)="editCours.convocation_nominative == true ? editCours.convocation_nominative = false : editCours.convocation_nominative = true" >
+              <span *ngIf="editCours.convocation_nominative == true">Convocation nominative</span>
+              <span *ngIf="editCours.convocation_nominative == false">Groupe entier convoqué</span>
+            </mat-slide-toggle>
             </div>
             <div class="form-group">
               <label for="professeurs">Groupes</label>
               <br />
               <ng-container *ngFor="let niv of editCours.groupes">
                 <h5 class="badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
-                    class="bi bi-x-square"></i></h5>
+                    class="bi bi-trash3-fill"></i></h5>
               </ng-container><br />
               <label for="statut">Groupes disponibles</label>
               <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >

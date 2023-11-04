@@ -15,6 +15,13 @@
 
 
   </div>
+  <div *ngIf="EstProf || EstAdmin" class="menu_admin">
+    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-riders">Adhérents</button>
+      <button class="btn btn-outline-info btn-sm" routerLink="/gerer-groupe">Groupes</button>
+        <button class="btn btn-outline-info btn-sm" routerLink="/gerer-seance">Séances</button>
+    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-cours">Cours</button>
+    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-inscriptions">Administration</button>
+  </div>
   <div class="card-container">
     <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
       <div class="mat-card-header">
@@ -223,8 +230,10 @@
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
               <div class="accordion-body">
 
-                <button class="btn btn-outline-success" color="primary" routerLink="/gerer-seance/">Gérer les
+                <button class="btn btn-outline-info" color="primary" routerLink="/gerer-seance/">Gérer les
                   séances</button>
+                  <button class="btn btn-outline-info" routerLink="/gerer-groupe">Gérer les
+                    groupes</button>
 
                 <!-- Sélecteur pour voir la séance du professeur -->
                 <table class="screen" *ngIf="rider.est_prof">
@@ -285,30 +294,7 @@
                 </p>
               </div>
             </div>
-          </div>
-          <div *ngIf="rider.est_admin" class="accordion-item">
-
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                [attr.data-bs-target]="'#collapseFour-' + rider.id" aria-expanded="false"
-                [attr.aria-controls]="'collapseFour-' + rider.id">
-                Administration
-              </button>
-            </h2>
-            <div [id]="'collapseFour-' + rider.id" class="accordion-collapse collapse"
-              [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-              <div class="accordion-body">
-                <div class="div_flex">
-                  <button class="btn btn-outline-info" routerLink="/gerer-riders">Gérer les
-                    adhérents</button>
-                  <button class="btn btn-outline-info" routerLink="/gerer-cours">Gérer les cours</button>
-                  <button class="btn btn-outline-info" routerLink="/gerer-seance">Gérer les
-                    séances</button>
-                  <button class="btn btn-outline-info" routerLink="/gerer-inscriptions">Administration globale</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div>        
         </div>
 
 
