@@ -6,6 +6,7 @@ import { Seance } from 'src/class/seance';
 import { Inscription, InscriptionSeance } from 'src/class/inscription';
 import { ErrorService } from './error.service';
 import { Essai } from 'src/app/defaut/defaut.component';
+import { MailObjet } from 'src/app/simulation-mail/simulation-mail.component';
 
 @Injectable({
   providedIn: 'root'
@@ -128,6 +129,46 @@ export class SeancesService {
         return Promise.reject(error);
       });
   }
+  public SimulerMailRelance(): Promise<MailObjet[]> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "simuler_mail_relance"
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: MailObjet[]) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public EnvoyerMails(mails:MailObjet[]): Promise<string[]> {
+    this.url = environment.usivry + 'usivry/seance_manage.php';
+    //  this.url = this.url + "login.php";
+    const body = {
+      command: "mail_multiple",
+      mails:mails
+    };
+
+    return this.global.POST(this.url, body)
+      .then((response: string[]) => {
+        return response;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public EnvoyerMail(mail:MailObjet): Promise<string[]> {
+    let mails : MailObjet[] = [];
+    mails.push(mail);
+    return this.EnvoyerMails(mails);
+  }
+
+
+ 
   public MailRelance(): Promise<string> {
     this.url = environment.usivry + 'usivry/seance_manage.php';
     //  this.url = this.url + "login.php";

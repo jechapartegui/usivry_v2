@@ -1,12 +1,20 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-
+            <button type="button" class="btn btn-outline-success" (click)="SendAll()">Envoyer tous les mails</button>
+            <button type="button" class="btn btn-danger" (click)="Quitter()">Quitter</button>
+        </div>
+    </div>
+    <div *ngIf="notif_envoi" class="row">
+        <div class="col-12">
+            <ng-container *ngFor="let envoi of notif_envoi">
+                {{envoi}} <br/>
+            </ng-container>
         </div>
     </div>
     <div class="row">
         <div class="col-12">
-            <ng-container *ngFor="let mail of mails">
+            <ng-container *ngFor="let mail of data.mails">
                 <div class="row">
                     <div class="col-sm-2">
                         {{mail.subject}}
@@ -14,8 +22,11 @@
                     <div class="col-sm-2">
                         {{mail.to}}
                     </div>
-                    <div class="col-sm-8">
-                        {{mail.content}}
+                    <div class="col-sm-7">
+                        <div [innerHTML]="mail.content"></div>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-outline-success" (click)="Send(mail)">Envoyer</button>
                     </div>
                 </div>
             </ng-container>

@@ -1,4 +1,4 @@
-<div class="row">
+<div *ngIf="seance" class="row">
     <div class="col-12">
         <h3>{{seance.libelle}} le {{ seance.date_seance | date: 'dd/MM/yyyy' }}</h3>
     </div>

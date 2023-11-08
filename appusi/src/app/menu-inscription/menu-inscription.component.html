@@ -16,11 +16,11 @@
 
   </div>
   <div *ngIf="EstProf || EstAdmin" class="menu_admin">
-    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-riders">Adhérents</button>
+    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-riders">Adhérents</button>
       <button class="btn btn-outline-info btn-sm" routerLink="/gerer-groupe">Groupes</button>
         <button class="btn btn-outline-info btn-sm" routerLink="/gerer-seance">Séances</button>
-    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-cours">Cours</button>
-    <button class="btn btn-outline-info btn-sm" routerLink="/gerer-inscriptions">Administration</button>
+    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-cours">Cours</button>
+    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-inscriptions">Administration</button>
   </div>
   <div class="card-container">
     <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
@@ -230,11 +230,7 @@
               [attr.data-bs-parent]="'#accordionExample-' + rider.id">
               <div class="accordion-body">
 
-                <button class="btn btn-outline-info" color="primary" routerLink="/gerer-seance/">Gérer les
-                  séances</button>
-                  <button class="btn btn-outline-info" routerLink="/gerer-groupe">Gérer les
-                    groupes</button>
-
+             
                 <!-- Sélecteur pour voir la séance du professeur -->
                 <table class="screen" *ngIf="rider.est_prof">
                   <thead>

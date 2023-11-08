@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { catchError, firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, timeout } from 'rxjs';
 import { RidersService } from './riders.service';
 import { environment } from 'src/environments/environment.prod';
 import { ErrorService } from './error.service';
@@ -33,11 +33,11 @@ export class GlobalService {
     }
   }
   public async POST(url: string, body: any): Promise<any> {
-
     try {
       let date_ref = new Date();
       let date_ref_string = this.datepipe.transform(date_ref,"yyyy-MM-dd")
       let _varid:string = "0";
+      const timeoutMilliseconds = 50000;
       if(RidersService.IsLoggedIn){
         _varid = RidersService.account.toString();
       }
@@ -50,9 +50,20 @@ export class GlobalService {
   .set('password', hashedPassword)
   .set('dateref', date_ref_string)
   .set('userid', _varid)
-      const response = await firstValueFrom(this.http.post(url, body, { headers }));
-      return response;
-    } catch (error) {
+  const response = await firstValueFrom(
+    this.http.post(url, body, { headers }).pipe(
+      timeout(timeoutMilliseconds),
+      catchError((error) => {
+        if (error.name === 'TimeoutError') {
+          throw new Error('La requête a expiré en raison du délai dépassé.');
+        } else {
+          throw error; // Gérer d'autres erreurs ici
+        }
+      })
+    )
+  );
+  return response;
+} catch (error) {
       if (error instanceof HttpErrorResponse) {       
         this.handleError(error);
       } else {
