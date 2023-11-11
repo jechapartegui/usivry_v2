@@ -355,3 +355,55 @@ label.checkbox-label {
 .non_inscrit{
   color: gray;
 }
+
+// à partir d'ici code pour l'application MaSéance
+/* login_button */
+
+/* Auto layout */
+.login_button{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 12px;
+gap: 10px;
+
+
+background: #004CFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 25px;
+}
+
+/* Login */
+.login_svg{
+width: 16px;
+height: 16px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+
+/* Retour à l'accueil */
+
+.login_text{
+font-family: 'Source Sans 3', sans-serif;
+font-style: normal;
+font-weight: 800;
+font-size: 16px;
+line-height: 5px;
+/* identical to box height, or 25% */
+text-align: right;
+letter-spacing: 0.1em;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+}
