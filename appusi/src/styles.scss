@@ -1,4 +1,8 @@
 $accordion-color: var(--bs-danger-bg-subtle);
+$purple : #5D3891;
+$purple-shadow : rgba(93,56,145,0.75);
+$orange : #F99417;
+$gray : #F5F5F5;
 
 .accordion {
   background-color: $accordion-color;
@@ -14,11 +18,11 @@ $accordion-color: var(--bs-danger-bg-subtle);
   }
 }
 
-ul{
+ul {
   margin-bottom: 0;
 }
 
-.mobile{
+.mobile {
   display: none;
 }
 
@@ -26,16 +30,20 @@ ul{
   .menu-haut {
     display: none;
   }
-  .screen{
+
+  .screen {
     display: none;
   }
-  .mobile{
+
+  .mobile {
     display: block;
   }
-  .accordion-body{
+
+  .accordion-body {
     padding: 0;
   }
-  .rowmobile{
+
+  .rowmobile {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -44,7 +52,8 @@ ul{
     align-content: center;
 
   }
-  .display_flex{
+
+  .display_flex {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -294,19 +303,21 @@ label.checkbox-label {
   color: #6B1A54;
 }
 
-.label-groupe{
+.label-groupe {
   cursor: pointer;
   gap: 0.2em;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
 }
-.display_list_label{
+
+.display_list_label {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.5em;
 }
+
 .alert_OK {
   padding: 5px;
   border-width: 1px;
@@ -346,64 +357,342 @@ label.checkbox-label {
   align-items: center;
 }
 
-.present{
+.present {
   color: green;
 }
-.absent{
+
+.absent {
   color: red;
 }
-.non_inscrit{
+
+.non_inscrit {
   color: gray;
 }
 
 // à partir d'ici code pour l'application MaSéance
 /* login_button */
+.button {
+  cursor: pointer;
+  transform: scale(0.9);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  gap: 10px;
+  font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 16px;
+/* identical to box height, or 31% */
+text-align: left;
+letter-spacing: 0.1em;
+
+color: #FFFFFF;
+
+  &:hover {
+    transform: scale(1);
+  }
+}
 
 /* Auto layout */
-.login_button{
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 12px;
-gap: 10px;
+.login_button {
 
+  border-color: #004cffb9;
+  box-shadow: 0px 4px 4px #004cffb9;
+  background: #004CFF;
 
-background: #004CFF;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 25px;
 }
 
 /* Login */
-.login_svg{
-width: 16px;
-height: 16px;
+.login_svg {
+  width: 16px;
+  height: 16px;
 
 
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
 
 /* Retour à l'accueil */
 
-.login_text{
-font-family: 'Source Sans 3', sans-serif;
+.login_text {
+  font-family: 'Source Sans 3', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 5px;
+  /* identical to box height, or 25% */
+  text-align: right;
+  letter-spacing: 0.1em;
+
+  color: #FFFFFF;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.container_jecha {
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid rgba(133, 124, 136, 0.5);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 1;
+}
+
+.rectangle {
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+  gap: 31px;
+
+  width: 520px;
+  height: 394px;
+
+  background: #FFFFFF;
+  box-shadow: 4px 8px 8px 4px rgba(0, 0, 0, 0.25);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.url {
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: $orange;
+  text-decoration: none;
+
+  &:hover {
+    /* hover */
+
+    filter: drop-shadow($purple);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: $purple;
+   
+  }
+
+
+}
+
+
+
+
+.action_button{
+
+  border-color: rgba(3, 168, 3, 0.75);
+background: #03A803;
+box-shadow: 0px 4px 4px rgba(3, 168, 3, 0.75);
+
+}
+
+.title_label{
+
+  font-family: 'Source Sans 3';
 font-style: normal;
-font-weight: 800;
+font-weight: 400;
 font-size: 16px;
-line-height: 5px;
-/* identical to box height, or 25% */
+line-height: 16px;
+/* identical to box height, or 31% */
 text-align: right;
 letter-spacing: 0.1em;
 
-color: #FFFFFF;
-
-
-/* Inside auto layout */
-flex: none;
-order: 1;
-flex-grow: 0;
+color: #000000;
 }
+
+.input_jecha{
+  display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 15px 10px;
+gap: 10px;
+width: 400px;
+height: 20px;
+
+background: rgba(243, 242, 242, 0.5);
+border: 1px solid rgba(133, 124, 136, 0.5);
+border-radius: 10px;
+}
+/* webkit solution */
+::-webkit-input-placeholder { text-align:right; font-style: italic;}
+/* mozilla solution */
+input:-moz-placeholder { text-align:right; font-style: italic;}
+
+.input_jecha[type="text"]{
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 14px;
+
+
+color: #000000;
+
+}
+.main_body{
+  padding-top: 65px;
+}
+
+.menu_button{
+  background-color: $purple;
+  border-color: $purple;
+  box-shadow: 0px 4px 4px $purple-shadow;
+}
+
+.quit_button{
+  background-color:  #FF0000;
+  border-color:  #FF0000;
+  box-shadow: 0px 4px 4px rgba(255, 0, 0, 0.75);
+}
+
+.text_menu{
+  margin-left: 5px;
+  text-transform:uppercase;
+  margin-right: 5px;
+  border: none;
+  background-color: transparent;
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+line-height: 20px;
+/* identical to box height, or 25% */
+text-align: right;
+letter-spacing: 0.05em;
+color: #000000;
+
+
+  &:hover{
+/* Property 1=on_focus */
+
+
+font-weight: 600;
+font-size: 20px;
+line-height: 20px;
+/* identical to box height, or 25% */
+text-align: right;
+letter-spacing: 0.075em;
+
+color: #000000;
+
+
+  }
+}
+
+.button_menu_url{
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  border : none;
+  background-color: transparent;
+  /* identical to box height, or 125% */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: $purple;
+  text-decoration: none;
+  &:hover {
+    /* hover */
+
+    filter: drop-shadow($purple);
+    text-decoration: underline;
+  }
+}
+
+.menu_connected{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.menu_left{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.menu_right{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+

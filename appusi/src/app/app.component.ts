@@ -31,10 +31,11 @@ export class AppComponent implements OnInit {
   }
   loggedin = RidersService.IsLoggedIn;
 
-
+  
   GoToLogin(){
     this.router.navigate(['/login']);
   }
+  UpdateMailActive(){}
   Logout(){
     const errorService = ErrorService.instance;
     this.ridersService.Logout().then((boo) =>{

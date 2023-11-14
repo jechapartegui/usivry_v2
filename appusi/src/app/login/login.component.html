@@ -1,36 +1,15 @@
-<mat-card>
-  <mat-card-title>Connexion</mat-card-title>
-<mat-card-content>
-<div class="row">
-  <div class="col-12 col-md-10">
-  <div class="form-group">
-    <label for="username">Nom d'utilisateur :</label>
-    <input class="form-control" type="text" id="username" name="username" [(ngModel)]="username" required>
+<div class="login_page">
+  
+<div class="rectangle">
+    <span class="title_label">Login</span>
+    <input class="input_jecha" type="text" id="username" name="username" placeholder="username" [(ngModel)]="username" required>
+    <span class="title_label">Password</span>
+    <input class="input_jecha" type="password" id="password" name="password" (keyup.enter)="Login()" [(ngModel)]="password" required>
+    <button type="button" class="action_button button" (click)="Login()">Connexion</button>
+    <a href="#" class="url">Réinitialiser le mot de passe</a>
   </div>
-  <div>
-    <label for="password">Mot de passe :</label>
-    <input class="form-control"  type="password" id="password" name="password" (keyup.enter)="Login()" [(ngModel)]="password" required>
-  </div>
-  <div  style="margin-bottom: 15px;display: none;">
-    <label  for="toggle-switch">Resté connecté :</label>
-    <div class="toggle-switch">
-      <input type="checkbox" id="toggle" [(ngModel)]="stayLoggedIn">
-      <label class="toggle-switch-label" for="toggle"></label>
-    </div>
-  </div>
-</div>
-<div class="col-12 col-md-2" style="display: flex;
-flex-direction: column;
-/* align-content: stretch; */
-justify-content: flex-end;
-flex-wrap: nowrap;">
-  <button style="width: 100%;" class="btn btn-outline-success" type="button" (click)="Login()">Connexion</button>
-  <button style="width: 100%;" class="btn btn-outline-info" type="button" (click)="RecupMDP()">Réinitialiser le mot de passe</button>
-  </div>
-</div>
 
-</mat-card-content>
-</mat-card>
+</div>
 <br/>
 <br/>
 <br/>

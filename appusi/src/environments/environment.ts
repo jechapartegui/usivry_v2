@@ -7,7 +7,7 @@ export const environment = {
   usivry: '/',
   password:'jecha266',
   defaultlogin:'jechapartegui@gmail.com',
-  defaultpassword:'ivry',
+  defaultpassword:'Gulfed2606',
   environment: 'dev'
 
 };

@@ -10,10 +10,30 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RidersService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
+  private isProfSubject = new BehaviorSubject<boolean>(false);
+  private isCompteSubject = new BehaviorSubject<string>(null);
+  private ismailactiveSubject = new BehaviorSubject<boolean>(false);
   isLoggedIn$: Observable<boolean> = this.isLoggedInSubject.asObservable();
+  isAdmin$: Observable<boolean> = this.isAdminSubject.asObservable();
+  isProf$: Observable<boolean> = this.isProfSubject.asObservable();
+  isCompte$: Observable<string> = this.isCompteSubject.asObservable();
+  mailactive$: Observable<boolean> = this.ismailactiveSubject.asObservable();
 
   updateLoggedInStatus(isLoggedIn: boolean): void {
     this.isLoggedInSubject.next(isLoggedIn);
+  }
+  updateAdminStatus(admin: boolean): void {
+    this.isAdminSubject.next(admin);
+  }
+  updateProfStatus(prof: boolean): void {
+    this.isProfSubject.next(prof);
+  }
+  updateCompteStatus(compte: string): void {
+    this.isCompteSubject.next(compte);
+  }
+  updateMailActiveStatus(mailactive: boolean): void {
+    this.ismailactiveSubject.next(mailactive);
   }
   static instance: RidersService;
   static get ListeRiders(): Rider[] {
@@ -57,13 +77,16 @@ export class RidersService {
         this.updateLoggedInStatus(true);
         RidersService.account = response[0].compte;
         RidersService.email = username;
+        this.updateCompteStatus(username);
         RidersService.Riders = response;
         response.forEach(rider => {
           if(rider.est_admin){
             RidersService.Est_Admin = true;
+            this.updateAdminStatus(true);
           } 
           if(rider.est_prof){
             RidersService.Est_Prof = true;
+            this.updateProfStatus(true);
           } 
         });
         return true;
@@ -89,7 +112,9 @@ export class RidersService {
         RidersService.email = "";
         RidersService.Riders = [];
         RidersService.Est_Admin =false;
+        this.updateAdminStatus(false);
         RidersService.Est_Prof = false;
+        this.updateProfStatus(false);
         this.updateLoggedInStatus(false);
         return true;
       })
@@ -127,6 +152,11 @@ export class RidersService {
     };
     return this.global.POST(this.url, body)
     .then((response) => {
+      if(response.mail_active == 0){
+        this.updateMailActiveStatus(false);
+      } else {
+        this.updateMailActiveStatus(true);
+      }
       return response;
     })
     .catch(error => {
