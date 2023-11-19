@@ -9,6 +9,7 @@ import { GererCoursComponent } from './gerer-cours/gerer-cours.component';
 import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscriptions.component';
 import { MaSeanceComponent } from './ma-seance/ma-seance.component';
 import { GererGroupeComponent } from './gerer-groupe/gerer-groupe.component';
+import { GererCompteComponent } from './gerer-compte/gerer-compte.component';
 
 const routes: Routes = [
  // { path: '', redirectTo: 'defaut', pathMatch: 'full' }, // Redirection vers 'defaut' pour le path vide
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path:'gerer-cours', component:GererCoursComponent},
   {path:'gerer-inscriptions', component:GererInscriptionsComponent},
   {path:'gerer-groupe', component:GererGroupeComponent},
+  {path:'gerer-compte', component:GererCompteComponent},
 ];
 
 @NgModule({

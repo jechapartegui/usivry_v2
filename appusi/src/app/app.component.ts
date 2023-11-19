@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
    
   }
   loggedin = RidersService.IsLoggedIn;
+  relance_mail = RidersService.Mail_Actif;
 
   
   GoToLogin(){

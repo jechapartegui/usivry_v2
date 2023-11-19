@@ -14,6 +14,21 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "fr",
+          "baseHref": "/"
+        },
+        "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.xlf",
+            "baseHref": "/en/"
+          }
+        
+        }
+      },
+      
+
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -100,6 +115,26 @@
                   "with": "src/environments/environment.ts"
                 }
               ]
+            },
+            "devenglish": {
+              "buildOptimizer": true,
+              "aot": true,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "localize": [
+                "en"
+              ],
+
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.prod.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ]
+
             }
           }
         },
@@ -116,6 +151,10 @@
             "development": {
               "browserTarget": "appusi:build:development",
               "port": 9420
+            },
+            "devenglish": {
+              "browserTarget": "appusi:build:development",
+              "port": 9421
             }
           }
         },

@@ -682,6 +682,35 @@ color: #000000;
   align-content: center;
 }
 
+.menu_compte{
+  margin-left: 5px;
+  text-transform:uppercase;
+  margin-right: 5px;
+  border: none;
+  background-color: transparent;
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 25% */
+text-align: left;
+color: #000000;
+
+
+  &:hover{
+/* Property 1=on_focus */
+
+
+font-weight: 600;
+/* identical to box height, or 25% */
+
+color: #000000;
+
+
+  }
+}
+
 .menu_left{
   display: flex;
   flex-direction: row;

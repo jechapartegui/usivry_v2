@@ -33,7 +33,9 @@ export class RidersService {
     this.isCompteSubject.next(compte);
   }
   updateMailActiveStatus(mailactive: boolean): void {
-    this.ismailactiveSubject.next(mailactive);
+      this.ismailactiveSubject.next(mailactive);
+      console.log(mailactive);
+      RidersService.mail_actif = mailactive;
   }
   static instance: RidersService;
   static get ListeRiders(): Rider[] {
@@ -46,6 +48,9 @@ export class RidersService {
   
   static get IsLoggedIn(): boolean {
     return RidersService.isLoggedIn;
+  }  
+  static get Mail_Actif(): boolean {
+    return RidersService.mail_actif;
   }
   static Est_Admin:boolean = false;
   static Est_Prof:boolean =false;
@@ -54,7 +59,7 @@ export class RidersService {
   }
 
   url = environment.usivry;
-  
+  static mail_actif:boolean = false;
   static email: string = ''; // The name to display for the logged in user...
   static Riders: Rider[];
   static account:number;

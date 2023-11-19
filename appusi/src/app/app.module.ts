@@ -32,13 +32,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { GererGroupeComponent } from './gerer-groupe/gerer-groupe.component';
 import { SimulationMailComponent } from './simulation-mail/simulation-mail.component';
+import { GererCompteComponent } from './gerer-compte/gerer-compte.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent
-  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent],
+  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent],
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,

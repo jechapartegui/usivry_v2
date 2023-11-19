@@ -1,27 +1,5 @@
 <div class="container">
-  <div class="souscarte ligne_haute">
-      <span style="align-self: center;">{{CurrentMail}}</span>
-      <div class="form-group">
-        <span>Relance par mail :</span>
-        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio1-prof" [(ngModel)]="StatutMailActive" [value]="true" (ngModelChange)="UpdateMailActive()" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio1-prof">Oui</label>
-    
-            <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio2-prof" [(ngModel)]="StatutMailActive" [value]="false" (ngModelChange)="UpdateMailActive()" autocomplete="off" >
-            <label class="btn btn-outline-primary" for="btnradio2-prof">Non</label>
-        </div>
-    </div>
-    
 
-
-  </div>
-  <div *ngIf="EstProf || EstAdmin" class="menu_admin">
-    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-riders">Adhérents</button>
-      <button class="btn btn-outline-info btn-sm" routerLink="/gerer-groupe">Groupes</button>
-        <button class="btn btn-outline-info btn-sm" routerLink="/gerer-seance">Séances</button>
-    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-cours">Cours</button>
-    <button *ngIf="EstAdmin" class="btn btn-outline-info btn-sm" routerLink="/gerer-inscriptions">Administration</button>
-  </div>
   <div class="card-container">
     <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
       <div class="mat-card-header">
