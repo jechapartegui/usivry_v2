@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="menu_top_admin">
+    <button [class]="selected_menu == 'ADHERENTS' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'ADHERENTS'" i18n>Adhérents</button>
+    <button [class]="selected_menu == 'COMPTES' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'COMPTES'" i18n>Comptes</button>
+    <button [class]="selected_menu == 'SEANCES' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'SEANCES'" i18n>Séances</button>
+    <button [class]="selected_menu == 'COURS' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'COURS'" i18n>Cours</button>
+    <button [class]="selected_menu == 'MAILS' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'MAILS'" i18n>Mails</button>
+    <button [class]="selected_menu == 'SAISON' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'SAISON'" i18n>Saisons</button>
+    <button [class]="selected_menu == 'LIEU' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'LIEU'" i18n>Lieux</button>
+    <button [class]="selected_menu == 'PARAMETRAGE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'PARAMETRAGE'" i18n>Paramétrage</button>
+</div>
+<app-gerer-lieu *ngIf="selected_menu == 'LIEU'"></app-gerer-lieu>
+<app-gerer-saison *ngIf="selected_menu == 'SAISON'"></app-gerer-saison>
+
+    <button type="button" class="btn btn-outline-success" (click)="SimulerMailRelance()">Simuler le mail de relance</button>
+    <br/>
+    <button type="button" class="btn btn-outline-success" (click)="MailTest()">Envoyer le mail de test</button>
+    <span>{{message}}</span>
+</div>

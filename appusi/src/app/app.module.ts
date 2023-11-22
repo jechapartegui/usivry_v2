@@ -19,7 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { GererCoursComponent } from './gerer-cours/gerer-cours.component';
 import { GererSeanceComponent } from './gerer-seance/gerer-seance.component';
-import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscriptions.component';
+import { AdministrationComponent } from './administration/administration.component';
 import { PopInEssai } from './defaut/defaut.component';
 import { MaSeanceComponent } from './ma-seance/ma-seance.component'; // Import du module MatFormFieldModule
 import { SeancesService } from 'src/services/seances.service';
@@ -33,13 +33,16 @@ import { DatePipe } from '@angular/common';
 import { GererGroupeComponent } from './gerer-groupe/gerer-groupe.component';
 import { SimulationMailComponent } from './simulation-mail/simulation-mail.component';
 import { GererCompteComponent } from './gerer-compte/gerer-compte.component';
+import { AddinfoComponent } from './addinfo/addinfo.component';
+import { GererLieuComponent } from './gerer-lieu/gerer-lieu.component';
+import { GererSaisonComponent } from './gerer-saison/gerer-saison.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent
-  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, GererInscriptionsComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent],
+  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, AdministrationComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent, AddinfoComponent, GererLieuComponent, GererSaisonComponent],
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,

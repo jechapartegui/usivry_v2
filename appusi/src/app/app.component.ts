@@ -26,13 +26,16 @@ export class AppComponent implements OnInit {
       this.DisplayError(data);
     })
   }
+  public selected_menu : "ADHERENTS" | "MENU" | "SEANCES" | "COURS" | "ADMINISTRATION" | "GROUPES"  = "MENU";
   ngOnInit(): void {
    
   }
   loggedin = RidersService.IsLoggedIn;
   relance_mail = RidersService.Mail_Actif;
 
-  
+  test(){
+    console.log("test");
+  }
   GoToLogin(){
     this.router.navigate(['/login']);
   }

@@ -7,13 +7,13 @@
         <div class="menu_connected">
         <div class="menu_left">
         <ng-container *ngIf="(ridersService.isAdmin$ | async) === true || (ridersService.isProf$ | async) === true">
-          <button class="text_menu" routerLink="/gerer-groupe">Groupes</button>
-          <button class="text_menu" routerLink="/gerer-seance">Séances</button>
+          <button [class]="selected_menu == 'GROUPES' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'GROUPES'" routerLink="/gerer-groupe" i18n>Groupes</button>
+          <button [class]="selected_menu == 'SEANCES' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'SEANCES'" routerLink="/gerer-seance" i18n>Séances</button>
           <ng-container *ngIf="(ridersService.isAdmin$ | async) === true">
-            <button class="text_menu" routerLink="/gerer-cours">Cours</button>
-            <button class="text_menu" routerLink="/gerer-inscriptions">Administration</button>
-            <button class="text_menu" routerLink="/gerer-riders">Adhérents</button>
-          </ng-container>
+            <button [class]="selected_menu == 'COURS' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'COURS'" routerLink="/gerer-cours" i18n>Cours</button>
+            <button [class]="selected_menu == 'ADMINISTRATION' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'ADMINISTRATION'" routerLink="/administration" i18n>Administration</button>
+            <button [class]="selected_menu == 'ADHERENTS' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'ADHERENTS'" routerLink="/gerer-riders" i18n>Adhérents</button>
+              </ng-container>
         </ng-container>
       </div>
         <ng-container *ngIf="(ridersService.isAdmin$ | async) === false && (ridersService.isProf$ | async) === false">

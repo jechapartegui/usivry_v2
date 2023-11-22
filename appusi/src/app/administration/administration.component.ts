@@ -6,15 +6,16 @@ import { SimulationMailComponent } from '../simulation-mail/simulation-mail.comp
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-gerer-inscriptions',
-  templateUrl: './gerer-inscriptions.component.html',
-  styleUrls: ['./gerer-inscriptions.component.css']
+  selector: 'app-administration',
+  templateUrl: './administration.component.html',
+  styleUrls: ['./administration.component.css']
 })
-export class GererInscriptionsComponent {
+export class AdministrationComponent {
   constructor(
     private seancesservice: SeancesService, public dialog: MatDialog
   ) { }
   message: string = "";
+  public selected_menu : "ADHERENTS" | "COMPTES" | "SEANCES" | "COURS" | "MAILS" | "PARAMETRAGE" | "SAISON" | "LIEU" = "ADHERENTS";
 
   MailRelance() {
     let errorService = ErrorService.instance;

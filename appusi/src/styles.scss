@@ -1,9 +1,11 @@
 $accordion-color: var(--bs-danger-bg-subtle);
 $purple : #5D3891;
-$purple-shadow : rgba(93,56,145,0.75);
+$purple-shadow : rgba(93, 56, 145, 0.75);
 $orange : #F99417;
 $gray : #F5F5F5;
 
+
+/*#region old_version*/
 .accordion {
   background-color: $accordion-color;
   // Autres styles personnalisés pour l'accordéon
@@ -18,62 +20,7 @@ $gray : #F5F5F5;
   }
 }
 
-ul {
-  margin-bottom: 0;
-}
-
-.mobile {
-  display: none;
-}
-
-@media only screen and (max-width: 600px) {
-  .menu-haut {
-    display: none;
-  }
-
-  .screen {
-    display: none;
-  }
-
-  .mobile {
-    display: block;
-  }
-
-  .accordion-body {
-    padding: 0;
-  }
-
-  .rowmobile {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    align-content: center;
-
-  }
-
-  .display_flex {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    align-content: center;
-
-  }
-
-}
-
-
-
-@media only screen and (max-width: 600px) {
-  .menu-haut {
-    display: none;
-  }
-}
-
-.text-bg-ivry {
+text-bg-ivry {
   /* Hérite des propriétés de la classe .btn de Bootstrap */
   @extend .text-bg-danger !optional;
   /* Ajoutez vos propres propriétés personnalisées ici */
@@ -114,7 +61,60 @@ mat-form-field {
   gap: 15px;
   padding: 5px;
 }
+/*#endregion old_version*/
 
+
+ul {
+  margin-bottom: 0;
+}
+
+.mobile {
+  display: none;
+}
+
+/*#region mobile*/
+@media only screen and (max-width: 600px) {
+  .menu-haut {
+    display: none;
+  }
+
+  .screen {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .accordion-body {
+    padding: 0;
+  }
+
+  .rowmobile {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+
+  }
+
+  .display_flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+
+  }
+
+}
+/*#endregion old_version*/
+
+
+/*#region site usi*/
 .menu_usi {
   cursor: pointer;
   display: flex;
@@ -146,7 +146,6 @@ mat-form-field {
   transition: width 0.3s ease, left 0.3s ease;
 }
 
-/* Dans votre style.css */
 .btn-ivry {
   /* Hérite des propriétés de la classe .btn de Bootstrap */
   @extend .btn-danger !optional;
@@ -167,7 +166,9 @@ mat-form-field {
   left: 0;
 }
 
-/* Styling général de la table */
+/*#endregion site_usi*/
+
+
 .table-container {
   width: 100%;
   margin: 20px 0;
@@ -369,58 +370,104 @@ label.checkbox-label {
   color: gray;
 }
 
-// à partir d'ici code pour l'application MaSéance
-/* login_button */
-.button {
-  cursor: pointer;
-  transform: scale(0.9);
-  border-radius: 25px;
+
+/*#region ma_seance_text*/
+.url {
+
+  box-sizing: border-box;
+
+  /* Auto layout */
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px;
+  padding: 0px;
   gap: 10px;
-  font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 16px;
-/* identical to box height, or 31% */
-text-align: left;
-letter-spacing: 0.1em;
-
-color: #FFFFFF;
-
-  &:hover {
-    transform: scale(1);
-  }
-}
-
-/* Auto layout */
-.login_button {
-
-  border-color: #004cffb9;
-  box-shadow: 0px 4px 4px #004cffb9;
-  background: #004CFF;
-
-}
-
-/* Login */
-.login_svg {
-  width: 16px;
-  height: 16px;
-
 
   /* Inside auto layout */
   flex: none;
   order: 0;
   flex-grow: 0;
+
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: $orange;
+  text-decoration: none;
+
+  &:hover {
+    /* hover */
+
+    filter: drop-shadow($purple);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: $purple;
+
+  }
+
+
 }
-
-
-/* Retour à l'accueil */
-
+.text_menu_admin {
+  margin-left: 3px;
+  text-transform: uppercase;
+  margin-right: 3px;
+  border: none;
+  background-color: transparent;
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 14px;
+  /* identical to box height, or 25% */
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #000000;
+  &:hover {
+    /* Property 1=on_focus */
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 25% */
+    text-align: right;
+    letter-spacing: 0.075em;
+    color: #000000;
+  }
+}
+.text_menu {
+  margin-left: 5px;
+  text-transform: uppercase;
+  margin-right: 5px;
+  border: none;
+  background-color: transparent;
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 20px;
+  /* identical to box height, or 25% */
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #000000;
+  &:hover {
+    /* Property 1=on_focus */
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+    /* identical to box height, or 25% */
+    text-align: right;
+    letter-spacing: 0.075em;
+    color: #000000;
+  }
+}
 .login_text {
   font-family: 'Source Sans 3', sans-serif;
   font-style: normal;
@@ -439,6 +486,297 @@ color: #FFFFFF;
   order: 1;
   flex-grow: 0;
 }
+
+.title_label {
+
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  /* identical to box height, or 31% */
+  text-align: right;
+  letter-spacing: 0.1em;
+
+  color: #000000;
+}
+
+.menu_selected{
+color: $purple;
+font-weight: 800;
+}
+
+
+
+
+/*#endregion*/
+/*#region ma_seance_input*/
+.input_jecha {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 10px;
+  gap: 10px;
+  width: 400px;
+  height: 20px;
+
+  background: rgba(243, 242, 242, 0.5);
+  border: 1px solid rgba(133, 124, 136, 0.5);
+  border-radius: 10px;
+}
+
+/* webkit solution */
+::-webkit-input-placeholder {
+  text-align: right;
+  font-style: italic;
+}
+
+/* mozilla solution */
+input:-moz-placeholder {
+  text-align: right;
+  font-style: italic;
+}
+
+.input_jecha[type="text"] {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+
+
+  color: #000000;
+
+}
+
+/*#endregion*/
+/*#region ma_seance_btn*/
+.button {
+  cursor: pointer;
+  transform: scale(0.9);
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  gap: 10px;
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  /* identical to box height, or 31% */
+  text-align: left;
+  letter-spacing: 0.1em;
+
+  color: #FFFFFF;
+
+  &:hover {
+    transform: scale(1);
+  }
+}
+
+.login_button {
+
+  border-color: #004cffb9;
+  box-shadow: 0px 4px 4px #004cffb9;
+  background: #004CFF;
+
+}
+.action_button {
+
+  border-color: rgba(3, 168, 3, 0.75);
+  background: #03A803;
+  box-shadow: 0px 4px 4px rgba(3, 168, 3, 0.75);
+
+}
+
+.menu_button {
+  background-color: $purple;
+  border-color: $purple;
+  box-shadow: 0px 4px 4px $purple-shadow;
+}
+
+.quit_button {
+  background-color: #FF0000;
+  border-color: #FF0000;
+  box-shadow: 0px 4px 4px rgba(255, 0, 0, 0.75);
+}
+
+.button_menu_url {
+  box-sizing: border-box;
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  border: none;
+  background-color: transparent;
+  /* identical to box height, or 125% */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  color: $purple;
+  text-decoration: none;
+
+  &:hover {
+    /* hover */
+
+    filter: drop-shadow($purple);
+    text-decoration: underline;
+  }
+}
+
+.text_title_card_jecha{
+
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 900;
+font-size: 20px;
+line-height: 25px;
+/* identical to box height, or 125% */
+display: flex;
+align-items: center;
+text-transform: uppercase;
+
+color: #F8F2FF;
+
+flex: none;
+order: 0;
+flex-grow: 0;
+}
+
+.title_content_text_subcard_jecha{
+
+
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 300;
+font-size: 18px;
+line-height: 18px;
+/* or 100% */
+display: flex;
+align-items: center;
+text-align: right;
+justify-content: flex-end;
+text-transform: capitalize;
+
+color: #000000;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+}
+
+
+
+.table_th{
+
+
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+line-height: 25px;
+/* identical to box height, or 125% */
+display: flex;
+align-items: center;
+text-align: right;
+text-transform: capitalize;
+
+color: #000000;
+}
+
+
+.table_td{
+
+font-family: 'Source Sans 3';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 25px;
+/* identical to box height, or 156% */
+display: flex;
+align-items: center;
+text-align: right;
+text-transform: capitalize;
+
+color: #000000;
+}
+
+
+
+/*#endregion*/
+/*#region ma_seance_autre*/
+.svg{
+  transform: scale(0.9);
+  &:hover{
+    transform: scale(1);
+    cursor: pointer;
+  }
+}
+
+.login_svg {
+  width: 16px;
+  height: 16px;
+
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.arrows{
+
+width: 20px;
+height: 11px;
+
+}
+
+.line{
+
+
+border: 1px solid #5D3891;
+transform: rotate(0.04deg);
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;}
+
+
+.edit_text_title_card_jecha{
+width: 20px;
+height: 20px;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+
+/*#endregion*/
+/*#region ma_seance_container*/
+
 
 .container_jecha {
   box-sizing: border-box;
@@ -484,195 +822,17 @@ color: #FFFFFF;
   flex-grow: 0;
 }
 
-.url {
 
-  box-sizing: border-box;
-
-  /* Auto layout */
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  gap: 10px;
-
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
-  font-family: 'Source Sans 3';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  /* identical to box height, or 125% */
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  color: $orange;
-  text-decoration: none;
-
-  &:hover {
-    /* hover */
-
-    filter: drop-shadow($purple);
-    text-decoration: underline;
-  }
-
-  &:visited {
-    color: $purple;
-   
-  }
-
-
-}
-
-
-
-
-.action_button{
-
-  border-color: rgba(3, 168, 3, 0.75);
-background: #03A803;
-box-shadow: 0px 4px 4px rgba(3, 168, 3, 0.75);
-
-}
-
-.title_label{
-
-  font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 16px;
-/* identical to box height, or 31% */
-text-align: right;
-letter-spacing: 0.1em;
-
-color: #000000;
-}
-
-.input_jecha{
-  display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 15px 10px;
-gap: 10px;
-width: 400px;
-height: 20px;
-
-background: rgba(243, 242, 242, 0.5);
-border: 1px solid rgba(133, 124, 136, 0.5);
-border-radius: 10px;
-}
-/* webkit solution */
-::-webkit-input-placeholder { text-align:right; font-style: italic;}
-/* mozilla solution */
-input:-moz-placeholder { text-align:right; font-style: italic;}
-
-.input_jecha[type="text"]{
-font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 14px;
-
-
-color: #000000;
-
-}
-.main_body{
+.main_body {
   padding-top: 65px;
 }
-
-.menu_button{
-  background-color: $purple;
-  border-color: $purple;
-  box-shadow: 0px 4px 4px $purple-shadow;
-}
-
-.quit_button{
-  background-color:  #FF0000;
-  border-color:  #FF0000;
-  box-shadow: 0px 4px 4px rgba(255, 0, 0, 0.75);
-}
-
-.text_menu{
-  margin-left: 5px;
-  text-transform:uppercase;
-  margin-right: 5px;
-  border: none;
-  background-color: transparent;
-font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 300;
-font-size: 20px;
-line-height: 20px;
-/* identical to box height, or 25% */
-text-align: right;
-letter-spacing: 0.05em;
-color: #000000;
-
-
-  &:hover{
-/* Property 1=on_focus */
-
-
-font-weight: 600;
-font-size: 20px;
-line-height: 20px;
-/* identical to box height, or 25% */
-text-align: right;
-letter-spacing: 0.075em;
-
-color: #000000;
-
-
-  }
-}
-
-.button_menu_url{
-  box-sizing: border-box;
-
-  /* Auto layout */
+.menu_top_admin{
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  gap: 10px;
-
-  /* Inside auto layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
-  font-family: 'Source Sans 3';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 20px;
-  border : none;
-  background-color: transparent;
-  /* identical to box height, or 125% */
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  color: $purple;
-  text-decoration: none;
-  &:hover {
-    /* hover */
-
-    filter: drop-shadow($purple);
-    text-decoration: underline;
-  }
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
-.menu_connected{
+.menu_connected {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -682,46 +842,118 @@ color: #000000;
   align-content: center;
 }
 
-.menu_compte{
+.menu_compte {
   margin-left: 5px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   margin-right: 5px;
   border: none;
   background-color: transparent;
-font-family: 'Source Sans 3';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-/* identical to box height, or 25% */
-text-align: left;
-color: #000000;
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 25% */
+  text-align: left;
+  color: #000000;
 
 
-  &:hover{
-/* Property 1=on_focus */
+  &:hover {
+    /* Property 1=on_focus */
 
 
-font-weight: 600;
-/* identical to box height, or 25% */
+    font-weight: 600;
+    /* identical to box height, or 25% */
 
-color: #000000;
+    color: #000000;
 
 
   }
 }
 
-.menu_left{
+.menu_left {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
 }
 
-.menu_right{
+.menu_right {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: nowrap;
 }
+.card_jecha{
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+margin-bottom: 10px;
+gap: 5px;
+
+
+background: #FFFFFF;
+box-shadow: 4px 8px 8px 4px rgba(93, 56, 145, 0.75);
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+}
+
+.title_card_jecha{
+
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 20px;
+gap: 20px;
+
+
+background: #5D3891;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+}
+
+.title_subcard_jecha{
+
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0px;
+  gap: 5px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.title_content_subcard_jecha{
+
+
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px 10px;
+gap: 15px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+}
+/*#endregion*/
+
+
+
 

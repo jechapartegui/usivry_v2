@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { MenuInscriptionComponent } from './menu-inscription/menu-inscription.component';
 import { GererSeanceComponent } from './gerer-seance/gerer-seance.component';
 import { GererCoursComponent } from './gerer-cours/gerer-cours.component';
-import { GererInscriptionsComponent } from './gerer-inscriptions/gerer-inscriptions.component';
+import { AdministrationComponent } from './administration/administration.component';
 import { MaSeanceComponent } from './ma-seance/ma-seance.component';
 import { GererGroupeComponent } from './gerer-groupe/gerer-groupe.component';
 import { GererCompteComponent } from './gerer-compte/gerer-compte.component';
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'ma-seance', component: MaSeanceComponent },
   {path:'gerer-seance', component:GererSeanceComponent},
   {path:'gerer-cours', component:GererCoursComponent},
-  {path:'gerer-inscriptions', component:GererInscriptionsComponent},
+  {path:'administration', component:AdministrationComponent},
   {path:'gerer-groupe', component:GererGroupeComponent},
   {path:'gerer-compte', component:GererCompteComponent},
 ];
