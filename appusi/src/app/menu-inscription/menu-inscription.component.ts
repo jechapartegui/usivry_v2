@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
@@ -19,10 +19,14 @@ export class MenuInscriptionComponent implements OnInit {
   Seances: Seance[] = []; // La liste des séances
   listeprof: KeyValuePair[];
   CurrentMail: string = "";
-  EstAdmin :boolean = false;
-  EstProf:boolean = false;
+  EstAdmin: boolean = false;
+  EstProf: boolean = false;
   StatutMailActive: boolean = false;
-  constructor(private seanceService: SeancesService, private ridersservice: RidersService, private router: Router) { }
+  @ViewChildren('prof') proflist: QueryList<ElementRef>;
+  @ViewChildren('inscription') inscriptionlist: QueryList<ElementRef>;
+  @ViewChildren('seance') seancelist: QueryList<ElementRef>;
+  @ViewChildren('arrows') arrowslist: QueryList<ElementRef>;
+  constructor(private seanceService: SeancesService, private ridersservice: RidersService, private router: Router, private renderer: Renderer2) { }
 
   ngOnInit() {
     let errorService = ErrorService.instance;
@@ -31,11 +35,11 @@ export class MenuInscriptionComponent implements OnInit {
       return;
     }
     this.Riders = RidersService.ListeRiders;
-    this.Riders.forEach((rider) =>{
-      if(rider.est_admin){
+    this.Riders.forEach((rider) => {
+      if (rider.est_admin) {
         this.EstAdmin = true;
       }
-      if(rider.est_prof){
+      if (rider.est_prof) {
         this.EstProf = true;
       }
     })
@@ -48,7 +52,27 @@ export class MenuInscriptionComponent implements OnInit {
         } else {
           this.StatutMailActive = false;
         }
+        this.arrowslist.forEach(itemRef => {
+          const nativeElement = itemRef.nativeElement;
+          if (!nativeElement.id.includes('inscription')) {
+            this.renderer.removeClass(nativeElement, 'svg');
+            this.renderer.addClass(nativeElement, 'svg-down');
+          }
+        });
+        this.inscriptionlist.forEach(itemRef => {
+          const nativeElement = itemRef.nativeElement;
+          nativeElement.style.display = 'block';
+        });
+        this.seancelist.forEach(itemRef => {
+          const nativeElement = itemRef.nativeElement;
+          nativeElement.style.display = 'none';
+        });
+        this.proflist.forEach(itemRef => {
+          const nativeElement = itemRef.nativeElement;
+          nativeElement.style.display = 'none';
+        });
       })
+
     } else {
       this.router.navigate(['/login']);
       let u = errorService.CreateError("Chargement", "Pas de compte attaché");
@@ -71,7 +95,130 @@ export class MenuInscriptionComponent implements OnInit {
     });
 
   }
-
+  accordion(type: string, id: number) {
+    //analyser la situation
+    let ouvert = false;
+    this.arrowslist.forEach(itemRef => {
+      const nativeElement = itemRef.nativeElement;      
+      if (nativeElement.id == "arrow-" + type + "-" + id.toString()) {
+        nativeElement.classList.forEach(element => {
+          if(element == "svg"){
+            ouvert = true;
+          }
+        });
+      }
+    });
+    if(ouvert){
+      switch (type) {
+        case "inscription":
+          this.inscriptionlist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "inscription-" + id.toString()) {             
+                nativeElement.style.display = "block";
+            }
+          })
+          this.seancelist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "seance-" + id.toString()) {
+                nativeElement.style.display = "none";
+            }
+          })
+          this.proflist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "prof-" + id.toString()) {
+                nativeElement.style.display = "none";
+            }
+          })
+          this.arrowslist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if(nativeElement.id == "arrow-inscription-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg-down');
+              this.renderer.addClass(nativeElement, 'svg');
+            }
+            if(nativeElement.id == "arrow-seance-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+            if(nativeElement.id == "arrow-prof-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+          });
+          break;
+        case "seance":
+          this.inscriptionlist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "inscription-" + id.toString()) {             
+                nativeElement.style.display = "none";
+            }
+          })
+          this.seancelist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "seance-" + id.toString()) {
+                nativeElement.style.display = "block";
+            }
+          })
+          this.proflist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "prof-" + id.toString()) {
+                nativeElement.style.display = "none";
+            }
+          })
+          this.arrowslist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if(nativeElement.id == "arrow-seance-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg-down');
+              this.renderer.addClass(nativeElement, 'svg');
+            }
+            if(nativeElement.id == "arrow-inscription-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+            if(nativeElement.id == "arrow-prof-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+          });
+          break;
+        case "prof":
+          this.inscriptionlist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "inscription-" + id.toString()) {             
+                nativeElement.style.display = "none";
+            }
+          })
+          this.seancelist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "seance-" + id.toString()) {
+                nativeElement.style.display = "none";
+            }
+          })
+          this.proflist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if (nativeElement.id == "prof-" + id.toString()) {
+                nativeElement.style.display = "block";
+            }
+          })
+          this.arrowslist.forEach(itemRef=>{
+            const nativeElement = itemRef.nativeElement;
+            if(nativeElement.id == "arrow-seance-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg-down');
+              this.renderer.addClass(nativeElement, 'svg');
+            }
+            if(nativeElement.id == "arrow-prof-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+            if(nativeElement.id == "arrow-inscription-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg');
+              this.renderer.addClass(nativeElement, 'svg-down');
+            }
+          });
+          break;
+      }
+    }
+   
+  }
   // Fonction pour ajouter une séance à un rider
   Add(rider: Rider, seance: Seance, present: boolean, essai: boolean = false) {
 

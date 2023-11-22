@@ -5,8 +5,8 @@
     <div class="title_card_jecha">
       <span class="text_title_card_jecha">{{ rider.nom }} {{ rider.prenom }} &nbsp; {{
         calculateAge(rider.date_naissance) }} ans </span>
-      <svg class="svg edit_text_title_card_jecha" (click)="EditCompte(rider)" width="20" height="21" viewBox="0 0 20 21" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
+      <svg class="svg edit_text_title_card_jecha" (click)="EditCompte(rider)" width="20" height="21" viewBox="0 0 20 21"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_1575_13)">
           <path
             d="M2.91667 20.5H15.4167C16.1914 20.4978 16.9336 20.1883 17.4805 19.6394C18.0273 19.0906 18.334 18.3472 18.3333 17.5725V11.2916C18.3333 11.0706 18.2455 10.8587 18.0893 10.7024C17.933 10.5461 17.721 10.4583 17.5 10.4583C17.279 10.4583 17.067 10.5461 16.9107 10.7024C16.7545 10.8587 16.6667 11.0706 16.6667 11.2916V17.5725C16.6678 17.9053 16.5368 18.225 16.3024 18.4614C16.0681 18.6978 15.7495 18.8315 15.4167 18.8333H2.91667C2.58381 18.8315 2.26525 18.6978 2.0309 18.4614C1.79655 18.225 1.66556 17.9053 1.66667 17.5725V5.09413C1.66556 4.76127 1.79655 4.44157 2.0309 4.20519C2.26525 3.96881 2.58381 3.83506 2.91667 3.83329H9.16667C9.38768 3.83329 9.59964 3.7455 9.75592 3.58922C9.9122 3.43293 10 3.22097 10 2.99996C10 2.77895 9.9122 2.56698 9.75592 2.4107C9.59964 2.25442 9.38768 2.16663 9.16667 2.16663H2.91667C2.14192 2.16883 1.3997 2.47832 0.852882 3.02716C0.306068 3.57601 -0.000664243 4.31938 1.08009e-06 5.09413V17.5725C-0.000664243 18.3472 0.306068 19.0906 0.852882 19.6394C1.3997 20.1883 2.14192 20.4978 2.91667 20.5Z"
@@ -23,223 +23,226 @@
       </svg>
 
     </div>
-    <div class="title_subcard_jecha" >
-      <div class="title_content_subcard_jecha" >
-        <span class="title_content_text_subcard_jecha"> Mes inscriptions ({{rider.inscriptions.length}})</span>        
-        <svg class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z" fill="black"/>
+    <div class="content_card_jecha">
+      <div class="subcard_jecha" style="order: 0;">
+        <div class="title_content_subcard_jecha">
+          <span class="title_content_text_subcard_jecha"> Mes inscriptions ({{rider.inscriptions.length}})</span>
+          <svg #arrows [id]="'arrow-inscription-' + rider.id" (click)="accordion('inscription',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"
+              fill="black" />
           </svg>
-          <div [id]="'collapseOne-' + rider.id" class="accordion-collapse collapse show"
-            [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-              <table class="screen" *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
-                <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th>Statut</th>
-                  <th></th>
-                </thead>
-                <ng-container *ngFor="let inscription of rider.inscriptions">
-                  <tr [title]="inscription.info_seance">
-                    <!-- Afficher les détails de l'inscription ici -->
-                    <td>{{ inscription.libelle }}</td>
-                    <td>{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ inscription.heure_debut }}</td>
-                    <td>{{ inscription.duree_cours }} minutes</td>
-                    <td>{{ inscription.lieu }}</td>
-                    <td>
-                      <ul>
-                        <ng-container *ngFor="let profId of inscription.professeurs">
-                          <li>{{ profId.value }}</li>
-                        </ng-container>
-                      </ul>
-                    </td>
-                    <td>{{ inscription.statut }}
-                      <span *ngIf="inscription.statut.toString() ==='présent'"><svg xmlns="http://www.w3.org/2000/svg"
-                          width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                        </svg></span>
-                      <span *ngIf="inscription.statut.toString() ==='absent'"><svg xmlns="http://www.w3.org/2000/svg"
-                          width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg></span>
-                    </td>
-                    <!-- Bouton pour se désinscrire de la séance -->
-                    <td>
-                      <div *ngIf="rider.est_inscrit">
-                        <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
-                          (click)="Update(rider, inscription, false)">Se désinscrire</button>
-                        <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
-                          (click)="Update(rider, inscription, true)">Réinscrire</button>
-                      </div>
+        </div>
+        <hr class="line">
+        <div class="content_subcard_jecha">
+          <div #inscription [id]="'inscription-' + rider.id">
+            <table class="screen" *ngIf="rider.inscriptions && rider.inscriptions.length > 0 ">
+              <thead>
+                <th class="table_th">Nom</th>
+                <th class="table_th">Date</th>
+                <th class="table_th">Heure de début</th>
+                <th class="table_th">Durée du cours</th>
+                <th class="table_th">Lieu</th>
+                <th class="table_th">Professeur présent</th>
+                <th class="table_th">Statut</th>
+                <th class="table_th"></th>
+              </thead>
+              <ng-container *ngFor="let inscription of rider.inscriptions">
+                <tr [title]="inscription.info_seance">
+                  <!-- Afficher les détails de l'inscription ici -->
+                  <td class="table_td">{{ inscription.libelle }}</td>
+                  <td class="table_td">{{ inscription.date_seance | date: 'dd/MM/yyyy' }}</td>
+                  <td class="table_td">{{ inscription.heure_debut }}</td>
+                  <td class="table_td">{{ inscription.duree_cours }} minutes</td>
+                  <td class="table_td">{{ inscription.lieu }}</td>
+                  <td class="table_td">
+                    <ul>
+                      <ng-container *ngFor="let profId of inscription.professeurs">
+                        <li>{{ profId.value }}</li>
+                      </ng-container>
+                    </ul>
+                  </td>
+                  <td class="table_td">{{ inscription.statut }}
+                    <span *ngIf="inscription.statut.toString() ==='présent'"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                        <path
+                          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                      </svg></span>
+                    <span *ngIf="inscription.statut.toString() ==='absent'"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                        <path
+                          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                      </svg></span>
+                  </td>
+                  <!-- Bouton pour se désinscrire de la séance -->
+                  <td class="table_td">
+                    <div *ngIf="rider.est_inscrit">
+                      <button *ngIf="inscription.statut.toString() ==='présent'" class="btn btn-outline-danger"
+                        (click)="Update(rider, inscription, false)">Se désinscrire</button>
+                      <button *ngIf="inscription.statut.toString() ==='absent'" class="btn btn-success-danger"
+                        (click)="Update(rider, inscription, true)">Réinscrire</button>
+                    </div>
 
-                    </td>
-                  </tr>
-                </ng-container>
-              </table>
-             
-            </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
           </div>
         </div>
+      </div>
 
+      <div class="subcard_jecha" style="order: 1;">
+        <div class="title_content_subcard_jecha">
+          <span class="title_content_text_subcard_jecha"> Mes séances disponibles
+            ({{rider.seances.length}})</span>
+          <svg #arrows [id]="'arrow-seance-' + rider.id" (click)="accordion('seance',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"
+              fill="black" />
+          </svg>
+        </div>
+        <hr class="line">
+        <div class="content_subcard_jecha">
+          <div #seance [id]="'seance-' + rider.id">
+            <table class="screen" *ngIf="rider.seances && rider.seances.length > 0">
+              <thead>
+                <th class="table_th">Nom</th>
+                <th class="table_th">Date</th>
+                <th class="table_th">Heure de début</th>
+                <th class="table_th">Durée du cours</th>
+                <th class="table_th">Lieu</th>
+                <th class="table_th">Professeur présent</th>
+                <th class="table_th"></th>
+              </thead>
+              <ng-container *ngFor="let seance of rider.seances">
+                <tr [title]="seance.info_seance">
+                  <!-- Afficher les détails de l'inscription ici -->
+                  <td class="table_td">{{ seance.libelle }}</td>
+                  <td class="table_td">{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
+                  <td class="table_td">{{ seance.heure_debut }}</td>
+                  <td class="table_td">{{ seance.duree_cours }} minutes</td>
+                  <td class="table_td">{{ seance.lieu }}</td>
+                  <td class="table_td">
+                    <ul>
+                      <ng-container *ngFor="let profId of seance.professeurs">
+                        <li>{{ profId.value }}</li>
+                      </ng-container>
+                    </ul>
+                  </td>
 
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapseTwo-' + rider.id" aria-expanded="false"
-              [attr.aria-controls]="'collapseTwo-' + rider.id">
-              Mes séances disponibles ({{rider.seances.length}})
-            </button>
-          </h2>
-          <div [id]="'collapseTwo-' + rider.id" class="accordion-collapse collapse"
-            [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-              <table class="screen" *ngIf="rider.seances && rider.seances.length > 0">
-                <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th></th>
-                </thead>
-                <ng-container *ngFor="let seance of rider.seances">
-                  <tr [title]="seance.info_seance">
-                    <!-- Afficher les détails de l'inscription ici -->
-                    <td>{{ seance.libelle }}</td>
-                    <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ seance.heure_debut }}</td>
-                    <td>{{ seance.duree_cours }} minutes</td>
-                    <td>{{ seance.lieu }}</td>
-                    <td>
-                      <ul>
-                        <ng-container *ngFor="let profId of seance.professeurs">
-                          <li>{{ profId.value }}</li>
-                        </ng-container>
-                      </ul>
-                    </td>
+                  <!-- Bouton pour se désinscrire de la séance -->
+                  <td class="table_td">
+                    <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
+                    <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
+                      absent</button>
 
-                    <!-- Bouton pour se désinscrire de la séance -->
-                    <td>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+            <ul class="mobile" *ngIf="rider.seances && rider.seances.length > 0">
+              <ng-container *ngFor="let seance of rider.seances">
+                <li [title]="seance.info_seance">
+                  <div class="rowmobile">
+                    <div style="margin: 2px;">
+
+                      <span><strong>{{ seance.libelle }}</strong></span><br />
+                      <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                      <span>{{ seance.heure_debut }}</span><br />
+                      <span>{{ seance.lieu }}</span><br />
+                    </div>
+                    <div style="margin: 2px;">
                       <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
                       <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
                         absent</button>
 
-                    </td>
-                  </tr>
-                </ng-container>
-              </table>
-              <ul class="mobile" *ngIf="rider.seances && rider.seances.length > 0">
-                <ng-container *ngFor="let seance of rider.seances">
-                  <li [title]="seance.info_seance">
-                    <div class="rowmobile">
-                      <div style="margin: 2px;">
-
-                        <span><strong>{{ seance.libelle }}</strong></span><br />
-                        <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
-                        <span>{{ seance.heure_debut }}</span><br />
-                        <span>{{ seance.lieu }}</span><br />
-                      </div>
-                      <div style="margin: 2px;">
-                        <button class="btn btn-outline-success" (click)="Add(rider, seance, true)">S'inscrire</button>
-                        <button class="btn btn-outline-danger" (click)="Add(rider, seance, false)">Déclarer
-                          absent</button>
-
-                      </div>
                     </div>
-                  </li>
-                </ng-container>
-              </ul>
-              <p *ngIf="!rider.seances || rider.seances.length == 0">
-                Pas de séance disponible
-              </p>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="rider.est_prof" class="accordion-item">
-
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              [attr.data-bs-target]="'#collapseThree-' + rider.id" aria-expanded="false"
-              [attr.aria-controls]="'collapseThree-' + rider.id">
-              Professeur
-            </button>
-          </h2>
-          <div [id]="'collapseThree-' + rider.id" class="accordion-collapse collapse"
-            [attr.data-bs-parent]="'#accordionExample-' + rider.id">
-            <div class="accordion-body">
-
-
-              <!-- Sélecteur pour voir la séance du professeur -->
-              <table class="screen" *ngIf="rider.est_prof">
-                <thead>
-                  <th>Nom</th>
-                  <th>Date</th>
-                  <th>Heure de début</th>
-                  <th>Durée du cours</th>
-                  <th>Lieu</th>
-                  <th>Professeur présent</th>
-                  <th></th>
-                </thead>
-                <ng-container *ngFor="let seance of rider.seances_prof">
-                  <tr [title]="seance.info_seance">
-                    <!-- Afficher les détails de l'inscription ici -->
-                    <td>{{ seance.libelle }}</td>
-                    <td>{{ seance.date_seance | date: 'dd/MM/yyyy'}}</td>
-                    <td>{{ seance.heure_debut }}</td>
-                    <td>{{ seance.duree_cours }} minutes</td>
-                    <td>{{ seance.lieu }}</td>
-                    <td>
-                      <ul>
-                        <ng-container *ngFor="let profId of seance.professeurs">
-                          <li>{{ profId.value }}</li>
-                        </ng-container>
-                      </ul>
-                    </td>
-
-                    <!-- Bouton pour se désinscrire de la séance -->
-                    <td>
-                      <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
-                        séance</button>
-                    </td>
-                  </tr>
-                </ng-container>
-              </table>
-              <ul class="mobile" *ngIf="rider.est_prof">
-                <ng-container *ngFor="let seance of rider.seances_prof">
-                  <li>
-                    <div class="rowmobile">
-                      <div style="margin: 2px;">
-
-                        <span><strong>{{ seance.libelle }}</strong></span><br />
-                        <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
-                        <span>{{ seance.heure_debut }}</span><br />
-                        <span>{{ seance.lieu }}</span><br />
-                      </div>
-                      <div style="margin: 2px;">
-                        <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
-                          séance</button>
-                      </div>
-                    </div>
-                  </li>
-                </ng-container>
-              </ul>
-              <p *ngIf="!rider.seances_prof || rider.seances_prof.length == 0">
-                Pas de séance disponible
-              </p>
-            </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+            <p *ngIf="!rider.seances || rider.seances.length == 0">
+              Pas de séance disponible
+            </p>
           </div>
         </div>
       </div>
-   </div>
+      <div class="subcard_jecha" style="order: 2;">
+        <div class="title_content_subcard_jecha">
+          <span class="title_content_text_subcard_jecha">Professeurs</span>
+          <svg #arrows [id]="'arrow-prof-' + rider.id" (click)="accordion('prof',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"
+              fill="black" />
+          </svg>
+        </div>
+        <hr class="line">
+        <div class="content_subcard_jecha">
+          <div #prof [id]="'seance-' + rider.id">
+            <table class="screen" *ngIf="rider.est_prof">
+              <thead>
+                <th class="table_th">Nom</th>
+                <th class="table_th">Date</th>
+                <th class="table_th">Heure de début</th>
+                <th class="table_th">Durée du cours</th>
+                <th class="table_th">Lieu</th>
+                <th class="table_th">Professeur présent</th>
+                <th class="table_th"></th>
+              </thead>
+              <ng-container *ngFor="let seance of rider.seances_prof">
+                <tr [title]="seance.info_seance">
+                  <!-- Afficher les détails de l'inscription ici -->
+                  <td class="table_td">{{ seance.libelle }}</td>
+                  <td class="table_td">{{ seance.date_seance | date: 'dd/MM/yyyy'}}</td>
+                  <td class="table_td">{{ seance.heure_debut }}</td>
+                  <td class="table_td">{{ seance.duree_cours }} minutes</td>
+                  <td class="table_td">{{ seance.lieu }}</td>
+                  <td class="table_td">
+                    <ul>
+                      <ng-container *ngFor="let profId of seance.professeurs">
+                        <li>{{ profId.value }}</li>
+                      </ng-container>
+                    </ul>
+                  </td>
 
+                  <!-- Bouton pour se désinscrire de la séance -->
+                  <td class="table_td">
+                    <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
+                      séance</button>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+            <ul class="mobile" *ngIf="rider.est_prof">
+              <ng-container *ngFor="let seance of rider.seances_prof">
+                <li>
+                  <div class="rowmobile">
+                    <div style="margin: 2px;">
+
+                      <span><strong>{{ seance.libelle }}</strong></span><br />
+                      <span>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</span><br />
+                      <span>{{ seance.heure_debut }}</span><br />
+                      <span>{{ seance.lieu }}</span><br />
+                    </div>
+                    <div style="margin: 2px;">
+                      <button type="button" class="btn btn-outline-info" (click)="VoirSession( seance)">Voir la
+                        séance</button>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+            <p *ngIf="!rider.seances_prof || rider.seances_prof.length == 0">
+              Pas de séance disponible
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 
   <div class="card-container">
     <mat-card *ngFor="let rider of Riders" class="mat-card  m-2">
