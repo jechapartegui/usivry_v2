@@ -1,4 +1,8 @@
+
 <div class="container" >
+
+
+
   <div class="row" *ngIf="!editMode && est_admin">
     <div class="col-12">
       <div class="card mb-3">
@@ -87,6 +91,28 @@
     </div>
   </div>
   <div class="row">
+    <div class="card_jecha_light col-xs-12 col-md-6">
+      <div class="title_content_subcard_jecha">
+        <span class="title_content_text_subcard_jecha">Informations personnelles </span>  
+      </div>
+      <hr class="line">
+      <div class="content_card_jecha">
+        <span class="title_label">Nom</span>
+        <input class="input_jecha" type="text" id="nom_rider" name="nom_rider" placeholder="Nom" [(ngModel)]="editRider.nom" required>
+        <span class="title_label">Prénom</span>
+        <input class="input_jecha" type="text" id="prenom_rider" name="prenom_rider" placeholder="Nom" [(ngModel)]="editRider.prenom" required>
+        <span class="title_label">Date de naissance</span>
+        <input class="input_jecha" type="date" id="date_naissance" name="date_naissance" placeholder="Date de naissance" [(ngModel)]="editRider.date_naissance" required>
+        <span class="title_label">Adresse :</span>
+          <textarea class="textarea_jecha" id="adresse" [(ngModel)]="editRider.adresse" rows="3"></textarea>
+          <span class="title_label">Téléphone</span>
+          <input class="input_jecha" type="text" id="telephone" name="telephone" placeholder="Téléphone" [(ngModel)]="editRider.telephone" required>
+          <span class="title_label">Personne à prévenir</span>
+          <input class="input_jecha" type="text" id="personne_prevenir" name="personne_prevenir" placeholder="Personne à prévenir" [(ngModel)]="editRider.personne_prevenir" required>
+          <span class="title_label">Téléphone personne à prévenir</span>
+          <input class="input_jecha" type="text" id="telephone_personne_prevenir" name="telephone_personne_prevenir" placeholder="Téléphone personne à prévenir" [(ngModel)]="editRider.telephone_personne_prevenir" required>
+        </div>
+    </div>
     <div class="card col-md-6">
       <div class="card-header">
         Informations personnelles

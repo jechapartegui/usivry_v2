@@ -52,25 +52,7 @@ export class MenuInscriptionComponent implements OnInit {
         } else {
           this.StatutMailActive = false;
         }
-        this.arrowslist.forEach(itemRef => {
-          const nativeElement = itemRef.nativeElement;
-          if (!nativeElement.id.includes('inscription')) {
-            this.renderer.removeClass(nativeElement, 'svg');
-            this.renderer.addClass(nativeElement, 'svg-down');
-          }
-        });
-        this.inscriptionlist.forEach(itemRef => {
-          const nativeElement = itemRef.nativeElement;
-          nativeElement.style.display = 'block';
-        });
-        this.seancelist.forEach(itemRef => {
-          const nativeElement = itemRef.nativeElement;
-          nativeElement.style.display = 'none';
-        });
-        this.proflist.forEach(itemRef => {
-          const nativeElement = itemRef.nativeElement;
-          nativeElement.style.display = 'none';
-        });
+        this.Affichage();
       })
 
     } else {
@@ -108,7 +90,7 @@ export class MenuInscriptionComponent implements OnInit {
         });
       }
     });
-    if(ouvert){
+    if(!ouvert){
       switch (type) {
         case "inscription":
           this.inscriptionlist.forEach(itemRef=>{
@@ -148,33 +130,34 @@ export class MenuInscriptionComponent implements OnInit {
         case "seance":
           this.inscriptionlist.forEach(itemRef=>{
             const nativeElement = itemRef.nativeElement;
-            if (nativeElement.id == "inscription-" + id.toString()) {             
+            if (nativeElement.id == "inscription-" + id.toString()) {       
                 nativeElement.style.display = "none";
             }
           })
           this.seancelist.forEach(itemRef=>{
             const nativeElement = itemRef.nativeElement;
-            if (nativeElement.id == "seance-" + id.toString()) {
+            if (nativeElement.id == "seance-" + id.toString()) { 
                 nativeElement.style.display = "block";
             }
           })
           this.proflist.forEach(itemRef=>{
             const nativeElement = itemRef.nativeElement;
-            if (nativeElement.id == "prof-" + id.toString()) {
+            if (nativeElement.id == "prof-" + id.toString()) { 
                 nativeElement.style.display = "none";
             }
           })
           this.arrowslist.forEach(itemRef=>{
             const nativeElement = itemRef.nativeElement;
-            if(nativeElement.id == "arrow-seance-" + id.toString()){
+            if(nativeElement.id == "arrow-seance-" + id.toString()){ 
               this.renderer.removeClass(nativeElement, 'svg-down');
               this.renderer.addClass(nativeElement, 'svg');
             }
-            if(nativeElement.id == "arrow-inscription-" + id.toString()){
+            if(nativeElement.id == "arrow-inscription-" + id.toString()){ 
               this.renderer.removeClass(nativeElement, 'svg');
               this.renderer.addClass(nativeElement, 'svg-down');
             }
-            if(nativeElement.id == "arrow-prof-" + id.toString()){
+            if(nativeElement.id == "arrow-prof-" + id.toString()){ 
+              console.log(nativeElement.id) ;   
               this.renderer.removeClass(nativeElement, 'svg');
               this.renderer.addClass(nativeElement, 'svg-down');
             }
@@ -202,12 +185,12 @@ export class MenuInscriptionComponent implements OnInit {
           this.arrowslist.forEach(itemRef=>{
             const nativeElement = itemRef.nativeElement;
             if(nativeElement.id == "arrow-seance-" + id.toString()){
-              this.renderer.removeClass(nativeElement, 'svg-down');
-              this.renderer.addClass(nativeElement, 'svg');
-            }
-            if(nativeElement.id == "arrow-prof-" + id.toString()){
               this.renderer.removeClass(nativeElement, 'svg');
               this.renderer.addClass(nativeElement, 'svg-down');
+            }
+            if(nativeElement.id == "arrow-prof-" + id.toString()){
+              this.renderer.removeClass(nativeElement, 'svg-down');
+              this.renderer.addClass(nativeElement, 'svg');
             }
             if(nativeElement.id == "arrow-inscription-" + id.toString()){
               this.renderer.removeClass(nativeElement, 'svg');
@@ -218,6 +201,28 @@ export class MenuInscriptionComponent implements OnInit {
       }
     }
    
+  }
+
+  Affichage(){
+    this.arrowslist.forEach(itemRef => {
+      const nativeElement = itemRef.nativeElement;
+      if (!nativeElement.id.includes('inscription')) {
+        this.renderer.removeClass(nativeElement, 'svg');
+        this.renderer.addClass(nativeElement, 'svg-down');
+      }
+    });
+    this.inscriptionlist.forEach(itemRef => {
+      const nativeElement = itemRef.nativeElement;
+      nativeElement.style.display = 'block';
+    });
+    this.seancelist.forEach(itemRef => {
+      const nativeElement = itemRef.nativeElement;
+      nativeElement.style.display = 'none';
+    });
+    this.proflist.forEach(itemRef => {
+      const nativeElement = itemRef.nativeElement;
+      nativeElement.style.display = 'none';
+    });
   }
   // Fonction pour ajouter une séance à un rider
   Add(rider: Rider, seance: Seance, present: boolean, essai: boolean = false) {
@@ -241,6 +246,7 @@ export class MenuInscriptionComponent implements OnInit {
       if (id > 0) {
         this.ridersservice.GetRiders().then(() => {
           this.Riders = RidersService.ListeRiders;
+          this.Affichage();
         })
         let o = errorService.OKMessage(action);
         errorService.emitChange(o);
