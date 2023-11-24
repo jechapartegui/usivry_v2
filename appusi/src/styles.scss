@@ -306,7 +306,7 @@ label.checkbox-label {
 
 .label-groupe {
   cursor: pointer;
-  gap: 0.2em;
+  gap: 3px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -518,13 +518,28 @@ font-weight: 800;
   align-items: center;
   padding: 15px 10px;
   gap: 10px;
-  width: 400px;
+  width: 350px;
   height: 20px;
 
   background: rgba(243, 242, 242, 0.5);
   border: 1px solid rgba(133, 124, 136, 0.5);
   border-radius: 10px;
 }
+.select_jecha{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 10px;
+  gap: 10px;
+  width: 350px;
+  height: 20px;
+
+  background: rgba(243, 242, 242, 0.5);
+  border: 1px solid rgba(133, 124, 136, 0.5);
+  border-radius: 10px;
+}
+
 .textarea_jecha {
   display: flex;
   flex-direction: row;
@@ -532,7 +547,7 @@ font-weight: 800;
   align-items: center;
   padding: 15px 10px;
   gap: 10px;
-  width: 400px;
+  width: 350px;
 
   background: rgba(243, 242, 242, 0.5);
   border: 1px solid rgba(133, 124, 136, 0.5);
@@ -590,7 +605,18 @@ input:-moz-placeholder {
     transform: scale(1);
   }
 }
+.active_radio_bouton{
+  
+  border-color: $purple;
+  background: $purple;
+  color: white;
+}
+.inactive_radio_bouton{
 
+  border-color: $purple;
+  background: white;
+  color: $purple;
+}
 .login_button {
 
   border-color: #004cffb9;
@@ -813,7 +839,38 @@ flex-grow: 0;
 /*#endregion*/
 /*#region ma_seance_container*/
 
+.multi_card{
+  display: flex;
+}
 
+.button_group{
+  display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.groupe_container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 5px;
+  justify-content: flex-start;
+  max-width: 350px;
+  align-content: space-between;
+}
+.input_and_button{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: 350px;
+}
 .container_jecha {
   box-sizing: border-box;
 
