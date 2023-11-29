@@ -1,1 +1,17 @@
-<p>gerer-compte works!</p>
+<table>
+    <thead>
+        <th i18n>Compte</th>
+        <th i18n>Adhérent</th>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let item of list">
+            <tr>
+                <td>{{item.mail}}</td>
+                <td><ng-container *ngFor="let rider of item.riders">
+                        {{rider.nom}} {{rider.prenom}}
+                    </ng-container></td>
+            </tr>
+        </ng-container>
+    </tbody>
+
+</table>
