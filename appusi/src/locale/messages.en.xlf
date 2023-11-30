@@ -285,6 +285,200 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-    </body>
+    <trans-unit id="6239703543641432094" datatype="html">
+        <source>Adhérents</source><target state="new">Adhérents</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit><trans-unit id="6245262151918764849" datatype="html">
+        <source>Comptes</source><target state="new">Comptes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="7784308513989999767" datatype="html">
+        <source>Séances</source><target state="new">Séances</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit><trans-unit id="6310044748506890521" datatype="html">
+        <source>Cours</source><target state="new">Cours</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit><trans-unit id="5930578483020168418" datatype="html">
+        <source>Mails</source><target state="new">Mails</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="4448865243143856411" datatype="html">
+        <source>Saisons</source><target state="new">Saisons</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit><trans-unit id="6922660996336430740" datatype="html">
+        <source>Lieux</source><target state="new">Lieux</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit><trans-unit id="3401792141365712597" datatype="html">
+        <source>Paramétrage</source><target state="new">Paramétrage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/administration/administration.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit><trans-unit id="5783609750670031622" datatype="html">
+        <source>Groupes</source><target state="new">Groupes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit><trans-unit id="7844706011418789951" datatype="html">
+        <source>Administration</source><target state="new">Administration</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">188</context>
+        </context-group>
+      </trans-unit><trans-unit id="7384880253348820664" datatype="html">
+        <source>Informations personnelles </source><target state="new">Informations personnelles </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit><trans-unit id="5363451304863092478" datatype="html">
+        <source>Nom</source><target state="new">Name</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit><trans-unit id="8203024106711668685" datatype="html">
+        <source>Prénom</source><target state="new">Firstname</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit><trans-unit id="1189682757385808291" datatype="html">
+        <source>Date de naissance</source><target state="new">Birthdate</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit><trans-unit id="2193381959683349471" datatype="html">
+        <source>Sexe :</source><target state="new">Gender :</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit><trans-unit id="3092775843287290086" datatype="html">
+        <source>Adresse :</source><target state="new">Adress :</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit><trans-unit id="1815195286714301387" datatype="html">
+        <source>Adresse</source><target state="new">Adress</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit><trans-unit id="6628356255817390419" datatype="html">
+        <source>Téléphone</source><target state="new">Phone</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit><trans-unit id="3228920843565890053" datatype="html">
+        <source>Personne à prévenir</source><target state="new">Personne à prévenir</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit><trans-unit id="2780142641259523295" datatype="html">
+        <source>Téléphone personne à prévenir</source><target state="new">Téléphone personne à prévenir</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit><trans-unit id="8168765646794661881" datatype="html">
+        <source>Retour</source><target state="new">Retour</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+      </trans-unit><trans-unit id="5821785765393981739" datatype="html">
+        <source>Groupe de l'adhérent</source><target state="new">Groupe de l'adhérent</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+      </trans-unit><trans-unit id="8907403333766924071" datatype="html">
+        <source>Groupes disponibles</source><target state="new">Groupes disponibles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit><trans-unit id="7982522184978073249" datatype="html">
+        <source>Administrateur</source><target state="new">Administrateur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">192</context>
+        </context-group>
+      </trans-unit><trans-unit id="5214377865093013987" datatype="html">
+        <source>Professeur</source><target state="new">Professeur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/gerer-riders/gerer-riders.html</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit></body>
   </file>
 </xliff>

@@ -1,7 +1,4 @@
 <div class="container">
-
-
-
   <div class="row" *ngIf="!editMode && est_admin">
     <div class="col-12">
       <div class="card mb-3">
@@ -78,17 +75,6 @@
     </div>
   </div>
   <div *ngIf="editMode">
-    <div class="row">
-      <div class="col-12" style="display: flex; flex-direction: row;">
-        <div>
-          <button class="btn btn-outline-danger" mat-raised-button (click)="annulerEdition()">Retour</button>
-        </div>
-        <div> <button class="btn btn-outline-success" mat-raised-button (click)="soumettreRiders()">
-            {{ editRider.id<1 ? "Créer" : "Sauvegarder" }} </button>
-
-        </div>
-      </div>
-    </div>
     <div class="multi_card">
       <div class="card_jecha_light">
         <div class="title_content_subcard_jecha">
@@ -136,6 +122,54 @@
                 : "Sauvegarder" }}</button>
           </div>
         </div>
+      </div>
+
+      <div class="card_jecha_light">
+        <div class="title_content_subcard_jecha">
+          <span class="title_content_text_subcard_jecha" i18n>Gestion du compte </span>
+        </div>
+        <hr class="line">
+        <div class="content_card_jecha">
+          <div *ngIf="situation == 'CREATE' || situation == 'ADD' " class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+              (ngModelChange)="ChangerExistingAccount()" [(ngModel)]="existing_account">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Compte existant</label>
+          </div>
+          <span class="title_label" *ngIf="situation == 'CREATE' || situation == 'ADD' ">{{libelle_mail}}</span>
+          <span class="title_label" *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">Saisir l'email</span>
+          <input class="input_jecha" type="text" id="email" name="email" [placeholder]="libelle_mail"
+            [(ngModel)]="editRider.email" required>
+          <div *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
+            <span class="title_label" i18n>Mot de passe actuel :</span>
+            <input class="input_jecha" type="password" id="mdp_actuel" [(ngModel)]="mdp_actuel"
+             i18n-placeholder placeholder="Mot de passe actuel">
+          </div>
+          <div *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
+            <span class="title_label" i18n>Nouveau mot de passe :</span>
+            <input class="input_jecha" type="password" id="new_mdp" [(ngModel)]="new_mdp"
+             i18n-placeholder placeholder="Nouveau mot de passe">
+          </div>
+          <div 
+            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
+            <span class="title_label" i18n>Confirmer nouveau mot de passe</span>
+            <input class="input_jecha" type="password" id="new_mdp_confirm" [(ngModel)]="new_mdp_confirm"
+            i18n-placeholder placeholder="Confirmer nouveau mot de passe">
+          </div>
+          <div *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">
+            <p >Saisir nouveau mail et mot de passe actuel puis cliquer sur le bouton ci-dessous</p>
+            <div> <button class="button action_button" [disabled]="!editRider.email || !mdp_actuel"
+                (click)="ModifMail()" i18n>Modifier l'email
+              </button>
+            </div>
+            <p>Saisir le mot de passe actuel et le mot de passe souhaité/confirmer le mot de passe puis cliquer sur le
+              bouton ci-dessous</p>
+            <div> <button class="button action_button"  [disabled]="(new_mdp_confirm!= new_mdp) || !mdp_actuel"
+                (click)="ModifMDP()" i18n>Modifier le mot de passe
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="card_jecha_light">
         <div class="title_content_subcard_jecha">
@@ -219,184 +253,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="card col-md-6">
-        <div class="card-header">
-          Informations personnelles
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12" style="margin: 5px;">
-              <h2 class="mat-h2">{{ editRider.id==0 ? "Créer" : "Editer" }} un rider</h2>
-              <div class="form-group">
-                <label for="nom_rider">Nom du Rider</label>
-                <input class="form-control" id="nom_rider" type="text" [(ngModel)]="editRider.nom"
-                  placeholder="Nom du Rider">
-              </div>
-              <div class="form-group">
-                <label for="prenom_rider">Prénom du Rider</label>
-                <input class="form-control" id="prenom_rider" type="text" [(ngModel)]="editRider.prenom"
-                  placeholder="Prénom du Rider">
-              </div>
 
-              <div class="form-group">
-                <label for="date_naissance">Date de naissance :</label>
-                <input class="form-control" id="date_naissance" matInput type="date"
-                  [(ngModel)]="editRider.date_naissance">
-              </div>
-              <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio-sexe" id="btnradio1-sexe"
-                  [(ngModel)]="editRider.sexe" [value]="true" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio1-sexe">Homme</label>
-
-                <input type="radio" class="btn-check" name="btnradio-sexe" id="btnradio2-sexe"
-                  [(ngModel)]="editRider.sexe" [value]="false" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2-sexe">Femme</label>
-              </div>
-              <div class="form-group">
-                <label for="adresse">Adresse :</label>
-                <textarea class="form-control" id="adresse" [(ngModel)]="editRider.adresse" rows="3"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="telephone">Téléphone :</label>
-                <input class="form-control" matInput type="text" id="telephone" [(ngModel)]="editRider.telephone">
-              </div>
-              <div class="form-group">
-                <label for="personne_prevenir">Personne à prévenir :</label>
-                <input class="form-control" matInput type="text" id="personne_prevenir"
-                  [(ngModel)]="editRider.personne_prevenir">
-              </div>
-              <div class="form-group">
-                <label for="telephone_personne_prevenir">Téléphone personne à prévenir :</label>
-                <input class="form-control" matInput type="phone" id="telephone_personne_prevenir"
-                  [(ngModel)]="editRider.telephone_personne_prevenir">
-              </div>
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-      <div class="card col-md-6">
-        <div class="card-header">
-          Information du compte
-        </div>
-        <div class="card-body">
-          <div *ngIf="situation == 'CREATE' || situation == 'ADD' " class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-              (ngModelChange)="ChangerExistingAccount()" [(ngModel)]="existing_account">
-            <label class="form-check-label" for="flexSwitchCheckChecked">Compte existant</label>
-          </div>
-          <div class="form-group">
-            <label *ngIf="situation == 'CREATE' || situation == 'ADD' " for="email">{{libelle_mail}}</label>
-            <label *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' " for="email">Saisir l'email</label>
-            <input class="form-control" matInput type="email" id="email" [(ngModel)]="editRider.email"
-              [placeholder]="libelle_mail">
-          </div>
-          <div class="form-group"
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <label for="mdp_actuel">Mot de passe actuel :</label>
-            <input class="form-control" matInput type="password" id="mdp_actuel" [(ngModel)]="mdp_actuel"
-              placeholder="Mot de passe actuel">
-          </div>
-          <div class="form-group"
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <label for="new_mdp">Nouveau mot de passe :</label>
-            <input class="form-control" matInput type="password" id="new_mdp" [(ngModel)]="new_mdp"
-              placeholder="Nouveau mot de passe">
-          </div>
-          <div class="form-group"
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <label for="new_mdp_confirm">Confirmer nouveau mot de passe</label>
-            <input class="form-control" matInput type="password" id="new_mdp_confirm" [(ngModel)]="new_mdp_confirm"
-              placeholder="Confirmer nouveau mot de passe">
-          </div>
-          <div class="row" *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">
-            <p>Saisir nouveau mail et mot de passe actuel puis cliquer sur le bouton ci-dessous</p>
-            <div> <button class="btn btn-outline-success" [disabled]="!editRider.email || !mdp_actuel"
-                (click)="ModifMail()">Modifier l'email du compte
-              </button>
-            </div>
-            <p>Saisir le mot de passe actuel et le mot de passe souhaité/confirmer le mot de passe puis cliquer sur le
-              bouton ci-dessous</p>
-            <div> <button class="btn btn-outline-success" [disabled]="(new_mdp_confirm!= new_mdp) || !mdp_actuel"
-                (click)="ModifMDP()">Modifier le mot de passe
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="card col-md-6">
-        <div class="card-header">
-          Groupes
-        </div>
-        <div class="card-body">
-
-          <div class="form-group">
-            <label for="professeurs">Groupes du rider</label>
-            <br />
-            <ng-container *ngIf="!est_admin">
-              <ng-container *ngFor="let niv of editRider.groupes">
-                <h5 class="label-groupe badge rounded-pill bg-primary">{{niv.nom}} <i class="bi bi-x-trash3-fill"></i>
-                </h5>
-              </ng-container><br />
-            </ng-container>
-            <ng-container *ngIf="est_admin">
-              <ng-container *ngFor="let niv of editRider.groupes">
-                <h5 class="label-groupe badge rounded-pill bg-primary" (click)="RemoveGroupe(niv)">{{niv.nom}} <i
-                    class="bi bi-x-trash3-fill"></i></h5>
-              </ng-container><br />
-              <label for="statut">Groupes disponibles</label>
-              <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id">
-                <ng-container *ngFor="let ni of groupe_dispo	">
-                  <option [value]="ni.id">{{ ni.nom }}</option>
-                </ng-container>
-              </select>
-              <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
-            </ng-container>
-
-          </div>
-        </div>
-      </div>
-      <div class="card col-md-6" *ngIf="est_admin">
-        <div class="card-header">
-          Administration
-        </div>
-        <div class="card-body">
-
-          <div class="form-group">
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio-admin" id="btnradio1-admin"
-                [(ngModel)]="editRider.est_admin" [value]="true" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio1-admin">Est admin</label>
-
-              <input type="radio" class="btn-check" name="btnradio-admin" id="btnradio2-admin"
-                [(ngModel)]="editRider.est_admin" [value]="false" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio2-admin">Non admin</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio1-prof"
-                [(ngModel)]="editRider.est_prof" [value]="true" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio1-prof">Est prof</label>
-
-              <input type="radio" class="btn-check" name="btnradio-prof" id="btnradio2-prof"
-                [(ngModel)]="editRider.est_prof" [value]="false" autocomplete="off">
-              <label class="btn btn-outline-primary" for="btnradio2-prof">Non prof</label>
-            </div>
-          </div>
-          <div *ngIf="!editRider.est_inscrit && (situation == 'UPDATE' || situation == 'MY_UPDATE')">
-            <div> <button class="btn btn-outline-success" (click)="InscrireRider()">
-                Inscrire le rider</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

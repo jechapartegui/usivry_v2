@@ -841,6 +841,8 @@ flex-grow: 0;
 
 .multi_card{
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .button_group{
@@ -1002,6 +1004,7 @@ flex-grow: 0;
   width: fit-content;
   padding: 15px;
   margin: 15px;
+  width: 375px;
   gap: 8px;
   
   
