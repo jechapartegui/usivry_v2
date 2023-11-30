@@ -9,6 +9,7 @@
     <button [class]="selected_menu == 'LIEU' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'LIEU'" i18n>Lieux</button>
     <button [class]="selected_menu == 'PARAMETRAGE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'" (click)="selected_menu = 'PARAMETRAGE'" i18n>Paramétrage</button>
 </div>
+<app-gerer-compte *ngIf="selected_menu == 'COMPTES'"></app-gerer-compte>
 <app-gerer-lieu *ngIf="selected_menu == 'LIEU'"></app-gerer-lieu>
 <app-gerer-saison *ngIf="selected_menu == 'SAISON'"></app-gerer-saison>
 

@@ -1,1 +1,23 @@
-<p>gerer-lieu works!</p>
+<ng-container *ngIf="lieux">
+    <table>
+        <thead>
+            <th i18n>ID</th>
+            <th i18n>Nom</th>
+            <th i18n>Adresse</th>
+            <th ></th>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of lieux">
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td><input i18n-placeholder placeholder="Nom du lieu" type="text" class="input_jecha"
+                            [value]="item.nom"></td>
+                    <td><textarea i18n-placeholder rows="2" placeholder="Adresse du lieu" class="input_jecha"
+                            [value]="item.adresse"></textarea></td>
+                            <td><button *ngIf="item.id==0" type="button" (click)="Save(item)" class="action_button button">Créer</button>
+                                <button *ngIf="item.id>0" type="button" (click)="Save(item)" class="action_button button">Sauvegarder</button></td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</ng-container>
