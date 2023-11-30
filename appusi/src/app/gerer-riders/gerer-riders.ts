@@ -14,6 +14,7 @@ import { CoursService } from 'src/services/cours.service';
 import { environment } from 'src/environments/environment.prod';
 import { Groupe } from 'src/class/groupe';
 import { GroupeService } from 'src/services/groupe.service';
+import { colonne_view, table_view } from 'src/class/table_view';
 
 
 @Component({
@@ -42,11 +43,14 @@ export class GererRidersComponent implements OnInit {
   new_mdp_confirm = "";
   current_groupe_id: number;
   groupe_dispo: Groupe[] = [];
+  table_view: table_view;
 
   liste_groupe: Groupe[] = [];
   constructor(private _riderser: RidersService, private grServ: GroupeService, private coursser: CoursService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.initTable();
+
     const errorService = ErrorService.instance;
     let o: notification;
     if (this.editRider) {
@@ -111,6 +115,99 @@ export class GererRidersComponent implements OnInit {
       errorService.emitChange(o);
     });
 
+  }
+
+  initTable() {
+    //faire un appel à un paramétrage existant ici
+    this.table_view = new table_view();
+    var c: colonne_view = new colonne_view();
+    c.name="id";
+    c.label = $localize`id`;
+    c.visible = false;
+    c.order = 1;
+    c.sort = "NO";
+    c.value_type = "NOMBRE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "prenom";
+    c.label = $localize`Prénom`;
+    c.visible = true;
+    c.order = 2;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "nom";
+    c.label = $localize`Nom`;
+    c.visible = true;
+    c.order = 3;
+    c.sort = "ASC";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "date_naissance";
+    c.label = $localize`Date de naissance`;
+    c.visible = false;
+    c.order = 4;
+    c.sort = "NO";
+    c.value_type = "DATE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "est_inscrit";
+    c.label = $localize`Inscrit`;
+    c.visible = true;
+    c.order = 5;
+    c.sort = "NO";
+    c.value_type = "BOOLEAN";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "sexe";
+    c.label = $localize`Genre`;
+    c.visible = true;
+    c.order = 6;
+    c.sort = "NO";
+    c.value_type = "SEXE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "email";
+    c.label = $localize`Mail`;
+    c.visible = true;
+    c.order = 7;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "telephone";
+    c.label = $localize`Téléphone`;
+    c.visible = true;
+    c.order = 8;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "personne_prevenir";
+    c.label = $localize`Personne à prévenir`;
+    c.visible = true;
+    c.order = 9;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "telephone_personne_prevenir";
+    c.label = $localize`Téléphone de la personne à prévenir`;
+    c.visible = true;
+    c.order = 10;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
+    c = new colonne_view();
+    c.name = "adresse";
+    c.label = $localize`Adresse`;
+    c.visible = true;
+    c.order = 11;
+    c.sort = "NO";
+    c.value_type = "TEXTE";
+    this.table_view.colonnes.push(c);
   }
 
   ModifMail() {
