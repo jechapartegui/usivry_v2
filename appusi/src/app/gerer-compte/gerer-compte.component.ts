@@ -33,10 +33,10 @@ export class GererCompteComponent implements OnInit {
     const errorService = ErrorService.instance;
     this.cptserv.UpdateMailRelance(compte_id).then((retour) => {
       if (retour) {
-        if (this.list.find(x => x.id == compte_id).relance_mail) {
-          this.list.find(x => x.id == compte_id).relance_mail = false;
+        if (this.list.find(x => x.id == compte_id).mail_active) {
+          this.list.find(x => x.id == compte_id).mail_active = false;
         } else {
-          this.list.find(x => x.id == compte_id).relance_mail = true;
+          this.list.find(x => x.id == compte_id).mail_active = true;
         }
         let o = errorService.OKMessage(this.action);
         errorService.emitChange(o);

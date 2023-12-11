@@ -6,7 +6,7 @@
     <tbody>
         <ng-container *ngFor="let item of list">
             <tr>
-                <td>{{item.mail}}</td>
+                <td>{{item.login}}</td>
                 <td><ng-container *ngFor="let rider of item.riders">
                         {{rider.nom}} {{rider.prenom}}
                     </ng-container></td>

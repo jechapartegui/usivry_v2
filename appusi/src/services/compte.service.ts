@@ -48,21 +48,7 @@ public Attacher(compte_id:number, rider_id:number): Promise<boolean> {
     });
 }
 public Detacher(rider_id:number): Promise<boolean> {
-  this.url = environment.usivry + 'usivry/compte_manage.php';
-  //  this.url = this.url + "login.php";
-  const body = {
-    command:"detacher",
-    rider_id:rider_id,
-  };
-
-  return this.global.POST(this.url, body)
-    .then((response: boolean) => {
-      return response;
-    })
-    .catch(error => {
-      // Gestion de l'erreur
-      return Promise.reject(error);
-    });
+return this.Attacher(0, rider_id);
 }
 public UpdateMailRelance(compte_id:number): Promise<boolean> {
   this.url = environment.usivry + 'usivry/compte_manage.php';
