@@ -31,17 +31,19 @@ export class GererRidersComponent implements OnInit {
   list_rider: Rider[] = [];
   list_rider_VM: Rider_VM[];
 
-  filter_nom:string="";
-  filter_active_nom:boolean=false;
+  filter_nom: string = "";
+  filter_active_nom: boolean = false;
   sort_nom: "NO" | "ASC" | "DESC" = "NO";
 
-  filter_prenom:string="";
-  filter_active_prenom:boolean=false;
+  filter_prenom: string = "";
+  filter_active_prenom: boolean = false;
   sort_prenom: "NO" | "ASC" | "DESC" = "NO";
 
 
-  filter_sexe:boolean=null;
-  filter_active_sexe:boolean=false;
+  sort_date_naissance: "NO" | "ASC" | "DESC" = "NO";
+
+  filter_sexe: boolean = null;
+  filter_active_sexe: boolean = false;
   sort_sexe: "NO" | "ASC" | "DESC" = "NO";
 
 
@@ -87,7 +89,7 @@ export class GererRidersComponent implements OnInit {
           this.list_saison = saisons;
           this._riderser.GetAllThisSeason().then((list) => {
             this.list_rider = list;
-            this.list_rider_VM = list.map( x => new Rider_VM(x));
+            this.list_rider_VM = list.map(x => new Rider_VM(x));
             this.situation = "LIST";
           }).catch((err: HttpErrorResponse) => {
             errorService.CreateError("récupérer les riders", err.statusText);
@@ -105,12 +107,12 @@ export class GererRidersComponent implements OnInit {
         this.router.navigate(['/menu-inscription']);
       });
 
-    } else if (this.situation == "MY_UPDATE"){
+    } else if (this.situation == "MY_UPDATE") {
       this.RiderToEdit();
     }
   }
 
-  RiderToEdit(){    
+  RiderToEdit() {
     var this_rider = RidersService.ListeRiders.find(x => x.id == this.id);
     this.editRider = new Rider_VM(this_rider);
   }
@@ -157,8 +159,87 @@ export class GererRidersComponent implements OnInit {
     this.MAJListeGroupe();
   }
 
-  Sort(sens:string, champ:string){
-    
+  Sort(sens: "NO" | "ASC" | "DESC", champ: string) {
+
+    switch (champ) {
+      case "nom":
+        this.sort_nom = sens;
+        if (this.sort_nom != "NO") {
+          this.list_rider_VM.sort((a, b) => {
+            const nomA = a.nom.toUpperCase(); // Ignore la casse lors du tri
+            const nomB = b.nom.toUpperCase();
+
+            let comparaison = 0;
+            if (nomA > nomB) {
+              comparaison = 1;
+            } else if (nomA < nomB) {
+              comparaison = -1;
+            }
+
+            return this.sort_nom === 'ASC' ? comparaison : -comparaison; // Inverse pour le tri descendant
+          });
+
+        }
+        break;
+      case "prenom":
+        this.sort_prenom = sens;
+        if (this.sort_prenom != "NO") {
+          this.list_rider_VM.sort((a, b) => {
+            const nomA = a.prenom.toUpperCase(); // Ignore la casse lors du tri
+            const nomB = b.prenom.toUpperCase();
+
+            let comparaison = 0;
+            if (nomA > nomB) {
+              comparaison = 1;
+            } else if (nomA < nomB) {
+              comparaison = -1;
+            }
+
+            return this.sort_prenom === 'ASC' ? comparaison : -comparaison; // Inverse pour le tri descendant
+          });
+        }
+        break;
+      case "date_naissance":
+        this.sort_date_naissance = sens;
+        if (this.sort_date_naissance != "NO") {
+          this.list_rider_VM.sort((a, b) => {
+            const nomA = a.date_naissance; // Ignore la casse lors du tri
+            const nomB = b.date_naissance;
+
+            let comparaison = 0;
+            if (nomA > nomB) {
+              comparaison = 1;
+            } else if (nomA < nomB) {
+              comparaison = -1;
+            }
+
+            return this.sort_date_naissance === 'ASC' ? comparaison : -comparaison; // Inverse pour le tri descendant
+          });
+        }
+        break;
+      case "sexe":
+        this.sort_sexe = sens;
+        if (this.sort_sexe != "NO") {
+          this.list_rider_VM.sort((a, b) => {
+
+            const actifA = a.sexe ? 1 : 0; // Convertit le booléen en 1 (true) ou 0 (false)
+            const actifB = b.sexe ? 1 : 0;
+
+            let comparaison = 0;
+            if (actifA > actifB) {
+              comparaison = 1;
+            } else if (actifA < actifB) {
+              comparaison = -1;
+            }
+
+            return this.sort_sexe === 'ASC' ? comparaison : -comparaison; // Inverse pour le tri descendant
+          });
+        }
+        break;
+
+    }
+
+
   }
 
 
@@ -184,15 +265,15 @@ export class GererRidersComponent implements OnInit {
 
   Reinit(thisl: Rider_VM) {
     let confirmation = window.confirm($localize`Cette action annulera l'ensemble des modifications sur cet adhérent ?`);
-    if(confirmation){
+    if (confirmation) {
       const rider_avant: Rider = this.list_rider.find(x => x.id === thisl.id);
       const index_rider_apres: number = this.list_rider_VM.findIndex(x => x.id === thisl.id);
-    
+
       if (rider_avant !== undefined && index_rider_apres !== -1) {
         this.list_rider_VM[index_rider_apres] = new Rider_VM(rider_avant);
       }
     }
-   
+
   }
 
   Delete(rider: Rider_VM): void {
@@ -334,7 +415,7 @@ export class GererRidersComponent implements OnInit {
         case "MY_UPDATE":
           this.router.navigate(['/menu-inscription']);
           break;
-         
+
       }
     }
 

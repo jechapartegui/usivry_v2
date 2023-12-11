@@ -120,7 +120,82 @@
                   type="text" [(ngModel)]="filter_nom">
               </div>
             </th>
-            <th i18n>Prénom</th>
+            <th class="filtered_th">
+              <div class="filtered_th_head">
+                <span i18n>Prénom</span>
+                <svg *ngIf="sort_prenom=== 'NO'" (click)="Sort('ASC', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M16.4583 10C16.4583 10.3452 16.1785 10.625 15.8333 10.625H4.16667C3.8215 10.625 3.54167 10.3452 3.54167 10C3.54167 9.65483 3.8215 9.375 4.16667 9.375H15.8333C16.1785 9.375 16.4583 9.65483 16.4583 10Z"
+                    fill="#AAAAAA" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M18.9583 5.83333C18.9583 6.17851 18.6785 6.45833 18.3333 6.45833H1.66667C1.3215 6.45833 1.04167 6.17851 1.04167 5.83333C1.04167 5.48816 1.3215 5.20833 1.66667 5.20833H18.3333C18.6785 5.20833 18.9583 5.48816 18.9583 5.83333ZM13.9583 14.1667C13.9583 14.5118 13.6785 14.7917 13.3333 14.7917H6.66667C6.3215 14.7917 6.04167 14.5118 6.04167 14.1667C6.04167 13.8215 6.3215 13.5417 6.66667 13.5417H13.3333C13.6785 13.5417 13.9583 13.8215 13.9583 14.1667Z"
+                    fill="#111111" />
+                </svg>
+                <svg *ngIf="sort_prenom === 'ASC'" (click)="Sort('DESC', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1670_39)">
+                    <path d="M11.25 13.1245L14.375 16.2495L17.4999 13.125" stroke="black" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M14.375 8.74945V16.2495" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 4.99953H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 14.9995H8.125" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1670_39">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <svg *ngIf="sort_prenom === 'DESC'" (click)="Sort('NO', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1670_46)">
+                    <path d="M11.25 6.87453L14.375 3.74953L17.4999 6.87398" stroke="black" stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path d="M14.375 11.2495V3.74953" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 4.99953H8.12492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 14.9995H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1670_46">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <svg *ngIf="!filter_active_prenom" (click)="filter_active_prenom = true" width="22" height="19"
+                  viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.625 0.875V2.20833L8.625 10.2083V18.2083H12.625V10.2083L20.625 2.20833V0.875H0.625Z"
+                    stroke="#010101" stroke-miterlimit="10" />
+                </svg>
+                <svg *ngIf="filter_active_prenom" (click)="filter_active_prenom = false; filter_prenom = ''" width="20"
+                  height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1669_25)">
+                    <path
+                      d="M11.2406 18.3781H7.30936C7.06249 18.3781 6.86249 18.1781 6.86249 17.9313V10.3937L0.681238 4.17812C0.596863 4.09375 0.549988 3.98125 0.549988 3.8625V0.446875C0.549988 0.2 0.749988 0 0.996863 0H17.4406C17.6875 0 17.8875 0.2 17.8875 0.446875V3.8625C17.8875 3.98125 17.8406 4.09375 17.7594 4.17812L11.4719 10.5469C11.2969 10.7219 11.0156 10.725 10.8375 10.55C10.6625 10.375 10.6594 10.0937 10.8344 9.91562L16.9969 3.675V0.896875H1.44686V3.67813L7.62499 9.89375C7.70936 9.97812 7.75624 10.0906 7.75624 10.2094V17.4812H10.7875L10.7281 13.7C10.725 13.4531 10.9219 13.25 11.1687 13.2469C11.1719 13.2469 11.1719 13.2469 11.175 13.2469C11.4187 13.2469 11.6187 13.4437 11.6219 13.6875L11.6875 17.925C11.6906 18.0438 11.6437 18.1594 11.5594 18.2469C11.475 18.3312 11.3625 18.3781 11.2406 18.3781Z"
+                      fill="black" />
+                    <path
+                      d="M19 20C18.8844 20 18.7719 19.9563 18.6844 19.8688L11.1125 12.2969C10.9375 12.1219 10.9375 11.8375 11.1125 11.6625C11.2875 11.4875 11.5719 11.4875 11.7469 11.6625L19.3188 19.2344C19.4938 19.4094 19.4938 19.6938 19.3188 19.8688C19.2313 19.9563 19.1156 20 19 20Z"
+                      fill="black" />
+                    <path
+                      d="M11.4281 20C11.3125 20 11.2 19.9563 11.1125 19.8688C10.9375 19.6938 10.9375 19.4094 11.1125 19.2344L18.6844 11.6625C18.8594 11.4875 19.1438 11.4875 19.3188 11.6625C19.4938 11.8375 19.4938 12.1219 19.3188 12.2969L11.7469 19.8688C11.6594 19.9563 11.5438 20 11.4281 20Z"
+                      fill="black" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1669_25">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+
+
+              </div>
+              <div *ngIf="filter_active_prenom" class="filtered_th_filter">
+                <input style="width: fit-content;" class="input_jecha" i18n-placeholder placeholder="Filtre sur le prénom"
+                  type="text" [(ngModel)]="filter_prenom">
+              </div>
+            </th>
             <th i18n>Date de naissance / Age</th>
             <th i18n>Sexe</th>
             <th i18n>Téléphone</th>
@@ -129,7 +204,7 @@
         </thead>
         <tbody>
           <ng-template ngFor let-item
-          [ngForOf]="list_rider_VM | filterName : filter_nom">
+          [ngForOf]="list_rider_VM | filterName : filter_nom | filterFirstname : filter_prenom">
 
 
           <tr >

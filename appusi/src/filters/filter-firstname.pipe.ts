@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filterName'
+  name: 'filterFirstname'
 })
-export class FilterNamePipe implements PipeTransform {
+export class FilterFirstnamePipe implements PipeTransform {
 
   transform(items: any[], filter: string): any {
     if (!items || !filter || filter.length == 0) {
@@ -11,7 +11,7 @@ export class FilterNamePipe implements PipeTransform {
     }
 
     function check(item) {
-      return item.nom.toLowerCase().includes(filter.toString().toLowerCase());
+      return item.prenom.toLowerCase().includes(filter.toString().toLowerCase());
     }
 
     return items.filter(check);

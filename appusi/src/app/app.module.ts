@@ -37,12 +37,13 @@ import { AddinfoComponent } from './addinfo/addinfo.component';
 import { GererLieuComponent } from './gerer-lieu/gerer-lieu.component';
 import { GererSaisonComponent } from './gerer-saison/gerer-saison.component';
 import { FilterNamePipe } from 'src/filters/filter-name.pipe';
+import { FilterFirstnamePipe } from 'src/filters/filter-firstname.pipe';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, FilterNamePipe
+    AppComponent, FilterNamePipe, FilterFirstnamePipe
   , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, AdministrationComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent, AddinfoComponent, GererLieuComponent, GererSaisonComponent],
   imports: [
     BrowserModule,HttpClientModule,
