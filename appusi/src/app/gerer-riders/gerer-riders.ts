@@ -1,6 +1,6 @@
 // import-riders.component.ts
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import * as XLSX from 'xlsx'; // Bibliothèque pour lire les fichiers Excel
 import { Rider, Rider_VM, ValidationRider } from '../../class/riders';
 import { StaticClass } from '../global';
@@ -22,6 +22,7 @@ import { GroupeService } from 'src/services/groupe.service';
   styleUrls: ['./gerer-riders.css']
 })
 export class GererRidersComponent implements OnInit {
+  @Output() existing_account:boolean;
   id: number = 0;
   situation: "MY_UPDATE" | "UPDATE" | "CREATE" | "ADD" | "LIST";
   selected_menu: "INFOPERSO" | "GROUPE" | "ADMIN" | "COMPTE" | "TOUS" = "INFOPERSO";
@@ -50,15 +51,11 @@ export class GererRidersComponent implements OnInit {
   editRider: Rider_VM | null = null;
   est_prof: boolean = false;
   est_admin: boolean = false;
-  mdp_actuel: string = "";
-  new_mdp: string = "";
+  afficher_menu_admin:boolean=false;
   list_saison: KeyValuePair[];
-  existing_account: boolean = false;
   inscription_saison_encours = false;
-  libelle_mail: string = "Saisir le nouvel email";
   season_id: number;
   search_text: string;
-  new_mdp_confirm = "";
   current_groupe_id: number;
   groupe_dispo: Groupe[] = [];
 
@@ -112,46 +109,21 @@ export class GererRidersComponent implements OnInit {
     }
   }
 
+  Edit(rider:Rider_VM){
+    this.situation = "UPDATE";
+    this.id = rider.id;
+    this.RiderToEdit();
+  }
+
   RiderToEdit() {
-    var this_rider = RidersService.ListeRiders.find(x => x.id == this.id);
+    var this_rider = this.list_rider.find(x => x.id == this.id);
     this.editRider = new Rider_VM(this_rider);
+  
   }
 
 
 
-  ModifMail() {
-    const errorService = ErrorService.instance;
-    let o: notification;
-    this._riderser.UpdateMail(this.editRider.compte, this.editRider.email, this.mdp_actuel).then((boooo) => {
-      if (boooo) {
-        o = errorService.OKMessage("Modification de l'émail");
-        errorService.emitChange(o);
-      } else {
-        o = errorService.CreateError("Modification de l'émail", "erreur inconnue");
-        errorService.emitChange(o);
-      }
-    }).catch((err: HttpErrorResponse) => {
-      o = errorService.CreateError("Modification de l'émail", err.statusText);
-      errorService.emitChange(o);
-    })
-  }
-
-  ModifMDP() {
-    const errorService = ErrorService.instance;
-    let o: notification;
-    this._riderser.UpdateMDP(this.editRider.email, this.mdp_actuel, this.new_mdp).then((boooo) => {
-      if (boooo) {
-        o = errorService.OKMessage("Modification du mot de passe");
-        errorService.emitChange(o);
-      } else {
-        o = errorService.CreateError("Modification du mot de passe", "erreur inconnue");
-        errorService.emitChange(o);
-      }
-    }).catch((err: HttpErrorResponse) => {
-      o = errorService.CreateError("Modification du mot de passe", err.statusText);
-      errorService.emitChange(o);
-    })
-  }
+  
 
   Creer() {
     this.editRider = new Rider_VM(new Rider());
@@ -244,13 +216,7 @@ export class GererRidersComponent implements OnInit {
 
 
 
-  ChangerExistingAccount() {
-    if (this.existing_account) {
-      this.libelle_mail = "Saisir le nouvel email";
-    } else {
-      this.libelle_mail = "Saisir le mail du compte";
-    }
-  }
+
 
   calculateAge(dateNaissance: Date): number {
     const today = new Date();
@@ -306,7 +272,6 @@ export class GererRidersComponent implements OnInit {
 
 
   Save(rider: Rider_VM) {
-
     const errorService = ErrorService.instance;
     let act = "Ajouter un rider";
     if (rider) {
@@ -348,9 +313,9 @@ export class GererRidersComponent implements OnInit {
             let rider_vm: Rider_VM = new Rider_VM(new_rider);
             this.list_rider_VM.push(rider_vm);
             if (this.situation = "CREATE") {
-              this._riderser.Login(this.editRider.email, this.mdp_actuel, false);
+          //    this._riderser.Login(this.editRider.email, this.mdp_actuel, false);
               this.router.navigate(['/menu-inscription']);
-            } else {
+            } else if (this.situation = "ADD") {
               this.situation = "UPDATE";
               this.editRider = rider_vm;
             }
@@ -382,7 +347,12 @@ export class GererRidersComponent implements OnInit {
               // Remplacer l'élément à l'index trouvé par la nouvelle valeur
               this.list_rider_VM[indexToUpdateVM] = rider;
             }
-            this.Retour();
+            if(this.situation == "LIST"){
+              rider.editing = false;
+            } else if(this.situation == "UPDATE"){
+              this.situation = "LIST";
+              this.editRider = null;
+            }
             let o = errorService.OKMessage(this.action);
             errorService.emitChange(o);
           } else {

@@ -38,13 +38,14 @@ import { GererLieuComponent } from './gerer-lieu/gerer-lieu.component';
 import { GererSaisonComponent } from './gerer-saison/gerer-saison.component';
 import { FilterNamePipe } from 'src/filters/filter-name.pipe';
 import { FilterFirstnamePipe } from 'src/filters/filter-firstname.pipe';
+import { GererCompteIndividuelComponent } from './gerer-compte-individuel/gerer-compte-individuel.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent, FilterNamePipe, FilterFirstnamePipe
-  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, AdministrationComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent, AddinfoComponent, GererLieuComponent, GererSaisonComponent],
+  , GererRidersComponent, DefautComponent, LoginComponent, MenuInscriptionComponent, MaSeanceComponent, GererCoursComponent, GererSeanceComponent, AdministrationComponent, MaSeanceComponent, NotifJechaComponent, PopInEssai, GererGroupeComponent, SimulationMailComponent, GererCompteComponent, AddinfoComponent, GererLieuComponent, GererSaisonComponent, GererCompteIndividuelComponent],
   imports: [
     BrowserModule,HttpClientModule,
     AppRoutingModule, FormsModule, NoopAnimationsModule,

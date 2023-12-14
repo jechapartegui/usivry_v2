@@ -24,7 +24,7 @@ export class Rider {
   public telephone: string = "";
   public email: string = "";
   public date_naissance: Date = new Date()
-  public sexe: boolean;
+  public sexe: boolean = false;
   public groupes: Groupe[] = [];
   public adresse: string;
   public mot_de_passe: string = 'ivry';

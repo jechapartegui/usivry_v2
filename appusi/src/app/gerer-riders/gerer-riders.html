@@ -1,6 +1,26 @@
 <div class="container">
   <div class="row" *ngIf="situation == 'LIST' && est_admin">
+    <div class="button_group">
+      <button type="button" class="button outline_action_button" (click)="Creer()">
+        <svg width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#plus" style="fill:green"></use>
+        </svg>
+        Créer
+      </button>
+      <button type="button" (click)="afficher_menu_admin ? afficher_menu_admin = false : afficher_menu_admin = true"
+        class="button outline_login_button">
+        <svg *ngIf="!afficher_menu_admin" width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:blue"></use>
+        </svg>
+        <svg *ngIf="afficher_menu_admin" width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:blue"></use>
+        </svg>
+        Vue administrateur
+      </button>
+    </div>
+  </div>
 
+  <div class="row" *ngIf="afficher_menu_admin">
     <div class="col-12">
       <div class="card mb-3">
         <div class="card-header text-bg-ivry ">Menu administrateur</div>
@@ -11,9 +31,6 @@
               <input class="form-control col-6" type="file" id="formFile" (change)="onFileChange($event)">
               <button type="button col-3" class="btn btn-outline-success" (click)="importData()">Simuler
                 l'import</button>
-            </div>
-            <div class="col-4">
-              <button type="button" class="btn btn-outline-success" (click)="Creer()">Créer</button>
             </div>
             <div class="col-4">
               <label for="seasons" class="form-label">Choisir une saison</label>
@@ -47,73 +64,23 @@
             <th class="filtered_th">
               <div class="filtered_th_head">
                 <span i18n>Nom</span>
-                <svg *ngIf="sort_nom === 'NO'" (click)="Sort('ASC', 'nom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M16.4583 10C16.4583 10.3452 16.1785 10.625 15.8333 10.625H4.16667C3.8215 10.625 3.54167 10.3452 3.54167 10C3.54167 9.65483 3.8215 9.375 4.16667 9.375H15.8333C16.1785 9.375 16.4583 9.65483 16.4583 10Z"
-                    fill="#AAAAAA" />
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M18.9583 5.83333C18.9583 6.17851 18.6785 6.45833 18.3333 6.45833H1.66667C1.3215 6.45833 1.04167 6.17851 1.04167 5.83333C1.04167 5.48816 1.3215 5.20833 1.66667 5.20833H18.3333C18.6785 5.20833 18.9583 5.48816 18.9583 5.83333ZM13.9583 14.1667C13.9583 14.5118 13.6785 14.7917 13.3333 14.7917H6.66667C6.3215 14.7917 6.04167 14.5118 6.04167 14.1667C6.04167 13.8215 6.3215 13.5417 6.66667 13.5417H13.3333C13.6785 13.5417 13.9583 13.8215 13.9583 14.1667Z"
-                    fill="#111111" />
+                <svg class="svg" *ngIf="sort_nom === 'NO'" (click)="Sort('ASC', 'nom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="sort_nom === 'ASC'" (click)="Sort('DESC', 'nom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1670_39)">
-                    <path d="M11.25 13.1245L14.375 16.2495L17.4999 13.125" stroke="black" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path d="M14.375 8.74945V16.2495" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 4.99953H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 14.9995H8.125" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1670_39">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
+                <svg class="svg" *ngIf="sort_nom === 'ASC'" (click)="Sort('DESC', 'nom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="sort_nom === 'DESC'" (click)="Sort('NO', 'nom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1670_46)">
-                    <path d="M11.25 6.87453L14.375 3.74953L17.4999 6.87398" stroke="black" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path d="M14.375 11.2495V3.74953" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 4.99953H8.12492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 14.9995H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1670_46">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                <svg *ngIf="!filter_active_nom" (click)="filter_active_nom = true" width="22" height="19"
-                  viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0.625 0.875V2.20833L8.625 10.2083V18.2083H12.625V10.2083L20.625 2.20833V0.875H0.625Z"
-                    stroke="#010101" stroke-miterlimit="10" />
-                </svg>
-                <svg *ngIf="filter_active_nom" (click)="filter_active_nom = false; filter_nom = ''" width="20"
-                  height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1669_25)">
-                    <path
-                      d="M11.2406 18.3781H7.30936C7.06249 18.3781 6.86249 18.1781 6.86249 17.9313V10.3937L0.681238 4.17812C0.596863 4.09375 0.549988 3.98125 0.549988 3.8625V0.446875C0.549988 0.2 0.749988 0 0.996863 0H17.4406C17.6875 0 17.8875 0.2 17.8875 0.446875V3.8625C17.8875 3.98125 17.8406 4.09375 17.7594 4.17812L11.4719 10.5469C11.2969 10.7219 11.0156 10.725 10.8375 10.55C10.6625 10.375 10.6594 10.0937 10.8344 9.91562L16.9969 3.675V0.896875H1.44686V3.67813L7.62499 9.89375C7.70936 9.97812 7.75624 10.0906 7.75624 10.2094V17.4812H10.7875L10.7281 13.7C10.725 13.4531 10.9219 13.25 11.1687 13.2469C11.1719 13.2469 11.1719 13.2469 11.175 13.2469C11.4187 13.2469 11.6187 13.4437 11.6219 13.6875L11.6875 17.925C11.6906 18.0438 11.6437 18.1594 11.5594 18.2469C11.475 18.3312 11.3625 18.3781 11.2406 18.3781Z"
-                      fill="black" />
-                    <path
-                      d="M19 20C18.8844 20 18.7719 19.9563 18.6844 19.8688L11.1125 12.2969C10.9375 12.1219 10.9375 11.8375 11.1125 11.6625C11.2875 11.4875 11.5719 11.4875 11.7469 11.6625L19.3188 19.2344C19.4938 19.4094 19.4938 19.6938 19.3188 19.8688C19.2313 19.9563 19.1156 20 19 20Z"
-                      fill="black" />
-                    <path
-                      d="M11.4281 20C11.3125 20 11.2 19.9563 11.1125 19.8688C10.9375 19.6938 10.9375 19.4094 11.1125 19.2344L18.6844 11.6625C18.8594 11.4875 19.1438 11.4875 19.3188 11.6625C19.4938 11.8375 19.4938 12.1219 19.3188 12.2969L11.7469 19.8688C11.6594 19.9563 11.5438 20 11.4281 20Z"
-                      fill="black" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1669_25">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
+                <svg class="svg" *ngIf="sort_nom === 'DESC'" (click)="Sort('NO', 'nom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
                 </svg>
 
-
+                <svg class="svg" *ngIf="!filter_active_nom" (click)="filter_active_nom = true" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#filter" style="fill:black"></use>
+                </svg>
+                <svg class="svg" *ngIf="filter_active_nom" (click)="filter_active_nom = false; filter_nom = ''"
+                  width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#filter_off" style="fill:black"></use>
+                </svg>
               </div>
               <div *ngIf="filter_active_nom" class="filtered_th_filter">
                 <input style="width: fit-content;" class="input_jecha" i18n-placeholder placeholder="Filtre sur le nom"
@@ -123,80 +90,49 @@
             <th class="filtered_th">
               <div class="filtered_th_head">
                 <span i18n>Prénom</span>
-                <svg *ngIf="sort_prenom=== 'NO'" (click)="Sort('ASC', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M16.4583 10C16.4583 10.3452 16.1785 10.625 15.8333 10.625H4.16667C3.8215 10.625 3.54167 10.3452 3.54167 10C3.54167 9.65483 3.8215 9.375 4.16667 9.375H15.8333C16.1785 9.375 16.4583 9.65483 16.4583 10Z"
-                    fill="#AAAAAA" />
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M18.9583 5.83333C18.9583 6.17851 18.6785 6.45833 18.3333 6.45833H1.66667C1.3215 6.45833 1.04167 6.17851 1.04167 5.83333C1.04167 5.48816 1.3215 5.20833 1.66667 5.20833H18.3333C18.6785 5.20833 18.9583 5.48816 18.9583 5.83333ZM13.9583 14.1667C13.9583 14.5118 13.6785 14.7917 13.3333 14.7917H6.66667C6.3215 14.7917 6.04167 14.5118 6.04167 14.1667C6.04167 13.8215 6.3215 13.5417 6.66667 13.5417H13.3333C13.6785 13.5417 13.9583 13.8215 13.9583 14.1667Z"
-                    fill="#111111" />
+                <svg class="svg" *ngIf="sort_prenom === 'NO'" (click)="Sort('ASC', 'prenom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="sort_prenom === 'ASC'" (click)="Sort('DESC', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1670_39)">
-                    <path d="M11.25 13.1245L14.375 16.2495L17.4999 13.125" stroke="black" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path d="M14.375 8.74945V16.2495" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 4.99953H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 14.9995H8.125" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1670_39">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
+                <svg class="svg" *ngIf="sort_prenom === 'ASC'" (click)="Sort('DESC', 'prenom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="sort_prenom === 'DESC'" (click)="Sort('NO', 'prenom')" width="20" height="20" viewBox="0 0 20 20"
-                  fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1670_46)">
-                    <path d="M11.25 6.87453L14.375 3.74953L17.4999 6.87398" stroke="black" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                    <path d="M14.375 11.2495V3.74953" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 9.99953H9.37492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 4.99953H8.12492" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M3.75 14.9995H14.3749" stroke="black" stroke-linecap="round" stroke-linejoin="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1670_46">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
+                <svg class="svg" *ngIf="sort_prenom === 'DESC'" (click)="Sort('NO', 'prenom')" width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="!filter_active_prenom" (click)="filter_active_prenom = true" width="22" height="19"
-                  viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M0.625 0.875V2.20833L8.625 10.2083V18.2083H12.625V10.2083L20.625 2.20833V0.875H0.625Z"
-                    stroke="#010101" stroke-miterlimit="10" />
+
+                <svg class="svg" *ngIf="!filter_active_prenom" (click)="filter_active_prenom = true" width="20"
+                  height="20">
+                  <use xlink:href=".\assets\liste.svg#filter" style="fill:black"></use>
                 </svg>
-                <svg *ngIf="filter_active_prenom" (click)="filter_active_prenom = false; filter_prenom = ''" width="20"
-                  height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_1669_25)">
-                    <path
-                      d="M11.2406 18.3781H7.30936C7.06249 18.3781 6.86249 18.1781 6.86249 17.9313V10.3937L0.681238 4.17812C0.596863 4.09375 0.549988 3.98125 0.549988 3.8625V0.446875C0.549988 0.2 0.749988 0 0.996863 0H17.4406C17.6875 0 17.8875 0.2 17.8875 0.446875V3.8625C17.8875 3.98125 17.8406 4.09375 17.7594 4.17812L11.4719 10.5469C11.2969 10.7219 11.0156 10.725 10.8375 10.55C10.6625 10.375 10.6594 10.0937 10.8344 9.91562L16.9969 3.675V0.896875H1.44686V3.67813L7.62499 9.89375C7.70936 9.97812 7.75624 10.0906 7.75624 10.2094V17.4812H10.7875L10.7281 13.7C10.725 13.4531 10.9219 13.25 11.1687 13.2469C11.1719 13.2469 11.1719 13.2469 11.175 13.2469C11.4187 13.2469 11.6187 13.4437 11.6219 13.6875L11.6875 17.925C11.6906 18.0438 11.6437 18.1594 11.5594 18.2469C11.475 18.3312 11.3625 18.3781 11.2406 18.3781Z"
-                      fill="black" />
-                    <path
-                      d="M19 20C18.8844 20 18.7719 19.9563 18.6844 19.8688L11.1125 12.2969C10.9375 12.1219 10.9375 11.8375 11.1125 11.6625C11.2875 11.4875 11.5719 11.4875 11.7469 11.6625L19.3188 19.2344C19.4938 19.4094 19.4938 19.6938 19.3188 19.8688C19.2313 19.9563 19.1156 20 19 20Z"
-                      fill="black" />
-                    <path
-                      d="M11.4281 20C11.3125 20 11.2 19.9563 11.1125 19.8688C10.9375 19.6938 10.9375 19.4094 11.1125 19.2344L18.6844 11.6625C18.8594 11.4875 19.1438 11.4875 19.3188 11.6625C19.4938 11.8375 19.4938 12.1219 19.3188 12.2969L11.7469 19.8688C11.6594 19.9563 11.5438 20 11.4281 20Z"
-                      fill="black" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1669_25">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
+                <svg class="svg" *ngIf="filter_active_prenom" (click)="filter_active_prenom = false; filter_prenom = ''"
+                  width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#filter_off" style="fill:black"></use>
                 </svg>
 
 
               </div>
               <div *ngIf="filter_active_prenom" class="filtered_th_filter">
-                <input style="width: fit-content;" class="input_jecha" i18n-placeholder placeholder="Filtre sur le prénom"
-                  type="text" [(ngModel)]="filter_prenom">
+                <input style="width: fit-content;" class="input_jecha" i18n-placeholder
+                  placeholder="Filtre sur le prénom" type="text" [(ngModel)]="filter_prenom">
               </div>
             </th>
-            <th i18n>Date de naissance / Age</th>
+            <th class="filtered_th">
+              <div class="filtered_th_head">
+                <span i18n>Date de naissance / Age </span>
+                <svg class="svg" *ngIf="sort_date_naissance === 'NO'" (click)="Sort('ASC', 'date_naissance')" width="20"
+                  height="20">
+                  <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
+                </svg>
+                <svg class="svg" *ngIf="sort_date_naissance === 'ASC'" (click)="Sort('DESC', 'date_naissance')"
+                  width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
+                </svg>
+                <svg class="svg" *ngIf="sort_date_naissance === 'DESC'" (click)="Sort('NO', 'date_naissance')"
+                  width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
+                </svg>
+              </div>
+            </th>
             <th i18n>Sexe</th>
             <th i18n>Téléphone</th>
             <th i18n></th>
@@ -204,108 +140,134 @@
         </thead>
         <tbody>
           <ng-template ngFor let-item
-          [ngForOf]="list_rider_VM | filterName : filter_nom | filterFirstname : filter_prenom">
+            [ngForOf]="list_rider_VM | filterName : filter_nom | filterFirstname : filter_prenom">
 
 
-          <tr >
-            <td>
-              <div (click)="item.editing = true" *ngIf="!item.editing">
-                <span style="cursor: pointer;">{{item.nom}}</span>
-              </div>
-              <div *ngIf="item.editing">
-                <input style="width: fit-content;" [class]="item.valid.nom ? 'input_jecha' : 'input_jecha input_error'"
-                  i18n-placeholder placeholder="Nom de l'adhérent" type="text" [(ngModel)]="item.nom">
-                <small *ngIf="!item.valid.nom" class="small_jecha" i18n>Le nom doit faire au moins 3
-                  caractères</small>
+            <tr>
+              <td>
+                <div (click)="item.editing = true" *ngIf="!item.editing">
+                  <span style="cursor: pointer;">{{item.nom}}</span>
+                </div>
+                <div *ngIf="item.editing">
+                  <input style="width: fit-content;"
+                    [class]="item.valid.nom ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                    placeholder="Nom de l'adhérent" type="text" [(ngModel)]="item.nom">
+                  <small *ngIf="!item.valid.nom" class="small_jecha" i18n>Le nom doit faire au moins 3
+                    caractères</small>
 
-              </div>
-            </td>
-            <td>
-              <div (click)="item.editing = true" *ngIf="!item.editing">
-                <span style="cursor: pointer;">{{item.prenom}}</span>
-              </div>
-              <div *ngIf="item.editing">
-                <input style="width: fit-content;"
-                  [class]="item.valid.prenom ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
-                  placeholder="Prénom de l'adhérent" type="text" [(ngModel)]="item.prenom">
-                <small *ngIf="!item.valid.prenom" class="small_jecha" i18n>Le prenom doit faire au moins 3
-                  caractères</small>
+                </div>
+              </td>
+              <td>
+                <div (click)="item.editing = true" *ngIf="!item.editing">
+                  <span style="cursor: pointer;">{{item.prenom}}</span>
+                </div>
+                <div *ngIf="item.editing">
+                  <input style="width: fit-content;"
+                    [class]="item.valid.prenom ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                    placeholder="Prénom de l'adhérent" type="text" [(ngModel)]="item.prenom">
+                  <small *ngIf="!item.valid.prenom" class="small_jecha" i18n>Le prenom doit faire au moins 3
+                    caractères</small>
 
-              </div>
-            </td>
-            <td>
-              <div (click)="item.editing = true" *ngIf="!item.editing">
-                <span style="cursor: pointer;"> {{item.date_naissance | date: 'dd/MM/yyyy' }} - {{
-                  calculateAge(item.date_naissance)}} <span i18n>ans</span></span>
-              </div>
-              <div *ngIf="item.editing">
-                <input style="width: fit-content;"
-                  [class]="item.valid.date_naissance ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
-                  placeholder="Date de naissance de l'adhérent" type="date" [(ngModel)]="item.date_naissance">
-                <small *ngIf="!item.valid.date_naissance" class="small_jecha" i18n>La date de naissance doit être
-                  saisie</small>
+                </div>
+              </td>
+              <td>
+                <div (click)="item.editing = true" *ngIf="!item.editing">
+                  <span style="cursor: pointer;"> {{item.date_naissance | date: 'dd/MM/yyyy' }} - {{
+                    calculateAge(item.date_naissance)}} <span i18n>ans</span></span>
+                </div>
+                <div *ngIf="item.editing">
+                  <input style="width: fit-content;"
+                    [class]="item.valid.date_naissance ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                    placeholder="Date de naissance de l'adhérent" type="date" [(ngModel)]="item.date_naissance">
+                  <small *ngIf="!item.valid.date_naissance" class="small_jecha" i18n>La date de naissance doit être
+                    saisie</small>
 
-              </div>
-            </td>
-            <td>{{ item.sexe }}</td>
-            <td>
-              <div (click)="item.editing = true" *ngIf="!item.editing">
-                <span style="cursor: pointer;">{{item.telephone}}</span>
-              </div>
-              <div *ngIf="item.editing">
-                <input style="width: fit-content;"
-                  [class]="item.valid.telephone ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
-                  placeholder="Téléphone de l'adhérent" type="text" [(ngModel)]="item.telephone">
-                <small *ngIf="!item.valid.telephone" class="small_jecha" i18n>Le téléphone doit faire au moins 10
-                  caractères</small>
-
-              </div>
-            </td>
-            <td>
-              <div *ngIf="item.id>0 && item.editing" class="button_group">
-                <button i18n-title title="Recharger" class="outline_quit_button button" type="button"
-                  (click)="Reinit(item)" i18n>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M15.3972 0.00312185H10.1361V1.84553H15.3972C17.2097 1.84553 18.6854 3.91272 18.6854 6.45156C18.6854 8.99041 17.2097 11.0576 15.3972 11.0576H2.51679L6.65463 5.26137L5.72605 3.95694L-0.00063026 11.9788L5.72605 20.0007L6.65595 18.6981L2.51679 12.9H15.3972C17.9357 12.9 20.0007 10.0074 20.0007 6.45156C20.0007 2.89571 17.9357 0.00312185 15.3972 0.00312185Z"
-                      fill="red" />
+                </div>
+              </td>
+              <td>
+                <div (click)="item.editing = true" *ngIf="!item.editing">
+                  <svg *ngIf="item.sexe" class="svg" style="cursor: pointer;" width="20" height="20">
+                    <use xlink:href=".\assets\liste.svg#homme" style="fill:black"></use>
                   </svg>
-                </button>
-                <button i18n-title title="Sauvegarder"
-                  [class]="item.valid.control ? 'outline_action_button button' : 'disabled_button'"
-                  [disabled]="!item.valid.control" type="button" (click)="Save(item)"><svg width="20" height="20"
-                    viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M2.99656 0.00317383C2.20353 0.00713837 1.44406 0.323637 0.882952 0.884041C0.32184 1.44445 0.00435485 2.20351 -0.000610352 2.99653V17.0036C-0.000610352 18.6476 1.35246 20.0007 2.99656 20.0007H17.0035C17.7972 19.9967 18.5572 19.6797 19.1184 19.1185C19.6796 18.5572 19.9967 17.7972 20.0006 17.0036V4.99979C20.0029 4.73422 19.8996 4.47857 19.7134 4.28917L15.7071 0.286685C15.584 0.165562 15.4317 0.0782669 15.2649 0.0333934L2.99656 0.00317383ZM2.99656 1.99882H4.00191V6.99913C4.00191 7.54716 4.44789 7.99315 4.9997 7.99315H15.0003C15.264 7.99216 15.5167 7.88719 15.7035 7.7011C15.8903 7.51501 15.9961 7.2628 15.9981 6.99913V3.40853L18.0013 5.41168V17.0036C18.0049 17.1356 17.9816 17.2669 17.9328 17.3896C17.8839 17.5123 17.8105 17.6238 17.7172 17.7172C17.6238 17.8106 17.5123 17.8839 17.3896 17.9327C17.2669 17.9816 17.1355 18.0049 17.0035 18.0013H2.99656C2.86484 18.0044 2.73387 17.9807 2.61161 17.9316C2.48935 17.8825 2.37835 17.8091 2.28537 17.7158C2.19238 17.6225 2.11936 17.5111 2.07074 17.3887C2.02212 17.2662 1.99891 17.1352 2.00254 17.0036V2.99653C2.00254 2.4296 2.42585 1.99882 2.99656 1.99882ZM6.00128 1.99882H13.9988V6.00511H6.00128V1.99882ZM4.9997 9.99629C4.86818 9.99679 4.73803 10.0231 4.6167 10.0739C4.49538 10.1247 4.38524 10.1989 4.29259 10.2923C4.19994 10.3856 4.12658 10.4964 4.0767 10.6181C4.02683 10.7398 4.00141 10.8701 4.00191 11.0016V15.0004C4.00191 15.5522 4.44789 15.9943 4.9997 15.9981H15.0003C15.2647 15.9971 15.5179 15.8917 15.7048 15.7048C15.8917 15.5179 15.9971 15.2647 15.9981 15.0004V11.0016C15.9986 10.8701 15.9732 10.7398 15.9233 10.6181C15.8735 10.4964 15.8001 10.3856 15.7075 10.2923C15.6148 10.1989 15.5047 10.1247 15.3833 10.0739C15.262 10.0231 15.1319 9.99679 15.0003 9.99629H4.9997ZM6.00128 11.9994H13.9988V13.9988H6.00128V11.9994Z"
-                      fill="green" />
+                  <svg *ngIf="!item.sexe" class="svg" style="cursor: pointer;" width="20" height="20">
+                    <use xlink:href=".\assets\liste.svg#femme" style="fill:black"></use>
                   </svg>
-                </button>
-              </div>
-              <div *ngIf="item.id>0 && !item.editing" class="button_group">
-                <button i18n-title title="Supprimer" class="outline_quit_button button" type="button"
-                  (click)="Delete(item)" i18n><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M14.7498 7.46597L14.4277 17.2159C14.4002 18.0509 14.0485 18.8424 13.4471 19.4223C12.8456 20.0022 12.0419 20.325 11.2064 20.322H5.08603C4.2511 20.325 3.44783 20.0027 2.84649 19.4235C2.24516 18.8442 1.89304 18.0536 1.86478 17.2191L1.54265 7.46597C1.5356 7.25239 1.61369 7.04475 1.75973 6.88874C1.90577 6.73273 2.10781 6.64113 2.32139 6.63408C2.53497 6.62703 2.74261 6.70512 2.89862 6.85116C3.05463 6.9972 3.14623 7.19924 3.15328 7.41282L3.47541 17.1652C3.49145 17.5815 3.66819 17.9754 3.96852 18.2642C4.26885 18.5529 4.6694 18.7141 5.08603 18.7138H11.2064C11.6236 18.7141 12.0246 18.5525 12.325 18.263C12.6254 17.9736 12.8018 17.5788 12.817 17.162L13.1392 7.41282C13.1462 7.19924 13.2378 6.9972 13.3938 6.85116C13.5498 6.70512 13.7575 6.62703 13.9711 6.63408C14.1846 6.64113 14.3867 6.73273 14.5327 6.88874C14.6788 7.04475 14.7568 7.25239 14.7498 7.46597ZM15.8152 4.22136C15.8152 4.43494 15.7304 4.63978 15.5794 4.7908C15.4283 4.94183 15.2235 5.02667 15.0099 5.02667H1.28334C1.06976 5.02667 0.864924 4.94183 0.713898 4.7908C0.562872 4.63978 0.478027 4.43494 0.478027 4.22136C0.478027 4.00778 0.562872 3.80294 0.713898 3.65192C0.864924 3.50089 1.06976 3.41605 1.28334 3.41605H3.77981C4.03498 3.41673 4.28127 3.32246 4.47076 3.15158C4.66025 2.98069 4.77938 2.74542 4.80498 2.49155C4.86441 1.896 5.14342 1.34392 5.58766 0.942852C6.0319 0.541787 6.60954 0.320473 7.20804 0.32203H9.08442C9.68291 0.320473 10.2606 0.541787 10.7048 0.942852C11.149 1.34392 11.428 1.896 11.4875 2.49155C11.5131 2.74542 11.6322 2.98069 11.8217 3.15158C12.0112 3.32246 12.2575 3.41673 12.5126 3.41605H15.0091C15.2227 3.41605 15.4275 3.50089 15.5786 3.65192C15.7296 3.80294 15.8144 4.00778 15.8144 4.22136H15.8152ZM6.203 3.41605H10.0911C9.98524 3.17424 9.91602 2.91803 9.8857 2.65583C9.86575 2.45733 9.77283 2.27329 9.62494 2.13939C9.47705 2.00549 9.28473 1.93124 9.08522 1.93105H7.20884C7.00934 1.93124 6.81701 2.00549 6.66912 2.13939C6.52123 2.27329 6.42831 2.45733 6.40836 2.65583C6.37778 2.91807 6.3091 3.17429 6.203 3.41605ZM7.01395 15.6174V8.76011C7.01395 8.54653 6.92911 8.34169 6.77808 8.19067C6.62706 8.03964 6.42222 7.9548 6.20864 7.9548C5.99506 7.9548 5.79022 8.03964 5.6392 8.19067C5.48817 8.34169 5.40333 8.54653 5.40333 8.76011V15.6206C5.40333 15.8342 5.48817 16.039 5.6392 16.19C5.79022 16.341 5.99506 16.4259 6.20864 16.4259C6.42222 16.4259 6.62706 16.341 6.77808 16.19C6.92911 16.039 7.01395 15.8342 7.01395 15.6206V15.6174ZM10.8907 15.6174V8.76011C10.8907 8.54653 10.8059 8.34169 10.6549 8.19067C10.5038 8.03964 10.299 7.9548 10.0854 7.9548C9.87184 7.9548 9.66701 8.03964 9.51598 8.19067C9.36495 8.34169 9.28011 8.54653 9.28011 8.76011V15.6206C9.28011 15.8342 9.36495 16.039 9.51598 16.19C9.66701 16.341 9.87184 16.4259 10.0854 16.4259C10.299 16.4259 10.5038 16.341 10.6549 16.19C10.8059 16.039 10.8907 15.8342 10.8907 15.6206V15.6174Z"
-                      fill="red" />
-                  </svg>
+                </div>
+                <div *ngIf="item.editing">
+                  <div class="button_group">
+                    <button type="button"
+                      [class]="item.sexe == true ? 'button active_radio_bouton' : 'button inactive_radio_bouton'"
+                      (click)="item.sexe == true ? item.sexe = false : item.sexe = true">
+                      <svg class="svg" style="cursor: pointer;" width="20" height="20">
+                        <use xlink:href=".\assets\liste.svg#homme" style="fill:black"></use>
+                      </svg></button>
+                    <button type="button"
+                      [class]="item.sexe == false ? 'button active_radio_bouton' : 'button inactive_radio_bouton'"
+                      (click)="item.sexe == true ? item.sexe = false : item.sexe = true">
+                      <svg class="svg" style="cursor: pointer;" width="20" height="20">
+                        <use xlink:href=".\assets\liste.svg#femme" style="fill:black"></use>
+                      </svg></button>
+                  </div>
+                  </div>
+              </td>
+              <td>
+                <div (click)="item.editing = true" *ngIf="!item.editing">
+                  <span style="cursor: pointer;">{{item.telephone}}</span>
+                </div>
+                <div *ngIf="item.editing">
+                  <input style="width: fit-content;"
+                    [class]="item.valid.telephone ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                    placeholder="Téléphone de l'adhérent" type="text" [(ngModel)]="item.telephone">
+                  <small *ngIf="!item.valid.telephone" class="small_jecha" i18n>Le téléphone doit faire au moins 10
+                    caractères</small>
 
-                </button>
-                <button i18n-title title="Editer" class="outline_login_button button" type="button"
-                  (click)="item.editing = true"><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M2.7147 20.3221H12.3005C12.8946 20.3199 13.4638 20.0104 13.8831 19.4616C14.3024 18.9127 14.5376 18.1694 14.5371 17.3946V11.1138C14.5371 10.8928 14.4698 10.6808 14.35 10.5245C14.2301 10.3682 14.0676 10.2804 13.8981 10.2804C13.7286 10.2804 13.5661 10.3682 13.4462 10.5245C13.3264 10.6808 13.259 10.8928 13.259 11.1138V17.3946C13.2599 17.7275 13.1594 18.0472 12.9797 18.2835C12.8 18.5199 12.5557 18.6537 12.3005 18.6554H2.7147C2.45945 18.6537 2.21516 18.5199 2.03545 18.2835C1.85573 18.0472 1.75528 17.7275 1.75613 17.3946V4.91627C1.75528 4.58341 1.85573 4.26371 2.03545 4.02733C2.21516 3.79095 2.45945 3.6572 2.7147 3.65544H7.50758C7.67707 3.65544 7.83961 3.56764 7.95946 3.41136C8.0793 3.25508 8.14663 3.04312 8.14663 2.8221C8.14663 2.60109 8.0793 2.38913 7.95946 2.23285C7.83961 2.07657 7.67707 1.98877 7.50758 1.98877H2.7147C2.12058 1.99098 1.5514 2.30046 1.13207 2.84931C0.712739 3.39815 0.477518 4.14152 0.478028 4.91627V17.3946C0.477518 18.1694 0.712739 18.9127 1.13207 19.4616C1.5514 20.0104 2.12058 20.3199 2.7147 20.3221Z"
-                      fill="blue" />
-                    <path
-                      d="M6.52026 9.10869L6.01605 12.1204C5.99323 12.257 5.99713 12.3989 6.02739 12.533C6.05766 12.6671 6.11331 12.7891 6.18923 12.8879C6.2662 12.9841 6.35982 13.0547 6.46217 13.0937C6.56451 13.1328 6.67256 13.139 6.77716 13.112L9.08157 12.4529C9.20123 12.4186 9.31081 12.3402 9.39726 12.227L15.2216 4.63202C15.3996 4.39987 15.5409 4.12425 15.6372 3.82091C15.7336 3.51757 15.7832 3.19244 15.7832 2.8641C15.7832 2.53576 15.7336 2.21064 15.6372 1.9073C15.5409 1.60395 15.3996 1.32834 15.2216 1.09619C14.8565 0.6413 14.3711 0.387451 13.8661 0.387451C13.3612 0.387451 12.8758 0.6413 12.5107 1.09619L6.69536 8.69869C6.60808 8.81066 6.5473 8.95297 6.52026 9.10869ZM13.4143 2.27535C13.5359 2.12347 13.6978 2.03868 13.8661 2.03868C14.0345 2.03868 14.1964 2.12347 14.318 2.27535C14.4362 2.43254 14.5024 2.64393 14.5024 2.8641C14.5024 3.08427 14.4362 3.29566 14.318 3.45285L13.8661 4.04202L12.9625 2.86369L13.4143 2.27535ZM7.72679 9.70369L12.0557 4.04452L12.9504 5.21702L8.61954 10.8779L7.47245 11.2062L7.72679 9.70369Z"
-                      fill="blue" />
-                  </svg>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="item.id>0 && item.editing" class="button_group">
+                  <button i18n-title title="Recharger" class="outline_quit_button button" type="button"
+                    (click)="Reinit(item)" i18n>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M15.3972 0.00312185H10.1361V1.84553H15.3972C17.2097 1.84553 18.6854 3.91272 18.6854 6.45156C18.6854 8.99041 17.2097 11.0576 15.3972 11.0576H2.51679L6.65463 5.26137L5.72605 3.95694L-0.00063026 11.9788L5.72605 20.0007L6.65595 18.6981L2.51679 12.9H15.3972C17.9357 12.9 20.0007 10.0074 20.0007 6.45156C20.0007 2.89571 17.9357 0.00312185 15.3972 0.00312185Z"
+                        fill="red" />
+                    </svg>
+                  </button>
+                  <button i18n-title title="Sauvegarder"
+                    [class]="item.valid.control ? 'outline_action_button button' : 'disabled_button'"
+                    [disabled]="!item.valid.control" type="button" (click)="Save(item)"><svg width="20" height="20"
+                      viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.99656 0.00317383C2.20353 0.00713837 1.44406 0.323637 0.882952 0.884041C0.32184 1.44445 0.00435485 2.20351 -0.000610352 2.99653V17.0036C-0.000610352 18.6476 1.35246 20.0007 2.99656 20.0007H17.0035C17.7972 19.9967 18.5572 19.6797 19.1184 19.1185C19.6796 18.5572 19.9967 17.7972 20.0006 17.0036V4.99979C20.0029 4.73422 19.8996 4.47857 19.7134 4.28917L15.7071 0.286685C15.584 0.165562 15.4317 0.0782669 15.2649 0.0333934L2.99656 0.00317383ZM2.99656 1.99882H4.00191V6.99913C4.00191 7.54716 4.44789 7.99315 4.9997 7.99315H15.0003C15.264 7.99216 15.5167 7.88719 15.7035 7.7011C15.8903 7.51501 15.9961 7.2628 15.9981 6.99913V3.40853L18.0013 5.41168V17.0036C18.0049 17.1356 17.9816 17.2669 17.9328 17.3896C17.8839 17.5123 17.8105 17.6238 17.7172 17.7172C17.6238 17.8106 17.5123 17.8839 17.3896 17.9327C17.2669 17.9816 17.1355 18.0049 17.0035 18.0013H2.99656C2.86484 18.0044 2.73387 17.9807 2.61161 17.9316C2.48935 17.8825 2.37835 17.8091 2.28537 17.7158C2.19238 17.6225 2.11936 17.5111 2.07074 17.3887C2.02212 17.2662 1.99891 17.1352 2.00254 17.0036V2.99653C2.00254 2.4296 2.42585 1.99882 2.99656 1.99882ZM6.00128 1.99882H13.9988V6.00511H6.00128V1.99882ZM4.9997 9.99629C4.86818 9.99679 4.73803 10.0231 4.6167 10.0739C4.49538 10.1247 4.38524 10.1989 4.29259 10.2923C4.19994 10.3856 4.12658 10.4964 4.0767 10.6181C4.02683 10.7398 4.00141 10.8701 4.00191 11.0016V15.0004C4.00191 15.5522 4.44789 15.9943 4.9997 15.9981H15.0003C15.2647 15.9971 15.5179 15.8917 15.7048 15.7048C15.8917 15.5179 15.9971 15.2647 15.9981 15.0004V11.0016C15.9986 10.8701 15.9732 10.7398 15.9233 10.6181C15.8735 10.4964 15.8001 10.3856 15.7075 10.2923C15.6148 10.1989 15.5047 10.1247 15.3833 10.0739C15.262 10.0231 15.1319 9.99679 15.0003 9.99629H4.9997ZM6.00128 11.9994H13.9988V13.9988H6.00128V11.9994Z"
+                        fill="green" />
+                    </svg>
+                  </button>
+                </div>
+                <div *ngIf="item.id>0 && !item.editing" class="button_group">
+                  <button i18n-title title="Supprimer" class="outline_quit_button button" type="button"
+                    (click)="Delete(item)" i18n><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M14.7498 7.46597L14.4277 17.2159C14.4002 18.0509 14.0485 18.8424 13.4471 19.4223C12.8456 20.0022 12.0419 20.325 11.2064 20.322H5.08603C4.2511 20.325 3.44783 20.0027 2.84649 19.4235C2.24516 18.8442 1.89304 18.0536 1.86478 17.2191L1.54265 7.46597C1.5356 7.25239 1.61369 7.04475 1.75973 6.88874C1.90577 6.73273 2.10781 6.64113 2.32139 6.63408C2.53497 6.62703 2.74261 6.70512 2.89862 6.85116C3.05463 6.9972 3.14623 7.19924 3.15328 7.41282L3.47541 17.1652C3.49145 17.5815 3.66819 17.9754 3.96852 18.2642C4.26885 18.5529 4.6694 18.7141 5.08603 18.7138H11.2064C11.6236 18.7141 12.0246 18.5525 12.325 18.263C12.6254 17.9736 12.8018 17.5788 12.817 17.162L13.1392 7.41282C13.1462 7.19924 13.2378 6.9972 13.3938 6.85116C13.5498 6.70512 13.7575 6.62703 13.9711 6.63408C14.1846 6.64113 14.3867 6.73273 14.5327 6.88874C14.6788 7.04475 14.7568 7.25239 14.7498 7.46597ZM15.8152 4.22136C15.8152 4.43494 15.7304 4.63978 15.5794 4.7908C15.4283 4.94183 15.2235 5.02667 15.0099 5.02667H1.28334C1.06976 5.02667 0.864924 4.94183 0.713898 4.7908C0.562872 4.63978 0.478027 4.43494 0.478027 4.22136C0.478027 4.00778 0.562872 3.80294 0.713898 3.65192C0.864924 3.50089 1.06976 3.41605 1.28334 3.41605H3.77981C4.03498 3.41673 4.28127 3.32246 4.47076 3.15158C4.66025 2.98069 4.77938 2.74542 4.80498 2.49155C4.86441 1.896 5.14342 1.34392 5.58766 0.942852C6.0319 0.541787 6.60954 0.320473 7.20804 0.32203H9.08442C9.68291 0.320473 10.2606 0.541787 10.7048 0.942852C11.149 1.34392 11.428 1.896 11.4875 2.49155C11.5131 2.74542 11.6322 2.98069 11.8217 3.15158C12.0112 3.32246 12.2575 3.41673 12.5126 3.41605H15.0091C15.2227 3.41605 15.4275 3.50089 15.5786 3.65192C15.7296 3.80294 15.8144 4.00778 15.8144 4.22136H15.8152ZM6.203 3.41605H10.0911C9.98524 3.17424 9.91602 2.91803 9.8857 2.65583C9.86575 2.45733 9.77283 2.27329 9.62494 2.13939C9.47705 2.00549 9.28473 1.93124 9.08522 1.93105H7.20884C7.00934 1.93124 6.81701 2.00549 6.66912 2.13939C6.52123 2.27329 6.42831 2.45733 6.40836 2.65583C6.37778 2.91807 6.3091 3.17429 6.203 3.41605ZM7.01395 15.6174V8.76011C7.01395 8.54653 6.92911 8.34169 6.77808 8.19067C6.62706 8.03964 6.42222 7.9548 6.20864 7.9548C5.99506 7.9548 5.79022 8.03964 5.6392 8.19067C5.48817 8.34169 5.40333 8.54653 5.40333 8.76011V15.6206C5.40333 15.8342 5.48817 16.039 5.6392 16.19C5.79022 16.341 5.99506 16.4259 6.20864 16.4259C6.42222 16.4259 6.62706 16.341 6.77808 16.19C6.92911 16.039 7.01395 15.8342 7.01395 15.6206V15.6174ZM10.8907 15.6174V8.76011C10.8907 8.54653 10.8059 8.34169 10.6549 8.19067C10.5038 8.03964 10.299 7.9548 10.0854 7.9548C9.87184 7.9548 9.66701 8.03964 9.51598 8.19067C9.36495 8.34169 9.28011 8.54653 9.28011 8.76011V15.6206C9.28011 15.8342 9.36495 16.039 9.51598 16.19C9.66701 16.341 9.87184 16.4259 10.0854 16.4259C10.299 16.4259 10.5038 16.341 10.6549 16.19C10.8059 16.039 10.8907 15.8342 10.8907 15.6206V15.6174Z"
+                        fill="red" />
+                    </svg>
 
-                </button>
-              </div>
-            </td>
-          </tr>
+                  </button>
+                  <button i18n-title title="Editer" class="outline_login_button button" type="button"
+                    (click)="Edit(item)"><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M2.7147 20.3221H12.3005C12.8946 20.3199 13.4638 20.0104 13.8831 19.4616C14.3024 18.9127 14.5376 18.1694 14.5371 17.3946V11.1138C14.5371 10.8928 14.4698 10.6808 14.35 10.5245C14.2301 10.3682 14.0676 10.2804 13.8981 10.2804C13.7286 10.2804 13.5661 10.3682 13.4462 10.5245C13.3264 10.6808 13.259 10.8928 13.259 11.1138V17.3946C13.2599 17.7275 13.1594 18.0472 12.9797 18.2835C12.8 18.5199 12.5557 18.6537 12.3005 18.6554H2.7147C2.45945 18.6537 2.21516 18.5199 2.03545 18.2835C1.85573 18.0472 1.75528 17.7275 1.75613 17.3946V4.91627C1.75528 4.58341 1.85573 4.26371 2.03545 4.02733C2.21516 3.79095 2.45945 3.6572 2.7147 3.65544H7.50758C7.67707 3.65544 7.83961 3.56764 7.95946 3.41136C8.0793 3.25508 8.14663 3.04312 8.14663 2.8221C8.14663 2.60109 8.0793 2.38913 7.95946 2.23285C7.83961 2.07657 7.67707 1.98877 7.50758 1.98877H2.7147C2.12058 1.99098 1.5514 2.30046 1.13207 2.84931C0.712739 3.39815 0.477518 4.14152 0.478028 4.91627V17.3946C0.477518 18.1694 0.712739 18.9127 1.13207 19.4616C1.5514 20.0104 2.12058 20.3199 2.7147 20.3221Z"
+                        fill="blue" />
+                      <path
+                        d="M6.52026 9.10869L6.01605 12.1204C5.99323 12.257 5.99713 12.3989 6.02739 12.533C6.05766 12.6671 6.11331 12.7891 6.18923 12.8879C6.2662 12.9841 6.35982 13.0547 6.46217 13.0937C6.56451 13.1328 6.67256 13.139 6.77716 13.112L9.08157 12.4529C9.20123 12.4186 9.31081 12.3402 9.39726 12.227L15.2216 4.63202C15.3996 4.39987 15.5409 4.12425 15.6372 3.82091C15.7336 3.51757 15.7832 3.19244 15.7832 2.8641C15.7832 2.53576 15.7336 2.21064 15.6372 1.9073C15.5409 1.60395 15.3996 1.32834 15.2216 1.09619C14.8565 0.6413 14.3711 0.387451 13.8661 0.387451C13.3612 0.387451 12.8758 0.6413 12.5107 1.09619L6.69536 8.69869C6.60808 8.81066 6.5473 8.95297 6.52026 9.10869ZM13.4143 2.27535C13.5359 2.12347 13.6978 2.03868 13.8661 2.03868C14.0345 2.03868 14.1964 2.12347 14.318 2.27535C14.4362 2.43254 14.5024 2.64393 14.5024 2.8641C14.5024 3.08427 14.4362 3.29566 14.318 3.45285L13.8661 4.04202L12.9625 2.86369L13.4143 2.27535ZM7.72679 9.70369L12.0557 4.04452L12.9504 5.21702L8.61954 10.8779L7.47245 11.2062L7.72679 9.70369Z"
+                        fill="blue" />
+                    </svg>
+
+                  </button>
+                </div>
+              </td>
+            </tr>
           </ng-template>
         </tbody>
       </table>
@@ -316,11 +278,14 @@
     <div class="menu_top_admin">
       <button [class]="selected_menu == 'INFOPERSO' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
         (click)="selected_menu = 'INFOPERSO'" i18n>Informations personnelles</button>
-      <button [class]="selected_menu == 'COMPTE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
+      <button *ngIf="situation=='UPDATE'"
+        [class]="selected_menu == 'COMPTE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
         (click)="selected_menu = 'COMPTE'" i18n>Comptes</button>
-      <button [class]="selected_menu == 'GROUPE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
-        (click)="selected_menu = 'GROUPE'" i18n>Séances</button>
-      <button [class]="selected_menu == 'ADMIN' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
+      <button *ngIf="situation=='UPDATE'"
+        [class]="selected_menu == 'GROUPE' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
+        (click)="selected_menu = 'GROUPE'" i18n>Groupes</button>
+      <button *ngIf="situation=='UPDATE'"
+        [class]="selected_menu == 'ADMIN' ? 'text_menu_admin menu_selected' : 'text_menu_admin'"
         (click)="selected_menu = 'ADMIN'" i18n>Administration</button>
     </div>
     <div class="multi_card">
@@ -337,7 +302,7 @@
 
           <span class="title_label" i18n>Prénom</span>
           <input [class]="editRider.valid.prenom ? 'input_jecha' : 'input_jecha input_error'" type="text"
-            id="prenom_rider" name="prenom_rider" i18n-placeholder placeholder="Nom" [(ngModel)]="editRider.prenom"
+            id="prenom_rider" name="prenom_rider" i18n-placeholder placeholder="Prénom" [(ngModel)]="editRider.prenom"
             required>
           <small class="small_jecha" *ngIf="!editRider.valid.prenom" i18n>Le prénom doit faire au moins 2 caractères
           </small>
@@ -347,6 +312,8 @@
             [(ngModel)]="editRider.date_naissance" required>
           <small class="small_jecha" *ngIf="!editRider.valid.date_naissance" i18n>La date de naissance doit être saisie
           </small>
+
+
           <span class="title_label" i18n>Sexe :</span>
 
           <div class="button_group">
@@ -359,6 +326,7 @@
               (click)="editRider.sexe == true ? editRider.sexe = false : editRider.sexe = true">
               Femme</button>
           </div>
+
           <span class="title_label" i18n>Adresse :</span>
           <textarea class="textarea_jecha" id="adresse" i18n-placeholder placeholder="Adresse"
             [(ngModel)]="editRider.adresse" rows="3"></textarea>
@@ -396,53 +364,8 @@
         </div>
       </div>
 
-      <div *ngIf="selected_menu =='COMPTE' || selected_menu =='TOUS'" class="card_jecha_light">
-        <div class="title_content_subcard_jecha">
-          <span class="title_content_text_subcard_jecha" i18n>Gestion du compte </span>
-        </div>
-        <hr class="line">
-        <div class="content_card_jecha_center">
-          <div *ngIf="situation == 'CREATE' || situation == 'ADD' " class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-              (ngModelChange)="ChangerExistingAccount()" [(ngModel)]="existing_account">
-            <label class="form-check-label" for="flexSwitchCheckChecked">Compte existant</label>
-          </div>
-          <span class="title_label" *ngIf="situation == 'CREATE' || situation == 'ADD' ">{{libelle_mail}}</span>
-          <span class="title_label" *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">Saisir l'email</span>
-          <input class="input_jecha" type="text" id="email" name="email" [placeholder]="libelle_mail"
-            [(ngModel)]="editRider.email" required>
-          <div
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <span class="title_label" i18n>Mot de passe actuel :</span>
-            <input class="input_jecha" type="password" id="mdp_actuel" [(ngModel)]="mdp_actuel" i18n-placeholder
-              placeholder="Mot de passe actuel">
-          </div>
-          <div
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <span class="title_label" i18n>Nouveau mot de passe :</span>
-            <input class="input_jecha" type="password" id="new_mdp" [(ngModel)]="new_mdp" i18n-placeholder
-              placeholder="Nouveau mot de passe">
-          </div>
-          <div
-            *ngIf="((situation == 'CREATE' || situation == 'ADD') &&  !existing_account) ||situation == 'MY_UPDATE' || situation == 'UPDATE'">
-            <span class="title_label" i18n>Confirmer nouveau mot de passe</span>
-            <input class="input_jecha" type="password" id="new_mdp_confirm" [(ngModel)]="new_mdp_confirm"
-              i18n-placeholder placeholder="Confirmer nouveau mot de passe">
-          </div>
-          <div *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">
-            <p>Saisir nouveau mail et mot de passe actuel puis cliquer sur le bouton ci-dessous</p>
-            <div> <button class="button action_button" [disabled]="!editRider.email || !mdp_actuel"
-                (click)="ModifMail()" i18n>Modifier l'email
-              </button>
-            </div>
-            <p>Saisir le mot de passe actuel et le mot de passe souhaité/confirmer le mot de passe puis cliquer sur le
-              bouton ci-dessous</p>
-            <div> <button class="button action_button" [disabled]="(new_mdp_confirm!= new_mdp) || !mdp_actuel"
-                (click)="ModifMDP()" i18n>Modifier le mot de passe
-              </button>
-            </div>
-          </div>
-        </div>
+      <div *ngIf="selected_menu =='COMPTE' || selected_menu =='TOUS'" >
+        <app-gerer-compte-individuel [editRider]="editRider" [situation]="situation"></app-gerer-compte-individuel>
 
       </div>
       <div *ngIf="selected_menu =='GROUPE' || selected_menu =='TOUS'" class="card_jecha_light">

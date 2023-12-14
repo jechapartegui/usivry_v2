@@ -5,96 +5,120 @@
     justify-content: center;">
       <div class="btn-toolbar" style="width: 100%;" role="toolbar" aria-label="Toolbar with button groups">
         <div class="menu_connected">
-        <div class="menu_left">
-        <ng-container *ngIf="(ridersService.isAdmin$ | async) === true || (ridersService.isProf$ | async) === true">
-          <button [class]="selected_menu == 'GROUPES' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'GROUPES'" routerLink="/gerer-groupe" i18n>Groupes</button>
-          <button [class]="selected_menu == 'SEANCES' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'SEANCES'" routerLink="/gerer-seance" i18n>Séances</button>
-          <ng-container *ngIf="(ridersService.isAdmin$ | async) === true">
-            <button [class]="selected_menu == 'COURS' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'COURS'" routerLink="/gerer-cours" i18n>Cours</button>
-            <button [class]="selected_menu == 'ADMINISTRATION' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'ADMINISTRATION'" routerLink="/administration" i18n>Administration</button>
-            <button [class]="selected_menu == 'ADHERENTS' ? 'text_menu menu_selected' : 'text_menu'" (click)="selected_menu = 'ADHERENTS'" routerLink="/gerer-riders" i18n>Adhérents</button>
+          <div class="menu_left">
+            <ng-container *ngIf="(ridersService.isAdmin$ | async) === true || (ridersService.isProf$ | async) === true">
+              <button [class]="selected_menu == 'GROUPES' ? 'text_menu menu_selected' : 'text_menu'"
+                (click)="selected_menu = 'GROUPES'" routerLink="/gerer-groupe" i18n>Groupes</button>
+              <button [class]="selected_menu == 'SEANCES' ? 'text_menu menu_selected' : 'text_menu'"
+                (click)="selected_menu = 'SEANCES'" routerLink="/gerer-seance" i18n>Séances</button>
+              <ng-container *ngIf="(ridersService.isAdmin$ | async) === true">
+                <button [class]="selected_menu == 'COURS' ? 'text_menu menu_selected' : 'text_menu'"
+                  (click)="selected_menu = 'COURS'" routerLink="/gerer-cours" i18n>Cours</button>
+                <button [class]="selected_menu == 'ADMINISTRATION' ? 'text_menu menu_selected' : 'text_menu'"
+                  (click)="selected_menu = 'ADMINISTRATION'" routerLink="/administration" i18n>Administration</button>
+                <button [class]="selected_menu == 'ADHERENTS' ? 'text_menu menu_selected' : 'text_menu'"
+                  (click)="selected_menu = 'ADHERENTS'" routerLink="/gerer-riders" i18n>Adhérents</button>
               </ng-container>
-        </ng-container>
-      </div>
-        <ng-container *ngIf="(ridersService.isAdmin$ | async) === false && (ridersService.isProf$ | async) === false">
-        <div class="btn-group me-2" role="group" aria-label="Second group">
-          <a class="navbar-brand" href="#Ecole">
-            <img src=".\assets\usi.png" alt="Omnisports" width="68" height="30">
-          </a>
-          <a class="navbar-brand" href="#RollerSoccer">
-            <img src=".\assets\rollersoccer.png" alt="RollerSoccer" width="30" height="30">
-          </a>
-          <a class="navbar-brand" href="#RollBall">
-            <img src=".\assets\roller.png" alt="Roller" width="36" height="30">
-          </a>
-          <a class="navbar-brand" href="#RollerDerby">
-            <img src=".\assets\cata.png" alt="Derby" width="30" height="30">
-          </a>
-        </div>
-        <div class="menu-haut btn-group me-2" role="group" aria-label="First group">
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry" href="#Ecole">Ecole de Roller</a></button>
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry" href="#RollerSoccer">Roller
-              Soccer</a></button>
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry" href="#RollBall">RollBall</a></button>
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry" href="#RollerDerby">Roller
-              Derby</a></button>
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry"
-              href="#Entrainements">Entrainements</a></button>
-          <button type="button" class="btn btn-ivry"> <a style="text-decoration: none;" class="lien-ivry"
-              href="#Inscriptions">Inscriptions</a></button>
-          <button type="button" class="btn btn-ivry">
-            <a style="text-decoration: none;" class="lien-ivry" href="#Infos">Club et
-              Contacts</a></button>
-        </div>
-      </ng-container>
-        <div class="menu_right" role="group" aria-label="Second group">
-          <button *ngIf="(ridersService.isLoggedIn$ | async) === false" type="button" class="button login_button"
-            (click)="GoToLogin()"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8.66667 14.0001C8.48986 14.0001 8.32029 14.0703 8.19526 14.1953C8.07024 14.3204 8 14.4899 8 14.6667C8 14.8436 8.07024 15.0131 8.19526 15.1382C8.32029 15.2632 8.48986 15.3334 8.66667 15.3334H14C14.1768 15.3334 14.3464 15.2632 14.4714 15.1382C14.5964 15.0131 14.6667 14.8436 14.6667 14.6667V1.33341C14.6667 1.1566 14.5964 0.987034 14.4714 0.86201C14.3464 0.736986 14.1768 0.666748 14 0.666748H8.66667C8.48986 0.666748 8.32029 0.736986 8.19526 0.86201C8.07024 0.987034 8 1.1566 8 1.33341C8 1.51023 8.07024 1.6798 8.19526 1.80482C8.32029 1.92984 8.48986 2.00008 8.66667 2.00008H13.3333V14.0001H8.66667Z" fill="white"/>
-              <path d="M1.33331 7.99997C1.33331 8.17678 1.40355 8.34635 1.52858 8.47138C1.6536 8.5964 1.82317 8.66664 1.99998 8.66664H9.72398L8.19531 10.1953C8.13164 10.2568 8.08085 10.3304 8.04591 10.4117C8.01097 10.493 7.99258 10.5805 7.99181 10.669C7.99104 10.7576 8.00791 10.8453 8.04143 10.9273C8.07495 11.0092 8.12445 11.0836 8.18705 11.1462C8.24965 11.2088 8.32408 11.2583 8.40601 11.2919C8.48794 11.3254 8.57573 11.3422 8.66425 11.3415C8.75277 11.3407 8.84025 11.3223 8.92158 11.2874C9.00292 11.2524 9.07648 11.2016 9.13798 11.138L11.8046 8.47131C11.9296 8.34629 11.9998 8.17675 11.9998 7.99997C11.9998 7.8232 11.9296 7.65366 11.8046 7.52864L9.13798 4.86197C9.07648 4.7983 9.00292 4.74751 8.92158 4.71257C8.84025 4.67763 8.75277 4.65924 8.66425 4.65847C8.57573 4.6577 8.48794 4.67457 8.40601 4.70809C8.32408 4.74161 8.24965 4.79111 8.18705 4.85371C8.12445 4.9163 8.07495 4.99074 8.04143 5.07267C8.00791 5.1546 7.99104 5.24239 7.99181 5.33091C7.99258 5.41943 8.01097 5.50691 8.04591 5.58824C8.08085 5.66958 8.13164 5.74314 8.19531 5.80464L9.72398 7.33331H1.99998C1.82317 7.33331 1.6536 7.40354 1.52858 7.52857C1.40355 7.65359 1.33331 7.82316 1.33331 7.99997Z" fill="white"/>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="(ridersService.isAdmin$ | async) === false && (ridersService.isProf$ | async) === false">
+            <div class="btn-group me-2" role="group" aria-label="Second group">
+              <a class="navbar-brand" href="#Ecole">
+                <img src=".\assets\usi.png" alt="Omnisports" width="68" height="30">
+              </a>
+              <a class="navbar-brand" href="#RollerSoccer">
+                <img src=".\assets\rollersoccer.png" alt="RollerSoccer" width="30" height="30">
+              </a>
+              <a class="navbar-brand" href="#RollBall">
+                <img src=".\assets\roller.png" alt="Roller" width="36" height="30">
+              </a>
+              <a class="navbar-brand" href="#RollerDerby">
+                <img src=".\assets\cata.png" alt="Derby" width="30" height="30">
+              </a>
+            </div>
+            <div class="menu-haut btn-group me-2" role="group" aria-label="First group">
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#Ecole">Ecole de Roller</a></button>
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#RollerSoccer">Roller
+                  Soccer</a></button>
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#RollBall">RollBall</a></button>
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#RollerDerby">Roller
+                  Derby</a></button>
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#Entrainements">Entrainements</a></button>
+              <button type="button" class="btn btn-ivry"> <a style="text-decoration: none;" class="lien-ivry"
+                  href="#Inscriptions">Inscriptions</a></button>
+              <button type="button" class="btn btn-ivry">
+                <a style="text-decoration: none;" class="lien-ivry" href="#Infos">Club et
+                  Contacts</a></button>
+            </div>
+          </ng-container>
+          <div class="menu_right" role="group" aria-label="Second group">
+            <button *ngIf="(ridersService.isLoggedIn$ | async) === false" type="button" class="button login_button"
+              (click)="GoToLogin()"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M8.66667 14.0001C8.48986 14.0001 8.32029 14.0703 8.19526 14.1953C8.07024 14.3204 8 14.4899 8 14.6667C8 14.8436 8.07024 15.0131 8.19526 15.1382C8.32029 15.2632 8.48986 15.3334 8.66667 15.3334H14C14.1768 15.3334 14.3464 15.2632 14.4714 15.1382C14.5964 15.0131 14.6667 14.8436 14.6667 14.6667V1.33341C14.6667 1.1566 14.5964 0.987034 14.4714 0.86201C14.3464 0.736986 14.1768 0.666748 14 0.666748H8.66667C8.48986 0.666748 8.32029 0.736986 8.19526 0.86201C8.07024 0.987034 8 1.1566 8 1.33341C8 1.51023 8.07024 1.6798 8.19526 1.80482C8.32029 1.92984 8.48986 2.00008 8.66667 2.00008H13.3333V14.0001H8.66667Z"
+                  fill="white" />
+                <path
+                  d="M1.33331 7.99997C1.33331 8.17678 1.40355 8.34635 1.52858 8.47138C1.6536 8.5964 1.82317 8.66664 1.99998 8.66664H9.72398L8.19531 10.1953C8.13164 10.2568 8.08085 10.3304 8.04591 10.4117C8.01097 10.493 7.99258 10.5805 7.99181 10.669C7.99104 10.7576 8.00791 10.8453 8.04143 10.9273C8.07495 11.0092 8.12445 11.0836 8.18705 11.1462C8.24965 11.2088 8.32408 11.2583 8.40601 11.2919C8.48794 11.3254 8.57573 11.3422 8.66425 11.3415C8.75277 11.3407 8.84025 11.3223 8.92158 11.2874C9.00292 11.2524 9.07648 11.2016 9.13798 11.138L11.8046 8.47131C11.9296 8.34629 11.9998 8.17675 11.9998 7.99997C11.9998 7.8232 11.9296 7.65366 11.8046 7.52864L9.13798 4.86197C9.07648 4.7983 9.00292 4.74751 8.92158 4.71257C8.84025 4.67763 8.75277 4.65924 8.66425 4.65847C8.57573 4.6577 8.48794 4.67457 8.40601 4.70809C8.32408 4.74161 8.24965 4.79111 8.18705 4.85371C8.12445 4.9163 8.07495 4.99074 8.04143 5.07267C8.00791 5.1546 7.99104 5.24239 7.99181 5.33091C7.99258 5.41943 8.01097 5.50691 8.04591 5.58824C8.08085 5.66958 8.13164 5.74314 8.19531 5.80464L9.72398 7.33331H1.99998C1.82317 7.33331 1.6536 7.40354 1.52858 7.52857C1.40355 7.65359 1.33331 7.82316 1.33331 7.99997Z"
+                  fill="white" />
               </svg>
-              
-              <span class="login_text" i18n>Se Connecter</span></button>
-              <ng-container *ngIf="(ridersService.isLoggedIn$ | async) === true">
 
-                <div class="dropdown">
-                <button class="button_menu_url dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="login_text" i18n>Se Connecter</span></button>
+            <ng-container *ngIf="(ridersService.isLoggedIn$ | async) === true">
+
+              <div class="dropdown">
+                <button class="button_menu_url dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
 
                   {{ (ridersService.isCompte$ | async)}}
-                 </button>
-                 <ul class="dropdown-menu">
-                  <li><div class="menu_compte dropdown-item">Relance par mail <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" style="padding: 1px;" name="btnradio" id="btnradio1" [attr.checked]="(ridersService.mailactive$ | async) === true ?  '' : null"  (ngModelChange)="UpdateMailActive()" autocomplete="off">
-                    <label class="btn btn-outline-primary" style="padding: 1px;" for="btnradio1" i18n>Oui</label>
-            
-                    <input type="radio" class="btn-check" style="padding: 1px;" name="btnradio" id="btnradio2" [attr.checked]="(ridersService.mailactive$ | async) === false ? '' : null" (ngModelChange)="UpdateMailActive()" autocomplete="off" >
-                    <label class="btn btn-outline-primary" style="padding: 1px;" for="btnradio2" i18n>Non</label>
-                </div></div></li>
-                  <li><a class="menu_compte dropdown-item"  routerLink="/gerer-compte" i18n>Modifier le compte</a></li>
-                  <li><div class="menu_compte dropdown-item" i18n>Changer la langue</div></li>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <div class="menu_compte dropdown-item">Relance par mail
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" style="padding: 1px;" name="btnradio" id="btnradio1"
+                          [attr.checked]="(ridersService.mailactive$ | async) === true ?  '' : null"
+                          (ngModelChange)="UpdateMailActive()" autocomplete="off">
+                        <label class="btn btn-outline-primary" style="padding: 1px;" for="btnradio1" i18n>Oui</label>
+
+                        <input type="radio" class="btn-check" style="padding: 1px;" name="btnradio" id="btnradio2"
+                          [attr.checked]="(ridersService.mailactive$ | async) === false ? '' : null"
+                          (ngModelChange)="UpdateMailActive()" autocomplete="off">
+                        <label class="btn btn-outline-primary" style="padding: 1px;" for="btnradio2" i18n>Non</label>
+                      </div>
+                    </div>
+                  </li>
+                  <li><a class="menu_compte dropdown-item" routerLink="/gerer-compte" i18n>Modifier le compte</a></li>
+                  <li>
+                    <div class="menu_compte dropdown-item" i18n>Changer la langue</div>
+                  </li>
                 </ul>
               </div>
-              </ng-container>
-          
-          <button *ngIf="(ridersService.isLoggedIn$ | async) === true" type="button" class="button menu_button"
-            (click)="GoToMI()">
-            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M18.9 17.009C18.9 17.56 18.382 18 17.803 18H14.653C14.5215 18.0031 14.3906 17.9797 14.2683 17.9311C14.146 17.8826 14.0348 17.8099 13.9412 17.7174C13.8476 17.6249 13.7735 17.5145 13.7235 17.3928C13.6735 17.2711 13.6485 17.1406 13.65 17.009V14.009C13.648 13.8764 13.6725 13.7448 13.7221 13.6219C13.7718 13.499 13.8455 13.3872 13.9389 13.2932C14.0324 13.1992 14.1437 13.1248 14.2663 13.0744C14.389 13.0241 14.5204 12.9988 14.653 13H17.803C18.383 13 18.9 13.458 18.9 14.009V17.009ZM17.803 11H14.653C12.913 11 11.55 12.352 11.55 14.009V17.009C11.55 18.666 12.913 20 14.653 20H17.803C19.543 20 21 18.666 21 17.009V14.009C21 12.352 19.543 11 17.803 11ZM7.35 17.009C7.35 17.56 6.832 18 6.253 18H3.103C2.97145 18.0031 2.84063 17.9797 2.71833 17.9311C2.59603 17.8826 2.48476 17.8099 2.39115 17.7174C2.29755 17.6249 2.22353 17.5145 2.17351 17.3928C2.12349 17.2711 2.09849 17.1406 2.1 17.009V14.009C2.09799 13.8764 2.12252 13.7448 2.17214 13.6219C2.22176 13.499 2.29547 13.3872 2.38893 13.2932C2.48239 13.1992 2.59371 13.1248 2.71634 13.0744C2.83897 13.0241 2.97044 12.9988 3.103 13H6.253C6.833 13 7.35 13.458 7.35 14.009V17.009ZM6.253 11H3.103C1.363 11 0 12.352 0 14.009V17.009C0 18.666 1.363 20 3.103 20H6.253C7.993 20 9.45 18.666 9.45 17.009V14.009C9.45 12.352 7.993 11 6.253 11ZM18.9 6.009C18.9 6.56 18.382 7 17.803 7H14.653C14.5215 7.0031 14.3906 6.97967 14.2683 6.93112C14.146 6.88256 14.0348 6.80988 13.9412 6.71739C13.8476 6.62491 13.7735 6.51452 13.7235 6.39282C13.6735 6.27111 13.6485 6.14058 13.65 6.009V3.009C13.648 2.87645 13.6725 2.74483 13.7221 2.6219C13.7718 2.49897 13.8455 2.38721 13.9389 2.29319C14.0324 2.19918 14.1437 2.1248 14.2663 2.07445C14.389 2.0241 14.5204 1.99878 14.653 2H17.803C18.383 2 18.9 2.458 18.9 3.009V6.009ZM17.803 0H14.653C12.913 0 11.55 1.352 11.55 3.009V6.009C11.55 7.666 12.913 9 14.653 9H17.803C19.543 9 21 7.666 21 6.009V3.009C21 1.352 19.543 0 17.803 0ZM7.35 6.009C7.35 6.56 6.832 7 6.253 7H3.103C2.97145 7.0031 2.84063 6.97967 2.71833 6.93112C2.59603 6.88256 2.48476 6.80988 2.39115 6.71739C2.29755 6.62491 2.22353 6.51452 2.17351 6.39282C2.12349 6.27111 2.09849 6.14058 2.1 6.009V3.009C2.09799 2.87645 2.12252 2.74483 2.17214 2.6219C2.22176 2.49897 2.29547 2.38721 2.38893 2.29319C2.48239 2.19918 2.59371 2.1248 2.71634 2.07445C2.83897 2.0241 2.97044 1.99878 3.103 2H6.253C6.833 2 7.35 2.458 7.35 3.009V6.009ZM6.253 0H3.103C1.363 0 0 1.352 0 3.009V6.009C0 7.666 1.363 9 3.103 9H6.253C7.993 9 9.45 7.666 9.45 6.009V3.009C9.45 1.352 7.993 0 6.253 0Z" fill="white"/>
+            </ng-container>
+
+            <button *ngIf="(ridersService.isLoggedIn$ | async) === true" type="button" class="button menu_button"
+              (click)="GoToMI()">
+              <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M18.9 17.009C18.9 17.56 18.382 18 17.803 18H14.653C14.5215 18.0031 14.3906 17.9797 14.2683 17.9311C14.146 17.8826 14.0348 17.8099 13.9412 17.7174C13.8476 17.6249 13.7735 17.5145 13.7235 17.3928C13.6735 17.2711 13.6485 17.1406 13.65 17.009V14.009C13.648 13.8764 13.6725 13.7448 13.7221 13.6219C13.7718 13.499 13.8455 13.3872 13.9389 13.2932C14.0324 13.1992 14.1437 13.1248 14.2663 13.0744C14.389 13.0241 14.5204 12.9988 14.653 13H17.803C18.383 13 18.9 13.458 18.9 14.009V17.009ZM17.803 11H14.653C12.913 11 11.55 12.352 11.55 14.009V17.009C11.55 18.666 12.913 20 14.653 20H17.803C19.543 20 21 18.666 21 17.009V14.009C21 12.352 19.543 11 17.803 11ZM7.35 17.009C7.35 17.56 6.832 18 6.253 18H3.103C2.97145 18.0031 2.84063 17.9797 2.71833 17.9311C2.59603 17.8826 2.48476 17.8099 2.39115 17.7174C2.29755 17.6249 2.22353 17.5145 2.17351 17.3928C2.12349 17.2711 2.09849 17.1406 2.1 17.009V14.009C2.09799 13.8764 2.12252 13.7448 2.17214 13.6219C2.22176 13.499 2.29547 13.3872 2.38893 13.2932C2.48239 13.1992 2.59371 13.1248 2.71634 13.0744C2.83897 13.0241 2.97044 12.9988 3.103 13H6.253C6.833 13 7.35 13.458 7.35 14.009V17.009ZM6.253 11H3.103C1.363 11 0 12.352 0 14.009V17.009C0 18.666 1.363 20 3.103 20H6.253C7.993 20 9.45 18.666 9.45 17.009V14.009C9.45 12.352 7.993 11 6.253 11ZM18.9 6.009C18.9 6.56 18.382 7 17.803 7H14.653C14.5215 7.0031 14.3906 6.97967 14.2683 6.93112C14.146 6.88256 14.0348 6.80988 13.9412 6.71739C13.8476 6.62491 13.7735 6.51452 13.7235 6.39282C13.6735 6.27111 13.6485 6.14058 13.65 6.009V3.009C13.648 2.87645 13.6725 2.74483 13.7221 2.6219C13.7718 2.49897 13.8455 2.38721 13.9389 2.29319C14.0324 2.19918 14.1437 2.1248 14.2663 2.07445C14.389 2.0241 14.5204 1.99878 14.653 2H17.803C18.383 2 18.9 2.458 18.9 3.009V6.009ZM17.803 0H14.653C12.913 0 11.55 1.352 11.55 3.009V6.009C11.55 7.666 12.913 9 14.653 9H17.803C19.543 9 21 7.666 21 6.009V3.009C21 1.352 19.543 0 17.803 0ZM7.35 6.009C7.35 6.56 6.832 7 6.253 7H3.103C2.97145 7.0031 2.84063 6.97967 2.71833 6.93112C2.59603 6.88256 2.48476 6.80988 2.39115 6.71739C2.29755 6.62491 2.22353 6.51452 2.17351 6.39282C2.12349 6.27111 2.09849 6.14058 2.1 6.009V3.009C2.09799 2.87645 2.12252 2.74483 2.17214 2.6219C2.22176 2.49897 2.29547 2.38721 2.38893 2.29319C2.48239 2.19918 2.59371 2.1248 2.71634 2.07445C2.83897 2.0241 2.97044 1.99878 3.103 2H6.253C6.833 2 7.35 2.458 7.35 3.009V6.009ZM6.253 0H3.103C1.363 0 0 1.352 0 3.009V6.009C0 7.666 1.363 9 3.103 9H6.253C7.993 9 9.45 7.666 9.45 6.009V3.009C9.45 1.352 7.993 0 6.253 0Z"
+                  fill="white" />
               </svg>
               <span class="login_text">Menu</span></button>
-          <button *ngIf="(ridersService.isLoggedIn$ | async) === true" type="button" class="button quit_button"
-            (click)="Logout()">
-            <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 10C0 10.2652 0.111942 10.5196 0.311199 10.7071C0.510457 10.8946 0.780707 11 1.0625 11H9.12688L6.68312 13.29C6.58354 13.383 6.50449 13.4936 6.45055 13.6154C6.39661 13.7373 6.36884 13.868 6.36884 14C6.36884 14.132 6.39661 14.2627 6.45055 14.3846C6.50449 14.5064 6.58354 14.617 6.68312 14.71C6.7819 14.8037 6.89941 14.8781 7.02889 14.9289C7.15836 14.9797 7.29724 15.0058 7.4375 15.0058C7.57776 15.0058 7.71664 14.9797 7.84611 14.9289C7.97559 14.8781 8.0931 14.8037 8.19188 14.71L12.4419 10.71C12.5386 10.6149 12.6144 10.5028 12.665 10.38C12.7713 10.1365 12.7713 9.86346 12.665 9.62C12.6144 9.49725 12.5386 9.3851 12.4419 9.29L8.19188 5.29C8.09281 5.19676 7.9752 5.1228 7.84577 5.07234C7.71633 5.02188 7.5776 4.99591 7.4375 4.99591C7.2974 4.99591 7.15867 5.02188 7.02923 5.07234C6.8998 5.1228 6.78219 5.19676 6.68312 5.29C6.58406 5.38324 6.50548 5.49393 6.45186 5.61575C6.39825 5.73757 6.37065 5.86814 6.37065 6C6.37065 6.13186 6.39825 6.26243 6.45186 6.38425C6.50548 6.50607 6.58406 6.61676 6.68312 6.71L9.12688 9H1.0625C0.780707 9 0.510457 9.10536 0.311199 9.29289C0.111942 9.48043 0 9.73478 0 10ZM13.8125 0H3.1875C2.34212 0 1.53137 0.316071 0.933597 0.87868C0.335825 1.44129 0 2.20435 0 3V6C0 6.26522 0.111942 6.51957 0.311199 6.70711C0.510457 6.89464 0.780707 7 1.0625 7C1.34429 7 1.61454 6.89464 1.8138 6.70711C2.01306 6.51957 2.125 6.26522 2.125 6V3C2.125 2.73478 2.23694 2.48043 2.4362 2.29289C2.63546 2.10536 2.90571 2 3.1875 2H13.8125C14.0943 2 14.3645 2.10536 14.5638 2.29289C14.7631 2.48043 14.875 2.73478 14.875 3V17C14.875 17.2652 14.7631 17.5196 14.5638 17.7071C14.3645 17.8946 14.0943 18 13.8125 18H3.1875C2.90571 18 2.63546 17.8946 2.4362 17.7071C2.23694 17.5196 2.125 17.2652 2.125 17V14C2.125 13.7348 2.01306 13.4804 1.8138 13.2929C1.61454 13.1054 1.34429 13 1.0625 13C0.780707 13 0.510457 13.1054 0.311199 13.2929C0.111942 13.4804 0 13.7348 0 14V17C0 17.7956 0.335825 18.5587 0.933597 19.1213C1.53137 19.6839 2.34212 20 3.1875 20H13.8125C14.6579 20 15.4686 19.6839 16.0664 19.1213C16.6642 18.5587 17 17.7956 17 17V3C17 2.20435 16.6642 1.44129 16.0664 0.87868C15.4686 0.316071 14.6579 0 13.8125 0Z" fill="white"/>
+            <button *ngIf="(ridersService.isLoggedIn$ | async) === true" type="button" class="button quit_button"
+              (click)="Logout()">
+              <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M0 10C0 10.2652 0.111942 10.5196 0.311199 10.7071C0.510457 10.8946 0.780707 11 1.0625 11H9.12688L6.68312 13.29C6.58354 13.383 6.50449 13.4936 6.45055 13.6154C6.39661 13.7373 6.36884 13.868 6.36884 14C6.36884 14.132 6.39661 14.2627 6.45055 14.3846C6.50449 14.5064 6.58354 14.617 6.68312 14.71C6.7819 14.8037 6.89941 14.8781 7.02889 14.9289C7.15836 14.9797 7.29724 15.0058 7.4375 15.0058C7.57776 15.0058 7.71664 14.9797 7.84611 14.9289C7.97559 14.8781 8.0931 14.8037 8.19188 14.71L12.4419 10.71C12.5386 10.6149 12.6144 10.5028 12.665 10.38C12.7713 10.1365 12.7713 9.86346 12.665 9.62C12.6144 9.49725 12.5386 9.3851 12.4419 9.29L8.19188 5.29C8.09281 5.19676 7.9752 5.1228 7.84577 5.07234C7.71633 5.02188 7.5776 4.99591 7.4375 4.99591C7.2974 4.99591 7.15867 5.02188 7.02923 5.07234C6.8998 5.1228 6.78219 5.19676 6.68312 5.29C6.58406 5.38324 6.50548 5.49393 6.45186 5.61575C6.39825 5.73757 6.37065 5.86814 6.37065 6C6.37065 6.13186 6.39825 6.26243 6.45186 6.38425C6.50548 6.50607 6.58406 6.61676 6.68312 6.71L9.12688 9H1.0625C0.780707 9 0.510457 9.10536 0.311199 9.29289C0.111942 9.48043 0 9.73478 0 10ZM13.8125 0H3.1875C2.34212 0 1.53137 0.316071 0.933597 0.87868C0.335825 1.44129 0 2.20435 0 3V6C0 6.26522 0.111942 6.51957 0.311199 6.70711C0.510457 6.89464 0.780707 7 1.0625 7C1.34429 7 1.61454 6.89464 1.8138 6.70711C2.01306 6.51957 2.125 6.26522 2.125 6V3C2.125 2.73478 2.23694 2.48043 2.4362 2.29289C2.63546 2.10536 2.90571 2 3.1875 2H13.8125C14.0943 2 14.3645 2.10536 14.5638 2.29289C14.7631 2.48043 14.875 2.73478 14.875 3V17C14.875 17.2652 14.7631 17.5196 14.5638 17.7071C14.3645 17.8946 14.0943 18 13.8125 18H3.1875C2.90571 18 2.63546 17.8946 2.4362 17.7071C2.23694 17.5196 2.125 17.2652 2.125 17V14C2.125 13.7348 2.01306 13.4804 1.8138 13.2929C1.61454 13.1054 1.34429 13 1.0625 13C0.780707 13 0.510457 13.1054 0.311199 13.2929C0.111942 13.4804 0 13.7348 0 14V17C0 17.7956 0.335825 18.5587 0.933597 19.1213C1.53137 19.6839 2.34212 20 3.1875 20H13.8125C14.6579 20 15.4686 19.6839 16.0664 19.1213C16.6642 18.5587 17 17.7956 17 17V3C17 2.20435 16.6642 1.44129 16.0664 0.87868C15.4686 0.316071 14.6579 0 13.8125 0Z"
+                  fill="white" />
               </svg>
               <span class="login_text" i18n>Quitter</span></button>
+          </div>
         </div>
-      </div>
       </div>
       <!-- <button class="menu_usi" mat-button color="primary" (click)="select('EcoleRoller')">Ecole de Roller</button>
       <button class="menu_usi" mat-button color="primary" (click)="select('RollerSoccer')">Roller Soccer</button>
