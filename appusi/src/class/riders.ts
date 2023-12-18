@@ -4,12 +4,6 @@ import { Seance } from "./seance";
 import { Subject } from 'rxjs';
 
 export class Rider {
-
-
-
-
-
-
   public ToLienGroupe(): Lien_Groupe {
     let LG = new Lien_Groupe();
     LG.objet_id = this.id;

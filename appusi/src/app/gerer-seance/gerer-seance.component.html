@@ -1,18 +1,46 @@
 <div class="container">
-  <div class="row" *ngIf="!editMode && (est_admin || est_prof)">
+  <div class="row" *ngIf="est_admin">
+    <div class="button_group">
+      <button type="button" class="button outline_action_button" (click)="Creer()">
+        <svg width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#plus" style="fill:green"></use>
+        </svg>
+        Créer
+      </button>
+      <button type="button" (click)="afficher_menu_admin ? afficher_menu_admin = false : afficher_menu_admin = true"
+        class="button outline_login_button">
+        <svg *ngIf="!afficher_menu_admin" width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:blue"></use>
+        </svg>
+        <svg *ngIf="afficher_menu_admin" width="20" height="20">
+          <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:blue"></use>
+        </svg>
+        Vue administrateur
+      </button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="afficher_menu_admin">
     <div class="col-12">
       <div class="card mb-3">
         <div class="card-header text-bg-ivry ">Menu administrateur</div>
         <div class="card-body">
           <div class="row">
             <div class="col-6">
-              <button type="button" class="btn btn-outline-success" (click)="creerSeance()">Créer</button>
+              <button type="button" class="button outline_action_button" (click)="Creer(true)">
+                <svg width="20" height="20">
+                  <use xlink:href=".\assets\liste.svg#plus" style="fill:green"></use>
+                </svg>
+                Créer une série de séances
+              </button>
+              <button type="button" class="btn btn-outline-success" (click)="TerminerSeance()">Terminer les séances
+                passés</button>
             </div>
             <div class="col-4">
               <label for="seasons" class="form-label">Choisir une saison</label>
               <select id="seasons" class="form-control" [(ngModel)]="season_id" placeholder="Choisir la saison">
                 <!-- Options pour les professeurs -->
-                <ng-container *ngFor="let season of seasons">
+                <ng-container *ngFor="let season of list_saison">
                   <option [value]="season.key">{{season.value}}</option>
                 </ng-container>
               </select>
@@ -28,51 +56,246 @@
   </div>
   <div *ngIf="!editMode">
     <h2>Liste des séances</h2>
-    <table *ngIf="listeSeances && listeSeances.length > 0">
+    <table style="font-size: x-small;" *ngIf="list_seance_VM && list_seance_VM.length > 0">
       <thead>
         <tr>
-          <th>Cours</th>
-          <th>Date de la séance</th>
+          <th class="filtered_th">
+            <div class="filtered_th_head">
+              <span i18n>Cours</span>
+              <svg class="svg" *ngIf="sort_cours === 'NO'" (click)="Sort('ASC', 'cours')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_cours === 'ASC'" (click)="Sort('DESC', 'cours')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_cours === 'DESC'" (click)="Sort('NO', 'cours')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
+              </svg>
+
+              <svg class="svg" *ngIf="!filter_active_cours" (click)="filter_active_cours = true" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#filter" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="filter_active_cours" (click)="filter_active_cours = false; filter_cours= null"
+                width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#filter_off" style="fill:black"></use>
+              </svg>
+            </div>
+            <div *ngIf="filter_active_cours" class="filtered_th_filter">
+              <select style="width: fit-content;" class="select_jecha">
+                <ng-container (ngModel)="filter_cours" *ngFor="let cours of listeCours">
+                  <option style="font-size: xx-small;" [value]="cours.id">{{cours.nom}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </th>
+          <th class="filtered_th">
+            <div class="filtered_th_head">
+              <span i18n>Libellé</span>
+              <svg class="svg" *ngIf="sort_libelle === 'NO'" (click)="Sort('ASC', 'libelle')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_libelle === 'ASC'" (click)="Sort('DESC', 'libelle')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_libelle === 'DESC'" (click)="Sort('NO', 'libelle')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
+              </svg>
+
+              <svg class="svg" *ngIf="!filter_active_libelle" (click)="filter_active_libelle = true" width="20"
+                height="20">
+                <use xlink:href=".\assets\liste.svg#filter" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="filter_active_libelle"
+                (click)="filter_active_libelle = false; filter_libelle= null" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#filter_off" style="fill:black"></use>
+              </svg>
+            </div>
+            <div *ngIf="filter_active_libelle" class="filtered_th_filter">
+              <input style="width: fit-content;" class="input_jecha" i18n-placeholder
+                placeholder="Filtre sur le libellé" type="text" [(ngModel)]="filter_libelle">
+            </div>
+          </th>
+
+          <th class="filtered_th">
+            <div class="filtered_th_head">
+              <span i18n>Date de la séance</span>
+              <svg class="svg" *ngIf="sort_date === 'NO'" (click)="Sort('ASC', 'date')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sorting" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_date === 'ASC'" (click)="Sort('DESC', 'date')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_asc" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="sort_date === 'DESC'" (click)="Sort('NO', 'date')" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#sort_desc" style="fill:black"></use>
+              </svg>
+
+              <svg class="svg" *ngIf="!filter_active_date" (click)="filter_active_date = true" width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#filter" style="fill:black"></use>
+              </svg>
+              <svg class="svg" *ngIf="filter_active_date" (click)="filter_active_date = false; filter_date= null"
+                width="20" height="20">
+                <use xlink:href=".\assets\liste.svg#filter_off" style="fill:black"></use>
+              </svg>
+            </div>
+            <div *ngIf="filter_active_libelle" class="filtered_th_filter">
+              <input style="width: fit-content;" class="input_jecha" i18n-placeholder placeholder="Filtre sur la date"
+                type="date" [(ngModel)]="filter_date">
+            </div>
+          </th>
           <th>Heure de début</th>
           <th>Durée (en minutes)</th>
           <th>Lieu</th>
           <th>Statut</th>
           <th>Professeurs</th>
           <th>Âge requis</th>
-          <th>Action</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let seance of listeSeances">
-        <tr [title]="seance.info_seance" style="cursor: pointer;" (click)="editerSeance(seance)">
-          <td>{{ seance.libelle }}</td>
-          <td>{{ seance.date_seance | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ seance.heure_debut }}</td>
-          <td>{{ seance.duree_cours }}</td>
-          <td>{{ seance.lieu }}</td>
-          <td>{{ seance.statut }}</td>
-          <td>
-            <ul>
-              <ng-container *ngFor="let profId of seance.professeurs">
-                <li> {{profId.value}}</li>
+      <tbody>
+        <ng-template ngFor let-item [ngForOf]="list_seance_VM">
+
+          <tr [title]="item.info_seance">
+            <td>
+              <ng-container (ngModel)="filter_cours" *ngFor="let cours of listeCours">
+                <ng-container *ngIf="item.cours==cours.id">{{cours.nom}}
+                </ng-container>
               </ng-container>
-            </ul>
+            </td>
+            <td>
+              <div (click)="item.editing = true" *ngIf="!item.editing">
+                <span style="cursor: pointer;">{{item.libelle}}</span>
+              </div>
+              <div *ngIf="item.editing">
+                <input style="width: fit-content;"
+                  [class]="item.valid.libelle ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                  placeholder="Libellé de la séance" type="text" [(ngModel)]="item.libelle">
+                <small *ngIf="!item.valid.libelle" class="small_jecha" i18n>Le libelle doit faire au moins 6
+                  caractères</small>
+
+              </div>
+            </td>
+            <td>
+              <div (click)="item.editing = true" *ngIf="!item.editing">
+                <span style="cursor: pointer;">{{ item.date_seance | date: 'dd/MM/yyyy' }}</span>
+              </div>
+              <div *ngIf="item.editing">
+                <input style="width: fit-content;"
+                  [class]="item.valid.libelle ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                  placeholder="Date de la séance" type="date" [(ngModel)]="item.libelle">
+                <small *ngIf="!item.valid.libelle" class="small_jecha" i18n>La date doit être saisie</small>
+
+              </div>
+            </td>
+            <td>
+              <div (click)="item.editing = true" *ngIf="!item.editing">
+                <span style="cursor: pointer;">{{item.heure_debut}}</span>
+              </div>
+              <div *ngIf="item.editing">
+                <input style="width: fit-content;"
+                  [class]="item.valid.heure ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                  placeholder="Heure de la séance" type="time" [(ngModel)]="item.heure_debut">
+                <small *ngIf="!item.valid.heure" class="small_jecha" i18n>L'heure doit faire entre 3 et 10 caractères
+                  caractères</small>
+
+              </div>
+            </td>
+            <td>
+              <div (click)="item.editing = true" *ngIf="!item.editing">
+                <span style="cursor: pointer;">{{item.duree_seance}}</span>
+              </div>
+              <div *ngIf="item.editing">
+                <input style="width: fit-content;"
+                  [class]="item.valid.heure ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                  placeholder="Durée de la séance" type="number" min="0" max="2880" [(ngModel)]="item.duree_seance">
+                <small *ngIf="!item.valid.heure" class="small_jecha" i18n>La durée doit être inférieure 2 jours </small>
+
+              </div>
+            </td>
+            <td>
+              <div (click)="item.editing = true" *ngIf="!item.editing">
+                <ng-container *ngFor="let lieu of listelieu">
+                  <ng-container *ngIf="item.lieu_id==lieu.key"><span style="cursor: pointer;">{{lieu.value}}</span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <div *ngIf="item.editing">
+                <select style="width: fit-content;" class="select_jecha">
+                  <ng-container [(ngModel)]="item.lieu_id" *ngFor="let lieu of listelieu">
+                    <option style="font-size: xx-small;" [value]="lieu.key">{{lieu.value}}</option>
+                  </ng-container>
+                </select>
+                <small *ngIf="!item.valid.lieu" class="small_jecha" i18n>Le lieu doit être saisi </small>
+
+              </div>
+            </td>
+            <td> <div (click)="item.editing = true" *ngIf="!item.editing"><span style="cursor: pointer;">{{item.statut}}</span>
+            </div>
+            <div *ngIf="item.editing">
+              <select class="select_jecha" id="statut" [(ngModel)]="item.statut" i18n-placeholder placeholder="Statut">
+                <option value="prévue">Prévue</option>
+                <option value="réalisée">Réalisée</option>
+                <option value="annulée">Annulée</option>
+              </select>
+            </div>
           </td>
-          <td>{{ seance.age_requis }} à {{seance.age_maximum}}</td>
-          <td>
-            <button class="btn btn-outline-danger" (click)="supprimerSeance(seance)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-trash3-fill"
-                viewBox="0 0 16 16">
-                <path
-                  d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
-              </svg>
-            </button>
-          </td>
-        </tr>
-      </ng-container>
+            <td>
+              <ul>
+                <ng-container *ngFor="let profId of item.professeurs">
+                  <li> {{profId.value}}</li>
+                </ng-container>
+              </ul>
+            </td>
+            <td>{{ item.age_requis }} à {{item.age_maximum}}</td>
+            <td>
+              <div *ngIf="item.seance_id>0 && item.editing" class="button_group">
+                <button i18n-title title="Recharger" class="outline_quit_button button" type="button"
+                  (click)="Reinit(item)" i18n>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M15.3972 0.00312185H10.1361V1.84553H15.3972C17.2097 1.84553 18.6854 3.91272 18.6854 6.45156C18.6854 8.99041 17.2097 11.0576 15.3972 11.0576H2.51679L6.65463 5.26137L5.72605 3.95694L-0.00063026 11.9788L5.72605 20.0007L6.65595 18.6981L2.51679 12.9H15.3972C17.9357 12.9 20.0007 10.0074 20.0007 6.45156C20.0007 2.89571 17.9357 0.00312185 15.3972 0.00312185Z"
+                      fill="red" />
+                  </svg>
+                </button>
+                <button i18n-title title="Sauvegarder"
+                  [class]="item.valid.control ? 'outline_action_button button' : 'disabled_button'"
+                  [disabled]="!item.valid.control" type="button" (click)="Save(item)"><svg width="20" height="20"
+                    viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M2.99656 0.00317383C2.20353 0.00713837 1.44406 0.323637 0.882952 0.884041C0.32184 1.44445 0.00435485 2.20351 -0.000610352 2.99653V17.0036C-0.000610352 18.6476 1.35246 20.0007 2.99656 20.0007H17.0035C17.7972 19.9967 18.5572 19.6797 19.1184 19.1185C19.6796 18.5572 19.9967 17.7972 20.0006 17.0036V4.99979C20.0029 4.73422 19.8996 4.47857 19.7134 4.28917L15.7071 0.286685C15.584 0.165562 15.4317 0.0782669 15.2649 0.0333934L2.99656 0.00317383ZM2.99656 1.99882H4.00191V6.99913C4.00191 7.54716 4.44789 7.99315 4.9997 7.99315H15.0003C15.264 7.99216 15.5167 7.88719 15.7035 7.7011C15.8903 7.51501 15.9961 7.2628 15.9981 6.99913V3.40853L18.0013 5.41168V17.0036C18.0049 17.1356 17.9816 17.2669 17.9328 17.3896C17.8839 17.5123 17.8105 17.6238 17.7172 17.7172C17.6238 17.8106 17.5123 17.8839 17.3896 17.9327C17.2669 17.9816 17.1355 18.0049 17.0035 18.0013H2.99656C2.86484 18.0044 2.73387 17.9807 2.61161 17.9316C2.48935 17.8825 2.37835 17.8091 2.28537 17.7158C2.19238 17.6225 2.11936 17.5111 2.07074 17.3887C2.02212 17.2662 1.99891 17.1352 2.00254 17.0036V2.99653C2.00254 2.4296 2.42585 1.99882 2.99656 1.99882ZM6.00128 1.99882H13.9988V6.00511H6.00128V1.99882ZM4.9997 9.99629C4.86818 9.99679 4.73803 10.0231 4.6167 10.0739C4.49538 10.1247 4.38524 10.1989 4.29259 10.2923C4.19994 10.3856 4.12658 10.4964 4.0767 10.6181C4.02683 10.7398 4.00141 10.8701 4.00191 11.0016V15.0004C4.00191 15.5522 4.44789 15.9943 4.9997 15.9981H15.0003C15.2647 15.9971 15.5179 15.8917 15.7048 15.7048C15.8917 15.5179 15.9971 15.2647 15.9981 15.0004V11.0016C15.9986 10.8701 15.9732 10.7398 15.9233 10.6181C15.8735 10.4964 15.8001 10.3856 15.7075 10.2923C15.6148 10.1989 15.5047 10.1247 15.3833 10.0739C15.262 10.0231 15.1319 9.99679 15.0003 9.99629H4.9997ZM6.00128 11.9994H13.9988V13.9988H6.00128V11.9994Z"
+                      fill="green" />
+                  </svg>
+                </button>
+              </div>
+              <div *ngIf="item.seance_id>0 && !item.editing" class="button_group">
+                <button i18n-title title="Supprimer" class="outline_quit_button button" type="button"
+                  (click)="Delete(item)" i18n><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M14.7498 7.46597L14.4277 17.2159C14.4002 18.0509 14.0485 18.8424 13.4471 19.4223C12.8456 20.0022 12.0419 20.325 11.2064 20.322H5.08603C4.2511 20.325 3.44783 20.0027 2.84649 19.4235C2.24516 18.8442 1.89304 18.0536 1.86478 17.2191L1.54265 7.46597C1.5356 7.25239 1.61369 7.04475 1.75973 6.88874C1.90577 6.73273 2.10781 6.64113 2.32139 6.63408C2.53497 6.62703 2.74261 6.70512 2.89862 6.85116C3.05463 6.9972 3.14623 7.19924 3.15328 7.41282L3.47541 17.1652C3.49145 17.5815 3.66819 17.9754 3.96852 18.2642C4.26885 18.5529 4.6694 18.7141 5.08603 18.7138H11.2064C11.6236 18.7141 12.0246 18.5525 12.325 18.263C12.6254 17.9736 12.8018 17.5788 12.817 17.162L13.1392 7.41282C13.1462 7.19924 13.2378 6.9972 13.3938 6.85116C13.5498 6.70512 13.7575 6.62703 13.9711 6.63408C14.1846 6.64113 14.3867 6.73273 14.5327 6.88874C14.6788 7.04475 14.7568 7.25239 14.7498 7.46597ZM15.8152 4.22136C15.8152 4.43494 15.7304 4.63978 15.5794 4.7908C15.4283 4.94183 15.2235 5.02667 15.0099 5.02667H1.28334C1.06976 5.02667 0.864924 4.94183 0.713898 4.7908C0.562872 4.63978 0.478027 4.43494 0.478027 4.22136C0.478027 4.00778 0.562872 3.80294 0.713898 3.65192C0.864924 3.50089 1.06976 3.41605 1.28334 3.41605H3.77981C4.03498 3.41673 4.28127 3.32246 4.47076 3.15158C4.66025 2.98069 4.77938 2.74542 4.80498 2.49155C4.86441 1.896 5.14342 1.34392 5.58766 0.942852C6.0319 0.541787 6.60954 0.320473 7.20804 0.32203H9.08442C9.68291 0.320473 10.2606 0.541787 10.7048 0.942852C11.149 1.34392 11.428 1.896 11.4875 2.49155C11.5131 2.74542 11.6322 2.98069 11.8217 3.15158C12.0112 3.32246 12.2575 3.41673 12.5126 3.41605H15.0091C15.2227 3.41605 15.4275 3.50089 15.5786 3.65192C15.7296 3.80294 15.8144 4.00778 15.8144 4.22136H15.8152ZM6.203 3.41605H10.0911C9.98524 3.17424 9.91602 2.91803 9.8857 2.65583C9.86575 2.45733 9.77283 2.27329 9.62494 2.13939C9.47705 2.00549 9.28473 1.93124 9.08522 1.93105H7.20884C7.00934 1.93124 6.81701 2.00549 6.66912 2.13939C6.52123 2.27329 6.42831 2.45733 6.40836 2.65583C6.37778 2.91807 6.3091 3.17429 6.203 3.41605ZM7.01395 15.6174V8.76011C7.01395 8.54653 6.92911 8.34169 6.77808 8.19067C6.62706 8.03964 6.42222 7.9548 6.20864 7.9548C5.99506 7.9548 5.79022 8.03964 5.6392 8.19067C5.48817 8.34169 5.40333 8.54653 5.40333 8.76011V15.6206C5.40333 15.8342 5.48817 16.039 5.6392 16.19C5.79022 16.341 5.99506 16.4259 6.20864 16.4259C6.42222 16.4259 6.62706 16.341 6.77808 16.19C6.92911 16.039 7.01395 15.8342 7.01395 15.6206V15.6174ZM10.8907 15.6174V8.76011C10.8907 8.54653 10.8059 8.34169 10.6549 8.19067C10.5038 8.03964 10.299 7.9548 10.0854 7.9548C9.87184 7.9548 9.66701 8.03964 9.51598 8.19067C9.36495 8.34169 9.28011 8.54653 9.28011 8.76011V15.6206C9.28011 15.8342 9.36495 16.039 9.51598 16.19C9.66701 16.341 9.87184 16.4259 10.0854 16.4259C10.299 16.4259 10.5038 16.341 10.6549 16.19C10.8059 16.039 10.8907 15.8342 10.8907 15.6206V15.6174Z"
+                      fill="red" />
+                  </svg>
+
+                </button>
+                <button i18n-title title="Editer" class="outline_login_button button" type="button"
+                  (click)="Edit(item)"><svg width="16" height="21" viewBox="0 0 16 21" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M2.7147 20.3221H12.3005C12.8946 20.3199 13.4638 20.0104 13.8831 19.4616C14.3024 18.9127 14.5376 18.1694 14.5371 17.3946V11.1138C14.5371 10.8928 14.4698 10.6808 14.35 10.5245C14.2301 10.3682 14.0676 10.2804 13.8981 10.2804C13.7286 10.2804 13.5661 10.3682 13.4462 10.5245C13.3264 10.6808 13.259 10.8928 13.259 11.1138V17.3946C13.2599 17.7275 13.1594 18.0472 12.9797 18.2835C12.8 18.5199 12.5557 18.6537 12.3005 18.6554H2.7147C2.45945 18.6537 2.21516 18.5199 2.03545 18.2835C1.85573 18.0472 1.75528 17.7275 1.75613 17.3946V4.91627C1.75528 4.58341 1.85573 4.26371 2.03545 4.02733C2.21516 3.79095 2.45945 3.6572 2.7147 3.65544H7.50758C7.67707 3.65544 7.83961 3.56764 7.95946 3.41136C8.0793 3.25508 8.14663 3.04312 8.14663 2.8221C8.14663 2.60109 8.0793 2.38913 7.95946 2.23285C7.83961 2.07657 7.67707 1.98877 7.50758 1.98877H2.7147C2.12058 1.99098 1.5514 2.30046 1.13207 2.84931C0.712739 3.39815 0.477518 4.14152 0.478028 4.91627V17.3946C0.477518 18.1694 0.712739 18.9127 1.13207 19.4616C1.5514 20.0104 2.12058 20.3199 2.7147 20.3221Z"
+                      fill="blue" />
+                    <path
+                      d="M6.52026 9.10869L6.01605 12.1204C5.99323 12.257 5.99713 12.3989 6.02739 12.533C6.05766 12.6671 6.11331 12.7891 6.18923 12.8879C6.2662 12.9841 6.35982 13.0547 6.46217 13.0937C6.56451 13.1328 6.67256 13.139 6.77716 13.112L9.08157 12.4529C9.20123 12.4186 9.31081 12.3402 9.39726 12.227L15.2216 4.63202C15.3996 4.39987 15.5409 4.12425 15.6372 3.82091C15.7336 3.51757 15.7832 3.19244 15.7832 2.8641C15.7832 2.53576 15.7336 2.21064 15.6372 1.9073C15.5409 1.60395 15.3996 1.32834 15.2216 1.09619C14.8565 0.6413 14.3711 0.387451 13.8661 0.387451C13.3612 0.387451 12.8758 0.6413 12.5107 1.09619L6.69536 8.69869C6.60808 8.81066 6.5473 8.95297 6.52026 9.10869ZM13.4143 2.27535C13.5359 2.12347 13.6978 2.03868 13.8661 2.03868C14.0345 2.03868 14.1964 2.12347 14.318 2.27535C14.4362 2.43254 14.5024 2.64393 14.5024 2.8641C14.5024 3.08427 14.4362 3.29566 14.318 3.45285L13.8661 4.04202L12.9625 2.86369L13.4143 2.27535ZM7.72679 9.70369L12.0557 4.04452L12.9504 5.21702L8.61954 10.8779L7.47245 11.2062L7.72679 9.70369Z"
+                      fill="blue" />
+                  </svg>
+
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
       </tbody>
     </table>
-    <p *ngIf="!listeSeances || listeSeances.length === 0">Pas de séances disponibles</p>
+    <p *ngIf="!list_seance_VM || list_seance_VM.length === 0">Pas de séances disponibles</p>
   </div>
 
   <!-- Formulaire d'édition/création de séance -->
@@ -96,7 +319,7 @@
 
               <div class="form-group">
                 <label for="date_seance">Date de la séance <p *ngIf="editSeance.cours">&nbsp;({{jour_semaine}})</p>
-                  </label>
+                </label>
                 <input class="form-control" id="date_seance" type="date" [(ngModel)]="editSeance.date_seance">
               </div>
               <div class="form-group">
@@ -111,7 +334,7 @@
               </div>
               <div class="form-group">
                 <label for="date_seance">Durée de la séance</label>
-                <input class="form-control" id="duree_cours" type="number" [(ngModel)]="editSeance.duree_cours">
+                <input class="form-control" id="duree_cours" type="number" [(ngModel)]="editSeance.duree_seance">
               </div>
               <div class="form-group">
                 <label for="lieu">Lieu</label>
@@ -145,40 +368,42 @@
               </div>
               <div class="form-group">
                 <label for="age_minimum">Age minimum :</label>
-                <input class="form-control" min="1" max="99" matInput type="number" id="age_minimum" [(ngModel)]="editSeance.age_requis"
-                  placeholder="Age requis">
+                <input class="form-control" min="1" max="99" matInput type="number" id="age_minimum"
+                  [(ngModel)]="editSeance.age_requis" placeholder="Age requis">
               </div>
               <div class="form-group">
                 <label for="age_maximum">Age maximum :</label>
-                <input class="form-control" min="1" max="99" matInput type="number" id="age_maximum" [(ngModel)]="editSeance.age_maximum"
-                  placeholder="Age maximum">
+                <input class="form-control" min="1" max="99" matInput type="number" id="age_maximum"
+                  [(ngModel)]="editSeance.age_maximum" placeholder="Age maximum">
               </div>
               <div class="form-group">
                 <label for="place_maximum">Place maximum :</label>
-                <mat-slide-toggle class="form-control" [checked]="editSeance.place_maximum == -1 ? true : false" 
-                (change)="editSeance.place_maximum == -1 ? editSeance.place_maximum = 25 : editSeance.place_maximum = -1" >
-                <span *ngIf="editSeance.place_maximum == -1">Places illimitées</span>
-                <span *ngIf="editSeance.place_maximum > -1">Places limitées</span>
-              </mat-slide-toggle>
-                <input *ngIf="editSeance.place_maximum>0" class="form-control" matInput type="number" id="place_maximum" min="1" max="99" [(ngModel)]="editSeance.place_maximum"
+                <mat-slide-toggle class="form-control" [checked]="editSeance.place_maximum == -1 ? true : false"
+                  (change)="editSeance.place_maximum == -1 ? editSeance.place_maximum = 25 : editSeance.place_maximum = -1">
+                  <span *ngIf="editSeance.place_maximum == -1">Places illimitées</span>
+                  <span *ngIf="editSeance.place_maximum > -1">Places limitées</span>
+                </mat-slide-toggle>
+                <input *ngIf="editSeance.place_maximum>0" class="form-control" matInput type="number" id="place_maximum"
+                  min="1" max="99" [(ngModel)]="editSeance.place_maximum"
                   placeholder="Laissez vide si pas de place maximum">
               </div>
               <div class="form-group">
                 <label for="place_maximum">Convocation :</label>
-                <mat-slide-toggle class="form-control" [checked]="editSeance.convocation_nominative == true ? true : false" 
-                (change)="editSeance.convocation_nominative == true ? editSeance.convocation_nominative = false : editSeance.convocation_nominative = true" >
-                <span *ngIf="editSeance.convocation_nominative == true">Convocation nominative</span>
-                <span *ngIf="editSeance.convocation_nominative == false">Groupe entier convoqué</span>
-              </mat-slide-toggle>
+                <mat-slide-toggle class="form-control"
+                  [checked]="editSeance.convocation_nominative == true ? true : false"
+                  (change)="editSeance.convocation_nominative == true ? editSeance.convocation_nominative = false : editSeance.convocation_nominative = true">
+                  <span *ngIf="editSeance.convocation_nominative == true">Convocation nominative</span>
+                  <span *ngIf="editSeance.convocation_nominative == false">Groupe entier convoqué</span>
+                </mat-slide-toggle>
               </div>
               <div class="form-group">
                 <label for="place_maximum">Essai :</label>
-                <mat-slide-toggle class="form-control" [checked]="editSeance.essai_possible == true ? true : false" 
-                (change)="editSeance.essai_possible == true ? editSeance.essai_possible = false : editSeance.essai_possible = true" >
-                <span *ngIf="editSeance.essai_possible == true">Essai possible</span>
-                <span *ngIf="editSeance.essai_possible == false">Pas d'essai pendant cette séance</span>
-              </mat-slide-toggle>
-            </div>
+                <mat-slide-toggle class="form-control" [checked]="editSeance.essai_possible == true ? true : false"
+                  (change)="editSeance.essai_possible == true ? editSeance.essai_possible = false : editSeance.essai_possible = true">
+                  <span *ngIf="editSeance.essai_possible == true">Essai possible</span>
+                  <span *ngIf="editSeance.essai_possible == false">Pas d'essai pendant cette séance</span>
+                </mat-slide-toggle>
+              </div>
               <div class="form-group">
                 <label for="professeurs">Groupes</label>
                 <br />
@@ -187,7 +412,7 @@
                       class="bi bi-x-square"></i></h5>
                 </ng-container><br />
                 <label for="statut">Groupes disponibles</label>
-                <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id" >
+                <select class="form-control" id="professeurs" [(ngModel)]="current_groupe_id">
                   <ng-container *ngFor="let ni of groupe_dispo	">
                     <option [value]="ni.id">{{ ni.nom }}</option>
                   </ng-container>
@@ -195,18 +420,19 @@
                 <button type="button" class="btn btn-outline-success" (click)="AjouterGroupe()">Ajouter</button>
               </div>
             </div>
-             
-              <div class="form-group">
-                <label for="place_maximum">Info séance : </label>
-                <textarea class="form-control" [(ngModel)]="editSeance.info_seance" aria-label="Info pour la séance"></textarea>
-              </div>
-             
-              
-              <button class="btn btn-outline-success" [disabled]="!coursselectionne" (click)="soumettreSeance()">
-                {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour" }}
-              </button>
-              <button class="btn btn-outline-danger" (click)="annulerEdition()">Annuler</button>
-              <button *ngIf="est_admin && editSeance.seance_id > 0" class="btn btn-outline-info"
-                (click)="VoirMaSeance()">Vue professeur
-              </button>
+
+            <div class="form-group">
+              <label for="place_maximum">Info séance : </label>
+              <textarea class="form-control" [(ngModel)]="editSeance.info_seance"
+                aria-label="Info pour la séance"></textarea>
             </div>
+
+
+            <button class="btn btn-outline-success" [disabled]="!coursselectionne" (click)="Save(editSeance)">
+              {{ editSeance.seance_id === 0 ?"Créer" : "Mettre à jour" }}
+            </button>
+            <button class="btn btn-outline-danger" (click)="Retour()">Annuler</button>
+            <button *ngIf="est_admin && editSeance.seance_id > 0" class="btn btn-outline-info"
+              (click)="VoirMaSeance()">Vue professeur
+            </button>
+          </div>
