@@ -66,6 +66,7 @@ export class GererSeanceComponent implements OnInit {
   filter_lieu: KeyValuePair;
   filter_active_lieu: boolean = false;
   sort_lieu: "NO" | "ASC" | "DESC" = "NO";
+  listeStatuts: StatutSeance[];
 
   constructor(
     private router: Router,
@@ -90,6 +91,7 @@ export class GererSeanceComponent implements OnInit {
       this.router.navigate(['/menu-inscription']);
       return;
     }
+    this.listeStatuts  = Object.keys(StatutSeance).map(key => StatutSeance[key]);
     this.grServ.GetAll().then((groupes) => {
       this.list_groupe = groupes;
       this.coursservice.GetSaison().then((saisons) => {

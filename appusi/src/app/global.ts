@@ -33,6 +33,12 @@ export class StaticClass{
     date.setHours(12);
     return date;
   }
+   convertListToString(list: string[]): string {
+    return list.join(',');
+  }
+  convertStringToList(inputString: string): string[] {
+    return inputString.split(',');
+  }
 
   
 }

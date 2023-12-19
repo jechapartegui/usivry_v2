@@ -1,0 +1,16 @@
+<div class="" (click)="afficher_mail ? afficher_mail = false : afficher_mail = true">Afficher les mails</div>
+<div [class]="afficher_mail ? 'display_mail' : 'dont_display_mail'">
+<div class="row">
+ <div class="col-md-3">
+    <ul>
+        <ng-container *ngFor="let mail of liste_mail">
+        </ng-container>
+    </ul>
+ </div>
+ <div class="col-md-9">
+    
+ </div>
+
+</div>
+
+</div>

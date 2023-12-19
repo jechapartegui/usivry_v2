@@ -22,9 +22,11 @@
 
   <div class="row" *ngIf="afficher_menu_admin">
     <div class="col-12">
-      <div class="card mb-3">
-        <div class="card-header text-bg-ivry ">Menu administrateur</div>
-        <div class="card-body">
+      <div class="title_content_subcard_jecha">
+        <span class="title_content_text_subcard_jecha" i18n>Menu administrateur </span>
+      </div>
+      <hr class="line">
+      <div class="content_card_jecha_center">
           <div class="row">
             <div class="col-6">
               <button type="button" class="button outline_action_button" (click)="Creer(true)">
@@ -33,12 +35,12 @@
                 </svg>
                 Créer une série de séances
               </button>
-              <button type="button" class="btn btn-outline-success" (click)="TerminerSeance()">Terminer les séances
+              <button type="button" class="button outline_action_button" (click)="TerminerSeance()">Terminer les séances
                 passés</button>
             </div>
             <div class="col-4">
               <label for="seasons" class="form-label">Choisir une saison</label>
-              <select id="seasons" class="form-control" [(ngModel)]="season_id" placeholder="Choisir la saison">
+              <select id="seasons" class="select_jecha" [(ngModel)]="season_id" placeholder="Choisir la saison">
                 <!-- Options pour les professeurs -->
                 <ng-container *ngFor="let season of list_saison">
                   <option [value]="season.key">{{season.value}}</option>
@@ -181,9 +183,9 @@
               </div>
               <div *ngIf="item.editing">
                 <input style="width: fit-content;"
-                  [class]="item.valid.libelle ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
-                  placeholder="Date de la séance" type="date" [(ngModel)]="item.libelle">
-                <small *ngIf="!item.valid.libelle" class="small_jecha" i18n>La date doit être saisie</small>
+                  [class]="item.valid.date ? 'input_jecha' : 'input_jecha input_error'" i18n-placeholder
+                  placeholder="Date de la séance" type="date" [(ngModel)]="item.date_seance">
+                <small *ngIf="!item.valid.date" class="small_jecha" i18n>La date doit être saisie</small>
 
               </div>
             </td>
@@ -232,10 +234,10 @@
             <td> <div (click)="item.editing = true" *ngIf="!item.editing"><span style="cursor: pointer;">{{item.statut}}</span>
             </div>
             <div *ngIf="item.editing">
-              <select class="select_jecha" id="statut" [(ngModel)]="item.statut" i18n-placeholder placeholder="Statut">
-                <option value="prévue">Prévue</option>
-                <option value="réalisée">Réalisée</option>
-                <option value="annulée">Annulée</option>
+              <select id="statut" [(ngModel)]="item.statut" i18n-placeholder placeholder="Statut">
+                <ng-container *ngFor="let statut of listeStatuts">
+                  <option style="font-size: xx-small;" [value]="statut">{{statut.toString()}}</option>
+                </ng-container>
               </select>
             </div>
           </td>

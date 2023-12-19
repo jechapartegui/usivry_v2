@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MailData } from 'src/class/mail';
 import { ErrorService } from 'src/services/error.service';
 import { SeancesService } from 'src/services/seances.service';
 
@@ -29,7 +30,7 @@ export class SimulationMailComponent {
       })
     }
   }
-  Send(mail:MailObjet) {
+  Send(mail:MailData) {
     let errorService = ErrorService.instance;
     let confirmation = window.confirm("Voulez-vous envoyer le message à tous les adhérents ? Cette action entrainera l'envoi de nombreux mails ?")
     if (confirmation) {
@@ -45,8 +46,4 @@ export class SimulationMailComponent {
     this.dialogRef.close();
   }
 }
-export class MailObjet {
-  public subject: string;
-  public to: string;
-  public content: string;
-}
+
