@@ -20,7 +20,21 @@ export class MaSeanceComponent implements OnInit {
   text_recherche: string = "";
   liste_adherent: KeyValuePair[];
   messageAnnulation: string = "";
+  afficher_eleve:boolean=true;
+  afficher_present:boolean=true;
+  afficher_absent:boolean=true;
   constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv: RidersService, private route: ActivatedRoute) { }
+  
+  NbListe() : string {
+    return this.Liste.filter(x => !x.statut_seance).length.toString();
+  }
+  NbListePresent() : string {
+    return "15"
+  }
+  NbListeAbsent() : string {
+    return "15"
+  }
+
   ngOnInit(): void {
     const errorService = ErrorService.instance;
     //virer tous les cas initules

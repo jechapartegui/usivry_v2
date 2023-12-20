@@ -68,15 +68,15 @@ export class EnvoiMailComponent implements OnInit {
     const errorService = ErrorService.instance;
     this.serviceMail.Save(amil.ToMailData()).then((mail) => {
       if (mail.id>0) {
-        const indexToUpdate = this.liste_mail.findIndex(m => m.subject === rider.id);
+        const indexToUpdate = this.liste_mail.findIndex(m => m.subject === mail.subject && m.content === mail.content);
         if (indexToUpdate !== -1) {
           // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-          this.list_rider[indexToUpdate] = rider.ToRider();
+          this.liste_mail[indexToUpdate] = mail;
         }
-        const indexToUpdateVM = this.list_rider_VM.findIndex(rider => rider.id === rider.id);
+        const indexToUpdateVM = this.liste_mail_VM.findIndex(m => m.subject === mail.subject && m.content === mail.content);
         if (indexToUpdateVM !== -1) {
           // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-          this.list_rider_VM[indexToUpdateVM] = rider;
+          this.liste_mail_VM[indexToUpdateVM] = new MailData_VM(mail);
         }
         errorService.OKMessage(this.action);
         errorService.emitChange(o);
