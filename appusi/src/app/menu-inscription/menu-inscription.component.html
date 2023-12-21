@@ -25,9 +25,9 @@
     </div>
     <div class="content_card_jecha">
       <div class="subcard_jecha" style="order: 0;">
-        <div class="title_content_subcard_jecha">
+        <div class="title_content_subcard_jecha" style="cursor: pointer;" (click)="accordion('inscription',rider.id)">
           <span class="title_content_text_subcard_jecha"> Mes inscriptions ({{rider.inscriptions.length}})</span>
-          <svg #arrows [id]="'arrow-inscription-' + rider.id" (click)="accordion('inscription',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+          <svg #arrows [id]="'arrow-inscription-' + rider.id"  class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <path
               d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"
@@ -98,10 +98,10 @@
       </div>
 
       <div class="subcard_jecha" style="order: 1;">
-        <div class="title_content_subcard_jecha">
+        <div class="title_content_subcard_jecha"  (click)="accordion('seance',rider.id)" style="cursor: pointer;">
           <span class="title_content_text_subcard_jecha"> Mes séances disponibles
             ({{rider.seances.length}})</span>
-          <svg #arrows [id]="'arrow-seance-' + rider.id" (click)="accordion('seance',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+          <svg #arrows [id]="'arrow-seance-' + rider.id" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <path
               d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"
@@ -178,9 +178,9 @@
         </div>
       </div>
       <div class="subcard_jecha" *ngIf="rider.est_prof" style="order: 2;">
-        <div class="title_content_subcard_jecha">
+        <div class="title_content_subcard_jecha" (click)="accordion('prof',rider.id)" style="cursor: pointer;">
           <span class="title_content_text_subcard_jecha">Professeurs</span>
-          <svg #arrows [id]="'arrow-prof-' + rider.id" (click)="accordion('prof',rider.id)" class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
+          <svg #arrows [id]="'arrow-prof-' + rider.id"  class="svg arrows" width="20" height="12" viewBox="0 0 20 12" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <path
               d="M20 10.5672C20.0001 10.7516 19.9458 10.932 19.8438 11.0854C19.7419 11.2388 19.5969 11.3584 19.4272 11.429C19.2575 11.4996 19.0708 11.5181 18.8907 11.482C18.7106 11.446 18.5451 11.3571 18.4153 11.2266L9.97699 2.7517L1.53864 11.2266C1.3611 11.3824 1.13118 11.4645 0.895577 11.4562C0.659972 11.4479 0.436337 11.3499 0.27008 11.182C0.103824 11.0141 0.00740794 10.789 0.000409421 10.5524C-0.0065891 10.3157 0.0763544 10.0852 0.232399 9.90774L9.32735 0.773366C9.41354 0.686705 9.5159 0.617956 9.62856 0.57105C9.74123 0.524144 9.86199 0.5 9.98395 0.5C10.1059 0.5 10.2267 0.524144 10.3393 0.57105C10.452 0.617956 10.5544 0.686705 10.6406 0.773366L19.7216 9.90774C19.809 9.99379 19.8786 10.0964 19.9264 10.2095C19.9742 10.3227 19.9992 10.4443 20 10.5672Z"

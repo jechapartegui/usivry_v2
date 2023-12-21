@@ -14,6 +14,7 @@ export class Inscription {
 export enum StatutPresence {
       Présent = "présent",
       Absent = "absent",
+      Convoqué = "convoqué",
       NonInscrit = "non inscrit",
   
 }

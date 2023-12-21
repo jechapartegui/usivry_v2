@@ -27,12 +27,12 @@
 
                 </div>
             </div>
-            <div class="title_content_subcard_jecha">
+            <div class="title_content_subcard_jecha" style="cursor: pointer;" (click)="afficher_eleve == true ? afficher_eleve = false : afficher_eleve = true">
                 <span class="title_content_text_subcard_jecha" i18n> Eleves disponibles ({{NbListe()}})</span>
-                <svg *ngIf="!afficher_eleve" width="20" (click)="afficher_eleve = true" height="20">
+                <svg *ngIf="!afficher_eleve" width="20"  height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
-                <svg *ngIf="afficher_eleve" width="20" height="20" (click)="afficher_eleve = false">
+                <svg *ngIf="afficher_eleve" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
             </div>
@@ -61,6 +61,8 @@
                                                 class="bi bi-check-circle-fill"></i>
                                             <i *ngIf="item.statut.toString() == 'absent'"
                                                 style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                <i *ngIf="item.statut.toString() == 'convoqué'"
+                                                style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
                                         </ng-container>
                                         <ng-container *ngIf="!item.statut">
                                             <i style="font-size: 2rem;color: gray;"
@@ -72,7 +74,7 @@
                                         <div class="button_group">
                                             <button i18n-title title="Se déclarer présent"
                                                 class="outline_action_button button" type="button"
-                                                (click)="UpdateStatut(item)">
+                                                (click)="UpdateStatut(item, true)">
                                                 <svg width="20" height="20">
                                                     <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
                                                 </svg>
@@ -80,7 +82,7 @@
                                             </button>
                                             <button i18n-title title="Se déclarer absent"
                                                 class="outline_quit_button button" type="button"
-                                                (click)="UpdateStatut(item)">
+                                                (click)="UpdateStatut(item,false)">
                                                 <svg width="20" height="20">
                                                     <use xlink:href=".\assets\liste.svg#pouce_rouge"></use>
                                                 </svg>
@@ -166,12 +168,12 @@
         </div>
 
         <div class="subcard_jecha" style="order: 0;">
-            <div class="title_content_subcard_jecha">
+            <div class="title_content_subcard_jecha"  style="cursor: pointer;" (click)="afficher_present == true ? afficher_present = false : afficher_present = true">
                 <span class="title_content_text_subcard_jecha" i18n> Elèves présents ({{NbListePresent()}})</span>
-                <svg *ngIf="!afficher_present" width="20" (click)="afficher_present = true" height="20">
+                <svg *ngIf="!afficher_present" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
-                <svg *ngIf="afficher_present" width="20" height="20" (click)="afficher_present = false">
+                <svg *ngIf="afficher_present" width="20" height="20" >
                     <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
             </div>
@@ -200,10 +202,12 @@
                                         <td>
                                             <ng-container *ngIf="present.statut">
                                                 <i *ngIf="present.statut.toString() == 'présent'"
-                                                    style="font-size: 2rem;color: green;"
-                                                    class="bi bi-check-circle-fill"></i>
-                                                <i *ngIf="present.statut.toString() == 'absent'"
-                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                style="font-size: 2rem;color: green;"
+                                                class="bi bi-check-circle-fill"></i>
+                                            <i *ngIf="present.statut.toString() == 'absent'"
+                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                <i *ngIf="present.statut.toString() == 'convoqué'"
+                                                style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
                                             </ng-container>
                                             <ng-container *ngIf="!present.statut">
                                                 <i style="font-size: 2rem;color: gray;"
@@ -212,24 +216,23 @@
 
                                         </td>
                                         <td>
-                                            <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group">
-
-                                                <input type="radio" [(ngModel)]="present.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(present)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio_present' + present.rider_id"
-                                                    [id]="'btnradio1_present' + present.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-success"
-                                                    [for]="'btnradio1_present' + present.rider_id">Présent</label>
-
-                                                <input type="radio" [(ngModel)]="present.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(present)" [value]="'absent'"
-                                                    class="btn-check" [name]="'btnradio_present' + present.rider_id"
-                                                    [id]="'btnradio2_present' + present.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-danger"
-                                                    [for]="'btnradio2_present' + present.rider_id">Absent</label>
-
-
+                                            <div class="button_group">
+                                                <button i18n-title title="Se déclarer présent"
+                                                    class="action_button button" type="button"
+                                                    >
+                                                    <svg width="20" height="20">
+                                                        <use xlink:href=".\assets\liste.svg#pouce_positif_blanc"></use>
+                                                    </svg>
+                                                    <span>Présent</span>
+                                                </button>
+                                                <button i18n-title title="Se déclarer absent"
+                                                    class="outline_quit_button button" type="button"
+                                                    (click)="UpdateStatut(present,false)">
+                                                    <svg width="20" height="20">
+                                                        <use xlink:href=".\assets\liste.svg#pouce_rouge"></use>
+                                                    </svg>
+                                                    <span>Absent</span>
+                                                </button>
                                             </div>
                                         </td>
                                         <td>{{present.contact_urgence}}</td>
@@ -308,12 +311,12 @@
             </div>
         </div>
         <div class="subcard_jecha" style="order: 0;">
-            <div class="title_content_subcard_jecha">
+            <div class="title_content_subcard_jecha"  style="cursor: pointer;" (click)="afficher_absent == true ? afficher_absent = false : afficher_absent = true">
                 <span class="title_content_text_subcard_jecha" i18n> Elèves absents ({{NbListeAbsent()}})</span>
-                <svg *ngIf="!afficher_absent" width="20" (click)="afficher_absent = true" height="20">
+                <svg *ngIf="!afficher_absent" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
-                <svg *ngIf="afficher_absent" width="20" height="20" (click)="afficher_absent = false">
+                <svg *ngIf="afficher_absent" width="20" height="20" >
                     <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
             </div>
@@ -346,10 +349,12 @@
                                         <td>
                                             <ng-container *ngIf="absent.statut">
                                                 <i *ngIf="absent.statut.toString() == 'présent'"
-                                                    style="font-size: 2rem;color: green;"
-                                                    class="bi bi-check-circle-fill"></i>
-                                                <i *ngIf="absent.statut.toString() == 'absent'"
-                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                style="font-size: 2rem;color: green;"
+                                                class="bi bi-check-circle-fill"></i>
+                                            <i *ngIf="absent.statut.toString() == 'absent'"
+                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                <i *ngIf="absent.statut.toString() == 'convoqué'"
+                                                style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
                                             </ng-container>
                                             <ng-container *ngIf="!absent.statut">
                                                 <i style="font-size: 2rem;color: gray;"
@@ -358,31 +363,23 @@
 
                                         </td>
                                         <td>
-                                            <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group">
-                                                <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                    [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
-                                                <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                    [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-success"
-                                                    [for]="'btnradio1_absent' + absent.rider_id">Présent</label>
-
-                                                <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                    [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
-                                                <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                    [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-danger"
-                                                    [for]="'btnradio2_absent' + absent.rider_id">Absent</label>
-
-
+                                            <div class="button_group">
+                                                <button i18n-title title="Se déclarer présent"
+                                                    class="outline_action_button button" type="button" (click)="UpdateStatut(absent,true)"
+                                                    >
+                                                    <svg width="20" height="20">
+                                                        <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
+                                                    </svg>
+                                                    <span>Présent</span>
+                                                </button>
+                                                <button i18n-title title="Se déclarer absent"
+                                                    class="quit_button button" type="button"
+                                                    >
+                                                    <svg width="20" height="20">
+                                                        <use xlink:href=".\assets\liste.svg#pouce_negatif_blanc"></use>
+                                                    </svg>
+                                                    <span>Absent</span>
+                                                </button>
                                             </div>
                                         </td>
                                         <td>{{absent.contact_urgence}}</td>
@@ -438,25 +435,23 @@
                                         </span>
                                     </div>
                                     <span>
-                                        <div class="btn-group" role="group"
-                                            aria-label="Basic radio toggle button group">
-                                            <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
-                                                class="btn-check" [name]="'btnradio' + absent.rider_id"
-                                                [id]="'btnradio1_item' + absent.rider_id" autocomplete="off">
-                                            <label class="btn btn-outline-success"
-                                                [for]="'btnradio1_item' + absent.rider_id">Présent</label>
-
-
-
-                                            <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                class="btn-check" [name]="'btnradio' + absent.rider_id"
-                                                [id]="'btnradio2_item' + absent.rider_id" autocomplete="off">
-                                            <label class="btn btn-outline-danger"
-                                                [for]="'btnradio2_item' + absent.rider_id">Absent</label>
-
-
+                                        <div class="button_group">
+                                            <button i18n-title title="Se déclarer présent"
+                                                class="outline_action_button button" type="button" (click)="UpdateStatut(absent,false)"
+                                                >
+                                                <svg width="20" height="20">
+                                                    <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
+                                                </svg>
+                                                <span>Présent</span>
+                                            </button>
+                                            <button i18n-title title="Se déclarer absent"
+                                                class="quit_button button" type="button"
+                                                >
+                                                <svg width="20" height="20">
+                                                    <use xlink:href=".\assets\liste.svg#pouce_outline_rouge"></use>
+                                                </svg>
+                                                <span>Absent</span>
+                                            </button>
                                         </div>
                                     </span>
                                 </li>

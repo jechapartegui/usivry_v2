@@ -30,10 +30,10 @@ export class MaSeanceComponent implements OnInit {
     return this.Liste.filter(x => !x.statut_seance).length.toString();
   }
   NbListePresent() : string {
-    return "15"
+    return this.Liste.filter(x => x.statut_seance && x.statut_seance == StatutPresence.Présent).length.toString();
   }
   NbListeAbsent() : string {
-    return "15"
+    return this.Liste.filter(x => x.statut_seance && x.statut_seance == StatutPresence.Absent).length.toString();
   }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class MaSeanceComponent implements OnInit {
     this._seanceserv.ChargerSeance(this.id).then((list: InscriptionSeance[]) => {
       this.Liste = list;
       function compareByStatut(a: InscriptionSeance, b: InscriptionSeance): number {
-        const statutOrder = { présent: 1, absent: 2, null: 3 };
+        const statutOrder = { présent: 1, convoqué: 2, absent: 3, null: 4};
 
         const aStatut = a.statut || null;
         const bStatut = b.statut || null;
@@ -189,7 +189,7 @@ export class MaSeanceComponent implements OnInit {
     inscription.date_inscription = new Date();
     inscription.rider_id = this.selected_adherent.key;
     inscription.seance_id = this.seance.seance_id;
-    inscription.statut = StatutPresence.Présent;
+    inscription.statut = StatutPresence.Convoqué;
     this._seanceserv.inscrire(inscription).then((id) => {
       this._seanceserv.ChargerSeance(this.id).then((list: InscriptionSeance[]) => {
         this.Liste = list;
@@ -226,9 +226,14 @@ export class MaSeanceComponent implements OnInit {
 
 
 
-  UpdateStatut(item: InscriptionSeance) {
+  UpdateStatut(item: InscriptionSeance, present:boolean) {
     const errorService = ErrorService.instance;
     item.seance_id = this.id;
+    if(present){
+      item.statut_seance = StatutPresence.Présent;
+    } else{
+      item.statut_seance = StatutPresence.Absent;
+    }
     this._seanceserv.UpdatePresence(item).then((retour: boolean) => {
       // Si la liste de riders est retournée (authentification réussie), rediriger vers la page "menu_inscription"
       if (retour) {
