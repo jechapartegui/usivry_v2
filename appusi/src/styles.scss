@@ -756,7 +756,7 @@ input:-moz-placeholder {
 
   font-family: 'Source Sans 3';
   font-style: normal;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 20px;
   line-height: 25px;
   /* identical to box height, or 125% */
@@ -764,7 +764,7 @@ input:-moz-placeholder {
   align-items: center;
   text-transform: uppercase;
 
-  color: #F8F2FF;
+  color: #f7f5fa;
 
   flex: none;
   order: 0;
@@ -792,7 +792,7 @@ input:-moz-placeholder {
 .title_content_text_subcard_jecha {
 
 
-  font-family: 'Source Sans 3';
+  font-family: 'math';
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
@@ -802,7 +802,6 @@ input:-moz-placeholder {
   align-items: center;
   text-align: right;
   justify-content: flex-end;
-  text-transform: capitalize;
 
   color: #000000;
 
@@ -818,14 +817,12 @@ input:-moz-placeholder {
 .table_th {
 
 
-  font-family: 'Source Sans 3';
+  font-family: 'math';
   font-style: normal;
   font-weight: 300;
   font-size: 20px;
   line-height: 25px;
   /* identical to box height, or 125% */
-
-  text-transform: capitalize;
 
   color: #000000;
 }
@@ -835,7 +832,7 @@ input:-moz-placeholder {
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
-  font-family: "Source Sans 3";
+  font-family: "math";
 }
 
 .filered_th_head{
@@ -844,6 +841,17 @@ input:-moz-placeholder {
     justify-content: flex-start;
     align-items: center;
     gap: 6px;
+}
+
+.bloc_jecha{
+  
+  border-block-color:$purple;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 25px;
+  margin: 10px;
+  padding: 10px;
+
 }
 
 

@@ -16,13 +16,14 @@ export class MaSeanceComponent implements OnInit {
   @Input() id: number = 0;
   Liste: InscriptionSeance[] = [];
   seance: Seance;
-  selected_adherent: number = null;
+  selected_adherent: KeyValuePair = null;
   text_recherche: string = "";
   liste_adherent: KeyValuePair[];
   messageAnnulation: string = "";
   afficher_eleve:boolean=true;
   afficher_present:boolean=true;
   afficher_absent:boolean=true;
+  showDropdown: boolean;
   constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv: RidersService, private route: ActivatedRoute) { }
   
   NbListe() : string {
@@ -157,26 +158,36 @@ export class MaSeanceComponent implements OnInit {
   }
 
   RechercherAdherent() {
-    const errorService = ErrorService.instance;
-    this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) => {
-      if (res.length > 0) {
-        this.liste_adherent = res;
-      } else {
-        this.liste_adherent = null;
-        let o = errorService.CreateError("Rechercher adhérent", "Pas de résultat");
+    if(this.text_recherche.length>2){
+      const errorService = ErrorService.instance;
+      this._riderserv.GetAllSearchActiveLight(this.text_recherche).then((res) => {
+        if (res.length > 0) {
+          this.liste_adherent = res;
+          this.showDropdown = this.liste_adherent.length > 0;
+        } else {
+          this.liste_adherent = null;
+          let o = errorService.CreateError("Rechercher adhérent", "Pas de résultat");
+          errorService.emitChange(o);
+        }
+      }).catch((error: Error) => {
+        let o = errorService.CreateError("Rechercher adhérent", error.message);
         errorService.emitChange(o);
-      }
-    }).catch((error: Error) => {
-      let o = errorService.CreateError("Rechercher adhérent", error.message);
-      errorService.emitChange(o);
-    });
+      });
+    }
+  
   }
+  selectAdherent(adh: KeyValuePair) {
+    this.selected_adherent = adh;
+    this.showDropdown = false;
+    console.log(adh);
+    this.selected_adherent = adh;
+}
 
   InscrireAdherent() {
     const inscription = new Inscription();
     const errorService = ErrorService.instance;
     inscription.date_inscription = new Date();
-    inscription.rider_id = this.selected_adherent;
+    inscription.rider_id = this.selected_adherent.key;
     inscription.seance_id = this.seance.seance_id;
     inscription.statut = StatutPresence.Présent;
     this._seanceserv.inscrire(inscription).then((id) => {

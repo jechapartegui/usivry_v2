@@ -1,97 +1,100 @@
-<div class="row">
-    <div class="col-12">
+<div class="card_jecha">
+    <div class="title_card_jecha">
+        <span class="text_title_card_jecha" *ngIf="seance">{{seance.libelle}} le {{ seance.date_seance | date:
+            'dd/MM/yyyy' }}</span>
+    </div>
+    <div class="content_card_jecha">
+        <div class="subcard_jecha" style="order: 0;">
+            <div class="bloc_jecha">
+                <h2>Inscrire des gens hors liste</h2>
+                <div class="row_flex">
+                    <div >
+                        <div class="display_flex">
+                                <label for="text_recherche">Taper 3 lettres du nom/prénom</label>
+                                <input type="text" (input)="RechercherAdherent()" id="text_recherche" class="input_jecha" [(ngModel)]="text_recherche" />
+                                <ul class="custom-dropdown" *ngIf="showDropdown">
+                                    <li *ngFor="let adh of liste_adherent" (click)="selectAdherent(adh)">
+                                        {{ adh.value }}
+                                    </li>
+                                </ul>
+                        </div>
+                       
+                    </div>
+                    <label *ngIf="selected_adherent" class="selected-adherent-label">Adhérent sélectionné : {{ selected_adherent.value }}</label>
+                    <button type="button" [class]="selected_adherent ? 'outline_action_button button' : 'disabled_button'" [disabled]="!selected_adherent"  (click)="InscrireAdherent()">
+                        
+                        Inscrire l'adhérent</button>
 
-        <div class="title_card_jecha">
-            <span class="text_title_card_jecha" *ngIf="seance">{{seance.libelle}} le {{ seance.date_seance | date:
-                'dd/MM/yyyy' }}</span>
-        </div>
-        <div class="content_card_jecha">
-            <div class="subcard_jecha" style="order: 0;">
-                <div class="title_content_subcard_jecha">
-                    <span class="title_content_text_subcard_jecha" i18n> Eleves disponibles ({{NbListe()}})</span>
-                    <svg *ngIf="!afficher_eleve" width="20" (click)="afficher_eleve = true" height="20">
-                        <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
-                    </svg>
-                    <svg *ngIf="afficher_eleve" width="20" height="20" (click)="afficher_eleve = false">
-                        <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
-                    </svg>
                 </div>
-                <hr class="line">
-                <div *ngIf="afficher_eleve" class="content_subcard_jecha">
-                    <table div class="screen">
-                        <thead>
-                            <th>Nom</th>
-                            <th>Inscription</th>
-                            <th>Séance</th>
-                            <th>Contact d'urgence</th>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let item of Liste; trackBy: trackByRiderId">
-                                <ng-container *ngIf="!item.statut_seance">
+            </div>
+            <div class="title_content_subcard_jecha">
+                <span class="title_content_text_subcard_jecha" i18n> Eleves disponibles ({{NbListe()}})</span>
+                <svg *ngIf="!afficher_eleve" width="20" (click)="afficher_eleve = true" height="20">
+                    <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
+                </svg>
+                <svg *ngIf="afficher_eleve" width="20" height="20" (click)="afficher_eleve = false">
+                    <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
+                </svg>
+            </div>
+            <hr class="line">
+            
+            <div *ngIf="afficher_eleve" class="content_subcard_jecha">
+                <table div class="screen">
+                    <thead>
+                        <th>Nom</th>
+                        <th>Inscription</th>
+                        <th>Séance</th>
+                        <th>Contact d'urgence</th>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of Liste; trackBy: trackByRiderId">
+                            <ng-container *ngIf="!item.statut_seance">
 
-                                    <tr>
-                                        <td><span class="mr-1">{{item.rider_libelle}}</span>
+                                <tr>
+                                    <td><span class="mr-1">{{item.rider_libelle}}</span>
 
-                                        </td>
-                                        <td>
-                                            <ng-container *ngIf="item.statut">
-                                                <i *ngIf="item.statut.toString() == 'présent'"
-                                                    style="font-size: 2rem;color: green;"
-                                                    class="bi bi-check-circle-fill"></i>
-                                                <i *ngIf="item.statut.toString() == 'absent'"
-                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
-                                            </ng-container>
-                                            <ng-container *ngIf="!item.statut">
-                                                <i style="font-size: 2rem;color: gray;"
-                                                    class="bi bi-question-circle-fill"></i>
-                                            </ng-container>
+                                    </td>
+                                    <td>
+                                        <ng-container *ngIf="item.statut">
+                                            <i *ngIf="item.statut.toString() == 'présent'"
+                                                style="font-size: 2rem;color: green;"
+                                                class="bi bi-check-circle-fill"></i>
+                                            <i *ngIf="item.statut.toString() == 'absent'"
+                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                        </ng-container>
+                                        <ng-container *ngIf="!item.statut">
+                                            <i style="font-size: 2rem;color: gray;"
+                                                class="bi bi-question-circle-fill"></i>
+                                        </ng-container>
 
-                                        </td>
-                                        <td>
-                                            <div  class="button_group">
-                                                <button i18n-title title="Se déclarer présent" class="outline_action_button button"
-                                                    type="button" (click)="UpdateStatut(item)">
-                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M15.3972 0.00312185H10.1361V1.84553H15.3972C17.2097 1.84553 18.6854 3.91272 18.6854 6.45156C18.6854 8.99041 17.2097 11.0576 15.3972 11.0576H2.51679L6.65463 5.26137L5.72605 3.95694L-0.00063026 11.9788L5.72605 20.0007L6.65595 18.6981L2.51679 12.9H15.3972C17.9357 12.9 20.0007 10.0074 20.0007 6.45156C20.0007 2.89571 17.9357 0.00312185 15.3972 0.00312185Z"
-                                                            fill="red" />
-                                                    </svg>
-                                                </button>
-                                                <button i18n-title title="Se déclarer absent" class="outline_quit_button button"
-                                                type="button" (click)="UpdateStatut(item)"><svg width="20" height="20" viewBox="0 0 20 20"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M2.99656 0.00317383C2.20353 0.00713837 1.44406 0.323637 0.882952 0.884041C0.32184 1.44445 0.00435485 2.20351 -0.000610352 2.99653V17.0036C-0.000610352 18.6476 1.35246 20.0007 2.99656 20.0007H17.0035C17.7972 19.9967 18.5572 19.6797 19.1184 19.1185C19.6796 18.5572 19.9967 17.7972 20.0006 17.0036V4.99979C20.0029 4.73422 19.8996 4.47857 19.7134 4.28917L15.7071 0.286685C15.584 0.165562 15.4317 0.0782669 15.2649 0.0333934L2.99656 0.00317383ZM2.99656 1.99882H4.00191V6.99913C4.00191 7.54716 4.44789 7.99315 4.9997 7.99315H15.0003C15.264 7.99216 15.5167 7.88719 15.7035 7.7011C15.8903 7.51501 15.9961 7.2628 15.9981 6.99913V3.40853L18.0013 5.41168V17.0036C18.0049 17.1356 17.9816 17.2669 17.9328 17.3896C17.8839 17.5123 17.8105 17.6238 17.7172 17.7172C17.6238 17.8106 17.5123 17.8839 17.3896 17.9327C17.2669 17.9816 17.1355 18.0049 17.0035 18.0013H2.99656C2.86484 18.0044 2.73387 17.9807 2.61161 17.9316C2.48935 17.8825 2.37835 17.8091 2.28537 17.7158C2.19238 17.6225 2.11936 17.5111 2.07074 17.3887C2.02212 17.2662 1.99891 17.1352 2.00254 17.0036V2.99653C2.00254 2.4296 2.42585 1.99882 2.99656 1.99882ZM6.00128 1.99882H13.9988V6.00511H6.00128V1.99882ZM4.9997 9.99629C4.86818 9.99679 4.73803 10.0231 4.6167 10.0739C4.49538 10.1247 4.38524 10.1989 4.29259 10.2923C4.19994 10.3856 4.12658 10.4964 4.0767 10.6181C4.02683 10.7398 4.00141 10.8701 4.00191 11.0016V15.0004C4.00191 15.5522 4.44789 15.9943 4.9997 15.9981H15.0003C15.2647 15.9971 15.5179 15.8917 15.7048 15.7048C15.8917 15.5179 15.9971 15.2647 15.9981 15.0004V11.0016C15.9986 10.8701 15.9732 10.7398 15.9233 10.6181C15.8735 10.4964 15.8001 10.3856 15.7075 10.2923C15.6148 10.1989 15.5047 10.1247 15.3833 10.0739C15.262 10.0231 15.1319 9.99679 15.0003 9.99629H4.9997ZM6.00128 11.9994H13.9988V13.9988H6.00128V11.9994Z"
-                                                            fill="green" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="btn-group" role="group"
-                                                aria-label="Basic radio toggle button group">
-                                                <input type="radio" [(ngModel)]="item.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(item)" [value]="'présent'"
-                                                    class="btn-check" [name]="'btnradio' + item.rider_id"
-                                                    [id]="'btnradio1_item' + item.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-success"
-                                                    [for]="'btnradio1_item' + item.rider_id">Présent</label>
-                                                <input type="radio" [(ngModel)]="item.statut_seance"
-                                                    (ngModelChange)="UpdateStatut(item)" [value]="'absent'"
-                                                    class="btn-check" [name]="'btnradio' + item.rider_id"
-                                                    [id]="'btnradio2_item' + item.rider_id" autocomplete="off">
-                                                <label class="btn btn-outline-danger"
-                                                    [for]="'btnradio2_item' + item.rider_id">Absent</label>
-
-
-                                            </div>
-                                        </td>
-                                        <td>{{item.contact_urgence}}</td>
-                                    </tr>
-                                </ng-container>
+                                    </td>
+                                    <td>
+                                        <div class="button_group">
+                                            <button i18n-title title="Se déclarer présent"
+                                                class="outline_action_button button" type="button"
+                                                (click)="UpdateStatut(item)">
+                                                <svg width="20" height="20">
+                                                    <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
+                                                </svg>
+                                                <span>Présent</span>
+                                            </button>
+                                            <button i18n-title title="Se déclarer absent"
+                                                class="outline_quit_button button" type="button"
+                                                (click)="UpdateStatut(item)">
+                                                <svg width="20" height="20">
+                                                    <use xlink:href=".\assets\liste.svg#pouce_rouge"></use>
+                                                </svg>
+                                                <span>Absent</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>{{item.contact_urgence}}</td>
+                                </tr>
                             </ng-container>
-                        </tbody>
-                    </table>
-                    <!-- <ul div class="mobile">
+                        </ng-container>
+                    </tbody>
+                </table>
+                <!-- <ul div class="mobile">
                         <ng-container *ngFor="let item of Liste; trackBy: trackByRiderId">
                             <ng-container *ngIf="!item.statut_seance">
 
@@ -159,9 +162,9 @@
                             </ng-container>
                         </ng-container>
                     </ul> -->
-                </div>
             </div>
         </div>
+
         <div class="subcard_jecha" style="order: 0;">
             <div class="title_content_subcard_jecha">
                 <span class="title_content_text_subcard_jecha" i18n> Elèves présents ({{NbListePresent()}})</span>
@@ -304,195 +307,168 @@
                     </ul> -->
             </div>
         </div>
-    </div>
-    <div class="subcard_jecha" style="order: 0;">
-        <div class="title_content_subcard_jecha">
-            <span class="title_content_text_subcard_jecha" i18n> Elèves absents ({{NbListeAbsent()}})</span>
-            <svg *ngIf="!afficher_absent" width="20" (click)="afficher_absent = true" height="20">
-                <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
-            </svg>
-            <svg *ngIf="afficher_absent" width="20" height="20" (click)="afficher_absent = false">
-                <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
-            </svg>
-        </div>
-        <hr class="line">
-        <div class="content_subcard_jecha">
-            <table class="screen">
-                <thead>
-                    <th>Nom</th>
-                    <th>Inscription</th>
-                    <th>Présence séance</th>
-                    <th>Contact d'urgence</th>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let absent of Liste; trackBy: trackByRiderId">
-                        <ng-container *ngIf="absent.statut_seance">
-                            <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
+        <div class="subcard_jecha" style="order: 0;">
+            <div class="title_content_subcard_jecha">
+                <span class="title_content_text_subcard_jecha" i18n> Elèves absents ({{NbListeAbsent()}})</span>
+                <svg *ngIf="!afficher_absent" width="20" (click)="afficher_absent = true" height="20">
+                    <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
+                </svg>
+                <svg *ngIf="afficher_absent" width="20" height="20" (click)="afficher_absent = false">
+                    <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
+                </svg>
+            </div>
+            <hr class="line">
+            <div class="content_subcard_jecha">
+                <table class="screen">
+                    <thead>
+                        <th>Nom</th>
+                        <th>Inscription</th>
+                        <th>Présence séance</th>
+                        <th>Contact d'urgence</th>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let absent of Liste; trackBy: trackByRiderId">
+                            <ng-container *ngIf="absent.statut_seance">
+                                <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
 
-                                <tr>
-                                    <td style="display: flex;
+                                    <tr>
+                                        <td style="display: flex;
                                                 flex-direction: row;
                                                 flex-wrap: wrap;
                                                 align-items: center;
                                                 justify-content: space-between;"><span
-                                            class="mr-1">{{absent.rider_libelle}}</span>
+                                                class="mr-1">{{absent.rider_libelle}}</span>
 
 
 
 
-                                    </td>
-                                    <td>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="absent.statut">
+                                                <i *ngIf="absent.statut.toString() == 'présent'"
+                                                    style="font-size: 2rem;color: green;"
+                                                    class="bi bi-check-circle-fill"></i>
+                                                <i *ngIf="absent.statut.toString() == 'absent'"
+                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                            </ng-container>
+                                            <ng-container *ngIf="!absent.statut">
+                                                <i style="font-size: 2rem;color: gray;"
+                                                    class="bi bi-question-circle-fill"></i>
+                                            </ng-container>
+
+                                        </td>
+                                        <td>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Basic radio toggle button group">
+                                                <input type="radio" [(ngModel)]="absent.statut_seance"
+                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
+                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
+                                                    [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
+                                                <input type="radio" [(ngModel)]="absent.statut_seance"
+                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
+                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
+                                                    [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-success"
+                                                    [for]="'btnradio1_absent' + absent.rider_id">Présent</label>
+
+                                                <input type="radio" [(ngModel)]="absent.statut_seance"
+                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
+                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
+                                                    [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
+                                                <input type="radio" [(ngModel)]="absent.statut_seance"
+                                                    (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
+                                                    class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
+                                                    [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
+                                                <label class="btn btn-outline-danger"
+                                                    [for]="'btnradio2_absent' + absent.rider_id">Absent</label>
+
+
+                                            </div>
+                                        </td>
+                                        <td>{{absent.contact_urgence}}</td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <ul class="mobile">
+                    <ng-container *ngFor="let absent of Liste; trackBy: trackByRiderId">
+                        <ng-container *ngIf="absent.statut_seance">
+                            <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
+                                <li>
+                                    <div>
                                         <ng-container *ngIf="absent.statut">
-                                            <i *ngIf="absent.statut.toString() == 'présent'"
-                                                style="font-size: 2rem;color: green;"
-                                                class="bi bi-check-circle-fill"></i>
-                                            <i *ngIf="absent.statut.toString() == 'absent'"
-                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                            <ng-container *ngIf="absent.statut.toString() == 'présent'">
+                                                <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
+                                                    <span class="present"><strong>{{absent.rider_libelle}}
+                                                        </strong>
+                                                    </span>
+
+
+                                                    <span class="present">({{absent.contact_urgence}})</span>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="absent.statut.toString() == 'absent'">
+                                                <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
+                                                    <span class="absent"><strong>{{absent.rider_libelle}}
+                                                        </strong>
+                                                    </span>
+
+
+                                                    <span class="absent">({{absent.contact_urgence}})</span>
+                                                </div>
+                                            </ng-container>
+
                                         </ng-container>
                                         <ng-container *ngIf="!absent.statut">
-                                            <i style="font-size: 2rem;color: gray;"
-                                                class="bi bi-question-circle-fill"></i>
+                                            <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
+                                                <span class="non_inscrit"><strong>{{absent.rider_libelle}}
+                                                    </strong>
+                                                </span>
+
+
+                                                <span class="non_inscrit">({{absent.contact_urgence}})</span>
+                                            </div>
                                         </ng-container>
 
-                                    </td>
-                                    <td>
+
+                                        <span>
+
+                                        </span>
+                                    </div>
+                                    <span>
                                         <div class="btn-group" role="group"
                                             aria-label="Basic radio toggle button group">
                                             <input type="radio" [(ngModel)]="absent.statut_seance"
                                                 (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
-                                                class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
-                                            <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                (ngModelChange)="UpdateStatut(absent)" [value]="'présent'"
-                                                class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                [id]="'btnradio1_absent' + absent.rider_id" autocomplete="off">
+                                                class="btn-check" [name]="'btnradio' + absent.rider_id"
+                                                [id]="'btnradio1_item' + absent.rider_id" autocomplete="off">
                                             <label class="btn btn-outline-success"
-                                                [for]="'btnradio1_absent' + absent.rider_id">Présent</label>
+                                                [for]="'btnradio1_item' + absent.rider_id">Présent</label>
+
+
 
                                             <input type="radio" [(ngModel)]="absent.statut_seance"
                                                 (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
-                                            <input type="radio" [(ngModel)]="absent.statut_seance"
-                                                (ngModelChange)="UpdateStatut(absent)" [value]="'absent'"
-                                                class="btn-check" [name]="'btnradio_absent' + absent.rider_id"
-                                                [id]="'btnradio2_absent' + absent.rider_id" autocomplete="off">
+                                                class="btn-check" [name]="'btnradio' + absent.rider_id"
+                                                [id]="'btnradio2_item' + absent.rider_id" autocomplete="off">
                                             <label class="btn btn-outline-danger"
-                                                [for]="'btnradio2_absent' + absent.rider_id">Absent</label>
+                                                [for]="'btnradio2_item' + absent.rider_id">Absent</label>
 
 
                                         </div>
-                                    </td>
-                                    <td>{{absent.contact_urgence}}</td>
-                                </tr>
+                                    </span>
+                                </li>
                             </ng-container>
                         </ng-container>
                     </ng-container>
-                </tbody>
-            </table>
-            <ul class="mobile">
-                <ng-container *ngFor="let absent of Liste; trackBy: trackByRiderId">
-                    <ng-container *ngIf="absent.statut_seance">
-                        <ng-container *ngIf="absent.statut_seance.toString() == 'absent'">
-                            <li>
-                                <div>
-                                    <ng-container *ngIf="absent.statut">
-                                        <ng-container *ngIf="absent.statut.toString() == 'présent'">
-                                            <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
-                                                <span class="present"><strong>{{absent.rider_libelle}}
-                                                    </strong>
-                                                </span>
-
-
-                                                <span class="present">({{absent.contact_urgence}})</span>
-                                            </div>
-                                        </ng-container>
-                                        <ng-container *ngIf="absent.statut.toString() == 'absent'">
-                                            <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
-                                                <span class="absent"><strong>{{absent.rider_libelle}}
-                                                    </strong>
-                                                </span>
-
-
-                                                <span class="absent">({{absent.contact_urgence}})</span>
-                                            </div>
-                                        </ng-container>
-
-                                    </ng-container>
-                                    <ng-container *ngIf="!absent.statut">
-                                        <div style="display: flex;flex-direction: column;flex-wrap: wrap;">
-                                            <span class="non_inscrit"><strong>{{absent.rider_libelle}}
-                                                </strong>
-                                            </span>
-
-
-                                            <span class="non_inscrit">({{absent.contact_urgence}})</span>
-                                        </div>
-                                    </ng-container>
-
-
-                                    <span>
-
-                                    </span>
-                                </div>
-                                <span>
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" [(ngModel)]="absent.statut_seance"
-                                            (ngModelChange)="UpdateStatut(absent)" [value]="'présent'" class="btn-check"
-                                            [name]="'btnradio' + absent.rider_id"
-                                            [id]="'btnradio1_item' + absent.rider_id" autocomplete="off">
-                                        <label class="btn btn-outline-success"
-                                            [for]="'btnradio1_item' + absent.rider_id">Présent</label>
-
-
-
-                                        <input type="radio" [(ngModel)]="absent.statut_seance"
-                                            (ngModelChange)="UpdateStatut(absent)" [value]="'absent'" class="btn-check"
-                                            [name]="'btnradio' + absent.rider_id"
-                                            [id]="'btnradio2_item' + absent.rider_id" autocomplete="off">
-                                        <label class="btn btn-outline-danger"
-                                            [for]="'btnradio2_item' + absent.rider_id">Absent</label>
-
-
-                                    </div>
-                                </span>
-                            </li>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
-<h2>Inscrire des gens hors liste</h2>
-<div class="row mt-1">
-    <div class="col-12 col-md-6">
-        <div class="display_flex">
-            <div class="form-group">
-                <label for="text_recherche">Taper 3 lettres du nom/prenom</label>
-                <input type="text" id="text_recherche" class="form-control" [(ngModel)]="text_recherche" />
-            </div>
-            <button type="button" class=" input-group-text btn btn-success ml-1"
-                (click)="RechercherAdherent()">Rechercher les adhérents</button>
-        </div>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="display_flex">
 
-            <div class="form-group">
-                <label for="adhrent_trouve">Sélectionner parmi les adhérents trouvés</label>
-                <select id="adhrent_trouve" [disabled]="!liste_adherent" class="form-control"
-                    [(ngModel)]="selected_adherent" placeholder="Adhérents trouvés">
-                    <ng-container *ngFor="let adh of liste_adherent">
-                        <option [value]="adh.key">{{adh.value}}</option>
-                    </ng-container>
-                </select>
-            </div>
-            <button type="button" [disabled]="!selected_adherent" class=" input-group-text btn btn-success ml-1"
-                (click)="InscrireAdherent()">Inscrire l'adhérent</button>
-        </div>
-    </div>
-</div>
 <h2>Effectuer des notes</h2>
 <div *ngIf="seance" class="row  mt-1">
     <div class="col-12">
