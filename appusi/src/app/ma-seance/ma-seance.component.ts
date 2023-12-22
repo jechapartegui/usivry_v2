@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Inscription, InscriptionSeance, StatutPresence } from 'src/class/inscription';
 import { KeyValuePair } from 'src/class/keyvaluepair';
+import { MailData } from 'src/class/mail';
 import { Seance, StatutSeance } from 'src/class/seance';
 import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
@@ -23,6 +24,7 @@ export class MaSeanceComponent implements OnInit {
   afficher_eleve:boolean=true;
   afficher_present:boolean=true;
   afficher_absent:boolean=true;
+  liste_mail:MailData[];
   showDropdown: boolean;
   constructor(private router: Router, private _seanceserv: SeancesService, private _riderserv: RidersService, private route: ActivatedRoute) { }
   
@@ -104,12 +106,32 @@ export class MaSeanceComponent implements OnInit {
     if (confirmation) {
       this.seance.statut = StatutSeance.annulée;
       let ret = this.UpdateSeance("Annuler la séance");
-      let ut = this.NotifierAnnulation();
-
-      if (ut && ret) {
-        this.router.navigate(['/menu-inscription']);
+      const MD = new MailData();
+      MD.categorie = "ANNULATION";
+      MD.groupes = this.seance.groupes;
+      MD.params = [];
+      const KVP = new KeyValuePair();
+      KVP.key = this.seance.seance_id;
+      KVP.value = "seance_id";
+      MD.params.push(KVP);
+      this.liste_mail = [];
+      this.liste_mail.push(MD);
+      if(this.Liste.filter(x => x.statut == StatutPresence.Convoqué).length > 0){
+        this.Liste.filter(x => x.statut == StatutPresence.Convoqué).forEach(element => {
+          const MD_ind = new MailData();
+          MD_ind.categorie =  "ANNULATION";
+          MD_ind.params = [];
+          const KVP_ind = new KeyValuePair();
+          KVP_ind.key = this.seance.seance_id;
+          KVP_ind.value = "seance_id";
+          MD_ind.params.push(KVP_ind);
+          const KVP_ind2 = new KeyValuePair();
+          KVP_ind2.key = element.rider_id;
+          KVP_ind2.value = "rider_id";
+          MD_ind.params.push(KVP_ind2);
+        });
       }
-
+      
     }
 
   }
@@ -117,25 +139,7 @@ export class MaSeanceComponent implements OnInit {
   SauvegarderText() {
     this.UpdateSeance("Sauvegarder les notes");
   }
-  NotifierAnnulation(): boolean {
-    const errorService = ErrorService.instance;
-    this._seanceserv.NotifierAnnulation(this.seance.seance_id, this.messageAnnulation).then((res) => {
-      if (res) {
-        let o = errorService.OKMessage("Envoi mail annulation");
-        errorService.emitChange(o);
-        return true;
-      } else {
-        let o = errorService.CreateError("Envoi mail annulation", "Erreur inconnue");
-        errorService.emitChange(o);
-        return false;
-      }
-    }).catch((error: Error) => {
-      let o = errorService.CreateError("Envoi mail annulation", error.message);
-      errorService.emitChange(o);
-      return false;
-    });
-    return false;
-  }
+  
 
   UpdateSeance(motif: string): boolean {
     const errorService = ErrorService.instance;

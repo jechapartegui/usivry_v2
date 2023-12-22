@@ -1,35 +1,83 @@
-<div class="card_jecha">
+<div *ngIf="!liste_mail" class="card_jecha">
     <div class="title_card_jecha">
         <span class="text_title_card_jecha" *ngIf="seance">{{seance.libelle}} le {{ seance.date_seance | date:
             'dd/MM/yyyy' }}</span>
     </div>
     <div class="content_card_jecha">
-        <div class="subcard_jecha" style="order: 0;">
-            <div class="bloc_jecha">
+        <div class="bloc_jecha">
+            <div class="sous_bloc_jecha">
                 <h2>Inscrire des gens hors liste</h2>
-                <div class="row_flex">
-                    <div >
-                        <div class="display_flex">
-                                <label for="text_recherche">Taper 3 lettres du nom/prénom</label>
-                                <input type="text" (input)="RechercherAdherent()" id="text_recherche" class="input_jecha" [(ngModel)]="text_recherche" />
-                                <ul class="custom-dropdown" *ngIf="showDropdown">
-                                    <li *ngFor="let adh of liste_adherent" (click)="selectAdherent(adh)">
-                                        {{ adh.value }}
-                                    </li>
-                                </ul>
-                        </div>
-                       
+                <div>
+                    <div class="display_flex_column">
+                        <label for="text_recherche" i18n>Taper 3 lettres du nom/prénom</label>
+                        <input type="text" (input)="RechercherAdherent()" id="text_recherche" class="input_jecha"
+                            [(ngModel)]="text_recherche" />
+                        <ul class="custom-dropdown" *ngIf="showDropdown">
+                            <li *ngFor="let adh of liste_adherent" (click)="selectAdherent(adh)">
+                                {{ adh.value }}
+                            </li>
+                        </ul>
                     </div>
-                    <label *ngIf="selected_adherent" class="selected-adherent-label">Adhérent sélectionné : {{ selected_adherent.value }}</label>
-                    <button type="button" [class]="selected_adherent ? 'outline_action_button button' : 'disabled_button'" [disabled]="!selected_adherent"  (click)="InscrireAdherent()">
-                        
-                        Inscrire l'adhérent</button>
 
                 </div>
+                <div class="display_flex_row">
+                    <label *ngIf="selected_adherent" class="selected-adherent-label"><span i18n>Adhérent
+                            sélectionné</span> : {{
+                        selected_adherent.value }}</label>
+                    <button *ngIf="selected_adherent" type="button" (click)="selected_adherent =null; text_recherche = ''"
+                        class="button outline_quit_button">
+                        <svg *ngIf="!afficher_eleve" width="20" height="20">
+                            <use xlink:href=".\assets\liste.svg#KO" style="fill:rgb(255, 0, 0)"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <button type="button" *ngIf="selected_adherent" class="outline_action_button button"
+                    [disabled]="!selected_adherent" (click)="InscrireAdherent()">
+                    <svg *ngIf="!afficher_eleve" width="20" height="20">
+                        <use xlink:href=".\assets\liste.svg#plus" style="fill:green"></use>
+                    </svg>
+                    <span i18n>Inscrire l'adhérent</span></button>
+
             </div>
-            <div class="title_content_subcard_jecha" style="cursor: pointer;" (click)="afficher_eleve == true ? afficher_eleve = false : afficher_eleve = true">
+            <div class="sous_bloc_jecha" *ngIf="seance">
+                <h2>Ajouter une note à la séance</h2>
+                <label for="text_recherche" i18n>Notes de moins de 300 caractères</label>
+                <textarea class="input_jecha" rows="2" maxlength="300" [(ngModel)]="seance.notes" aria-label="Notes de la séances"></textarea>
+                <button type="button" class="button outline_action_button" (click)="SauvegarderText()">
+                    <svg *ngIf="!afficher_eleve" width="20" height="20">
+                        <use xlink:href=".\assets\liste.svg#save" style="fill:green"></use>
+                    </svg>
+                    <span i18n>Sauvegarder</span>
+                </button>
+            </div>
+            <div class="sous_bloc_jecha" *ngIf="seance">
+                <h2>Actions sur la séance</h2>
+                <div class="button_group">
+                    <button i18n-title title="Terminer la séance"
+                        class="outline_action_button button" type="button"
+                        (click)="validerSeance()">
+                        <svg width="20" height="20">
+                            <use xlink:href=".\assets\liste.svg#terminer"  style="fill:green"></use>
+                        </svg>
+                        <span>Terminer la séance</span>
+                    </button>
+                    <button i18n-title title="Se déclarer absent"
+                        class="outline_quit_button button" type="button"
+                        (click)="AnnulerSeance()">
+                        <svg width="20" height="20">
+                            <use xlink:href=".\assets\liste.svg#annuler" style="fill:red"></use>
+                        </svg>
+                        <span>Annuler la séance</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="subcard_jecha" style="order: 0;">
+            <div class="title_content_subcard_jecha" style="cursor: pointer;"
+                (click)="afficher_eleve == true ? afficher_eleve = false : afficher_eleve = true">
                 <span class="title_content_text_subcard_jecha" i18n> Eleves disponibles ({{NbListe()}})</span>
-                <svg *ngIf="!afficher_eleve" width="20"  height="20">
+                <svg *ngIf="!afficher_eleve" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
                 <svg *ngIf="afficher_eleve" width="20" height="20">
@@ -37,7 +85,7 @@
                 </svg>
             </div>
             <hr class="line">
-            
+
             <div *ngIf="afficher_eleve" class="content_subcard_jecha">
                 <table div class="screen">
                     <thead>
@@ -61,7 +109,7 @@
                                                 class="bi bi-check-circle-fill"></i>
                                             <i *ngIf="item.statut.toString() == 'absent'"
                                                 style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
-                                                <i *ngIf="item.statut.toString() == 'convoqué'"
+                                            <i *ngIf="item.statut.toString() == 'convoqué'"
                                                 style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
                                         </ng-container>
                                         <ng-container *ngIf="!item.statut">
@@ -168,12 +216,13 @@
         </div>
 
         <div class="subcard_jecha" style="order: 0;">
-            <div class="title_content_subcard_jecha"  style="cursor: pointer;" (click)="afficher_present == true ? afficher_present = false : afficher_present = true">
+            <div class="title_content_subcard_jecha" style="cursor: pointer;"
+                (click)="afficher_present == true ? afficher_present = false : afficher_present = true">
                 <span class="title_content_text_subcard_jecha" i18n> Elèves présents ({{NbListePresent()}})</span>
                 <svg *ngIf="!afficher_present" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
-                <svg *ngIf="afficher_present" width="20" height="20" >
+                <svg *ngIf="afficher_present" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
             </div>
@@ -202,12 +251,13 @@
                                         <td>
                                             <ng-container *ngIf="present.statut">
                                                 <i *ngIf="present.statut.toString() == 'présent'"
-                                                style="font-size: 2rem;color: green;"
-                                                class="bi bi-check-circle-fill"></i>
-                                            <i *ngIf="present.statut.toString() == 'absent'"
-                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                    style="font-size: 2rem;color: green;"
+                                                    class="bi bi-check-circle-fill"></i>
+                                                <i *ngIf="present.statut.toString() == 'absent'"
+                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
                                                 <i *ngIf="present.statut.toString() == 'convoqué'"
-                                                style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
+                                                    style="font-size: 2rem;color: blue;"
+                                                    class="bi bi-plus-circle-fill"></i>
                                             </ng-container>
                                             <ng-container *ngIf="!present.statut">
                                                 <i style="font-size: 2rem;color: gray;"
@@ -218,8 +268,7 @@
                                         <td>
                                             <div class="button_group">
                                                 <button i18n-title title="Se déclarer présent"
-                                                    class="action_button button" type="button"
-                                                    >
+                                                    class="action_button button" type="button">
                                                     <svg width="20" height="20">
                                                         <use xlink:href=".\assets\liste.svg#pouce_positif_blanc"></use>
                                                     </svg>
@@ -311,12 +360,13 @@
             </div>
         </div>
         <div class="subcard_jecha" style="order: 0;">
-            <div class="title_content_subcard_jecha"  style="cursor: pointer;" (click)="afficher_absent == true ? afficher_absent = false : afficher_absent = true">
+            <div class="title_content_subcard_jecha" style="cursor: pointer;"
+                (click)="afficher_absent == true ? afficher_absent = false : afficher_absent = true">
                 <span class="title_content_text_subcard_jecha" i18n> Elèves absents ({{NbListeAbsent()}})</span>
                 <svg *ngIf="!afficher_absent" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-up" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
-                <svg *ngIf="afficher_absent" width="20" height="20" >
+                <svg *ngIf="afficher_absent" width="20" height="20">
                     <use xlink:href=".\assets\liste.svg#chevron-down" style="fill:rgb(0, 0, 0)"></use>
                 </svg>
             </div>
@@ -349,12 +399,13 @@
                                         <td>
                                             <ng-container *ngIf="absent.statut">
                                                 <i *ngIf="absent.statut.toString() == 'présent'"
-                                                style="font-size: 2rem;color: green;"
-                                                class="bi bi-check-circle-fill"></i>
-                                            <i *ngIf="absent.statut.toString() == 'absent'"
-                                                style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
+                                                    style="font-size: 2rem;color: green;"
+                                                    class="bi bi-check-circle-fill"></i>
+                                                <i *ngIf="absent.statut.toString() == 'absent'"
+                                                    style="font-size: 2rem;color: red;" class="bi bi-x-circle-fill"></i>
                                                 <i *ngIf="absent.statut.toString() == 'convoqué'"
-                                                style="font-size: 2rem;color: blue;" class="bi bi-plus-circle-fill"></i>
+                                                    style="font-size: 2rem;color: blue;"
+                                                    class="bi bi-plus-circle-fill"></i>
                                             </ng-container>
                                             <ng-container *ngIf="!absent.statut">
                                                 <i style="font-size: 2rem;color: gray;"
@@ -365,16 +416,15 @@
                                         <td>
                                             <div class="button_group">
                                                 <button i18n-title title="Se déclarer présent"
-                                                    class="outline_action_button button" type="button" (click)="UpdateStatut(absent,true)"
-                                                    >
+                                                    class="outline_action_button button" type="button"
+                                                    (click)="UpdateStatut(absent,true)">
                                                     <svg width="20" height="20">
                                                         <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
                                                     </svg>
                                                     <span>Présent</span>
                                                 </button>
-                                                <button i18n-title title="Se déclarer absent"
-                                                    class="quit_button button" type="button"
-                                                    >
+                                                <button i18n-title title="Se déclarer absent" class="quit_button button"
+                                                    type="button">
                                                     <svg width="20" height="20">
                                                         <use xlink:href=".\assets\liste.svg#pouce_negatif_blanc"></use>
                                                     </svg>
@@ -437,16 +487,15 @@
                                     <span>
                                         <div class="button_group">
                                             <button i18n-title title="Se déclarer présent"
-                                                class="outline_action_button button" type="button" (click)="UpdateStatut(absent,false)"
-                                                >
+                                                class="outline_action_button button" type="button"
+                                                (click)="UpdateStatut(absent,false)">
                                                 <svg width="20" height="20">
                                                     <use xlink:href=".\assets\liste.svg#pouce_vert"></use>
                                                 </svg>
                                                 <span>Présent</span>
                                             </button>
-                                            <button i18n-title title="Se déclarer absent"
-                                                class="quit_button button" type="button"
-                                                >
+                                            <button i18n-title title="Se déclarer absent" class="quit_button button"
+                                                type="button">
                                                 <svg width="20" height="20">
                                                     <use xlink:href=".\assets\liste.svg#pouce_outline_rouge"></use>
                                                 </svg>
@@ -463,25 +512,4 @@
         </div>
     </div>
 </div>
-
-<h2>Effectuer des notes</h2>
-<div *ngIf="seance" class="row  mt-1">
-    <div class="col-12">
-        <div class="form-group">
-            <span class="input-group-text">Notes</span>
-            <textarea class="form-control" [(ngModel)]="seance.notes" aria-label="Notes de la séances"></textarea>
-            <button type="button" class="btn btn-success ml-1" (click)="SauvegarderText()">Sauvegarder</button>
-        </div>
-    </div>
-</div>
-<h2 *ngIf="seance">Changer le statut de la séance</h2>
-<div *ngIf="seance" class="row  mt-1">
-    <div class="col-12">
-        <ng-container *ngIf="seance.statut == 'prévue'">
-            <button type="button" class="btn btn-danger" [disabled]="messageAnnulation.length < 50"
-                (click)="AnnulerSeance()">Annuler la séance</button>
-            <button type="button" class="btn btn-success" (click)="validerSeance()">Valider la séance</button>
-        </ng-container>
-    </div>
-    <app-envoi-mail></app-envoi-mail>
-</div>
+<app-envoi-mail  *ngIf="liste_mail" [mails]="liste_mail"></app-envoi-mail>

@@ -105,9 +105,18 @@ ul {
 
   }
 
-  .display_flex {
+  .display_flex_row {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+
+  }
+  .display_flex_column {
+    display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
@@ -536,7 +545,6 @@ label.checkbox-label {
   padding: 15px 10px;
   gap: 10px;
   width: 350px;
-  height: 20px;
 
   background: rgba(243, 242, 242, 0.5);
   border: 1px solid rgba(133, 124, 136, 0.5);
@@ -843,15 +851,19 @@ input:-moz-placeholder {
     gap: 6px;
 }
 
-.bloc_jecha{
-  
-  border-block-color:$purple;
+.bloc_jecha {
+  border-block-color: #5D3891;
   border-style: solid;
   border-width: 1px;
   border-radius: 25px;
   margin: 10px;
   padding: 10px;
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+  align-content: flex-start;
+  justify-content: flex-start;
 }
 
 

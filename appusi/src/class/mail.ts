@@ -1,6 +1,8 @@
 import { StaticClass } from "src/app/global";
 import { Groupe } from "./groupe";
 import { Subject } from "rxjs";
+import { KeyValue } from "@angular/common";
+import { KeyValuePair } from "./keyvaluepair";
 
 export class MailData {
     public id:number;
@@ -12,7 +14,8 @@ export class MailData {
     public plusieurs_destinataire:boolean = false;
     public envoi_OK= false;
     public groupes:Groupe[] =[];
-    public categorie : "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE";
+    public params:KeyValuePair[]=[];
+    public categorie : "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" | "ESSAI";
 
 }
 
@@ -66,7 +69,7 @@ constructor(mail_:MailData){
   private _subject: string;
   private _liste_to: string[]
   private _content:string;
-  private _categorie: "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE";
+  private _categorie: "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" | "ESSAI";
   // Propriété nom avec get et set
   get subject(): string {
     return this._subject;
@@ -82,10 +85,10 @@ constructor(mail_:MailData){
     this._liste_to = value;
     this.listetoSubject.next(value);
   }
-  get categorie(): "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" {
+  get categorie(): "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" | "ESSAI" {
     return this._categorie;
   }
-  set categorie(value: "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE") {
+  set categorie(value: "INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" | "ESSAI") {
     this._categorie = value;
     this.categorieSubject.next(value);
   }

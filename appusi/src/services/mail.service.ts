@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MailData } from 'src/class/mail';
 import { environment } from 'src/environments/environment.prod';
 import { GlobalService } from './global.services';
+import { Seance } from 'src/class/seance';
+import { Rider } from 'src/class/riders';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +66,7 @@ export class MailService {
         return Promise.reject(error);
       });
    }
-   GetAll(saisonencours:boolean = true,datedebut:Date, datefin:Date, envoye:boolean,categorie:"INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" ): Promise<MailData[]>{
+   GetAll(saisonencours:boolean = true,datedebut:Date, datefin:Date, envoye:boolean,categorie:"INDIVIDUEL" | "GROUPE" | "ANNULATION" | "RELANCE" | "SEANCE" | "ESSAI" ): Promise<MailData[]>{
     this.url = environment.usivry + 'usivry/mail_manage.php';
     //  this.url = this.url + "login.php";
     const body = {
