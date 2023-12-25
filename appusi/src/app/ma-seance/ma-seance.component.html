@@ -24,10 +24,10 @@
                     <label *ngIf="selected_adherent" class="selected-adherent-label"><span i18n>Adhérent
                             sélectionné</span> : {{
                         selected_adherent.value }}</label>
-                    <button *ngIf="selected_adherent" type="button" (click)="selected_adherent =null; text_recherche = ''"
-                        class="button outline_quit_button">
-                        <svg *ngIf="!afficher_eleve" width="20" height="20">
-                            <use xlink:href=".\assets\liste.svg#KO" style="fill:rgb(255, 0, 0)"></use>
+                    <button *ngIf="selected_adherent" type="button"
+                        (click)="selected_adherent =null; text_recherche = ''" class="button outline_quit_button">
+                        <svg width="20" height="20">
+                            <use xlink:href=".\assets\liste.svg#croix" style="fill:rgb(255, 0, 0)"></use>
                         </svg>
                     </button>
                 </div>
@@ -43,7 +43,8 @@
             <div class="sous_bloc_jecha" *ngIf="seance">
                 <h2>Ajouter une note à la séance</h2>
                 <label for="text_recherche" i18n>Notes de moins de 300 caractères</label>
-                <textarea class="input_jecha" rows="2" maxlength="300" [(ngModel)]="seance.notes" aria-label="Notes de la séances"></textarea>
+                <textarea class="input_jecha" rows="2" maxlength="300" [(ngModel)]="seance.notes"
+                    aria-label="Notes de la séances"></textarea>
                 <button type="button" class="button outline_action_button" (click)="SauvegarderText()">
                     <svg *ngIf="!afficher_eleve" width="20" height="20">
                         <use xlink:href=".\assets\liste.svg#save" style="fill:green"></use>
@@ -51,27 +52,51 @@
                     <span i18n>Sauvegarder</span>
                 </button>
             </div>
-            <div class="sous_bloc_jecha" *ngIf="seance">
-                <h2>Actions sur la séance</h2>
-                <div class="button_group">
-                    <button i18n-title title="Terminer la séance"
-                        class="outline_action_button button" type="button"
-                        (click)="validerSeance()">
-                        <svg width="20" height="20">
-                            <use xlink:href=".\assets\liste.svg#terminer"  style="fill:green"></use>
-                        </svg>
-                        <span>Terminer la séance</span>
-                    </button>
-                    <button i18n-title title="Se déclarer absent"
-                        class="outline_quit_button button" type="button"
-                        (click)="AnnulerSeance()">
-                        <svg width="20" height="20">
-                            <use xlink:href=".\assets\liste.svg#annuler" style="fill:red"></use>
-                        </svg>
-                        <span>Annuler la séance</span>
-                    </button>
+            <div *ngIf="encours_annulation">
+                <div class="sous_bloc_jecha" *ngIf="seance">
+                    <h2>Ecrire un message d'annulation</h2>
+                    <textarea class="input_jecha" rows="2" maxlength="300" [(ngModel)]="messageAnnulation"
+                        aria-label="Message d'annulation"></textarea>
+                    <div class="button_group">
+                        <button i18n-title title="Terminer la séance" class="outline_action_button button" type="button"
+                            (click)="AnnulerSeance()">
+                            <svg width="20" height="20">
+                                <use xlink:href=".\assets\liste.svg#annuler" style="fill:green"></use>
+                            </svg>
+                            <span>Annuler la séance</span>
+                        </button>
+                        <button i18n-title title="Annuler la séance" class="outline_quit_button button" type="button"
+                            (click)="encours_annulation = false;messageAnnulation=''">
+                            <svg width="20" height="20">
+                                <use xlink:href=".\assets\liste.svg#retour" style="fill:red"></use>
+                            </svg>
+                            <span>Retour</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div *ngIf="!encours_annulation">
+                <div class="sous_bloc_jecha" *ngIf="seance">
+                    <h2>Actions sur la séance</h2>
+                    <div class="button_group">
+                        <button i18n-title title="Terminer la séance" class="outline_action_button button" type="button"
+                            (click)="validerSeance()">
+                            <svg width="20" height="20">
+                                <use xlink:href=".\assets\liste.svg#terminer" style="fill:green"></use>
+                            </svg>
+                            <span>Terminer la séance</span>
+                        </button>
+                        <button i18n-title title="Annuler la séance" class="outline_quit_button button" type="button"
+                            (click)="encours_annulation = true;messageAnnulation=''">
+                            <svg width="20" height="20">
+                                <use xlink:href=".\assets\liste.svg#annuler" style="fill:red"></use>
+                            </svg>
+                            <span>Annuler la séance</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="subcard_jecha" style="order: 0;">
             <div class="title_content_subcard_jecha" style="cursor: pointer;"
@@ -512,4 +537,11 @@
         </div>
     </div>
 </div>
-<app-envoi-mail  *ngIf="liste_mail" [mails]="liste_mail"></app-envoi-mail>
+<div *ngIf="liste_mail" class="card_jecha">
+    <div class="title_card_jecha">
+        <span class="text_title_card_jecha" i18n>Envoi d'email</span>
+    </div>
+    <div class="content_card_jecha">
+        <app-envoi-mail *ngIf="liste_mail" [mails]="liste_mail"></app-envoi-mail>
+    </div>
+</div>

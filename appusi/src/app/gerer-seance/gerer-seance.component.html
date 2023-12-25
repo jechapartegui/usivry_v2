@@ -149,7 +149,7 @@
           <th>Lieu</th>
           <th>Statut</th>
           <th>Professeurs</th>
-          <th>Âge requis</th>
+          <th>Groupes</th>
           <th></th>
         </tr>
       </thead>
@@ -222,7 +222,7 @@
                 </ng-container>
               </div>
               <div *ngIf="item.editing">
-                <select style="width: fit-content;" class="select_jecha">
+                <select   style="width: fit-content;" class="input_jecha" >
                   <ng-container [(ngModel)]="item.lieu_id" *ngFor="let lieu of listelieu">
                     <option style="font-size: xx-small;" [value]="lieu.key">{{lieu.value}}</option>
                   </ng-container>
@@ -234,19 +234,33 @@
             <td> <div (click)="item.editing = true" *ngIf="!item.editing"><span style="cursor: pointer;">{{item.statut}}</span>
             </div>
             <div *ngIf="item.editing">
-              <select id="statut" [(ngModel)]="item.statut" i18n-placeholder placeholder="Statut">
+              <select  style="width: fit-content;" id="statut" class="input_jecha" [(ngModel)]="item.statut" i18n-placeholder placeholder="Statut">
                 <ng-container *ngFor="let statut of listeStatuts">
                   <option style="font-size: xx-small;" [value]="statut">{{statut.toString()}}</option>
                 </ng-container>
               </select>
             </div>
           </td>
-            <td>
+            <td><div (click)="item.editing = true" *ngIf="!item.editing"> <ul>
+              <ng-container *ngFor="let profId of item.professeurs">
+                <li> {{profId.value}}</li>
+              </ng-container>
+            </ul>
+            </div>
+            <div *ngIf="item.editing">
               <ul>
                 <ng-container *ngFor="let profId of item.professeurs">
                   <li> {{profId.value}}</li>
                 </ng-container>
               </ul>
+              <select id="statut"  style="width: fit-content;" class="input_jecha"  i18n-placeholder placeholder="Prof">
+                <ng-container *ngFor="let prof of listeprof">
+                  <ng-container *ngIf="!item.professeurs.includes(prof)">
+                    <option style="font-size: xx-small;" [value]="prof">{{prof.value}}</option>
+                  </ng-container>
+                </ng-container>
+              </select>
+              </div>
             </td>
             <td>{{ item.age_requis }} à {{item.age_maximum}}</td>
             <td>

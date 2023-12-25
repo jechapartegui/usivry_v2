@@ -34,7 +34,6 @@ export class GererCoursComponent implements OnInit {
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
-    let o: notification;
     this.est_prof = RidersService.Est_Prof;
     this.est_admin = RidersService.Est_Admin;
     if (RidersService.IsLoggedIn === false) {
@@ -55,7 +54,7 @@ export class GererCoursComponent implements OnInit {
     this.grServ.GetAll().then((list) => {
       this.liste_groupe = list;
     }).catch((err: HttpErrorResponse) => {
-      errorService.CreateError("récupérer les groupes", err.statusText);
+      let o = errorService.CreateError("récupérer les groupes", err.statusText);
       errorService.emitChange(o);
     });
     this.ridersservice.GetProf().then((elka) => {

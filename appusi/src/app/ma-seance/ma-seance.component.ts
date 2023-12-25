@@ -23,6 +23,7 @@ export class MaSeanceComponent implements OnInit {
   messageAnnulation: string = "";
   afficher_eleve:boolean=true;
   afficher_present:boolean=true;
+  encours_annulation:boolean=false;
   afficher_absent:boolean=true;
   liste_mail:MailData[];
   showDropdown: boolean;
@@ -97,13 +98,14 @@ export class MaSeanceComponent implements OnInit {
       let ret = this.UpdateSeance("Séance réalisée");
     }
   }
-  AnnulerSeance(): void {
+  AnnulerSeance(): void { 
+    const confirmation = window.confirm($localize`Cette action annulera définitivement la séance ? `);
+
+  // Si l'utilisateur a confirmé, effectuez l'action souhaitée
+  if (confirmation) {
     const errorService = ErrorService.instance;
     // Afficher une boîte de dialogue de confirmation
-    const confirmation = window.confirm("Voulez-vous vraiment annuler la séance ?");
-
-    // Si l'utilisateur a confirmé, effectuez l'action souhaitée
-    if (confirmation) {
+ 
       this.seance.statut = StatutSeance.annulée;
       let ret = this.UpdateSeance("Annuler la séance");
       const MD = new MailData();
@@ -114,6 +116,12 @@ export class MaSeanceComponent implements OnInit {
       KVP.key = this.seance.seance_id;
       KVP.value = "seance_id";
       MD.params.push(KVP);
+      if(this.messageAnnulation.length>1){
+        const KVP_ind3 = new KeyValuePair();
+        KVP_ind3.key = -1;
+        KVP_ind3.value = this.messageAnnulation;
+        MD.params.push(KVP_ind3);
+      }
       this.liste_mail = [];
       this.liste_mail.push(MD);
       if(this.Liste.filter(x => x.statut == StatutPresence.Convoqué).length > 0){
@@ -129,9 +137,15 @@ export class MaSeanceComponent implements OnInit {
           KVP_ind2.key = element.rider_id;
           KVP_ind2.value = "rider_id";
           MD_ind.params.push(KVP_ind2);
+          if(this.messageAnnulation.length>1){
+            const KVP_ind3 = new KeyValuePair();
+            KVP_ind3.key = -1;
+            KVP_ind3.value = this.messageAnnulation;
+            MD_ind.params.push(KVP_ind3);
+          }
+          this.liste_mail.push(MD_ind);
         });
       }
-      
     }
 
   }

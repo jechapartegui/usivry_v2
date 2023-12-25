@@ -105,7 +105,7 @@ ul {
 
   }
 
-  .display_flex_row {
+  .afficher_ligne {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -324,7 +324,38 @@ label.checkbox-label {
   gap: 3px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.label_logo{
+  border-color: black;
+  border-style: solid;
+  cursor: pointer;
+  border-radius: 10px;
+  border-width: thin;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  padding: 2px;
   flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.label_mail{
+  font-family: "Source Sans 3";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-decoration: underline
+}
+.span_label_logo{
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .display_list_label {
@@ -592,17 +623,7 @@ input:-moz-placeholder {
   font-style: italic;
 }
 
-.input_jecha[type="text"] {
-  font-family: 'Source Sans 3';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 14px;
 
-
-  color: #000000;
-
-}
 
 /*#endregion*/
 /*#region ma_seance_btn*/
@@ -828,8 +849,8 @@ input:-moz-placeholder {
   font-family: 'math';
   font-style: normal;
   font-weight: 300;
-  font-size: 20px;
-  line-height: 25px;
+  font-size: 16px;
+  line-height: 20px;
   /* identical to box height, or 125% */
 
   color: #000000;

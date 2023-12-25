@@ -79,7 +79,6 @@ export class GererSeanceComponent implements OnInit {
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
-    let o: notification;
     if (RidersService.IsLoggedIn === false) {
       this.router.navigate(['/login']);
       return;
@@ -105,12 +104,12 @@ export class GererSeanceComponent implements OnInit {
               this.list_seance = list;
               this.list_seance_VM = list.map(x => new Seance_VM(x));
             }).catch((err: HttpErrorResponse) => {
-              errorService.CreateError("récupérer les séances", err.statusText);
+              let o =  errorService.CreateError("récupérer les séances", err.statusText);
               errorService.emitChange(o);
               this.router.navigate(['/menu-inscription']);
             })
           }).catch((err: HttpErrorResponse) => {
-            errorService.CreateError("récupérer les lieux", err.statusText);
+            let o = errorService.CreateError("récupérer les lieux", err.statusText);
             errorService.emitChange(o);
             this.router.navigate(['/menu-inscription']);
           })
@@ -120,12 +119,12 @@ export class GererSeanceComponent implements OnInit {
           this.router.navigate(['/menu-inscription']);
         })
       }).catch((err: HttpErrorResponse) => {
-        errorService.CreateError("récupérer les saisons", err.statusText);
+        let o = errorService.CreateError("récupérer les saisons", err.statusText);
         errorService.emitChange(o);
         this.router.navigate(['/menu-inscription']);
       })
     }).catch((err: HttpErrorResponse) => {
-      errorService.CreateError("récupérer les groupes", err.statusText);
+      let o = errorService.CreateError("récupérer les groupes", err.statusText);
       errorService.emitChange(o);
       this.router.navigate(['/menu-inscription']);
     });

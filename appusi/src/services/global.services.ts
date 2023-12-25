@@ -50,6 +50,7 @@ export class GlobalService {
   .set('password', hashedPassword)
   .set('dateref', date_ref_string)
   .set('userid', _varid)
+  .set('project',"1")
   const response = await firstValueFrom(
     this.http.post(url, body, { headers }).pipe(
       timeout(timeoutMilliseconds),

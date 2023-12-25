@@ -19,40 +19,41 @@ export class GererCompteIndividuelComponent {
   libelle_mail: string = "Saisir le nouvel email";
   new_mdp_confirm = "";
   mdp_actuel: string = "";
+  action:string="";
   new_mdp: string = "";
 
   constructor(private _riderser:RidersService){}
 
   ModifMail() {
     const errorService = ErrorService.instance;
-    let o: notification;
+    this.action = $localize`Modification de l'email`;
     this._riderser.UpdateMail(this.editRider.compte, this.editRider.email, this.mdp_actuel).then((boooo) => {
       if (boooo) {
-        o = errorService.OKMessage("Modification de l'émail");
+        let o = errorService.OKMessage(this.action);
         errorService.emitChange(o);
       } else {
-        o = errorService.CreateError("Modification de l'émail", "erreur inconnue");
+        let o = errorService.CreateError(this.action, $localize`Erreur inconnue`);
         errorService.emitChange(o);
       }
     }).catch((err: HttpErrorResponse) => {
-      o = errorService.CreateError("Modification de l'émail", err.statusText);
+      let o = errorService.CreateError(this.action, err.statusText);
       errorService.emitChange(o);
     })
   }
 
   ModifMDP() {
     const errorService = ErrorService.instance;
-    let o: notification;
+    this.action = $localize`Modification du mot de passe`;
     this._riderser.UpdateMDP(this.editRider.email, this.mdp_actuel, this.new_mdp).then((boooo) => {
       if (boooo) {
-        o = errorService.OKMessage("Modification du mot de passe");
+        let o = errorService.OKMessage(this.action);
         errorService.emitChange(o);
       } else {
-        o = errorService.CreateError("Modification du mot de passe", "erreur inconnue");
+        let o = errorService.CreateError(this.action, $localize`Erreur inconnue`);
         errorService.emitChange(o);
       }
     }).catch((err: HttpErrorResponse) => {
-      o = errorService.CreateError("Modification du mot de passe", err.statusText);
+      let o = errorService.CreateError(this.action, err.statusText);
       errorService.emitChange(o);
     })
   }

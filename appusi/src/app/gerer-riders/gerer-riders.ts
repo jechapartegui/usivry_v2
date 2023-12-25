@@ -64,7 +64,6 @@ export class GererRidersComponent implements OnInit {
 
   ngOnInit(): void {
     const errorService = ErrorService.instance;
-    let o: notification;
     this.route.queryParams.subscribe(params => {
       if ('id' in params) {
         this.id = params['id'];
@@ -89,17 +88,17 @@ export class GererRidersComponent implements OnInit {
             this.list_rider_VM = list.map(x => new Rider_VM(x));
             this.situation = "LIST";
           }).catch((err: HttpErrorResponse) => {
-            errorService.CreateError("récupérer les riders", err.statusText);
+            let o =  errorService.CreateError("récupérer les riders", err.statusText);
             errorService.emitChange(o);
             this.router.navigate(['/menu-inscription']);
           })
         }).catch((err: HttpErrorResponse) => {
-          errorService.CreateError("récupérer les saisons", err.statusText);
+          let o = errorService.CreateError("récupérer les saisons", err.statusText);
           errorService.emitChange(o);
           this.router.navigate(['/menu-inscription']);
         })
       }).catch((err: HttpErrorResponse) => {
-        errorService.CreateError("récupérer les groupes", err.statusText);
+        let o = errorService.CreateError("récupérer les groupes", err.statusText);
         errorService.emitChange(o);
         this.router.navigate(['/menu-inscription']);
       });

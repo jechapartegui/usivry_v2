@@ -1,16 +1,46 @@
 <div class="" (click)="afficher_mail ? afficher_mail = false : afficher_mail = true">Afficher les mails</div>
 <div [class]="afficher_mail ? 'display_mail' : 'dont_display_mail'">
-<div class="row">
- <div class="col-md-3">
-    <ul>
-        <ng-container *ngFor="let mail of liste_mail">
-        </ng-container>
-    </ul>
- </div>
- <div class="col-md-9">
-    
- </div>
+    <div class="row">
+        <div class="col-md-3">
+            <ul>
+                <ng-container *ngFor="let mail of liste_mail_VM">
+                    <li (click)="selected_mail = mail"><span>{{mail.subject}} ({{mail.liste_to.length}})</span></li>
+                </ng-container>
+            </ul>
+        </div>
+        <div class="col-md-9" *ngIf="selected_mail">
+            <span class="label_mail" i18n>Destinataires :</span>
+            <div class="label-groupe">
+                <ng-container *ngFor="let to of selected_mail.liste_to">
+                    <div class="label_logo"> <span class="span_label_logo">{{to}}</span> <svg width="20" height="20">
+                            <use xlink:href=".\assets\liste.svg#croix" style="fill:red"></use>
+                        </svg></div>
+                </ng-container>
+            </div>
+            <span class="label_mail" i18n>Ajouter un destinataire</span>
+            <div class="input_and_button">
+                <input type="text" id="new_destinataire" class="input_jecha" [(ngModel)]="new_destinataire" />
+                <button type="button" class="button outline_action_button"
+                    (click)="selected_mail.liste_to.push(new_destinataire); new_destinataire= ''">
+                    <svg width="20" height="20">
+                        <use xlink:href=".\assets\liste.svg#plus" style="fill:green"></use>
+                    </svg>
+                </button>
+            </div>
+            <span class="label_mail" i18n>Sujet :</span>
+            <input type="text" id="subject" class="input_jecha" [(ngModel)]="selected_mail.subject" />
+            <span class="label_mail" i18n>Contenu HTML :</span>
+            <textarea class="input_jecha" style="width: 100%;" rows="20" maxlength="2000"
+                [(ngModel)]="selected_mail.content" aria-label="Message à envoyer"></textarea>
+            <span class="label_mail" i18n>Contenu Mail :</span>
+            <div [innerHTML]="getSafeContent()" style="width: 100%;"></div>
+            <button type="button" class="outline_action_button button" (click)="Send(selected_mail)">
+                <svg width="20" height="20">
+                    <use xlink:href=".\assets\liste.svg#envoyer" style="fill:green"></use>
+                </svg>
+                <span i18n>Envoyer le mail</span></button>
+        </div>
 
-</div>
+    </div>
 
 </div>
