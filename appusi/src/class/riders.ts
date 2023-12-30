@@ -133,7 +133,7 @@ export class Rider_VM {
     this.est_inscrit = L.est_inscrit;
     this.seances_prof = L.seances_prof;
     this.seances = L.seances;
-    this.valid = new ValidationRider(this, false);
+    this.valid = new ValidationRider(this);
     this.valid.controler();
   }
 
@@ -167,18 +167,14 @@ export class ValidationRider {
   public prenom: boolean;
   public date_naissance: boolean;
   public telephone: boolean;
-  public email: boolean;
-  public check_compte: boolean;
 
-  constructor(private rider: Rider_VM, compte: boolean) {
+  constructor(private rider: Rider_VM) {
 
     this.rider.nomSubject.subscribe((value) => this.validateNom(value));
     this.rider.prenomSubject.subscribe((value) => this.validatePrenom(value));
     this.rider.dateNaissanceSubject.subscribe((value) => this.validateDateNaissance(value));
     this.rider.telephoneSubject.subscribe((value) => this.validateTelephone(value));
-    if (compte) {
-      this.rider.emailSubject.subscribe((value) => this.validateEmail(value));
-    }
+    
   }
 
   controler() {
@@ -188,20 +184,13 @@ export class ValidationRider {
     this.validatePrenom(this.rider.prenom);
     this.validateDateNaissance(this.rider.date_naissance);
     this.validateTelephone(this.rider.telephone);
-    if (this.check_compte) {
-      this.validateEmail(this.rider.email);
-    }
+   
   }
   checkcontrolvalue() {
-    if (this.check_compte) {
-      if (this.nom && this.prenom && this.date_naissance && this.telephone && this.email) {
-        this.control = true;
-      }
-    } else {
+   
       if (this.nom && this.prenom && this.date_naissance && this.telephone) {
         this.control = true;
       }
-    }
   }
 
   private validateNom(value: string) {
@@ -272,21 +261,6 @@ export class ValidationRider {
     }
   }
 
-  private validateEmail(value: string) {
-    // Code de validation de l'e-mail
-    // Mettre à jour this.email en conséquence
-    if (value) {
-      if (value.length < 3) {
-        this.email = false;
-        this.control = false;
-      } else {
-        this.email = true;
-        this.checkcontrolvalue();
-      }
-    } else {
-      this.email = false;
-      this.control = false;
-    }
-  }
+
 }
 

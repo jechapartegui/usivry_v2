@@ -33,6 +33,7 @@ export class GererSeanceComponent implements OnInit {
   est_admin: boolean = false;
   season_id: number;
   jour_semaine: string = "";
+  date_fin_serie:Date;
   list_saison: KeyValuePair[];
   current_prof: number;
   coursselectionne: boolean = false;
@@ -221,6 +222,8 @@ export class GererSeanceComponent implements OnInit {
     this.coursselectionne = false;
     if (serie) {
       this.editMode_serie = true;
+      this.editSeance.date_seance = new Date();
+      this.date_fin_serie = new Date();
     }
     this.editMode = true;
     this.MAJListeProf();

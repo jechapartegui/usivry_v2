@@ -34,7 +34,6 @@ export class RidersService {
   }
   updateMailActiveStatus(mailactive: boolean): void {
       this.ismailactiveSubject.next(mailactive);
-      console.log(mailactive);
       RidersService.mail_actif = mailactive;
   }
   static instance: RidersService;

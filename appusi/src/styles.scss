@@ -445,7 +445,7 @@ label.checkbox-label {
   align-items: center;
   letter-spacing: 0.1em;
   cursor: pointer;
-  color: $orange;
+  color: $purple;
   text-decoration: none;
 
   &:hover {
@@ -456,7 +456,7 @@ label.checkbox-label {
   }
 
   &:visited {
-    color: $purple;
+    color: $purple-shadow;
 
   }
 

@@ -4,6 +4,7 @@ import { ErrorService } from 'src/services/error.service';
 import { RidersService } from 'src/services/riders.service';
 import { notification } from '../custom-notification/custom-notification.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CompteService } from 'src/services/compte.service';
 
 @Component({
   selector: 'app-gerer-compte-individuel',
@@ -22,7 +23,7 @@ export class GererCompteIndividuelComponent {
   action:string="";
   new_mdp: string = "";
 
-  constructor(private _riderser:RidersService){}
+  constructor(private _riderser:RidersService, private compteservice:CompteService){}
 
   ModifMail() {
     const errorService = ErrorService.instance;
@@ -63,5 +64,22 @@ export class GererCompteIndividuelComponent {
     } else {
       this.libelle_mail = "Saisir le mail du compte";
     }
+  }
+
+  CreerValidation(motdepasse:boolean){
+    const errorService = ErrorService.instance;
+    this.action = $localize`Créer un utilisateur avec validation ultérieure`;
+    this.compteservice.Exist(this.editRider.email).then((boooo) => {
+      if (boooo) {
+        let o = errorService.OKMessage(this.action);
+        errorService.emitChange(o);
+      } else {
+        let o = errorService.CreateError(this.action, $localize`Compte inconnu`);
+        errorService.emitChange(o);
+      }
+    }).catch((err: HttpErrorResponse) => {
+      let o = errorService.CreateError(this.action, err.statusText);
+      errorService.emitChange(o);
+    })
   }
 }

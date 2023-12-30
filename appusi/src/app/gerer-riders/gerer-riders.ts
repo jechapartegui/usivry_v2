@@ -29,7 +29,6 @@ export class GererRidersComponent implements OnInit {
   fileData: any[];
   g: StaticClass = new StaticClass();
   action: string;
-  list_rider: Rider[] = [];
   list_rider_VM: Rider_VM[];
 
   filter_nom: string = "";
@@ -84,8 +83,8 @@ export class GererRidersComponent implements OnInit {
         this.courserv.GetSaison().then((saisons) => {
           this.list_saison = saisons;
           this._riderser.GetAllThisSeason().then((list) => {
-            this.list_rider = list;
-            this.list_rider_VM = list.map(x => new Rider_VM(x));
+            RidersService.Riders = list;
+            this.list_rider_VM = RidersService.Riders.map(x => new Rider_VM(x));
             this.situation = "LIST";
           }).catch((err: HttpErrorResponse) => {
             let o =  errorService.CreateError("récupérer les riders", err.statusText);
@@ -105,7 +104,8 @@ export class GererRidersComponent implements OnInit {
 
     } else if (this.situation == "MY_UPDATE") {
       this.RiderToEdit();
-    }
+      this.list_rider_VM = RidersService.Riders.map(x => new Rider_VM(x));
+    }   
   }
 
   Edit(rider:Rider_VM){
@@ -115,7 +115,7 @@ export class GererRidersComponent implements OnInit {
   }
 
   RiderToEdit() {
-    var this_rider = this.list_rider.find(x => x.id == this.id);
+    var this_rider = RidersService.Riders.find(x => x.id == this.id);
     this.editRider = new Rider_VM(this_rider);
   
   }
@@ -214,9 +214,6 @@ export class GererRidersComponent implements OnInit {
   }
 
 
-
-
-
   calculateAge(dateNaissance: Date): number {
     const today = new Date();
     const birthDate = new Date(dateNaissance);
@@ -231,7 +228,7 @@ export class GererRidersComponent implements OnInit {
   Reinit(thisl: Rider_VM) {
     let confirmation = window.confirm($localize`Cette action annulera l'ensemble des modifications sur cet adhérent ?`);
     if (confirmation) {
-      const rider_avant: Rider = this.list_rider.find(x => x.id === thisl.id);
+      const rider_avant: Rider = RidersService.Riders.find(x => x.id === thisl.id);
       const index_rider_apres: number = this.list_rider_VM.findIndex(x => x.id === thisl.id);
 
       if (rider_avant !== undefined && index_rider_apres !== -1) {
@@ -251,7 +248,7 @@ export class GererRidersComponent implements OnInit {
       if (rider) {
         this._riderser.Delete(rider.id).then((retour) => {
           if (retour) {
-            this.list_rider = this.list_rider.filter(x => x.id !== rider.id);
+            RidersService.Riders = RidersService.Riders.filter(x => x.id !== rider.id);
             this.list_rider_VM = this.list_rider_VM.filter(x => x.id !== rider.id);
             let o = errorService.OKMessage(this.action);
             errorService.emitChange(o);
@@ -272,7 +269,7 @@ export class GererRidersComponent implements OnInit {
 
   Save(rider: Rider_VM) {
     const errorService = ErrorService.instance;
-    let act = "Ajouter un rider";
+    this.action = "Ajouter un rider";
     if (rider) {
       if (rider.id == 0) {
         let body;
@@ -306,9 +303,12 @@ export class GererRidersComponent implements OnInit {
             }
           }
         }
+        console.log(body);
+        console.log(rider);
         this._riderser.Add(body, rider.ToRider()).then((new_rider) => {
+          console.log(new_rider);
           if (new_rider) {
-            this.list_rider.push(new_rider);
+            RidersService.Riders.push(new_rider);
             let rider_vm: Rider_VM = new Rider_VM(new_rider);
             this.list_rider_VM.push(rider_vm);
             if (this.situation = "CREATE") {
@@ -336,22 +336,24 @@ export class GererRidersComponent implements OnInit {
           this.action = "Mettre à jour un rider";
           if (ok) {
 
-            const indexToUpdate = this.list_rider.findIndex(rider => rider.id === rider.id);
+            const indexToUpdate = RidersService.Riders.findIndex(rider => rider.id === rider.id);
             if (indexToUpdate !== -1) {
               // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-              this.list_rider[indexToUpdate] = rider.ToRider();
+              RidersService.Riders[indexToUpdate] = rider.ToRider();
             }
-            const indexToUpdateVM = this.list_rider_VM.findIndex(rider => rider.id === rider.id);
-            if (indexToUpdateVM !== -1) {
-              // Remplacer l'élément à l'index trouvé par la nouvelle valeur
-              this.list_rider_VM[indexToUpdateVM] = rider;
-            }
+              const indexToUpdateVM = this.list_rider_VM.findIndex(rider => rider.id === rider.id);
+              if (indexToUpdateVM !== -1) {
+                // Remplacer l'élément à l'index trouvé par la nouvelle valeur
+                this.list_rider_VM[indexToUpdateVM] = rider;
+              }
+           
             if(this.situation == "LIST"){
               rider.editing = false;
             } else if(this.situation == "UPDATE"){
               this.situation = "LIST";
               this.editRider = null;
             }
+            console.log("ici");
             let o = errorService.OKMessage(this.action);
             errorService.emitChange(o);
           } else {
@@ -401,40 +403,7 @@ export class GererRidersComponent implements OnInit {
     fileReader.readAsArrayBuffer(file);
   }
 
-  Filtrer() {
-    let errorservice = ErrorService.instance;
-    if (!this.season_id || this.season_id == 0) {
-      this._riderser.GetAllSearch(this.search_text).then((result) => {
-        this.list_rider = result;
-        let o = errorservice.OKMessage("Recherche de rider");
-        errorservice.emitChange(o);
-      }).catch((elkerreur: HttpErrorResponse) => {
-        let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
-        errorservice.emitChange(o);
-      })
-    } else {
-      this._riderser.GetAllSearchSeason(this.search_text, this.season_id).then((result) => {
-        this.list_rider = result;
-        let o = errorservice.OKMessage("Recherche de rider");
-        errorservice.emitChange(o);
-      }).catch((elkerreur: HttpErrorResponse) => {
-        let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
-        errorservice.emitChange(o);
-      })
-    }
 
-  }
-  FiltrerBack() {
-    let errorservice = ErrorService.instance;
-    this._riderser.GetAllThisSeason().then((result) => {
-      this.list_rider = result;
-      let o = errorservice.OKMessage("Recherche de rider");
-      errorservice.emitChange(o);
-    }).catch((elkerreur: HttpErrorResponse) => {
-      let o = errorservice.CreateError("Recherche de rider", elkerreur.statusText);
-      errorservice.emitChange(o);
-    })
-  }
 
   InscrireRider() {
     let errorservice = ErrorService.instance;

@@ -31,6 +31,34 @@
         <input class="input_jecha" type="password" id="new_mdp_confirm" [(ngModel)]="new_mdp_confirm"
           i18n-placeholder placeholder="Confirmer nouveau mot de passe">
       </div>
+      <div *ngIf="situation == 'ADD' && existing_account">
+        <button class="button outline_action_button" (click)="CreerValidation(false)">
+          <svg width="20" height="20">
+            <use xlink:href=".\assets\liste.svg#activate" style="fill:green"></use>
+          </svg>
+          <span i18n>Créer avec activation par l'utilisateur</span>          
+        </button>
+        <button class="button outline_action_button" (click)="CreerValidation(true)">
+          <svg width="20" height="20">
+            <use xlink:href=".\assets\liste.svg#creermdp" style="fill:green"></use>
+          </svg>
+          <span i18n>Créer avec saisie de mot de passe</span>          
+        </button>
+      </div>
+      <div *ngIf="situation == 'ADD' && !existing_account">
+        <button class="button outline_action_button" (click)="CreerValidation(false)">
+          <svg width="20" height="20">
+            <use xlink:href=".\assets\liste.svg#activate" style="fill:green"></use>
+          </svg>
+          <span i18n>Créer avec activation par l'utilisateur</span>          
+        </button>
+        <button class="button outline_action_button" (click)="CreerValidation(true)">
+          <svg width="20" height="20">
+            <use xlink:href=".\assets\liste.svg#creermdp" style="fill:green"></use>
+          </svg>
+          <span i18n>Créer avec saisie de mot de passe</span>          
+        </button>
+      </div>
       <div *ngIf="situation == 'UPDATE' || situation == 'MY_UPDATE' ">
         <p>Saisir nouveau mail et mot de passe actuel puis cliquer sur le bouton ci-dessous</p>
         <div> <button class="button action_button" [disabled]="!editRider.email || !mdp_actuel"
